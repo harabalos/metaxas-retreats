@@ -1,19 +1,26 @@
-
 import * as React from "react";
+import { format } from "date-fns";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { DayPicker } from "react-day-picker";
+import { DayPicker, DayPickerSingleProps } from "react-day-picker";
 
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
+import { accommodations } from "@/data/accommodations";
 
-export type CalendarProps = React.ComponentProps<typeof DayPicker>;
+export type CalendarProps = DayPickerSingleProps & {
+  accommodationId?: string;
+};
 
 function Calendar({
   className,
   classNames,
   showOutsideDays = true,
+  accommodationId,
   ...props
 }: CalendarProps) {
+  const pricing =
+    accommodations.find((acc) => acc.id === accommodationId)?.dailyPricing || {};
+
   return (
     <DayPicker
       showOutsideDays={showOutsideDays}
@@ -35,26 +42,32 @@ function Calendar({
         head_cell:
           "text-muted-foreground rounded-md w-9 font-normal text-[0.8rem]",
         row: "flex w-full mt-2",
-        cell: "h-9 w-9 text-center text-sm p-0 relative [&:has([aria-selected].day-range-end)]:rounded-r-md [&:has([aria-selected].day-outside)]:bg-accent/50 [&:has([aria-selected])]:bg-accent first:[&:has([aria-selected])]:rounded-l-md last:[&:has([aria-selected])]:rounded-r-md focus-within:relative focus-within:z-20",
+        cell: "h-9 w-9 text-center text-sm p-0 relative",
         day: cn(
           buttonVariants({ variant: "ghost" }),
           "h-9 w-9 p-0 font-normal aria-selected:opacity-100"
         ),
-        day_range_end: "day-range-end",
-        day_selected:
-          "bg-forest text-white hover:bg-forest-dark hover:text-white focus:bg-forest focus:text-white",
+        day_selected: "bg-forest text-white hover:bg-forest-dark",
         day_today: "bg-forest-light/30 text-forest-dark font-semibold",
         day_outside:
-          "day-outside text-muted-foreground opacity-50 aria-selected:bg-accent/50 aria-selected:text-muted-foreground aria-selected:opacity-30",
-        day_disabled: "text-muted-foreground opacity-50",
-        day_range_middle:
-          "aria-selected:bg-forest-light aria-selected:text-forest-dark",
-        day_hidden: "invisible",
+          "text-muted-foreground opacity-50 aria-selected:opacity-30",
         ...classNames,
       }}
       components={{
-        IconLeft: ({ ..._props }) => <ChevronLeft className="h-4 w-4" />,
-        IconRight: ({ ..._props }) => <ChevronRight className="h-4 w-4" />,
+        IconLeft: () => <ChevronLeft className="h-4 w-4" />,
+        IconRight: () => <ChevronRight className="h-4 w-4" />,
+        DayContent: ({ date }) => {
+          const dateStr = format(date, "yyyy-MM-dd");
+          const price = pricing[dateStr];
+          return (
+            <div className="flex flex-col items-center justify-center text-xs">
+              <span>{format(date, "d")}</span>
+              {price !== undefined && (
+                <span className="text-[10px] text-gray-500">€{price}</span>
+              )}
+            </div>
+          );
+        },
       }}
       {...props}
     />

@@ -109,6 +109,7 @@ export function DateRangePicker({
           onSelect={handleSelect}
           initialFocus
           disabled={isDateDisabled}
+          accommodationId={accommodationId}
           className={cn("p-3 pointer-events-auto")}
           modifiers={{
             booked: (date) => isDateBooked(date, accommodationId),
