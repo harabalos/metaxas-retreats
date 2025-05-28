@@ -1,0 +1,108 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 82 15% 94%;
+    --foreground: 122 30% 18%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 122 30% 18%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 122 30% 18%;
+
+    --primary: 120 18% 25%;
+    --primary-foreground: 90 20% 98%;
+
+    --secondary: 39 36% 85%;
+    --secondary-foreground: 40 25% 35%;
+
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+
+    --accent: 40 25% 35%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 90 20% 98%;
+
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 120 18% 25%;
+
+    --radius: 0.5rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-heading;
+  }
+}
+
+.booking-calendar .react-datepicker {
+  @apply font-sans border-0 shadow-lg rounded-lg;
+}
+
+.booking-calendar .react-datepicker__month-container {
+  @apply p-4;
+}
+
+.booking-calendar .react-datepicker__day--selected {
+  @apply bg-forest text-white rounded-full;
+}
+
+.booking-calendar .react-datepicker__day--in-range {
+  @apply bg-forest-light text-forest-dark;
+}
+
+.booking-calendar .react-datepicker__day--outside-month {
+  @apply text-gray-300;
+}
+
+.hero-section {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.3)), url('/images/hero-beach.jpg');
+  background-size: cover;
+  background-position: center;
+}
+
+/* Enhanced calendar styles for better visibility */
+.rdp-day_selected, 
+.rdp-day_selected:focus-visible, 
+.rdp-day_selected:hover {
+  background-color: #507050 !important; /* forest color */
+  color: white !important;
+  font-weight: bold;
+}
+
+.rdp-day_range_start,
+.rdp-day_range_end {
+  background-color: #507050 !important; /* forest color */
+  color: white !important;
+  font-weight: bold;
+}
+
+.rdp-day_range_middle {
+  background-color: #8FB18F !important; /* forest-light color */
+  color: #3A533A !important; /* forest-dark color for contrast */
+}
+
+/* Make today's date more visible */
+.rdp-day_today {
+  border: 2px solid #507050 !important;
+  font-weight: bold;
+}
+
