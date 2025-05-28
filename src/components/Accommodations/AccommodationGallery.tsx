@@ -96,7 +96,7 @@ const AccommodationGallery = ({ images, name }: AccommodationGalleryProps) => {
                   src={image}
                   alt={`${name} thumbnail ${index + 1}`}
                   className="w-full h-full object-contain"
-                  loading={index === currentImageIndex ? "eager" : "lazy"}
+                  loading="eager"
                 />
               ) : (
                 <div className="w-full h-full bg-gray-200 flex items-center justify-center">
