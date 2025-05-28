@@ -39,7 +39,7 @@ const HomePage = () => {
           loop 
           className="absolute inset-0 w-full h-full object-cover"
         >
-          <source src="public/lovable-uploads/Best Beaches📍 Micro Gialos Beach, Lefkada, Greece 🎵 Deep House Drone 4K Footage - Travel 360 Drone (720p, h264) (online-video-cutter.com).mp4" type="video/mp4" />
+          <source src="public/lovable-uploads/video.mp4" type="video/mp4" />
           Your browser does not support the video tag.
         </video>
         <div className="absolute inset-0 bg-black opacity-40"></div>
