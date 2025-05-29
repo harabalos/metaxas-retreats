@@ -65,7 +65,7 @@ const ContactUs = () => {
               <CardTitle className="text-forest-dark">Email Us</CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-gray-700">metaxasrents@gmail.com</p>
+              <p className="text-gray-700">metaxasretreats@gmail.com</p>
               <p className="text-gray-600 mt-2">We'll respond within an hour</p>
             </CardContent>
           </Card>

@@ -49,7 +49,7 @@ const blockedDates: Record<string, BlockedDateRange[]> = {
     { start: "2025-06-26", end: "2025-07-02" },
     { start: "2025-07-17", end: "2025-07-19" },
     { start: "2025-08-04", end: "2025-08-10" },
-    { start: "2025-08-17", end: "2025-08-22" }
+    { start: "2025-08-17", end: "2025-08-18" }
   ]
 };
 
