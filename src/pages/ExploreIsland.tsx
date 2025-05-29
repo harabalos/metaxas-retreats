@@ -52,7 +52,7 @@ const ExploreIsland = () => {
                 name="Egremni"
                 description="A long stretch of pristine white sand and stunning blue waters. Famous for its 350 steps leading down to paradise."
                 rating={5}
-                image="/lovable-uploads/b333b19c-eb5a-4f1d-a8bb-9ba39fd8482d.png"
+                image="/lovable-uploads/b333b19c-eb5a-4f1d-a8bb-9ba39fd8482d.jpg"
               />
               <BeachCard 
                 name="Kathisma"
@@ -70,7 +70,7 @@ const ExploreIsland = () => {
                 name="Agiofili"
                 description="A small hidden gem with crystal clear turquoise waters, surrounded by olive trees and accessible by boat from Vasiliki."
                 rating={5}
-                image="/lovable-uploads/0cbd94cc-fdef-4176-82c1-389e8194aeb3.png"
+                image="/lovable-uploads/0cbd94cc-fdef-4176-82c1-389e8194aeb3.jpg"
               />
             </div>
           </TabsContent>
