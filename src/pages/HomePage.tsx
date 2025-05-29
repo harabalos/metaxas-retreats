@@ -37,6 +37,7 @@ const HomePage = () => {
           autoPlay 
           muted 
           loop 
+          playsInline
           className="absolute inset-0 w-full h-full object-cover"
         >
           <source src="/lovable-uploads/video.mp4" type="video/mp4" />
