@@ -46,12 +46,18 @@ export const accommodations: Accommodation[] = [
     images: [
       "/lovable-uploads/e9f9bd84-9f74-4189-bf30-d6640a566fd3.jpg",
       "/lovable-uploads/f3dbfe79-a8c0-42d5-87d3-df85833746be.jpg", 
-      "/lovable-uploads/c91657a6-d60c-4ed0-ba07-70d974650d53.jpg",
       "/lovable-uploads/c684f5f3-b382-4e9b-b997-9a4614320960.jpg",
       "/lovable-uploads/b548966e-47b9-4b60-a67c-8860d08b8aac.jpg", 
       "/lovable-uploads/85ab03d1-caf1-4700-8b73-024e7542386a.jpg", 
       "/lovable-uploads/88d93693-0850-4a0d-994d-97a5c35dfc96.jpg", 
       "/lovable-uploads/fd98c289-04aa-409e-abf0-a5369a9855be.jpg", 
+      "/lovable-uploads/avli.jpg",
+      "/lovable-uploads/avli2.jpg", 
+      "/lovable-uploads/477283771.jpg",
+      "/lovable-uploads/479336955.jpg",
+      "/lovable-uploads/480234586.jpg",
+      "/lovable-uploads/krev.jpg",
+      "/lovable-uploads/krev2.jpg",
     ],
     availableDates: [
       {
