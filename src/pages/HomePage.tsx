@@ -39,7 +39,7 @@ const HomePage = () => {
           loop 
           className="absolute inset-0 w-full h-full object-cover"
         >
-          <source src="public/lovable-uploads/video.mp4" type="video/mp4" />
+          <source src="/lovable-uploads/video.mp4" type="video/mp4" />
           Your browser does not support the video tag.
         </video>
         <div className="absolute inset-0 bg-black opacity-40"></div>
