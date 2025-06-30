@@ -19,7 +19,7 @@ const ContactSection = () => {
             <Phone className="h-5 w-5 text-sea mt-0.5" />
             <div>
               <h3 className="font-medium">Call or Text (WhatsApp)</h3>
-              <p className="text-lg font-medium text-sea-dark">+30 6980429891</p>
+              <p className="text-lg font-medium text-sea-dark">+30 6973219980 +30 6980429891</p>
             </div>
           </div>
           

@@ -52,7 +52,7 @@ const ContactUs = () => {
               <CardTitle className="text-forest-dark">Call Us</CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-gray-700">+30 6980429891</p>
+              <p className="text-gray-700">+30 6973219980 +30 6980429891</p>
               <p className="text-gray-600 mt-2">Available daily</p>
             </CardContent>
           </Card>
