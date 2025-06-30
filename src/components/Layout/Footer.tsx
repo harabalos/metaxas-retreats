@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
-import { BookOpen, Mail, MapPin, Phone, Globe, ExternalLink } from 'lucide-react';
+import { Mail, MapPin, Phone } from 'lucide-react';
+
 const Footer = () => {
   const scrollToTop = () => {
     window.scrollTo({
@@ -7,7 +8,9 @@ const Footer = () => {
       behavior: 'smooth'
     });
   };
-  return <footer className="bg-forest text-white">
+
+  return (
+    <footer className="bg-forest text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* About section */}
@@ -17,9 +20,8 @@ const Footer = () => {
               Experience the magic of Greek island living with our charming accommodations in Mikros Gialos, 
               nestled among beautiful trees and just steps from the azure Ionian Sea.
             </p>
-            
           </div>
-          
+
           {/* Quick links */}
           <div>
             <h3 className="text-xl font-heading font-semibold mb-4">Quick Links</h3>
@@ -46,7 +48,7 @@ const Footer = () => {
               </li>
             </ul>
           </div>
-          
+
           {/* Contact info */}
           <div>
             <h3 className="text-xl font-heading font-semibold mb-4">Contact Us</h3>
@@ -66,11 +68,24 @@ const Footer = () => {
             </ul>
           </div>
         </div>
-        
-        <div className="border-t border-forest-light mt-8 pt-8 text-center text-forest-light">
+
+        <div className="border-t border-forest-light mt-8 pt-8 flex flex-col md:flex-row justify-between items-center text-forest-light">
           <p>&copy; {new Date().getFullYear()} Metaxas Retreats. All rights reserved.</p>
+          <p className="mt-2 md:mt-0">
+            Powered by{" "}
+            <a
+              href="https://www.amox.gr"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-wood underline"
+            >
+              Amox
+            </a>
+          </p>
         </div>
       </div>
-    </footer>;
+    </footer>
+  );
 };
+
 export default Footer;
