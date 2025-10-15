@@ -40,37 +40,37 @@ const ExploreIsland = () => {
                 name="Mikros Gialos"
                 description="A serene bay with calm turquoise waters, ideal for swimming, snorkeling, and total relaxation. Great local tavernas and your perfect base to explore the island."
                 rating={5}
-                image="/lovable-uploads/2f6bd2b9-02d2-44a7-ade9-2051f8e6b39a.png"
+                image="/assets/2f6bd2b9-02d2-44a7-ade9-2051f8e6b39a.png"
               />
               <BeachCard 
                 name="Porto Katsiki"
                 description="One of the most iconic beaches in Greece, featuring dramatic white cliffs and crystal clear turquoise waters. Accessible via stairs descending the cliff."
                 rating={5}
-                image="/lovable-uploads/porto katsiki.jpg"
+                image="/assets/porto katsiki.jpg"
               />
               <BeachCard 
                 name="Egremni"
                 description="A long stretch of pristine white sand and stunning blue waters. Famous for its 350 steps leading down to paradise."
                 rating={5}
-                image="/lovable-uploads/b333b19c-eb5a-4f1d-a8bb-9ba39fd8482d.jpg"
+                image="/assets/b333b19c-eb5a-4f1d-a8bb-9ba39fd8482d.jpg"
               />
               <BeachCard 
                 name="Kathisma"
                 description="A popular organized beach with golden sand and crystal waters. Perfect for water sports and beach bars."
-                image="/lovable-uploads/kathisma.jpeg"
+                image="/assets/kathisma.jpeg"
                 rating={5}
               />
               <BeachCard 
                 name="Milos Beach"
                 description="A beautiful unspoiled beach near Agios Nikitas, accessible only by boat or by hiking through a scenic trail."
-                image="/lovable-uploads/Milos.jpeg"
+                image="/assets/Milos.jpeg"
                 rating={5}
               />
               <BeachCard 
                 name="Agiofili"
                 description="A small hidden gem with crystal clear turquoise waters, surrounded by olive trees and accessible by boat from Vasiliki."
                 rating={5}
-                image="/lovable-uploads/0cbd94cc-fdef-4176-82c1-389e8194aeb3.jpg"
+                image="/assets/0cbd94cc-fdef-4176-82c1-389e8194aeb3.jpg"
               />
             </div>
           </TabsContent>
