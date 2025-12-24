@@ -383,22 +383,10 @@ s3_secret_key = "env(S3_SECRET_KEY)"
 
 [functions.sync-calendars]
 enabled = true
-verify_jwt = true
-import_map = "./functions/sync-calendars/deno.json"
-# Uncomment to specify a custom file path to the entrypoint.
-# Supported file extensions are: .ts, .js, .mjs, .jsx, .tsx
-entrypoint = "./functions/sync-calendars/index.ts"
-# Specifies static files to be bundled with the function. Supports glob patterns.
-# For example, if you want to serve static HTML pages in your function:
-# static_files = [ "./functions/sync-calendars/*.html" ]
+verify_jwt = false
 
 [functions.export-calendar]
 enabled = true
-verify_jwt = true
-import_map = "./functions/export-calendar/deno.json"
-# Uncomment to specify a custom file path to the entrypoint.
-# Supported file extensions are: .ts, .js, .mjs, .jsx, .tsx
-entrypoint = "./functions/export-calendar/index.ts"
-# Specifies static files to be bundled with the function. Supports glob patterns.
+verify_jwt = false
 # For example, if you want to serve static HTML pages in your function:
 # static_files = [ "./functions/export-calendar/*.html" ]

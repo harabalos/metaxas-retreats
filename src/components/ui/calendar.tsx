@@ -1,13 +1,13 @@
 import * as React from "react";
 import { format } from "date-fns";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { DayPicker, DayPickerSingleProps } from "react-day-picker";
+import { DayPicker, DayPickerProps } from "react-day-picker";
 
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
 import { accommodations } from "@/data/accommodations";
 
-export type CalendarProps = DayPickerSingleProps & {
+export type CalendarProps = DayPickerProps & {
   accommodationId?: string;
 };
 
