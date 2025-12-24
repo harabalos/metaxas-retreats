@@ -2,6 +2,11 @@ import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { parseISO, isSameDay } from "date-fns";
 
+interface Booking {
+  start_date: string;
+  end_date: string;
+}
+
 export const useBlockedDates = (accommodationId: string) => {
   const [blockedDates, setBlockedDates] = useState<Date[]>([]);
   const [loading, setLoading] = useState(true);
@@ -20,17 +25,18 @@ export const useBlockedDates = (accommodationId: string) => {
 
         if (error) {
           console.error("Supabase Error:", error);
-          // If the table doesn't exist yet, we just ignore it so the calendar still works
           return; 
         }
 
         if (data && mounted) {
           const dates: Date[] = [];
-          data.forEach((booking) => {
+          (data as Booking[]).forEach((booking) => {
             let current = parseISO(booking.start_date);
             const end = parseISO(booking.end_date);
 
-            while (current <= end) {
+            // Block all dates from start up to (but not including) end
+            // End date is checkout day, so it should remain bookable
+            while (current < end) {
               dates.push(new Date(current));
               current.setDate(current.getDate() + 1);
             }
@@ -40,7 +46,6 @@ export const useBlockedDates = (accommodationId: string) => {
       } catch (err) {
         console.error("Unexpected error fetching dates:", err);
       } finally {
-        // CRITICAL: Always turn off loading, even if it failed
         if (mounted) setLoading(false);
       }
     };
@@ -48,7 +53,7 @@ export const useBlockedDates = (accommodationId: string) => {
     if (accommodationId) {
       fetchBookings();
     } else {
-        setLoading(false);
+      setLoading(false);
     }
 
     return () => {

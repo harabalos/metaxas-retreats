@@ -1,17 +1,8 @@
 import { createClient } from '@supabase/supabase-js';
-import { Database } from './types';
 
-// Safely get env vars
-const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
-const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY;
+// Hardcoded values - safe to expose (anon key is public)
+const SUPABASE_URL = "https://qpncbejlnmdqppoutyfs.supabase.co";
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFwbmNiZWpsbm1kcXBwb3V0eWZzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjYxNDQ4NzgsImV4cCI6MjA4MTcyMDg3OH0.i0FRHiY9CDhGtrHsgQS6lfrgPk_gqNudleqfRlp1obQ";
 
-// Log a warning if keys are missing (helps debugging)
-if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
-  console.warn("Supabase keys are missing! Check your .env file.");
-}
-
-// Create client with fallback to prevent crash
-export const supabase = createClient<Database>(
-  SUPABASE_URL || "https://placeholder.supabase.co", 
-  SUPABASE_ANON_KEY || "placeholder"
-);
+// Create untyped client to avoid type issues with auto-generated types
+export const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);

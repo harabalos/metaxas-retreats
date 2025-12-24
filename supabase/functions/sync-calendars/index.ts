@@ -2,13 +2,18 @@ import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 import ical from "https://esm.sh/node-ical@0.16.1";
 
-// -----------------------------------------------------------------------------
+// Type for iCal events
+interface ICalEvent {
+  type: string;
+  start?: Date | string;
+  end?: Date | string;
+  uid?: string;
+}
+
 // CONFIGURATION: Replace these with your REAL Airbnb/Booking URLs
-// -----------------------------------------------------------------------------
-const CALENDAR_URLS = {
+const CALENDAR_URLS: Record<string, string[]> = {
   "wooden-house": [
     "https://www.airbnb.gr/calendar/ical/1420445588586676264.ics?t=6f2c5caeee5e41f4a9bd3c78e721852a",
-    // Add your Booking.com link here if you have one
   ],
   "glamping-tent-1": [
     "https://www.airbnb.gr/calendar/ical/936140564087838043.ics?t=ecb01c9e6b9743f9a25d06eee7b1b05d"
@@ -18,32 +23,46 @@ const CALENDAR_URLS = {
   ]
 };
 
+const corsHeaders = {
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+};
+
 serve(async (req) => {
+  // Handle CORS preflight
+  if (req.method === 'OPTIONS') {
+    return new Response(null, { headers: corsHeaders });
+  }
+
   const supabase = createClient(
     Deno.env.get("SUPABASE_URL") ?? "",
     Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? ""
   );
 
-  const results = [];
+  const results: string[] = [];
 
   for (const [accommodationId, urls] of Object.entries(CALENDAR_URLS)) {
     for (const url of urls) {
       try {
-        // FIX: Manually fetch the file text using standard 'fetch'
+        console.log(`Fetching calendar for ${accommodationId}: ${url}`);
+        
+        // Fetch the ICS file
         const response = await fetch(url);
         if (!response.ok) {
           throw new Error(`Failed to download calendar: ${response.statusText}`);
         }
         const icsText = await response.text();
 
-        // FIX: Use parseICS instead of fromURL
+        // Parse the ICS content
         const events = await ical.async.parseICS(icsText);
         
+        let syncedCount = 0;
+        
         // Process the events
-        for (const event of Object.values(events)) {
+        for (const key of Object.keys(events)) {
+          const event = events[key] as ICalEvent;
+          
           if (event.type === 'VEVENT' && event.start && event.end) {
-            
-            // Clean up the Dates (handle generic JS dates vs iCal dates)
             const startDate = new Date(event.start);
             const endDate = new Date(event.end);
 
@@ -51,26 +70,31 @@ serve(async (req) => {
               .from('bookings')
               .upsert({
                 accommodation_id: accommodationId,
-                start_date: startDate.toISOString(),
-                end_date: endDate.toISOString(),
+                start_date: startDate.toISOString().split('T')[0],
+                end_date: endDate.toISOString().split('T')[0],
                 source: 'external',
                 external_id: event.uid || `${startDate.toISOString()}-${accommodationId}`
               }, { onConflict: 'accommodation_id, external_id' });
 
             if (error) {
-                console.error(`Database error for ${accommodationId}:`, error);
+              console.error(`Database error for ${accommodationId}:`, error);
+            } else {
+              syncedCount++;
             }
           }
         }
-        results.push(`Synced: ${url}`);
+        
+        console.log(`Synced ${syncedCount} events for ${accommodationId}`);
+        results.push(`Synced ${syncedCount} events from: ${url}`);
       } catch (err) {
-        console.error(`Failed to sync ${url}:`, err);
-        results.push(`Failed: ${url} - ${err.message}`);
+        const errorMessage = err instanceof Error ? err.message : String(err);
+        console.error(`Failed to sync ${url}:`, errorMessage);
+        results.push(`Failed: ${url} - ${errorMessage}`);
       }
     }
   }
 
   return new Response(JSON.stringify({ success: true, logs: results }), {
-    headers: { "Content-Type": "application/json" },
+    headers: { ...corsHeaders, "Content-Type": "application/json" },
   });
 });
