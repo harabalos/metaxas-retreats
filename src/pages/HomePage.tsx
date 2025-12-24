@@ -1,18 +1,17 @@
-
 import { useRef, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import { ArrowDown, Tent, Home, MessageSquare, Star } from 'lucide-react';
+import { ArrowDown, Tent, Home } from 'lucide-react';
+
+// --- IMPORTS FIXED ---
+// Default Exports (No curly braces)
 import Layout from '@/components/Layout/Layout';
 import AccommodationCard from '@/components/Accommodations/AccommodationCard';
-import { Button } from '@/components/ui/button';
+
+// Named Export (Needs curly braces)
 import { accommodations } from '@/data/accommodations';
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "@/components/ui/carousel";
+
+import { Button } from '@/components/ui/button';
+// ---------------------
 
 const HomePage = () => {
   const location = useLocation();
@@ -30,21 +29,39 @@ const HomePage = () => {
     }
   }, [location]);
 
+  // Load Elfsight Script for Reviews Widget
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.src = "https://elfsightcdn.com/platform.js";
+    script.async = true;
+    document.body.appendChild(script);
+
+    return () => {
+      try {
+        document.body.removeChild(script);
+      } catch (e) {
+        // Script already removed
+      }
+    };
+  }, []);
+
   return (
     <Layout>
       <section className="hero-section h-[70vh] flex items-center text-white relative overflow-hidden">
-        <video 
-          autoPlay 
-          muted 
-          loop 
-          playsInline
-          className="absolute inset-0 w-full h-full object-cover"
-        >
-          <source src="/assets/video.mp4" type="video/mp4" />
-          Your browser does not support the video tag.
-        </video>
-        <div className="absolute inset-0 bg-black opacity-40"></div>
-        <div className="container mx-auto px-4 z-10">
+        {/* Video Background with Fallback */}
+        <div className="absolute inset-0 bg-black">
+           <video 
+            autoPlay 
+            muted 
+            loop 
+            playsInline
+            className="absolute inset-0 w-full h-full object-cover opacity-60"
+          >
+            <source src="/assets/video.mp4" type="video/mp4" />
+          </video>
+        </div>
+        
+        <div className="container mx-auto px-4 z-10 relative">
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-heading font-bold mb-4 max-w-3xl">
             Welcome to Metaxas Retreats
           </h1>
@@ -113,152 +130,20 @@ const HomePage = () => {
           </p>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            {accommodations.map((accommodation) => (
+            {accommodations?.map((accommodation) => (
               <AccommodationCard key={accommodation.id} accommodation={accommodation} />
             ))}
           </div>
         </div>
       </section>
 
+      {/* Guest Reviews Section - Elfsight Widget */}
       <section className="py-16 bg-wood-light/20">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl md:text-4xl font-heading font-bold mb-2 text-center text-forest-dark">
+          <h2 className="text-3xl md:text-4xl font-heading font-bold mb-8 text-center text-forest-dark">
             Guest Reviews
           </h2>
-          <p className="text-center text-gray-600 mb-12 max-w-3xl mx-auto">
-            Read what our guests have to say about their stay at Metaxas Retreats
-          </p>
-          
-          <div className="max-w-6xl mx-auto">
-            <Carousel
-              opts={{
-                align: "start",
-                loop: true,
-              }}
-              className="w-full"
-            >
-              <CarouselContent className="pb-8">
-                {/* Review 1 */}
-                <CarouselItem className="md:basis-1/2 lg:basis-1/3">
-                  <div className="bg-white p-6 rounded-lg shadow-md h-full">
-                    <div className="flex items-center mb-4">
-                      <MessageSquare className="h-5 w-5 text-forest mr-2" />
-                      <div className="flex">
-                        {[...Array(5)].map((_, i) => (
-                          <Star key={i} className="h-4 w-4 text-yellow-400 fill-yellow-400" />
-                        ))}
-                      </div>
-                    </div>
-                    <p className="text-gray-700 mb-4">
-                      "Amazing location with breathtaking views! The wooden house was perfect for our family, and the proximity to the beach made our stay unforgettable. We'll definitely return!"
-                    </p>
-                    <div className="text-forest-dark font-semibold">Maria K.</div>
-                    <div className="text-sm text-gray-500">July 2024</div>
-                  </div>
-                </CarouselItem>
-
-                {/* Review 2 */}
-                <CarouselItem className="md:basis-1/2 lg:basis-1/3">
-                  <div className="bg-white p-6 rounded-lg shadow-md h-full">
-                    <div className="flex items-center mb-4">
-                      <MessageSquare className="h-5 w-5 text-forest mr-2" />
-                      <div className="flex">
-                        {[...Array(5)].map((_, i) => (
-                          <Star key={i} className="h-4 w-4 text-yellow-400 fill-yellow-400" />
-                        ))}
-                      </div>
-                    </div>
-                    <p className="text-gray-700 mb-4">
-                      "The glamping experience exceeded our expectations. The tent was luxurious and comfortable, and waking up to the sound of the sea was magical. Perfect blend of nature and comfort!"
-                    </p>
-                    <div className="text-forest-dark font-semibold">John D.</div>
-                    <div className="text-sm text-gray-500">August 2024</div>
-                  </div>
-                </CarouselItem>
-
-                {/* Review 3 */}
-                <CarouselItem className="md:basis-1/2 lg:basis-1/3">
-                  <div className="bg-white p-6 rounded-lg shadow-md h-full">
-                    <div className="flex items-center mb-4">
-                      <MessageSquare className="h-5 w-5 text-forest mr-2" />
-                      <div className="flex">
-                        {[...Array(5)].map((_, i) => (
-                          <Star key={i} className="h-4 w-4 text-yellow-400 fill-yellow-400" />
-                        ))}
-                      </div>
-                    </div>
-                    <p className="text-gray-700 mb-4">
-                      "We loved every moment of our stay! The hosts were incredibly welcoming, and the accommodation was spotlessly clean. The views of Mikros Gialos bay are simply stunning."
-                    </p>
-                    <div className="text-forest-dark font-semibold">Sophie M.</div>
-                    <div className="text-sm text-gray-500">September 2024</div>
-                  </div>
-                </CarouselItem>
-
-                {/* Review 4 */}
-                <CarouselItem className="md:basis-1/2 lg:basis-1/3">
-                  <div className="bg-white p-6 rounded-lg shadow-md h-full">
-                    <div className="flex items-center mb-4">
-                      <MessageSquare className="h-5 w-5 text-forest mr-2" />
-                      <div className="flex">
-                        {[...Array(5)].map((_, i) => (
-                          <Star key={i} className="h-4 w-4 text-yellow-400 fill-yellow-400" />
-                        ))}
-                      </div>
-                    </div>
-                    <p className="text-gray-700 mb-4">
-                      "What a gem in Lefkada! The wooden house offered privacy and comfort with the most amazing sea view. My morning coffee on the deck watching the sunrise was my favorite part of the day."
-                    </p>
-                    <div className="text-forest-dark font-semibold">Andreas P.</div>
-                    <div className="text-sm text-gray-500">June 2024</div>
-                  </div>
-                </CarouselItem>
-
-                {/* Review 5 */}
-                <CarouselItem className="md:basis-1/2 lg:basis-1/3">
-                  <div className="bg-white p-6 rounded-lg shadow-md h-full">
-                    <div className="flex items-center mb-4">
-                      <MessageSquare className="h-5 w-5 text-forest mr-2" />
-                      <div className="flex">
-                        {[...Array(5)].map((_, i) => (
-                          <Star key={i} className="h-4 w-4 text-yellow-400 fill-yellow-400" />
-                        ))}
-                      </div>
-                    </div>
-                    <p className="text-gray-700 mb-4">
-                      "Our honeymoon in the luxury tent was exactly what we needed. Romantic, peaceful, and with all the amenities we could ask for. The short walk to the beach was lovely, and the hosts went above and beyond to make us feel special."
-                    </p>
-                    <div className="text-forest-dark font-semibold">Elena and Nikolas T.</div>
-                    <div className="text-sm text-gray-500">May 2024</div>
-                  </div>
-                </CarouselItem>
-
-                {/* Review 6 */}
-                <CarouselItem className="md:basis-1/2 lg:basis-1/3">
-                  <div className="bg-white p-6 rounded-lg shadow-md h-full">
-                    <div className="flex items-center mb-4">
-                      <MessageSquare className="h-5 w-5 text-forest mr-2" />
-                      <div className="flex">
-                        {[...Array(5)].map((_, i) => (
-                          <Star key={i} className="h-4 w-4 text-yellow-400 fill-yellow-400" />
-                        ))}
-                      </div>
-                    </div>
-                    <p className="text-gray-700 mb-4">
-                      "As a family of four, we found the wooden house perfect for our needs. The kids loved exploring the olive groves, and we loved the relaxing atmosphere. Mikros Gialos beach is truly one of the most beautiful in Greece!"
-                    </p>
-                    <div className="text-forest-dark font-semibold">Thomas and Laura B.</div>
-                    <div className="text-sm text-gray-500">August 2024</div>
-                  </div>
-                </CarouselItem>
-              </CarouselContent>
-              
-              <div className="flex justify-center mt-4">
-                <CarouselPrevious className="relative static translate-y-0 left-0 mr-2" />
-                <CarouselNext className="relative static translate-y-0 right-0" />
-              </div>
-            </Carousel>
-          </div>
+          <div className="elfsight-app-08c2814a-39d2-4b24-af1d-0694c0b45eb6" data-elfsight-app-lazy></div>
         </div>
       </section>
 
