@@ -1,17 +1,11 @@
 import { useRef, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { ArrowDown, Tent, Home } from 'lucide-react';
-
-// --- IMPORTS FIXED ---
-// Default Exports (No curly braces)
 import Layout from '@/components/Layout/Layout';
 import AccommodationCard from '@/components/Accommodations/AccommodationCard';
-
-// Named Export (Needs curly braces)
 import { accommodations } from '@/data/accommodations';
-
 import { Button } from '@/components/ui/button';
-// ---------------------
+import SEOHead from '@/components/SEO/SEOHead';
 
 const HomePage = () => {
   const location = useLocation();
@@ -47,6 +41,11 @@ const HomePage = () => {
 
   return (
     <Layout>
+      <SEOHead
+        title="Luxury Glamping in Lefkada, Greece"
+        description="Experience luxury glamping above Mikros Gialos bay in Lefkada, Greece. Wooden house & glamping tents with sea views, 50m from beach. Book direct for best rates."
+        canonicalUrl="/"
+      />
       <section className="hero-section h-[70vh] flex items-center text-white relative overflow-hidden">
         {/* Video Background with Fallback */}
         <div className="absolute inset-0 bg-black">

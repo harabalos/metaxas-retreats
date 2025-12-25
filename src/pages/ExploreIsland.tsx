@@ -3,10 +3,43 @@ import Layout from '@/components/Layout/Layout';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { MapPin, Sailboat, Waves, Mountain, Coffee, UtensilsCrossed, Star } from 'lucide-react';
+import SEOHead from '@/components/SEO/SEOHead';
 
 const ExploreIsland = () => {
+  const exploreSchema = {
+    "@context": "https://schema.org",
+    "@type": "TouristDestination",
+    "name": "Lefkada Island, Greece",
+    "description": "Discover Lefkada's stunning beaches, charming villages, water sports, and local cuisine. Your complete Greek island travel guide.",
+    "url": "https://metaxasretreats.com/explore",
+    "touristType": ["Beach lovers", "Nature enthusiasts", "Adventure seekers", "Food lovers"],
+    "includesAttraction": [
+      {
+        "@type": "Beach",
+        "name": "Porto Katsiki",
+        "description": "One of the most iconic beaches in Greece with dramatic white cliffs and turquoise waters"
+      },
+      {
+        "@type": "Beach", 
+        "name": "Mikros Gialos",
+        "description": "Serene bay with calm turquoise waters, ideal for swimming and snorkeling"
+      },
+      {
+        "@type": "Beach",
+        "name": "Egremni",
+        "description": "Pristine white sand beach with stunning blue waters"
+      }
+    ]
+  };
+
   return (
     <Layout>
+      <SEOHead
+        title="Explore Lefkada - Best Beaches, Villages & Activities"
+        description="Discover Lefkada's stunning beaches like Porto Katsiki, charming villages, water sports, and local cuisine. Your complete Greek island travel guide from Metaxas Retreats."
+        canonicalUrl="/explore"
+        schema={exploreSchema}
+      />
       <div className="container mx-auto px-4 py-12">
         <h1 className="text-4xl font-heading font-bold text-forest-dark mb-4">Explore Lefkada Island</h1>
         <p className="text-lg text-gray-700 mb-8 max-w-3xl">
@@ -266,8 +299,9 @@ const BeachCard = ({
         {image ? (
           <img 
             src={image} 
-            alt={name} 
+            alt={`${name} beach in Lefkada, Greece - ${description.substring(0, 60)}...`}
             className="w-full h-full object-cover"
+            loading="lazy"
           />
         ) : (
           <div className="h-full bg-forest-light/30 flex items-center justify-center">

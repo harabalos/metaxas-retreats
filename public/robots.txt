@@ -1,3 +1,6 @@
+# Metaxas Retreats - Lefkada Glamping
+# https://metaxasretreats.com
+
 User-agent: Googlebot
 Allow: /
 
@@ -12,3 +15,6 @@ Allow: /
 
 User-agent: *
 Allow: /
+
+# Sitemap
+Sitemap: https://metaxasretreats.com/sitemap.xml
