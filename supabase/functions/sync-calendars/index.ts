@@ -46,7 +46,22 @@ serve(async (req) => {
       try {
         console.log(`Fetching calendar for ${accommodationId}: ${url}`);
         
-        // Fetch the ICS file
+        // STEP 1: Delete ALL existing external bookings for this accommodation
+        // This ensures unblocked dates in Airbnb get removed from our database
+        const { error: deleteError, count: deletedCount } = await supabase
+          .from('bookings')
+          .delete()
+          .eq('accommodation_id', accommodationId)
+          .eq('source', 'external')
+          .select('*', { count: 'exact', head: true });
+
+        if (deleteError) {
+          console.error(`Failed to delete old bookings for ${accommodationId}:`, deleteError);
+        } else {
+          console.log(`Deleted existing external bookings for ${accommodationId}`);
+        }
+        
+        // STEP 2: Fetch fresh data from Airbnb
         const response = await fetch(url);
         if (!response.ok) {
           throw new Error(`Failed to download calendar: ${response.statusText}`);
@@ -58,23 +73,26 @@ serve(async (req) => {
         
         let syncedCount = 0;
         
-        // Process the events
+        // STEP 3: Insert fresh bookings from Airbnb
         for (const key of Object.keys(events)) {
           const event = events[key] as ICalEvent;
           
           if (event.type === 'VEVENT' && event.start && event.end) {
             const startDate = new Date(event.start);
             const endDate = new Date(event.end);
+            
+            // Log each event for debugging
+            console.log(`Event for ${accommodationId}: ${event.uid}, Start: ${startDate.toISOString().split('T')[0]}, End: ${endDate.toISOString().split('T')[0]}`);
 
             const { error } = await supabase
               .from('bookings')
-              .upsert({
+              .insert({
                 accommodation_id: accommodationId,
                 start_date: startDate.toISOString().split('T')[0],
                 end_date: endDate.toISOString().split('T')[0],
                 source: 'external',
                 external_id: event.uid || `${startDate.toISOString()}-${accommodationId}`
-              }, { onConflict: 'accommodation_id, external_id' });
+              });
 
             if (error) {
               console.error(`Database error for ${accommodationId}:`, error);
@@ -85,7 +103,7 @@ serve(async (req) => {
         }
         
         console.log(`Synced ${syncedCount} events for ${accommodationId}`);
-        results.push(`Synced ${syncedCount} events from: ${url}`);
+        results.push(`${accommodationId}: Cleared old data, synced ${syncedCount} fresh events`);
       } catch (err) {
         const errorMessage = err instanceof Error ? err.message : String(err);
         console.error(`Failed to sync ${url}:`, errorMessage);
