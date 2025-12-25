@@ -6,6 +6,7 @@ import AccommodationGallery from '@/components/Accommodations/AccommodationGalle
 import BookingForm from '@/components/Booking/BookingForm';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
+import SEOHead from '@/components/SEO/SEOHead';
 
 const AccommodationDetail = () => {
   const { id } = useParams<{ id: string }>();
@@ -27,8 +28,58 @@ const AccommodationDetail = () => {
     );
   }
 
+  // Schema for VacationRental
+  const accommodationSchema = {
+    "@context": "https://schema.org",
+    "@type": "VacationRental",
+    "name": `${accommodation.name} - Metaxas Retreats Lefkada`,
+    "description": accommodation.description,
+    "url": `https://metaxasretreats.com/accommodation/${accommodation.id}`,
+    "image": accommodation.images.map(img => `https://metaxasretreats.com${img}`),
+    "numberOfRooms": accommodation.bedrooms,
+    "occupancy": {
+      "@type": "QuantitativeValue",
+      "maxValue": accommodation.guests
+    },
+    "numberOfBedrooms": accommodation.bedrooms,
+    "numberOfBathroomsTotal": accommodation.bathrooms,
+    "petsAllowed": false,
+    "amenityFeature": accommodation.amenities.map(amenity => ({
+      "@type": "LocationFeatureSpecification",
+      "name": amenity,
+      "value": true
+    })),
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Mikros Gialos, Poros",
+      "addressLocality": "Lefkada",
+      "addressRegion": "Ionian Islands",
+      "addressCountry": "GR"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": "38.640048",
+      "longitude": "20.698988"
+    }
+  };
+
+  const seoTitle = accommodation.type === 'house' 
+    ? "Wooden House with Sea View - Lefkada Vacation Rental"
+    : "Luxury Glamping Tent - Lefkada Accommodation";
+  
+  const seoDescription = accommodation.type === 'house'
+    ? `Charming wooden house overlooking Mikros Gialos bay in Lefkada. Sleeps ${accommodation.guests}, fully equipped kitchen, private terrace. From €${accommodation.price}/night. Book your Greek island getaway.`
+    : `Spacious glamping tent among olive trees in Lefkada, Greece. Sleeps ${accommodation.guests}, air conditioning, sea views. From €${accommodation.price}/night. Perfect for families and couples.`;
+
   return (
     <Layout>
+      <SEOHead
+        title={seoTitle}
+        description={seoDescription}
+        canonicalUrl={`/accommodation/${accommodation.id}`}
+        image={`https://metaxasretreats.com${accommodation.images[0]}`}
+        schema={accommodationSchema}
+      />
       <div className="container mx-auto px-4 py-8 max-w-7xl">
         {/* Accommodation name and type */}
         <div className="flex items-center mb-6">

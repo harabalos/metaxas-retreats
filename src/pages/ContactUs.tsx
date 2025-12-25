@@ -5,6 +5,7 @@ import { MapPin, Phone, Mail } from 'lucide-react';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
+import SEOHead from '@/components/SEO/SEOHead';
 
 // Fix the Leaflet default icon issue
 // This is the correct way to handle the icon issue in Leaflet 1.9.4
@@ -20,8 +21,43 @@ const ContactUs = () => {
   const metaxasRentsCoords: [number, number] = [38.640048782722396, 20.69898862142832];
   const position = metaxasRentsCoords;
 
+  const contactSchema = {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "name": "Metaxas Retreats",
+    "description": "Luxury glamping and vacation rentals in Mikros Gialos, Lefkada, Greece",
+    "url": "https://metaxasretreats.com/contact",
+    "telephone": "+30 6973219980",
+    "email": "metaxasretreats@gmail.com",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Mikros Gialos, Poros",
+      "addressLocality": "Lefkada",
+      "addressRegion": "Ionian Islands",
+      "postalCode": "31082",
+      "addressCountry": "GR"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": "38.640048",
+      "longitude": "20.698988"
+    },
+    "openingHoursSpecification": {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+      "opens": "08:00",
+      "closes": "22:00"
+    }
+  };
+
   return (
     <Layout>
+      <SEOHead
+        title="Contact Metaxas Retreats - Book Your Stay in Lefkada"
+        description="Contact us for reservations at our glamping retreat in Mikros Gialos, Lefkada, Greece. Phone, email, and directions to find us. Response within 1 hour."
+        canonicalUrl="/contact"
+        schema={contactSchema}
+      />
       <div className="container mx-auto px-4 py-12">
         <h1 className="text-4xl font-heading font-bold text-forest-dark mb-4">Contact Us</h1>
         <p className="text-lg text-gray-700 mb-8 max-w-3xl">

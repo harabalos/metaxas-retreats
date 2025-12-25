@@ -1,12 +1,17 @@
-
 import React from 'react';
 import Layout from '@/components/Layout/Layout';
 import { Card, CardContent } from "@/components/ui/card";
 import { Users, Heart, ThumbsUp } from 'lucide-react';
+import SEOHead from '@/components/SEO/SEOHead';
 
 const AboutUs = () => {
   return (
     <Layout>
+      <SEOHead
+        title="About Us - The Metaxas Family Story"
+        description="Learn about Metaxas Retreats, a family-run glamping retreat in Mikros Gialos, Lefkada. Three generations of Greek hospitality welcoming guests to our beautiful island."
+        canonicalUrl="/about"
+      />
       <div className="container mx-auto px-4 py-12">
         <h1 className="text-4xl font-heading font-bold text-forest-dark mb-4">About Us</h1>
         
