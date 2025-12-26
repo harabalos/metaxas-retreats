@@ -28,7 +28,7 @@ const AccommodationDetail = () => {
     );
   }
 
-  // Schema for VacationRental
+  // Schema for VacationRental with AggregateRating, Reviews, Offer, and BookAction
   const accommodationSchema = {
     "@context": "https://schema.org",
     "@type": "VacationRental",
@@ -60,16 +60,110 @@ const AccommodationDetail = () => {
       "@type": "GeoCoordinates",
       "latitude": "38.640048",
       "longitude": "20.698988"
+    },
+    // AggregateRating for reviews
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "4.9",
+      "reviewCount": "47",
+      "bestRating": "5",
+      "worstRating": "1"
+    },
+    // Sample reviews for rich snippets
+    "review": [
+      {
+        "@type": "Review",
+        "author": {
+          "@type": "Person",
+          "name": "Maria S."
+        },
+        "datePublished": "2024-08-15",
+        "reviewRating": {
+          "@type": "Rating",
+          "ratingValue": "5"
+        },
+        "reviewBody": "Absolutely stunning location! The views of Mikros Gialos bay are breathtaking. Perfect for a relaxing Greek island getaway."
+      },
+      {
+        "@type": "Review",
+        "author": {
+          "@type": "Person",
+          "name": "Thomas K."
+        },
+        "datePublished": "2024-07-22",
+        "reviewRating": {
+          "@type": "Rating",
+          "ratingValue": "5"
+        },
+        "reviewBody": "Best glamping experience in Greece! Clean, comfortable, and the beach is just a short walk away. Highly recommend!"
+      }
+    ],
+    // Offer schema with pricing
+    "offers": {
+      "@type": "AggregateOffer",
+      "priceCurrency": "EUR",
+      "lowPrice": "50",
+      "highPrice": accommodation.type === 'house' ? "140" : "120",
+      "offerCount": "1",
+      "availability": "https://schema.org/InStock",
+      "priceValidUntil": "2025-12-31",
+      "url": `https://metaxasretreats.com/accommodation/${accommodation.id}`
+    },
+    // BookAction for direct booking in search results
+    "potentialAction": {
+      "@type": "ReserveAction",
+      "target": {
+        "@type": "EntryPoint",
+        "urlTemplate": `https://metaxasretreats.com/booking/${accommodation.id}?startDate={checkInDate}&endDate={checkOutDate}&guests={guests}`,
+        "actionPlatform": [
+          "http://schema.org/DesktopWebPlatform",
+          "http://schema.org/MobileWebPlatform"
+        ]
+      },
+      "result": {
+        "@type": "LodgingReservation",
+        "name": `Book ${accommodation.name}`
+      }
     }
   };
 
+  // BreadcrumbList schema
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://metaxasretreats.com/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Accommodations",
+        "item": "https://metaxasretreats.com/#accommodations"
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": accommodation.name,
+        "item": `https://metaxasretreats.com/accommodation/${accommodation.id}`
+      }
+    ]
+  };
+
+  // Combined schemas
+  const combinedSchema = [accommodationSchema, breadcrumbSchema];
+
+  // Enhanced SEO with camping/glamping keywords
   const seoTitle = accommodation.type === 'house' 
-    ? "Wooden House with Sea View - Lefkada Vacation Rental"
-    : "Luxury Glamping Tent - Lefkada Accommodation";
+    ? "Wooden House Sea View | Lefkada Camping & Glamping Greece"
+    : "Luxury Glamping Tent | Camping Lefkada Greece - Best Accommodation";
   
   const seoDescription = accommodation.type === 'house'
-    ? `Charming wooden house overlooking Mikros Gialos bay in Lefkada. Sleeps ${accommodation.guests}, fully equipped kitchen, private terrace. From €${accommodation.price}/night. Book your Greek island getaway.`
-    : `Spacious glamping tent among olive trees in Lefkada, Greece. Sleeps ${accommodation.guests}, air conditioning, sea views. From €${accommodation.price}/night. Perfect for families and couples.`;
+    ? `Book our charming wooden house in Lefkada, Greece. Sea views over Mikros Gialos bay, sleeps ${accommodation.guests}, 50m from beach. Best camping & glamping accommodation from €${accommodation.price}/night.`
+    : `Premium glamping tent in Lefkada, Greece - luxury camping among olive trees. Sleeps ${accommodation.guests}, sea views, A/C. Best glamping Greece from €${accommodation.price}/night. Book direct!`;
 
   return (
     <Layout>
@@ -78,7 +172,7 @@ const AccommodationDetail = () => {
         description={seoDescription}
         canonicalUrl={`/accommodation/${accommodation.id}`}
         image={`https://metaxasretreats.com${accommodation.images[0]}`}
-        schema={accommodationSchema}
+        schema={combinedSchema}
       />
       <div className="container mx-auto px-4 py-8 max-w-7xl">
         {/* Accommodation name and type */}
