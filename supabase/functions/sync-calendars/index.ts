@@ -19,7 +19,7 @@ const CALENDAR_URLS: Record<string, string[]> = {
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-api-key',
 };
 
 serve(async (req) => {
@@ -27,6 +27,28 @@ serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
   }
+
+  // API Key Authentication - Required for sync operations
+  const apiKey = req.headers.get('X-API-Key') || req.headers.get('x-api-key');
+  const expectedApiKey = Deno.env.get('SYNC_API_KEY');
+  
+  if (!expectedApiKey) {
+    console.error('SYNC_API_KEY not configured in Edge Function secrets');
+    return new Response(
+      JSON.stringify({ success: false, error: 'Server configuration error: API key not set' }),
+      { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+    );
+  }
+  
+  if (!apiKey || apiKey !== expectedApiKey) {
+    console.warn('Unauthorized sync attempt - invalid or missing API key');
+    return new Response(
+      JSON.stringify({ success: false, error: 'Unauthorized - Valid API key required' }),
+      { status: 401, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+    );
+  }
+
+  console.log('API key validated successfully, proceeding with calendar sync');
 
   // Validate that all calendar URLs are configured
   const missingUrls: string[] = [];
@@ -57,7 +79,7 @@ serve(async (req) => {
   for (const [accommodationId, urls] of Object.entries(CALENDAR_URLS)) {
     for (const url of urls) {
       try {
-        console.log(`Fetching calendar for ${accommodationId}: ${url}`);
+        console.log(`Fetching calendar for ${accommodationId}`);
         
         // STEP 1: Delete ALL existing external bookings for this accommodation
         // This ensures unblocked dates in Airbnb get removed from our database
@@ -118,8 +140,8 @@ serve(async (req) => {
         results.push(`${accommodationId}: Cleared old data, synced ${syncedCount} fresh events`);
       } catch (err) {
         const errorMessage = err instanceof Error ? err.message : String(err);
-        console.error(`Failed to sync ${url}:`, errorMessage);
-        results.push(`Failed: ${url} - ${errorMessage}`);
+        console.error(`Failed to sync calendar for ${accommodationId}:`, errorMessage);
+        results.push(`Failed: ${accommodationId} - ${errorMessage}`);
       }
     }
   }
