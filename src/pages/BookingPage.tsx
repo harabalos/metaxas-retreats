@@ -4,6 +4,7 @@ import { differenceInDays } from 'date-fns';
 import Layout from '@/components/Layout/Layout';
 import { accommodations } from '@/data/accommodations';
 import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
 import BookingSummary from '@/components/Booking/BookingSummary';
 import ContactSection from '@/components/Booking/ContactSection';
 import { format, eachDayOfInterval } from 'date-fns';
@@ -105,12 +106,12 @@ const BookingPage = () => {
           {t('booking.pageSubtitle')}
         </p>
         
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          <div className="lg:col-span-2">
-            <ContactSection />
-          </div>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          {/* Left: Email Form + WhatsApp */}
+          <ContactSection />
           
-          <div>
+          {/* Right: Booking Summary + Save 15% */}
+          <div className="space-y-6">
             <BookingSummary
               accommodation={accommodation}
               startDate={startDate}
@@ -120,6 +121,14 @@ const BookingPage = () => {
               totalPrice={totalPrice}
               selectedTent={isGlampingTent ? selectedTent : undefined}
             />
+            
+            {/* Save ~15% Banner */}
+            <Card className="border-green-200 bg-green-50">
+              <CardContent className="p-4">
+                <p className="font-semibold text-green-800 text-lg">{t('booking.saveDiscount')}</p>
+                <p className="text-green-700">{t('booking.discountDescription')}</p>
+              </CardContent>
+            </Card>
           </div>
         </div>
       </div>
