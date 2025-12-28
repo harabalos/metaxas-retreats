@@ -124,73 +124,50 @@ Thank you!`
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
-            {/* Pre-filled booking details */}
-            <div className="bg-muted/50 p-4 rounded-lg space-y-2">
-              <div className="flex justify-between text-sm">
-                <span className="text-muted-foreground">{t('booking.accommodation') || (language === 'el' ? 'Κατάλυμα' : 'Accommodation')}:</span>
-                <span className="font-medium">{accommodationName}</span>
-              </div>
-              <div className="flex justify-between text-sm">
-                <span className="text-muted-foreground">{t('summary.checkIn')}:</span>
-                <span className="font-medium">{startDate ? formatDate(startDate) : '-'}</span>
-              </div>
-              <div className="flex justify-between text-sm">
-                <span className="text-muted-foreground">{t('summary.checkOut')}:</span>
-                <span className="font-medium">{endDate ? formatDate(endDate) : '-'}</span>
-              </div>
-              <div className="flex justify-between text-sm">
-                <span className="text-muted-foreground">{t('summary.guests')}:</span>
-                <span className="font-medium">{guests}</span>
-              </div>
+            <div>
+              <Label htmlFor="fullName">{t('form.fullName')} *</Label>
+              <Input 
+                id="fullName"
+                type="text"
+                required
+                value={formData.fullName}
+                onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
+                placeholder={language === 'el' ? 'Το ονοματεπώνυμό σας' : 'Your full name'}
+              />
             </div>
-
-            {/* Form fields */}
-            <div className="space-y-4">
-              <div>
-                <Label htmlFor="fullName">{t('form.fullName')} *</Label>
-                <Input 
-                  id="fullName"
-                  type="text"
-                  required
-                  value={formData.fullName}
-                  onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
-                  placeholder={language === 'el' ? 'Το ονοματεπώνυμό σας' : 'Your full name'}
-                />
-              </div>
-              
-              <div>
-                <Label htmlFor="email">{t('form.email')} *</Label>
-                <Input 
-                  id="email"
-                  type="email"
-                  required
-                  value={formData.email}
-                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  placeholder={language === 'el' ? 'Το email σας' : 'Your email'}
-                />
-              </div>
-              
-              <div>
-                <Label htmlFor="phone">{t('form.phone')}</Label>
-                <Input 
-                  id="phone"
-                  type="tel"
-                  value={formData.phone}
-                  onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                  placeholder={language === 'el' ? 'Το τηλέφωνό σας' : 'Your phone number'}
-                />
-              </div>
-              
-              <div>
-                <Label htmlFor="specialRequests">{t('form.specialRequests')}</Label>
-                <Textarea 
-                  id="specialRequests"
-                  value={formData.specialRequests}
-                  onChange={(e) => setFormData({ ...formData, specialRequests: e.target.value })}
-                  placeholder={language === 'el' ? 'Ειδικά αιτήματα ή σχόλια...' : 'Special requests or comments...'}
-                  rows={3}
-                />
-              </div>
+            
+            <div>
+              <Label htmlFor="email">{t('form.email')} *</Label>
+              <Input 
+                id="email"
+                type="email"
+                required
+                value={formData.email}
+                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                placeholder={language === 'el' ? 'Το email σας' : 'Your email'}
+              />
+            </div>
+            
+            <div>
+              <Label htmlFor="phone">{t('form.phone')}</Label>
+              <Input 
+                id="phone"
+                type="tel"
+                value={formData.phone}
+                onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                placeholder={language === 'el' ? 'Το τηλέφωνό σας' : 'Your phone number'}
+              />
+            </div>
+            
+            <div>
+              <Label htmlFor="specialRequests">{t('form.message')}</Label>
+              <Textarea 
+                id="specialRequests"
+                value={formData.specialRequests}
+                onChange={(e) => setFormData({ ...formData, specialRequests: e.target.value })}
+                placeholder={language === 'el' ? 'Το μήνυμά σας...' : 'Your message...'}
+                rows={3}
+              />
             </div>
 
             <Button type="submit" className="w-full bg-sea hover:bg-sea-dark">
@@ -242,30 +219,6 @@ Thank you!`
         </CardContent>
       </Card>
 
-      {/* Also available on */}
-      <div className="text-sm text-muted-foreground">
-        <p>{t('booking.alsoAvailable')}</p>
-        <div className="flex space-x-4 mt-2">
-          <a 
-            href="https://www.airbnb.gr/rooms/936140564087838043?source_impression_id=p3_1745246045_P32OFwyiKEHNkXyt" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="flex items-center text-foreground hover:text-sea transition-colors"
-          >
-            <span>Airbnb</span>
-            <ExternalLink className="ml-1 h-3 w-3" />
-          </a>
-          <a 
-            href="https://www.booking.com/hotel/gr/metaxaki.el.html" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="flex items-center text-foreground hover:text-sea transition-colors"
-          >
-            <span>Booking.com</span>
-            <ExternalLink className="ml-1 h-3 w-3" />
-          </a>
-        </div>
-      </div>
     </div>
   );
 };
