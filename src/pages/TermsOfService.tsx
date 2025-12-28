@@ -44,7 +44,6 @@ const TermsOfService = () => {
                 <ul className="list-disc pl-5 mt-2 space-y-1">
                   <li><strong>{t('terms.section2.checkin')}</strong></li>
                   <li><strong>{t('terms.section2.checkout')}</strong></li>
-                  <li><strong>{t('terms.section2.cancellation')}</strong></li>
                 </ul>
               </section>
 
@@ -62,11 +61,6 @@ const TermsOfService = () => {
               <section>
                 <h3 className="text-xl font-bold text-forest-dark mb-2">{t('terms.section4.title')}</h3>
                 <p>{t('terms.section4.content')}</p>
-              </section>
-
-              <section>
-                <h3 className="text-xl font-bold text-forest-dark mb-2">{t('terms.section5.title')}</h3>
-                <p>{t('terms.section5.content')}</p>
               </section>
             </div>
           </ScrollArea>
