@@ -17,9 +17,9 @@ export const useBlockedDates = (accommodationId: string) => {
     const fetchBookings = async () => {
       try {
         setLoading(true);
-        // Fetch from Supabase
+        // Fetch from booking_availability view (restricted to only date columns - no PII)
         const { data, error } = await supabase
-          .from("bookings")
+          .from("booking_availability")
           .select("start_date, end_date")
           .eq("accommodation_id", accommodationId);
 
