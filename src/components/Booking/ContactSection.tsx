@@ -12,6 +12,8 @@ import { accommodations } from '@/data/accommodations';
 import { format } from 'date-fns';
 import { toast } from 'sonner';
 import { Separator } from '@/components/ui/separator';
+import { contactFormSchema } from '@/lib/validationSchemas';
+import { z } from 'zod';
 
 const FORMSPREE_URL = 'https://formspree.io/f/mgoelyzg';
 
@@ -58,36 +60,39 @@ const ContactSection = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!formData.fullName.trim() || !formData.email.trim()) {
-      toast.error(language === 'el' ? 'Παρακαλώ συμπληρώστε τα απαιτούμενα πεδία' : 'Please fill in the required fields');
-      return;
-    }
-
-    if (!agreedToPolicy) {
-      toast.error(language === 'el' ? 'Παρακαλώ αποδεχτείτε την Πολιτική Απορρήτου' : 'Please accept the Privacy Policy');
-      return;
-    }
-
-    setIsSubmitting(true);
-
-    const checkIn = startDate ? formatDate(startDate) : '';
-    const checkOut = endDate ? formatDate(endDate) : '';
-
     try {
+      // Validate with Zod
+      const validatedData = contactFormSchema.parse({
+        fullName: formData.fullName,
+        email: formData.email,
+        phone: formData.phone,
+        specialRequests: formData.specialRequests
+      });
+
+      if (!agreedToPolicy) {
+        toast.error(language === 'el' ? 'Παρακαλώ αποδεχτείτε την Πολιτική Απορρήτου' : 'Please accept the Privacy Policy');
+        return;
+      }
+
+      setIsSubmitting(true);
+
+      const checkIn = startDate ? formatDate(startDate) : '';
+      const checkOut = endDate ? formatDate(endDate) : '';
+
       const response = await fetch(FORMSPREE_URL, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          name: formData.fullName,
-          email: formData.email,
-          phone: formData.phone || 'Not provided',
+          name: validatedData.fullName,
+          email: validatedData.email,
+          phone: validatedData.phone || 'Not provided',
           accommodation: accommodationName,
           checkIn,
           checkOut,
           guests,
-          message: formData.specialRequests || 'None',
+          message: validatedData.specialRequests || 'None',
           _subject: `Booking Request - ${accommodationName}`,
         }),
       });
@@ -100,7 +105,12 @@ const ContactSection = () => {
         throw new Error('Failed to submit');
       }
     } catch (error) {
-      toast.error(language === 'el' ? 'Υπήρξε πρόβλημα. Δοκιμάστε ξανά.' : 'There was a problem. Please try again.');
+      if (error instanceof z.ZodError) {
+        const firstError = error.errors[0];
+        toast.error(firstError.message);
+      } else {
+        toast.error(language === 'el' ? 'Υπήρξε πρόβλημα. Δοκιμάστε ξανά.' : 'There was a problem. Please try again.');
+      }
     } finally {
       setIsSubmitting(false);
     }

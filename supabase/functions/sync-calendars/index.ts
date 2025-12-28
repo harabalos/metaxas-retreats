@@ -10,17 +10,11 @@ interface ICalEvent {
   uid?: string;
 }
 
-// CONFIGURATION: Replace these with your REAL Airbnb/Booking URLs
+// Calendar URLs loaded from environment variables (secrets)
 const CALENDAR_URLS: Record<string, string[]> = {
-  "wooden-house": [
-    "https://www.airbnb.gr/calendar/ical/1420445588586676264.ics?t=6f2c5caeee5e41f4a9bd3c78e721852a",
-  ],
-  "glamping-tent-1": [
-    "https://www.airbnb.gr/calendar/ical/936140564087838043.ics?t=ecb01c9e6b9743f9a25d06eee7b1b05d"
-  ],
-  "glamping-tent-2": [
-    "https://www.airbnb.gr/calendar/ical/1424551364666564643.ics?t=e97ddb448df644c78328c55ebfd5654b"
-  ]
+  "wooden-house": [Deno.env.get("AIRBNB_WOODEN_HOUSE_URL") || ""],
+  "glamping-tent-1": [Deno.env.get("AIRBNB_TENT_1_URL") || ""],
+  "glamping-tent-2": [Deno.env.get("AIRBNB_TENT_2_URL") || ""]
 };
 
 const corsHeaders = {
@@ -32,6 +26,25 @@ serve(async (req) => {
   // Handle CORS preflight
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
+  }
+
+  // Validate that all calendar URLs are configured
+  const missingUrls: string[] = [];
+  for (const [accommodation, urls] of Object.entries(CALENDAR_URLS)) {
+    if (!urls[0]) {
+      missingUrls.push(accommodation);
+    }
+  }
+  
+  if (missingUrls.length > 0) {
+    console.error(`Missing calendar URLs for: ${missingUrls.join(', ')}`);
+    return new Response(
+      JSON.stringify({ 
+        success: false, 
+        error: `Missing calendar URL secrets for: ${missingUrls.join(', ')}. Please configure AIRBNB_WOODEN_HOUSE_URL, AIRBNB_TENT_1_URL, and AIRBNB_TENT_2_URL in Edge Function secrets.`
+      }),
+      { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+    );
   }
 
   const supabase = createClient(

@@ -11,6 +11,8 @@ import SEOHead from '@/components/SEO/SEOHead';
 import { useLanguage } from '@/context/LanguageContext';
 import { Link } from 'react-router-dom';
 import { toast } from 'sonner';
+import { contactFormSchema } from '@/lib/validationSchemas';
+import { z } from 'zod';
 
 const FORMSPREE_URL = 'https://formspree.io/f/mgoelyzg';
 
@@ -64,29 +66,37 @@ const ContactUs = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!formData.fullName.trim() || !formData.email.trim() || !formData.message.trim()) {
-      toast.error(language === 'el' ? 'Παρακαλώ συμπληρώστε τα απαιτούμενα πεδία' : 'Please fill in the required fields');
-      return;
-    }
-
-    if (!agreedToPolicy) {
-      toast.error(language === 'el' ? 'Παρακαλώ αποδεχτείτε την Πολιτική Απορρήτου' : 'Please accept the Privacy Policy');
-      return;
-    }
-
-    setIsSubmitting(true);
-
     try {
+      // Validate with Zod
+      const validatedData = contactFormSchema.parse({
+        fullName: formData.fullName,
+        email: formData.email,
+        phone: formData.phone,
+        message: formData.message
+      });
+
+      if (!validatedData.message?.trim()) {
+        toast.error(language === 'el' ? 'Παρακαλώ συμπληρώστε το μήνυμα' : 'Please fill in the message');
+        return;
+      }
+
+      if (!agreedToPolicy) {
+        toast.error(language === 'el' ? 'Παρακαλώ αποδεχτείτε την Πολιτική Απορρήτου' : 'Please accept the Privacy Policy');
+        return;
+      }
+
+      setIsSubmitting(true);
+
       const response = await fetch(FORMSPREE_URL, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          name: formData.fullName,
-          email: formData.email,
-          phone: formData.phone || 'Not provided',
-          message: formData.message,
+          name: validatedData.fullName,
+          email: validatedData.email,
+          phone: validatedData.phone || 'Not provided',
+          message: validatedData.message,
           _subject: `Contact Message - Metaxas Retreats`,
         }),
       });
@@ -99,7 +109,12 @@ const ContactUs = () => {
         throw new Error('Failed to submit');
       }
     } catch (error) {
-      toast.error(language === 'el' ? 'Υπήρξε πρόβλημα. Δοκιμάστε ξανά.' : 'There was a problem. Please try again.');
+      if (error instanceof z.ZodError) {
+        const firstError = error.errors[0];
+        toast.error(firstError.message);
+      } else {
+        toast.error(language === 'el' ? 'Υπήρξε πρόβλημα. Δοκιμάστε ξανά.' : 'There was a problem. Please try again.');
+      }
     } finally {
       setIsSubmitting(false);
     }
