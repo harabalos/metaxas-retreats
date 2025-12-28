@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
-import { Phone, Mail, MessageCircle, Send, ExternalLink } from 'lucide-react';
+import { Mail, Send } from 'lucide-react';
 import { useLanguage } from '@/context/LanguageContext';
 import { useSearchParams } from 'react-router-dom';
 import { accommodations } from '@/data/accommodations';
@@ -42,14 +42,6 @@ const ContactSection = () => {
     return format(date, 'dd/MM/yyyy');
   };
 
-  const getWhatsAppMessage = () => {
-    const checkIn = startDate ? formatDate(startDate) : '';
-    const checkOut = endDate ? formatDate(endDate) : '';
-    const message = language === 'el'
-      ? `Γεια σας! Ενδιαφέρομαι για κράτηση στο ${accommodationName}.\n\nΆφιξη: ${checkIn}\nΑναχώρηση: ${checkOut}\nΕπισκέπτες: ${guests}`
-      : `Hello! I'm interested in booking ${accommodationName}.\n\nCheck-in: ${checkIn}\nCheck-out: ${checkOut}\nGuests: ${guests}`;
-    return encodeURIComponent(message);
-  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -114,6 +106,13 @@ Thank you!`
   
   return (
     <div className="space-y-6">
+      {/* Minimal booking details */}
+      <div className="flex flex-wrap gap-x-6 gap-y-1 text-sm text-muted-foreground border-b pb-4">
+        <span><strong>{accommodationName}</strong></span>
+        <span>{startDate ? formatDate(startDate) : '-'} → {endDate ? formatDate(endDate) : '-'}</span>
+        <span>{guests} {language === 'el' ? 'επισκέπτες' : 'guests'}</span>
+      </div>
+
       {/* Email Form */}
       <Card>
         <CardHeader>
@@ -177,48 +176,6 @@ Thank you!`
           </form>
         </CardContent>
       </Card>
-
-      {/* WhatsApp Contact - Below Email Form */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <MessageCircle className="h-5 w-5 text-green-600" />
-            {t('booking.callWhatsapp')}
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-3">
-          <a 
-            href={`https://wa.me/306973219980?text=${getWhatsAppMessage()}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-3 p-3 bg-green-50 hover:bg-green-100 rounded-lg border border-green-200 transition-colors"
-          >
-            <div className="bg-green-500 p-2 rounded-full">
-              <Phone className="h-4 w-4 text-white" />
-            </div>
-            <div>
-              <p className="font-medium text-green-800">+30 6973219980</p>
-              <p className="text-sm text-green-600">{language === 'el' ? 'Πατήστε για WhatsApp' : 'Tap for WhatsApp'}</p>
-            </div>
-          </a>
-          
-          <a 
-            href={`https://wa.me/306980429891?text=${getWhatsAppMessage()}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-3 p-3 bg-green-50 hover:bg-green-100 rounded-lg border border-green-200 transition-colors"
-          >
-            <div className="bg-green-500 p-2 rounded-full">
-              <Phone className="h-4 w-4 text-white" />
-            </div>
-            <div>
-              <p className="font-medium text-green-800">+30 6980429891</p>
-              <p className="text-sm text-green-600">{language === 'el' ? 'Πατήστε για WhatsApp' : 'Tap for WhatsApp'}</p>
-            </div>
-          </a>
-        </CardContent>
-      </Card>
-
     </div>
   );
 };
