@@ -10,6 +10,7 @@ import ContactSection from '@/components/Booking/ContactSection';
 import { format, eachDayOfInterval } from 'date-fns';
 import SEOHead from '@/components/SEO/SEOHead';
 import { useLanguage } from '@/context/LanguageContext';
+import { ExternalLink } from 'lucide-react';
 
 const BookingPage = () => {
   const { id } = useParams<{ id: string }>();
@@ -129,6 +130,31 @@ const BookingPage = () => {
                 <p className="text-green-700">{t('booking.discountDescription')}</p>
               </CardContent>
             </Card>
+            
+            {/* Also available on */}
+            <div className="text-sm text-muted-foreground">
+              <p>{t('booking.alsoAvailable')}</p>
+              <div className="flex space-x-4 mt-2">
+                <a 
+                  href="https://www.airbnb.gr/rooms/936140564087838043?source_impression_id=p3_1745246045_P32OFwyiKEHNkXyt" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="flex items-center text-foreground hover:text-sea transition-colors"
+                >
+                  <span>Airbnb</span>
+                  <ExternalLink className="ml-1 h-3 w-3" />
+                </a>
+                <a 
+                  href="https://www.booking.com/hotel/gr/metaxaki.el.html" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="flex items-center text-foreground hover:text-sea transition-colors"
+                >
+                  <span>Booking.com</span>
+                  <ExternalLink className="ml-1 h-3 w-3" />
+                </a>
+              </div>
+            </div>
           </div>
         </div>
       </div>
