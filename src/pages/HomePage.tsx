@@ -149,7 +149,7 @@ const HomePage = () => {
         canonicalUrl="/"
         schema={combinedSchema}
       />
-      <section className="hero-section h-[70vh] flex items-center text-white relative overflow-hidden">
+      <section className="hero-section h-[90vh] flex items-center text-white relative overflow-hidden">
         <div className="absolute inset-0 bg-black">
           <video autoPlay muted loop playsInline className="absolute inset-0 w-full h-full object-cover opacity-60">
             <source src="/assets/video.mp4" type="video/mp4" />
