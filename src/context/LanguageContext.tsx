@@ -209,6 +209,16 @@ const translations: Record<Language, Record<string, string>> = {
     'terms.section4.title': '4. Liability',
     'terms.section4.content': 'Metaxas Retreats is not liable for any loss, damage, or theft of personal property. Guests use the facilities at their own risk. We are not responsible for accidents or injuries occurring on the premises unless caused by our proven negligence.',
     
+    // Form labels
+    'form.fullName': 'Full Name',
+    'form.email': 'Email',
+    'form.phone': 'Phone',
+    'form.specialRequests': 'Special Requests',
+    'form.sendRequest': 'Send Booking Request',
+    'form.sendMessage': 'Send Message',
+    'form.subject': 'Subject',
+    'form.message': 'Message',
+    
     // Footer
     'footer.privacy': 'Privacy Policy',
     'footer.terms': 'Terms of Service',
@@ -407,6 +417,16 @@ const translations: Record<Language, Record<string, string>> = {
     'terms.section3.rule4': 'Οι επισκέπτες είναι υπεύθυνοι για τυχόν ζημιές που προκληθούν στην ιδιοκτησία κατά τη διαμονή τους.',
     'terms.section4.title': '4. Ευθύνη',
     'terms.section4.content': 'Το Metaxas Retreats δεν ευθύνεται για απώλεια, ζημιά ή κλοπή προσωπικών αντικειμένων. Οι επισκέπτες χρησιμοποιούν τις εγκαταστάσεις με δική τους ευθύνη. Δεν είμαστε υπεύθυνοι για ατυχήματα ή τραυματισμούς που συμβαίνουν στις εγκαταστάσεις εκτός εάν προκλήθηκαν από αποδεδειγμένη αμέλειά μας.',
+    
+    // Form labels
+    'form.fullName': 'Ονοματεπώνυμο',
+    'form.email': 'Email',
+    'form.phone': 'Τηλέφωνο',
+    'form.specialRequests': 'Ειδικά Αιτήματα',
+    'form.sendRequest': 'Αποστολή Αιτήματος Κράτησης',
+    'form.sendMessage': 'Αποστολή Μηνύματος',
+    'form.subject': 'Θέμα',
+    'form.message': 'Μήνυμα',
     
     // Footer
     'footer.privacy': 'Πολιτική Απορρήτου',
@@ -607,6 +627,16 @@ const translations: Record<Language, Record<string, string>> = {
     'terms.section4.title': '4. Responsabilità',
     'terms.section4.content': 'Metaxas Retreats non è responsabile per perdita, danno o furto di beni personali. Gli ospiti utilizzano le strutture a proprio rischio. Non siamo responsabili per incidenti o infortuni che si verificano nei locali a meno che non siano causati da nostra comprovata negligenza.',
     
+    // Form labels
+    'form.fullName': 'Nome Completo',
+    'form.email': 'Email',
+    'form.phone': 'Telefono',
+    'form.specialRequests': 'Richieste Speciali',
+    'form.sendRequest': 'Invia Richiesta di Prenotazione',
+    'form.sendMessage': 'Invia Messaggio',
+    'form.subject': 'Oggetto',
+    'form.message': 'Messaggio',
+    
     // Footer
     'footer.privacy': 'Informativa sulla Privacy',
     'footer.terms': 'Termini di Servizio',
@@ -806,6 +836,16 @@ const translations: Record<Language, Record<string, string>> = {
     'terms.section4.title': '4. Haftung',
     'terms.section4.content': 'Metaxas Retreats haftet nicht für Verlust, Beschädigung oder Diebstahl von persönlichem Eigentum. Gäste nutzen die Einrichtungen auf eigenes Risiko. Wir sind nicht verantwortlich für Unfälle oder Verletzungen auf dem Gelände, es sei denn, sie wurden durch unsere nachgewiesene Fahrlässigkeit verursacht.',
     
+    // Form labels
+    'form.fullName': 'Vollständiger Name',
+    'form.email': 'E-Mail',
+    'form.phone': 'Telefon',
+    'form.specialRequests': 'Besondere Wünsche',
+    'form.sendRequest': 'Buchungsanfrage Senden',
+    'form.sendMessage': 'Nachricht Senden',
+    'form.subject': 'Betreff',
+    'form.message': 'Nachricht',
+    
     // Footer
     'footer.privacy': 'Datenschutzerklärung',
     'footer.terms': 'Nutzungsbedingungen',
@@ -1004,6 +1044,16 @@ const translations: Record<Language, Record<string, string>> = {
     'terms.section3.rule4': 'Oaspeții sunt responsabili pentru orice daune cauzate proprietății în timpul sejurului.',
     'terms.section4.title': '4. Răspundere',
     'terms.section4.content': 'Metaxas Retreats nu este răspunzător pentru pierderea, deteriorarea sau furtul proprietății personale. Oaspeții utilizează facilitățile pe propria răspundere. Nu suntem responsabili pentru accidente sau vătămări care au loc pe proprietate cu excepția cazului în care sunt cauzate de neglijența noastră dovedită.',
+    
+    // Form labels
+    'form.fullName': 'Nume Complet',
+    'form.email': 'Email',
+    'form.phone': 'Telefon',
+    'form.specialRequests': 'Cereri Speciale',
+    'form.sendRequest': 'Trimite Cerere de Rezervare',
+    'form.sendMessage': 'Trimite Mesaj',
+    'form.subject': 'Subiect',
+    'form.message': 'Mesaj',
     
     // Footer
     'footer.privacy': 'Politica de Confidențialitate',
