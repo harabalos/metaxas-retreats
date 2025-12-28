@@ -241,7 +241,7 @@ const ContactSection = () => {
             <Button 
               type="submit" 
               disabled={isSubmitting}
-              className="w-full bg-sea hover:bg-sea-dark text-white py-6"
+              className="w-full py-6 bg-primary text-primary-foreground hover:bg-primary/90"
             >
               <Send className="h-4 w-4 mr-2" />
               {isSubmitting 
