@@ -1,61 +1,77 @@
 import Layout from '@/components/Layout/Layout';
 import { ScrollArea } from '@/components/ui/scroll-area';
+import SEOHead from '@/components/SEO/SEOHead';
+import { useLanguage } from '@/context/LanguageContext';
 
 const PrivacyPolicy = () => {
+  const { language, t } = useLanguage();
+
+  const privacySchema = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": language === 'el' ? "Πολιτική Απορρήτου - Metaxas Retreats" : "Privacy Policy - Metaxas Retreats",
+    "description": language === 'el' 
+      ? "Πολιτική απορρήτου του Metaxas Retreats για την προστασία των προσωπικών σας δεδομένων"
+      : "Privacy policy of Metaxas Retreats regarding the protection of your personal data",
+    "url": "https://metaxasretreats.com/privacy"
+  };
+
   return (
     <Layout>
+      <SEOHead
+        title="Privacy Policy - Metaxas Retreats"
+        titleEl="Πολιτική Απορρήτου - Metaxas Retreats"
+        description="Learn how Metaxas Retreats protects your personal information. Our privacy policy explains data collection, usage, and your rights."
+        descriptionEl="Μάθετε πώς το Metaxas Retreats προστατεύει τα προσωπικά σας δεδομένα. Η πολιτική απορρήτου μας εξηγεί τη συλλογή, χρήση δεδομένων και τα δικαιώματά σας."
+        canonicalUrl="/privacy"
+        schema={privacySchema}
+      />
       <div className="container mx-auto px-4 py-12 md:py-20">
-        <h1 className="text-4xl font-heading font-bold text-forest-dark mb-8 text-center">Privacy Policy</h1>
+        <h1 className="text-4xl font-heading font-bold text-forest-dark mb-8 text-center">
+          {t('privacy.title')}
+        </h1>
         
         <div className="max-w-3xl mx-auto bg-white p-8 rounded-lg shadow-sm border border-gray-100">
           <ScrollArea className="h-[600px] pr-4">
             <div className="prose prose-green max-w-none text-gray-700 space-y-6">
               <section>
-                <h3 className="text-xl font-bold text-forest-dark mb-2">1. Introduction</h3>
-                <p>
-                  Welcome to Metaxas Retreats ("we," "our," or "us"). We are committed to protecting your personal information and your right to privacy. This Privacy Policy explains how we collect, use, and share your information when you visit our website or make a booking at our property in Mikros Gialos, Lefkada.
-                </p>
+                <h3 className="text-xl font-bold text-forest-dark mb-2">{t('privacy.section1.title')}</h3>
+                <p>{t('privacy.section1.content')}</p>
               </section>
 
               <section>
-                <h3 className="text-xl font-bold text-forest-dark mb-2">2. Information We Collect</h3>
-                <p>We collect personal information that you voluntarily provide to us when you make a reservation or contact us, including:</p>
+                <h3 className="text-xl font-bold text-forest-dark mb-2">{t('privacy.section2.title')}</h3>
+                <p>{t('privacy.section2.intro')}</p>
                 <ul className="list-disc pl-5 mt-2 space-y-1">
-                  <li>Names and Contact Details (Email, Phone Number)</li>
-                  <li>Booking Details (Arrival/Departure dates, Number of guests)</li>
-                  <li>Payment Information (Processed securely by our payment providers; we do not store credit card details on our servers)</li>
+                  <li>{t('privacy.section2.item1')}</li>
+                  <li>{t('privacy.section2.item2')}</li>
+                  <li>{t('privacy.section2.item3')}</li>
                 </ul>
               </section>
 
               <section>
-                <h3 className="text-xl font-bold text-forest-dark mb-2">3. How We Use Your Information</h3>
-                <p>We use your information to:</p>
+                <h3 className="text-xl font-bold text-forest-dark mb-2">{t('privacy.section3.title')}</h3>
+                <p>{t('privacy.section3.intro')}</p>
                 <ul className="list-disc pl-5 mt-2 space-y-1">
-                  <li>Facilitate your booking and provide requested services.</li>
-                  <li>Communicate with you regarding your stay (e.g., check-in instructions).</li>
-                  <li>Comply with local legal obligations (e.g., Greek tourism tax records).</li>
+                  <li>{t('privacy.section3.item1')}</li>
+                  <li>{t('privacy.section3.item2')}</li>
+                  <li>{t('privacy.section3.item3')}</li>
                 </ul>
               </section>
 
               <section>
-                <h3 className="text-xl font-bold text-forest-dark mb-2">4. Cookies and Tracking</h3>
-                <p>
-                  We use cookies and similar tracking technologies (like Google Analytics) to access or store information. This helps us analyze website traffic and improve your user experience. You can refuse the use of cookies by adjusting your browser settings.
-                </p>
+                <h3 className="text-xl font-bold text-forest-dark mb-2">{t('privacy.section4.title')}</h3>
+                <p>{t('privacy.section4.content')}</p>
               </section>
 
               <section>
-                <h3 className="text-xl font-bold text-forest-dark mb-2">5. Data Retention</h3>
-                <p>
-                  We keep your information for as long as necessary to fulfill the purposes outlined in this privacy policy, unless a longer retention period is required by law (such as tax, accounting, or other legal requirements).
-                </p>
+                <h3 className="text-xl font-bold text-forest-dark mb-2">{t('privacy.section5.title')}</h3>
+                <p>{t('privacy.section5.content')}</p>
               </section>
 
               <section>
-                <h3 className="text-xl font-bold text-forest-dark mb-2">6. Contact Us</h3>
-                <p>
-                  If you have questions or comments about this policy, you may email us at contact@metaxasretreats.com.
-                </p>
+                <h3 className="text-xl font-bold text-forest-dark mb-2">{t('privacy.section6.title')}</h3>
+                <p>{t('privacy.section6.content')}</p>
               </section>
             </div>
           </ScrollArea>

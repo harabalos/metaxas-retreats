@@ -48,12 +48,11 @@ serve(async (req) => {
         
         // STEP 1: Delete ALL existing external bookings for this accommodation
         // This ensures unblocked dates in Airbnb get removed from our database
-        const { error: deleteError, count: deletedCount } = await supabase
+        const { error: deleteError } = await supabase
           .from('bookings')
           .delete()
           .eq('accommodation_id', accommodationId)
-          .eq('source', 'external')
-          .select('*', { count: 'exact', head: true });
+          .eq('source', 'external');
 
         if (deleteError) {
           console.error(`Failed to delete old bookings for ${accommodationId}:`, deleteError);

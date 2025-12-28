@@ -1,4 +1,3 @@
-
 import { useEffect } from 'react';
 import { useParams, useSearchParams, useNavigate } from 'react-router-dom';
 import { differenceInDays } from 'date-fns';
@@ -8,11 +7,14 @@ import { Button } from '@/components/ui/button';
 import BookingSummary from '@/components/Booking/BookingSummary';
 import ContactSection from '@/components/Booking/ContactSection';
 import { format, eachDayOfInterval } from 'date-fns';
+import SEOHead from '@/components/SEO/SEOHead';
+import { useLanguage } from '@/context/LanguageContext';
 
 const BookingPage = () => {
   const { id } = useParams<{ id: string }>();
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
+  const { t, language } = useLanguage();
   
   const accommodation = accommodations.find(acc => acc.id === id);
   
@@ -29,7 +31,6 @@ const BookingPage = () => {
   const isGlampingTent = id === 'glamping-tent';
   
   useEffect(() => {
-    // Scroll to top when component mounts
     window.scrollTo(0, 0);
   }, []);
   
@@ -37,10 +38,10 @@ const BookingPage = () => {
     return (
       <Layout>
         <div className="container mx-auto px-4 py-16 text-center">
-          <h1 className="text-3xl font-heading font-bold mb-4">Booking Information Missing</h1>
-          <p className="mb-8">Please select an accommodation and dates before proceeding.</p>
+          <h1 className="text-3xl font-heading font-bold mb-4">{t('booking.missingInfo')}</h1>
+          <p className="mb-8">{t('booking.selectFirst')}</p>
           <Button onClick={() => navigate('/')} className="bg-sea hover:bg-sea-dark">
-            Return to Home
+            {t('detail.returnHome')}
           </Button>
         </div>
       </Layout>
@@ -57,22 +58,51 @@ const BookingPage = () => {
       }, 0)
   : 0;
   
-  // Get the accommodation name with tent number if applicable
   const getAccommodationDisplayName = () => {
     if (isGlampingTent) {
-      return `${accommodation.name} (Tent ${selectedTent})`;
+      return `${accommodation.name} (${t('booking.tent')} ${selectedTent})`;
     }
     return accommodation.name;
+  };
+
+  const bookingSchema = {
+    "@context": "https://schema.org",
+    "@type": "ReservationAction",
+    "target": {
+      "@type": "EntryPoint",
+      "urlTemplate": `https://metaxasretreats.com/booking/${id}`,
+      "actionPlatform": ["http://schema.org/DesktopWebPlatform", "http://schema.org/MobileWebPlatform"]
+    },
+    "object": {
+      "@type": "LodgingReservation",
+      "reservationFor": {
+        "@type": "LodgingBusiness",
+        "name": accommodation.name,
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Mikros Gialos, Lefkada",
+          "addressCountry": "GR"
+        }
+      }
+    }
   };
   
   return (
     <Layout>
+      <SEOHead
+        title={`Book ${accommodation.name} - Metaxas Retreats`}
+        titleEl={`Κράτηση ${language === 'el' ? t(`accommodation.${id === 'wooden-house' ? 'woodenHouse' : 'glampingTent'}`) : accommodation.name} - Metaxas Retreats`}
+        description={`Book your stay at ${accommodation.name} in Mikros Gialos, Lefkada. Direct booking saves 15% compared to Airbnb/Booking.com.`}
+        descriptionEl={`Κάντε κράτηση στο ${t(`accommodation.${id === 'wooden-house' ? 'woodenHouse' : 'glampingTent'}`)} στον Μικρό Γιαλό, Λευκάδα. Απευθείας κράτηση με 15% έκπτωση.`}
+        canonicalUrl={`/booking/${id}`}
+        schema={bookingSchema}
+      />
       <div className="container mx-auto px-4 py-8">
         <h1 className="text-3xl md:text-4xl font-heading font-bold mb-2 text-sea-dark">
-          Contact Us for Booking
+          {t('booking.pageTitle')}
         </h1>
         <p className="mb-8 text-gray-600">
-          Contact us directly to confirm availability and complete your booking.
+          {t('booking.pageSubtitle')}
         </p>
         
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
