@@ -113,57 +113,8 @@ Thank you!`
   };
   
   return (
-    <div className="space-y-6">
-      {/* Save ~15% Banner */}
-      <Card className="border-green-200 bg-green-50">
-        <CardContent className="p-4">
-          <p className="font-semibold text-green-800 text-lg">{t('booking.saveDiscount')}</p>
-          <p className="text-green-700">{t('booking.discountDescription')}</p>
-        </CardContent>
-      </Card>
-
-      {/* WhatsApp Contact Cards */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <MessageCircle className="h-5 w-5 text-green-600" />
-            {t('booking.callWhatsapp')}
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-3">
-          <a 
-            href={`https://wa.me/306973219980?text=${getWhatsAppMessage()}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-3 p-3 bg-green-50 hover:bg-green-100 rounded-lg border border-green-200 transition-colors"
-          >
-            <div className="bg-green-500 p-2 rounded-full">
-              <Phone className="h-4 w-4 text-white" />
-            </div>
-            <div>
-              <p className="font-medium text-green-800">+30 6973219980</p>
-              <p className="text-sm text-green-600">{language === 'el' ? 'Πατήστε για WhatsApp' : 'Tap for WhatsApp'}</p>
-            </div>
-          </a>
-          
-          <a 
-            href={`https://wa.me/306980429891?text=${getWhatsAppMessage()}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-3 p-3 bg-green-50 hover:bg-green-100 rounded-lg border border-green-200 transition-colors"
-          >
-            <div className="bg-green-500 p-2 rounded-full">
-              <Phone className="h-4 w-4 text-white" />
-            </div>
-            <div>
-              <p className="font-medium text-green-800">+30 6980429891</p>
-              <p className="text-sm text-green-600">{language === 'el' ? 'Πατήστε για WhatsApp' : 'Tap for WhatsApp'}</p>
-            </div>
-          </a>
-        </CardContent>
-      </Card>
-
-      {/* Booking Request Form */}
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      {/* Left: Email Form */}
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
@@ -250,28 +201,71 @@ Thank you!`
         </CardContent>
       </Card>
 
-      {/* Also available on */}
-      <div className="text-sm text-muted-foreground">
-        <p>{t('booking.alsoAvailable')}</p>
-        <div className="flex space-x-4 mt-2">
-          <a 
-            href="https://www.airbnb.gr/rooms/936140564087838043?source_impression_id=p3_1745246045_P32OFwyiKEHNkXyt" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="flex items-center text-foreground hover:text-sea transition-colors"
-          >
-            <span>Airbnb</span>
-            <ExternalLink className="ml-1 h-3 w-3" />
-          </a>
-          <a 
-            href="https://www.booking.com/hotel/gr/metaxaki.el.html" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="flex items-center text-foreground hover:text-sea transition-colors"
-          >
-            <span>Booking.com</span>
-            <ExternalLink className="ml-1 h-3 w-3" />
-          </a>
+      {/* Right: WhatsApp Contact */}
+      <div className="space-y-6">
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <MessageCircle className="h-5 w-5 text-green-600" />
+              {t('booking.callWhatsapp')}
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-3">
+            <a 
+              href={`https://wa.me/306973219980?text=${getWhatsAppMessage()}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-3 p-3 bg-green-50 hover:bg-green-100 rounded-lg border border-green-200 transition-colors"
+            >
+              <div className="bg-green-500 p-2 rounded-full">
+                <Phone className="h-4 w-4 text-white" />
+              </div>
+              <div>
+                <p className="font-medium text-green-800">+30 6973219980</p>
+                <p className="text-sm text-green-600">{language === 'el' ? 'Πατήστε για WhatsApp' : 'Tap for WhatsApp'}</p>
+              </div>
+            </a>
+            
+            <a 
+              href={`https://wa.me/306980429891?text=${getWhatsAppMessage()}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-3 p-3 bg-green-50 hover:bg-green-100 rounded-lg border border-green-200 transition-colors"
+            >
+              <div className="bg-green-500 p-2 rounded-full">
+                <Phone className="h-4 w-4 text-white" />
+              </div>
+              <div>
+                <p className="font-medium text-green-800">+30 6980429891</p>
+                <p className="text-sm text-green-600">{language === 'el' ? 'Πατήστε για WhatsApp' : 'Tap for WhatsApp'}</p>
+              </div>
+            </a>
+          </CardContent>
+        </Card>
+
+        {/* Also available on */}
+        <div className="text-sm text-muted-foreground">
+          <p>{t('booking.alsoAvailable')}</p>
+          <div className="flex space-x-4 mt-2">
+            <a 
+              href="https://www.airbnb.gr/rooms/936140564087838043?source_impression_id=p3_1745246045_P32OFwyiKEHNkXyt" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="flex items-center text-foreground hover:text-sea transition-colors"
+            >
+              <span>Airbnb</span>
+              <ExternalLink className="ml-1 h-3 w-3" />
+            </a>
+            <a 
+              href="https://www.booking.com/hotel/gr/metaxaki.el.html" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="flex items-center text-foreground hover:text-sea transition-colors"
+            >
+              <span>Booking.com</span>
+              <ExternalLink className="ml-1 h-3 w-3" />
+            </a>
+          </div>
         </div>
       </div>
     </div>
