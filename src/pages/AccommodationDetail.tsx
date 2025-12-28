@@ -263,12 +263,34 @@ const AccommodationDetail = () => {
                   {t('detail.amenities')}
                 </h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  {accommodation?.amenities.map((amenity, index) => (
-                    <div key={index} className="flex items-center">
-                      <Coffee className="h-5 w-5 text-forest mr-2" />
-                      <span>{amenity}</span>
-                    </div>
-                  ))}
+                  {accommodation?.amenities.map((amenity, index) => {
+                    // Map English amenity strings to translation keys
+                    const amenityKeyMap: Record<string, string> = {
+                      'Sea view': 'amenity.seaView',
+                      'Parking': 'amenity.parking',
+                      '50m from the beach': 'amenity.beachDistance',
+                      'Air conditioning': 'amenity.airConditioning',
+                      'Air Conditioning': 'amenity.airConditioning',
+                      'Fully equipped kitchen': 'amenity.kitchen',
+                      'High-speed Wi-Fi': 'amenity.wifi',
+                      'Private terrace': 'amenity.terrace',
+                      'Outdoor dining area': 'amenity.outdoorDining',
+                      'Washing machine': 'amenity.washingMachine',
+                      'Ramp access': 'amenity.rampAccess',
+                      'Private outdoor seating': 'amenity.outdoorSeating',
+                      'Eco-friendly amenities': 'amenity.ecoFriendly',
+                    };
+                    
+                    const translationKey = amenityKeyMap[amenity];
+                    const translatedAmenity = translationKey ? t(translationKey) : amenity;
+                    
+                    return (
+                      <div key={index} className="flex items-center">
+                        <Coffee className="h-5 w-5 text-forest mr-2" />
+                        <span>{translatedAmenity}</span>
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
             </div>

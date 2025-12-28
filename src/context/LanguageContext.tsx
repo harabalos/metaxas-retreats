@@ -127,16 +127,16 @@ const translations: Record<Language, Record<string, string>> = {
     // Amenities
     'amenity.seaView': 'Sea view',
     'amenity.parking': 'Parking',
-    'amenity.beach': '50m from the beach',
+    'amenity.beachDistance': '50m from the beach',
     'amenity.airConditioning': 'Air conditioning',
     'amenity.kitchen': 'Fully equipped kitchen',
     'amenity.wifi': 'High-speed Wi-Fi',
     'amenity.terrace': 'Private terrace',
-    'amenity.outdoor': 'Outdoor dining area',
-    'amenity.washing': 'Washing machine',
-    'amenity.ramp': 'Ramp access',
-    'amenity.eco': 'Eco-friendly amenities',
+    'amenity.outdoorDining': 'Outdoor dining area',
+    'amenity.washingMachine': 'Washing machine',
+    'amenity.rampAccess': 'Ramp access',
     'amenity.outdoorSeating': 'Private outdoor seating',
+    'amenity.ecoFriendly': 'Eco-friendly amenities',
     
     // Accommodation Detail Page
     'detail.notFound': 'Accommodation Not Found',
@@ -322,16 +322,16 @@ const translations: Record<Language, Record<string, string>> = {
     // Amenities
     'amenity.seaView': 'Θέα στη θάλασσα',
     'amenity.parking': 'Πάρκινγκ',
-    'amenity.beach': '50μ από την παραλία',
+    'amenity.beachDistance': '50μ από την παραλία',
     'amenity.airConditioning': 'Κλιματισμός',
     'amenity.kitchen': 'Πλήρως εξοπλισμένη κουζίνα',
     'amenity.wifi': 'Υψηλής ταχύτητας Wi-Fi',
     'amenity.terrace': 'Ιδιωτική βεράντα',
-    'amenity.outdoor': 'Εξωτερικός χώρος φαγητού',
-    'amenity.washing': 'Πλυντήριο ρούχων',
-    'amenity.ramp': 'Πρόσβαση με ράμπα',
-    'amenity.eco': 'Οικολογικές παροχές',
+    'amenity.outdoorDining': 'Εξωτερικός χώρος φαγητού',
+    'amenity.washingMachine': 'Πλυντήριο ρούχων',
+    'amenity.rampAccess': 'Πρόσβαση με ράμπα',
     'amenity.outdoorSeating': 'Ιδιωτικός εξωτερικός χώρος καθιστικού',
+    'amenity.ecoFriendly': 'Οικολογικές παροχές',
     
     // Accommodation Detail Page
     'detail.notFound': 'Το Κατάλυμα δεν Βρέθηκε',
