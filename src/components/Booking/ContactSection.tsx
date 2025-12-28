@@ -4,13 +4,16 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
+import { Checkbox } from '@/components/ui/checkbox';
 import { Mail, Send, MessageCircle, Phone } from 'lucide-react';
 import { useLanguage } from '@/context/LanguageContext';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams, Link } from 'react-router-dom';
 import { accommodations } from '@/data/accommodations';
 import { format } from 'date-fns';
 import { toast } from 'sonner';
 import { Separator } from '@/components/ui/separator';
+
+const FORMSPREE_URL = 'https://formspree.io/f/mgoelyzg';
 
 const ContactSection = () => {
   const { t, language } = useLanguage();
@@ -34,6 +37,8 @@ const ContactSection = () => {
     phone: '',
     specialRequests: ''
   });
+  const [agreedToPolicy, setAgreedToPolicy] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const accommodationName = accommodation?.type === 'tent' 
     ? `${t('accommodation.glampingTent')} (${t('booking.tent')} ${selectedTent})`
@@ -50,7 +55,7 @@ const ContactSection = () => {
     return encodeURIComponent(message);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
     if (!formData.fullName.trim() || !formData.email.trim()) {
@@ -58,57 +63,47 @@ const ContactSection = () => {
       return;
     }
 
+    if (!agreedToPolicy) {
+      toast.error(language === 'el' ? 'Παρακαλώ αποδεχτείτε την Πολιτική Απορρήτου' : 'Please accept the Privacy Policy');
+      return;
+    }
+
+    setIsSubmitting(true);
+
     const checkIn = startDate ? formatDate(startDate) : '';
     const checkOut = endDate ? formatDate(endDate) : '';
-    
-    const subject = encodeURIComponent(
-      language === 'el' 
-        ? `Αίτημα Κράτησης - ${accommodationName}` 
-        : `Booking Request - ${accommodationName}`
-    );
-    
-    const body = encodeURIComponent(
-      language === 'el'
-        ? `Γεια σας,
 
-Θα ήθελα να κάνω κράτηση:
+    try {
+      const response = await fetch(FORMSPREE_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: formData.fullName,
+          email: formData.email,
+          phone: formData.phone || 'Not provided',
+          accommodation: accommodationName,
+          checkIn,
+          checkOut,
+          guests,
+          message: formData.specialRequests || 'None',
+          _subject: `Booking Request - ${accommodationName}`,
+        }),
+      });
 
-Κατάλυμα: ${accommodationName}
-Άφιξη: ${checkIn}
-Αναχώρηση: ${checkOut}
-Επισκέπτες: ${guests}
-
-Στοιχεία Επικοινωνίας:
-Ονοματεπώνυμο: ${formData.fullName}
-Email: ${formData.email}
-Τηλέφωνο: ${formData.phone || 'Δεν παρέχεται'}
-
-Μήνυμα:
-${formData.specialRequests || 'Κανένα'}
-
-Ευχαριστώ!`
-        : `Hello,
-
-I would like to make a booking:
-
-Accommodation: ${accommodationName}
-Check-in: ${checkIn}
-Check-out: ${checkOut}
-Guests: ${guests}
-
-Contact Details:
-Full Name: ${formData.fullName}
-Email: ${formData.email}
-Phone: ${formData.phone || 'Not provided'}
-
-Message:
-${formData.specialRequests || 'None'}
-
-Thank you!`
-    );
-    
-    window.location.href = `mailto:metaxasretreats@gmail.com?subject=${subject}&body=${body}`;
-    toast.success(language === 'el' ? 'Ανοίγει η εφαρμογή email...' : 'Opening email app...');
+      if (response.ok) {
+        toast.success(language === 'el' ? 'Το αίτημά σας στάλθηκε επιτυχώς!' : 'Your request has been sent successfully!');
+        setFormData({ fullName: '', email: '', phone: '', specialRequests: '' });
+        setAgreedToPolicy(false);
+      } else {
+        throw new Error('Failed to submit');
+      }
+    } catch (error) {
+      toast.error(language === 'el' ? 'Υπήρξε πρόβλημα. Δοκιμάστε ξανά.' : 'There was a problem. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
   
   return (
@@ -176,22 +171,26 @@ Thank you!`
                 <Label htmlFor="fullName">{t('form.fullName')} *</Label>
                 <Input 
                   id="fullName"
+                  name="fullName"
                   type="text"
                   required
                   value={formData.fullName}
                   onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
                   placeholder={language === 'el' ? 'Ονοματεπώνυμο' : 'Full name'}
+                  className="bg-background"
                 />
               </div>
               <div>
                 <Label htmlFor="email">{t('form.email')} *</Label>
                 <Input 
                   id="email"
+                  name="email"
                   type="email"
                   required
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  placeholder={language === 'el' ? 'Email' : 'Email'}
+                  placeholder="Email"
+                  className="bg-background"
                 />
               </div>
             </div>
@@ -200,10 +199,12 @@ Thank you!`
               <Label htmlFor="phone">{t('form.phone')}</Label>
               <Input 
                 id="phone"
+                name="phone"
                 type="tel"
                 value={formData.phone}
                 onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                 placeholder={language === 'el' ? 'Τηλέφωνο' : 'Phone number'}
+                className="bg-background"
               />
             </div>
             
@@ -211,16 +212,41 @@ Thank you!`
               <Label htmlFor="specialRequests">{t('form.message')}</Label>
               <Textarea 
                 id="specialRequests"
+                name="message"
                 value={formData.specialRequests}
                 onChange={(e) => setFormData({ ...formData, specialRequests: e.target.value })}
                 placeholder={language === 'el' ? 'Το μήνυμά σας...' : 'Your message...'}
                 rows={3}
+                className="bg-background"
               />
             </div>
 
-            <Button type="submit" className="w-full bg-sea hover:bg-sea-dark">
+            <div className="flex items-start gap-3">
+              <Checkbox 
+                id="privacy-booking"
+                checked={agreedToPolicy}
+                onCheckedChange={(checked) => setAgreedToPolicy(checked === true)}
+                className="mt-0.5"
+              />
+              <Label htmlFor="privacy-booking" className="text-sm text-muted-foreground leading-relaxed cursor-pointer">
+                {language === 'el' 
+                  ? 'Συμφωνώ με την Πολιτική Απορρήτου και την επεξεργασία των προσωπικών μου δεδομένων. '
+                  : 'I agree with the Privacy Policy and the processing of my personal data. '}
+                <Link to="/privacy" className="text-sea hover:underline">
+                  {language === 'el' ? 'Πολιτική Απορρήτου' : 'Privacy Policy'}
+                </Link>
+              </Label>
+            </div>
+
+            <Button 
+              type="submit" 
+              disabled={isSubmitting}
+              className="w-full bg-sea hover:bg-sea-dark text-white py-6"
+            >
               <Send className="h-4 w-4 mr-2" />
-              {t('form.sendRequest')}
+              {isSubmitting 
+                ? (language === 'el' ? 'Αποστολή...' : 'Sending...') 
+                : t('form.sendRequest')}
             </Button>
           </form>
         </div>
