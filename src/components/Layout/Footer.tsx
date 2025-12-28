@@ -64,10 +64,29 @@ const Footer = () => {
         </div>
 
         <div className="border-t border-forest-light mt-8 pt-8 flex flex-col md:flex-row justify-between items-center text-forest-light">
-          <p>&copy; {new Date().getFullYear()} Metaxas Retreats. {t('footer.rights')}</p>
-          <p className="mt-2 md:mt-0">
-            {t('footer.poweredBy')}{" "}
-            <a href="https://www.amox.gr" target="_blank" rel="noopener noreferrer" className="hover:text-wood underline">
+          <div className="flex flex-col md:flex-row items-center gap-4 md:gap-8">
+            <p>&copy; {new Date().getFullYear()} Metaxas Retreats. All rights reserved.</p>
+            
+            {/* --- ADDED LEGAL LINKS HERE --- */}
+            <div className="flex gap-4 text-sm">
+              <Link to="/privacy" className="hover:text-wood underline transition-colors" onClick={scrollToTop}>
+                Privacy Policy
+              </Link>
+              <Link to="/terms" className="hover:text-wood underline transition-colors" onClick={scrollToTop}>
+                Terms of Service
+              </Link>
+            </div>
+            {/* ------------------------------ */}
+          </div>
+
+          <p className="mt-4 md:mt-0">
+            Powered by{" "}
+            <a
+              href="https://www.amox.gr"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-wood underline"
+            >
               Amox
             </a>
           </p>
