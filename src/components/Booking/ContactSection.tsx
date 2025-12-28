@@ -14,8 +14,7 @@ import { toast } from 'sonner';
 import { Separator } from '@/components/ui/separator';
 import { contactFormSchema } from '@/lib/validationSchemas';
 import { z } from 'zod';
-
-const FORMSPREE_URL = 'https://formspree.io/f/mgoelyzg';
+import { supabase } from '@/integrations/supabase/client';
 
 const ContactSection = () => {
   const { t, language } = useLanguage();
@@ -79,31 +78,28 @@ const ContactSection = () => {
       const checkIn = startDate ? formatDate(startDate) : '';
       const checkOut = endDate ? formatDate(endDate) : '';
 
-      const response = await fetch(FORMSPREE_URL, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          name: validatedData.fullName,
+      // Submit via server-side Edge Function for validation
+      const { data, error } = await supabase.functions.invoke('submit-contact', {
+        body: {
+          fullName: validatedData.fullName,
           email: validatedData.email,
-          phone: validatedData.phone || 'Not provided',
+          phone: validatedData.phone,
+          specialRequests: validatedData.specialRequests,
           accommodation: accommodationName,
           checkIn,
           checkOut,
           guests,
-          message: validatedData.specialRequests || 'None',
           _subject: `Booking Request - ${accommodationName}`,
-        }),
+        },
       });
 
-      if (response.ok) {
-        toast.success(language === 'el' ? 'Το αίτημά σας στάλθηκε επιτυχώς!' : 'Your request has been sent successfully!');
-        setFormData({ fullName: '', email: '', phone: '', specialRequests: '' });
-        setAgreedToPolicy(false);
-      } else {
-        throw new Error('Failed to submit');
+      if (error) {
+        throw new Error(error.message || 'Failed to submit');
       }
+
+      toast.success(language === 'el' ? 'Το αίτημά σας στάλθηκε επιτυχώς!' : 'Your request has been sent successfully!');
+      setFormData({ fullName: '', email: '', phone: '', specialRequests: '' });
+      setAgreedToPolicy(false);
     } catch (error) {
       if (error instanceof z.ZodError) {
         const firstError = error.errors[0];

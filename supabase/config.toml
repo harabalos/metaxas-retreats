@@ -388,5 +388,7 @@ verify_jwt = false
 [functions.export-calendar]
 enabled = true
 verify_jwt = false
-# For example, if you want to serve static HTML pages in your function:
-# static_files = [ "./functions/export-calendar/*.html" ]
+
+[functions.submit-contact]
+enabled = true
+verify_jwt = false
