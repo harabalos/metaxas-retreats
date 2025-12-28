@@ -11,6 +11,7 @@ import {
 const languages: { code: Language; name: string; flag: string }[] = [
   { code: 'en', name: 'English', flag: '🇬🇧' },
   { code: 'el', name: 'Ελληνικά', flag: '🇬🇷' },
+  { code: 'it', name: 'Italiano', flag: '🇮🇹' },
 ];
 
 const LanguageSwitcher = () => {
