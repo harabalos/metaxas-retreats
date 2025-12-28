@@ -251,7 +251,7 @@ const ContactUs = () => {
                   <Button 
                     type="submit" 
                     disabled={isSubmitting}
-                    className="w-full bg-sea hover:bg-sea-dark text-white py-6"
+                    className="w-full py-6 bg-primary text-primary-foreground hover:bg-primary/90"
                   >
                     {isSubmitting 
                       ? (language === 'el' ? 'Αποστολή...' : 'Sending...') 
