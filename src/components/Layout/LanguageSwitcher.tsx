@@ -13,6 +13,7 @@ const languages: { code: Language; name: string; flag: string }[] = [
   { code: 'el', name: 'Ελληνικά', flag: '🇬🇷' },
   { code: 'it', name: 'Italiano', flag: '🇮🇹' },
   { code: 'de', name: 'Deutsch', flag: '🇩🇪' },
+  { code: 'ro', name: 'Română', flag: '🇷🇴' },
 ];
 
 const LanguageSwitcher = () => {
