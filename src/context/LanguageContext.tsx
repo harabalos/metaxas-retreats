@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 
 // Define available languages
-export type Language = 'en' | 'el' | 'it' | 'de';
+export type Language = 'en' | 'el' | 'it' | 'de' | 'ro';
 
 type LanguageContextType = {
   language: Language;
@@ -821,6 +821,208 @@ const translations: Record<Language, Record<string, string>> = {
     // Footer
     'footer.privacy': 'Datenschutzerklärung',
     'footer.terms': 'Nutzungsbedingungen',
+  },
+  ro: {
+    // Navigation
+    'nav.home': 'Acasă',
+    'nav.accommodations': 'Cazare',
+    'nav.explore': 'Explorează Lefkada',
+    'nav.about': 'Despre Noi',
+    'nav.contact': 'Contact',
+    
+    // Homepage
+    'home.hero.welcome': 'Bine ați venit la Metaxas Retreats',
+    'home.hero.subtitle': 'Experiență de glamping de lux deasupra apelor turcoaz perfecte din golful Mikros Gialos din Lefkada',
+    'home.hero.viewAccommodations': 'Vezi Cazarea',
+    'home.section.title': 'Glamping în Lefkada',
+    'home.section.description': 'Așezate printre măslini și cu vedere la apele cristaline ale golfului Mikros Gialos, cazările noastre oferă un amestec incomparabil de camping de lux și viață autentică pe insulă grecească, la doar câțiva pași de una dintre cele mai frumoase plaje din Lefkada.',
+    'home.wooden.title': 'Casa din Lemn',
+    'home.wooden.description': 'Casa noastră spațioasă din lemn oferă vedere panoramică la mare asupra golfului Mikros Gialos, pentru o experiență autentică pe insulă.',
+    'home.glamping.title': 'Cort Glamping',
+    'home.glamping.description': 'Experimentați campingul de lux în cortul nostru elegant cu lenjerie premium și facilități, înconjurat de natură dar la doar câțiva pași de apele turcoaz ale plajei Mikros Gialos.',
+    'home.accommodations.title': 'Cazările Noastre',
+    'home.reviews.title': 'Recenzii de la Oaspeți',
+    'home.cta.title': 'Experimentează Lefkada cu Stil',
+    'home.cta.description': 'Rezervă acum vacanța ta glamping și trezește-te cu vedere uimitoare la apele turcoaz ale unuia dintre cele mai frumoase golfuri din Lefkada.',
+    'home.cta.button': 'Rezervă Sejurul',
+    
+    // Accommodation Card
+    'card.guests': 'oaspeți',
+    'card.beds': 'paturi',
+    'card.viewDetails': 'Vezi Detalii',
+    'card.fromPrice': 'De la',
+    'card.perNight': '/noapte',
+    
+    // About Page
+    'about.title': 'Despre Noi',
+    'about.welcome': 'Bine ați venit la Metaxas Retreats, poarta dumneavoastră către viața autentică pe insulă grecească în uimitorul golf Mikros Gialos din Lefkada.',
+    'about.founded': 'Fondată de familia Metaxas cu o dragoste profundă pentru acest colț frumos al Lefkadei, oferim cazări fermecătoare care îmbină elemente tradiționale grecești cu confort modern.',
+    'about.location': 'Proprietățile noastre sunt așezate în zona liniștită Poros din Mikros Gialos, înconjurate de măslini și la doar câțiva pași de una dintre cele mai frumoase plaje de pe insulă. Suntem mândri să oferim oaspeților noștri un refugiu pașnic unde pot experimenta frumusețea autentică și ritmul vieții pe insulă grecească.',
+    'about.family.title': 'Familia Noastră',
+    'about.family.description': 'De trei generații, familia Metaxas primește vizitatori în Mikros Gialos, împărtășind dragostea noastră pentru frumusețea naturală a Lefkadei și ospitalitatea tradițională.',
+    'about.passion.title': 'Pasiunea Noastră',
+    'about.passion.description': 'Suntem pasionați de crearea unor experiențe memorabile pentru oaspeții noștri, oferind cazări autentice care reflectă adevăratul spirit al vieții pe insulă grecească.',
+    'about.promise.title': 'Promisiunea Noastră',
+    'about.promise.description': 'Promitem atenție personală, cazări curate și confortabile, și cunoștințe locale pentru a vă ajuta să descoperiți ce e mai bun din Lefkada.',
+    'about.story.title': 'Povestea Noastră',
+    'about.story.p1': 'Povestea Metaxas Retreats a început în anii 1980 când Georgios Metaxas, vrăjit de frumusețea neprihănită a Mikros Gialos, a construit o casă de vară pentru familia sa în acest colț pașnic al Lefkadei. Când prietenii au început să ceară să stea în această locație idilică, s-a născut ideea pentru Metaxas Retreats.',
+    'about.story.p2': 'De-a lungul anilor, ceea ce a început ca o simplă pensiune a evoluat în colecția noastră actuală de cazări fermecătoare, fiecare proiectată să ofere confort păstrând în același timp caracterul autentic al vieții tradiționale pe insulă grecească.',
+    'about.story.p3': 'Astăzi, a doua și a treia generație a familiei Metaxas continuă această tradiție a ospitalității, primind oaspeți din întreaga lume pentru a experimenta magia Mikros Gialos.',
+    'about.story.p4': 'Deși am adăugat facilități și confort moderne, filozofia noastră rămâne aceeași: să împărtășim frumusețea autentică, aromele și ritmurile vieții în acest colț special al insulei Lefkada.',
+    'about.why.title': 'De Ce Să Alegeți Mikros Gialos?',
+    'about.why.intro': 'Mikros Gialos este unul dintre cele mai frumoase golfuri din Lefkada, oferind un echilibru perfect de frumusețe naturală, liniște și comoditate. Locația noastră în zona Poros oferă:',
+    'about.why.beach': 'O plajă uimitoare cu pietricele și ape cristal turcoaz, ideală pentru înot și snorkeling',
+    'about.why.peaceful': 'Împrejurimi pașnice departe de zonele mai aglomerate ale insulei',
+    'about.why.tavernas': 'La distanță de mers pe jos de tavernele locale excelente care servesc fructe de mare proaspete și bucătărie grecească tradițională',
+    'about.why.boats': 'Acces ușor la excursii cu barca explorând frumoasa coastă de est a Lefkadei',
+    'about.why.base': 'Bază perfectă pentru explorarea întregii insule, cu orașul Lefkada la doar 25km distanță',
+    'about.why.beaches': 'Aproape de alte plaje frumoase inclusiv Agiofili și Vassiliki',
+    'about.why.cta': 'Experimentați farmecul autentic al vieții pe insulă grecească la Metaxas Retreats în Mikros Gialos!',
+    
+    // Explore Page
+    'explore.title': 'Explorează Insula Lefkada',
+    'explore.intro': 'Descoperiți bijuteria smarald a Mării Ionice. Lefkada oferă plaje uimitoare, sate de munte fermecătoare, bucătărie locală delicioasă și activități interesante pentru fiecare tip de călător.',
+    'explore.beaches': 'Plaje',
+    'explore.villages': 'Sate',
+    'explore.activities': 'Activități',
+    'explore.cuisine': 'Bucătărie Locală',
+    'explore.plan.title': 'Planifică Ziua Ta Perfectă',
+    'explore.plan.beach.title': 'Zi la Plajă',
+    'explore.plan.beach.description': 'Trezește-te în cortul tău glamping în Mikros Gialos, mergi la plajă pentru un înot de dimineață, savurează prânzul la o tavernă locală în Mikros Gialos sau Sivota, și încheie cu băuturi la apus în satul Eksantheia.',
+    'explore.plan.village.title': 'Explorarea Satelor',
+    'explore.plan.village.description': 'Începe ziua în Mikros Gialos sau Sivota, mergi cu mașina până în satul de munte Karya pentru prânz, și încheie ziua în Agios Nikitas pentru cină lângă mare.',
+    'explore.plan.water.title': 'Activități Nautice',
+    'explore.plan.water.description': 'Fă o excursie cu velierul dimineața din Nidri în jurul insulelor din apropiere, savurează prânzul în Meganisi, și petrece după-amiaza făcând windsurf în Vasiliki.',
+    'explore.specialties.title': 'Specialități Locale',
+    'explore.specialties.subtitle': 'Mâncăruri tradiționale pe care trebuie să le încerci',
+    'explore.restaurants.title': 'Unde Să Mănânci',
+    'explore.restaurants.subtitle': 'Restaurante și taverne recomandate',
+    'explore.products.title': 'Produse Locale',
+    'explore.products.subtitle': 'Ia acasă o parte din gustul Lefkadei',
+    
+    // Contact Page
+    'contact.title': 'Contactează-ne',
+    'contact.subtitle': 'Ne-ar face plăcere să auzim de la tine! Găsește-ne în frumoasa zonă Poros, Mikros Gialos pe insula Lefkada, sau contactează-ne prin telefon sau email.',
+    'contact.visit': 'Vizitează-ne',
+    'contact.call': 'Sună-ne',
+    'contact.email': 'Trimite Email',
+    'contact.location': 'Locația Noastră',
+    'contact.mapNote': 'Notă: Mikros Gialos este unul dintre cele mai frumoase golfuri din Lefkada, cu ape cristaline și o atmosferă pașnică. Cazările noastre sunt la doar câțiva pași de plajă!',
+    'contact.reach': 'Cum Să Ajungi la Noi',
+    'contact.byCar': 'Cu Mașina',
+    'contact.byBus': 'Cu Autobuzul',
+    'contact.byBoat': 'Cu Barca',
+    'contact.book': 'Rezervă Sejurul în Mikros Gialos',
+    'contact.bookDescription': 'Experimentează frumusețea și liniștea golfului Mikros Gialos, cu apele sale cristal turcoaz, plaja cu pietricele și tavernele fermecătoare. Cazările noastre oferă baza perfectă pentru a explora această bijuterie ascunsă a insulei Lefkada.',
+    'contact.callToAction': 'Contactează-ne acum pentru a verifica disponibilitatea pentru datele tale preferate!',
+
+    // Footer
+    'footer.about': 'Experimentează magia vieții pe insulă grecească cu cazările noastre fermecătoare în Mikros Gialos, așezate printre copaci frumoși și la doar câțiva pași de Marea Ionică azurie.',
+    'footer.quickLinks': 'Linkuri Rapide',
+    'footer.ourAccommodations': 'Cazările Noastre',
+    'footer.contactUs': 'Contact',
+    'footer.rights': 'Toate drepturile rezervate.',
+    'footer.poweredBy': 'Powered by',
+    
+    // Accommodations
+    'accommodation.woodenHouse': 'Casa din Lemn',
+    'accommodation.glampingTent': 'Cort Glamping',
+    'accommodation.woodenHouse.description': 'Experimentează viața autentică pe insulă grecească în casa noastră fermecătoare din lemn. Așezată printre măslini cu vedere uimitoare la mare. Terasa spațioasă este ideală pentru a savura faimoasele apusuri grecești în timp ce sorbi vin local. În interior vei găsi o bucătărie complet echipată, zonă de living confortabilă și dormitoare proiectate cu grijă cu lenjerie premium.',
+    'accommodation.woodenHouse.short': 'Casă fermecătoare din lemn cu vedere la mare pentru o vacanță confortabilă',
+    'accommodation.glampingTent.description': 'Cortul nostru glamping de lux oferă o experiență de neuitat care combină aventura campingului cu facilități de tip hotel. Situat într-o locație pașnică printre măslini străvechi, acest cort spațios dispune de un pat dublu confortabil și 3 paturi single cu lenjerie premium, electricitate și mobilier elegant. Zona de relaxare exterioară privată este perfectă pentru cafeaua de dimineață sau relaxarea de seară sub stele. Experimentează magia vieții pe insulă cu tot confortul de care ai nevoie.',
+    'accommodation.glampingTent.short': 'Experiență glamping spațioasă cu confort de hotel înconjurată de copaci frumoși',
+    
+    // Amenities
+    'amenity.seaView': 'Vedere la mare',
+    'amenity.parking': 'Parcare',
+    'amenity.beachDistance': 'La 50m de plajă',
+    'amenity.airConditioning': 'Aer condiționat',
+    'amenity.kitchen': 'Bucătărie complet echipată',
+    'amenity.wifi': 'Wi-Fi de mare viteză',
+    'amenity.terrace': 'Terasă privată',
+    'amenity.outdoorDining': 'Zonă de luat masa în aer liber',
+    'amenity.washingMachine': 'Mașină de spălat',
+    'amenity.rampAccess': 'Acces cu rampă',
+    'amenity.outdoorSeating': 'Zonă de relaxare exterioară privată',
+    'amenity.ecoFriendly': 'Facilități eco-friendly',
+    
+    // Accommodation Detail Page
+    'detail.notFound': 'Cazare Negăsită',
+    'detail.notFoundText': 'Cazarea pe care o cauți nu există.',
+    'detail.returnHome': 'Înapoi Acasă',
+    'detail.about': 'Despre această cazare',
+    'detail.features': 'Caracteristici',
+    'detail.guests': 'oaspeți',
+    'detail.bedrooms': 'dormitoare',
+    'detail.beds': 'paturi',
+    'detail.bathrooms': 'băi',
+    'detail.amenities': 'Facilități',
+    
+    // Booking Summary
+    'summary.title': 'Sumar Rezervare',
+    'summary.checkIn': 'Check-in',
+    'summary.checkOut': 'Check-out',
+    'summary.guests': 'Oaspeți',
+    'summary.total': 'Total',
+    
+    // Booking Page
+    'booking.pageTitle': 'Contactează-ne pentru Rezervare',
+    'booking.pageSubtitle': 'Contactează-ne direct pentru a confirma disponibilitatea și a finaliza rezervarea.',
+    'booking.missingInfo': 'Informații de Rezervare Lipsă',
+    'booking.selectFirst': 'Te rugăm să selectezi o cazare și datele înainte de a continua.',
+    'booking.tent': 'Cort',
+    'booking.contactTitle': 'Contact pentru Rezervare',
+    'booking.saveDiscount': 'Economisești 15% rezervând direct!',
+    'booking.discountDescription': 'Prețurile noastre sunt cu 15% mai mici decât Airbnb/Booking.com.',
+    'booking.callWhatsapp': 'Sună sau Scrie (WhatsApp)',
+    'booking.emailUs': 'Trimite Email',
+    'booking.selectedDates': 'Datele Tale Selectate',
+    'booking.referenceDates': 'Te rugăm să menționezi datele selectate și cazarea când ne contactezi pentru a te ajuta mai eficient.',
+    'booking.alsoAvailable': 'De asemenea disponibil pe:',
+    
+    // Privacy Policy
+    'privacy.title': 'Politica de Confidențialitate',
+    'privacy.section1.title': '1. Introducere',
+    'privacy.section1.content': 'Bine ați venit la Metaxas Retreats ("noi" sau "nostru"). Ne angajăm să protejăm informațiile dumneavoastră personale și dreptul la confidențialitate. Această Politică de Confidențialitate explică modul în care colectăm, utilizăm și partajăm informațiile dumneavoastră când vizitați site-ul nostru sau faceți o rezervare la proprietatea noastră din Mikros Gialos, Lefkada.',
+    'privacy.section2.title': '2. Informații pe Care le Colectăm',
+    'privacy.section2.intro': 'Colectăm informații personale pe care ni le furnizați voluntar când faceți o rezervare sau ne contactați, inclusiv:',
+    'privacy.section2.item1': 'Nume și Date de Contact (Email, Număr de Telefon)',
+    'privacy.section2.item2': 'Detalii Rezervare (Date sosire/plecare, Număr de oaspeți)',
+    'privacy.section2.item3': 'Informații de Plată (Procesate în siguranță de furnizorii noștri de plăți; nu stocăm detaliile cardului pe serverele noastre)',
+    'privacy.section3.title': '3. Cum Utilizăm Informațiile',
+    'privacy.section3.intro': 'Utilizăm informațiile dumneavoastră pentru:',
+    'privacy.section3.item1': 'A facilita rezervarea și a furniza serviciile solicitate.',
+    'privacy.section3.item2': 'A comunica cu dumneavoastră privind sejurul (ex. instrucțiuni check-in).',
+    'privacy.section3.item3': 'A respecta obligațiile legale locale (ex. înregistrări taxe turism grecesc).',
+    'privacy.section4.title': '4. Cookie-uri și Urmărire',
+    'privacy.section4.content': 'Utilizăm cookie-uri și tehnologii similare de urmărire (precum Google Analytics) pentru a accesa sau stoca informații. Aceasta ne ajută să analizăm traficul site-ului și să îmbunătățim experiența utilizatorului. Puteți refuza utilizarea cookie-urilor ajustând setările browser-ului.',
+    'privacy.section5.title': '5. Păstrarea Datelor',
+    'privacy.section5.content': 'Păstrăm informațiile dumneavoastră atât timp cât este necesar pentru a îndeplini scopurile prezentate în această politică de confidențialitate, cu excepția cazului în care o perioadă mai lungă de păstrare este cerută de lege (precum cerințe fiscale, contabile sau alte cerințe legale).',
+    'privacy.section6.title': '6. Contactează-ne',
+    'privacy.section6.content': 'Dacă aveți întrebări sau comentarii despre această politică, ne puteți scrie la metaxasretreats@gmail.com.',
+    
+    // Terms of Service
+    'terms.title': 'Termeni și Condiții',
+    'terms.section1.title': '1. Acceptarea Termenilor',
+    'terms.section1.content': 'Acești Termeni și Condiții constituie un acord obligatoriu din punct de vedere juridic între dumneavoastră ("Oaspetele") și Metaxas Retreats privind sejurul la proprietatea noastră din Lefkada. Făcând o rezervare, sunteți de acord cu acești termeni.',
+    'terms.section2.title': '2. Rezervare și Anulare',
+    'terms.section2.checkin': 'Check-in: După ora 15:00.',
+    'terms.section2.checkout': 'Check-out: Înainte de ora 11:00.',
+    'terms.section2.cancellation': 'Anulare: Rambursare completă dacă se anulează cu 30 de zile înainte de sosire. Rambursare 50% dacă se anulează cu 14 zile înainte de sosire. Fără rambursare pentru anulările în termen de 14 zile de la sosire.',
+    'terms.section3.title': '3. Regulile Casei',
+    'terms.section3.intro': 'Pentru a asigura un sejur plăcut pentru toți:',
+    'terms.section3.rule1': 'Fumatul este interzis în interiorul cazărilor.',
+    'terms.section3.rule2': 'Nu sunt permise petreceri sau evenimente fără aprobare prealabilă.',
+    'terms.section3.rule3': 'Orele de liniște sunt de la 23:00 la 08:00.',
+    'terms.section3.rule4': 'Oaspeții sunt responsabili pentru orice daune cauzate proprietății în timpul sejurului.',
+    'terms.section4.title': '4. Răspundere',
+    'terms.section4.content': 'Metaxas Retreats nu este răspunzător pentru pierderea, deteriorarea sau furtul proprietății personale. Oaspeții utilizează facilitățile pe propria răspundere. Nu suntem responsabili pentru accidente sau vătămări care au loc pe proprietate cu excepția cazului în care sunt cauzate de neglijența noastră dovedită.',
+    'terms.section5.title': '5. Legea Aplicabilă',
+    'terms.section5.content': 'Acești termeni sunt reglementați și interpretați în conformitate cu legile Greciei. Metaxas Retreats și dumneavoastră consimțiți irevocabil că instanțele din Lefkada vor avea jurisdicție exclusivă pentru a rezolva orice dispută care poate apărea în legătură cu acești termeni.',
+    
+    // Footer
+    'footer.privacy': 'Politica de Confidențialitate',
+    'footer.terms': 'Termeni și Condiții',
   }
 };
 
@@ -835,7 +1037,7 @@ export const LanguageProvider = ({ children }: LanguageProviderProps) => {
   // Load language preference from localStorage on component mount
   useEffect(() => {
     const savedLanguage = localStorage.getItem('language') as Language;
-    if (savedLanguage && (savedLanguage === 'en' || savedLanguage === 'el' || savedLanguage === 'it' || savedLanguage === 'de')) {
+    if (savedLanguage && (savedLanguage === 'en' || savedLanguage === 'el' || savedLanguage === 'it' || savedLanguage === 'de' || savedLanguage === 'ro')) {
       setLanguageState(savedLanguage);
     } else {
       // Detect browser language
@@ -846,6 +1048,8 @@ export const LanguageProvider = ({ children }: LanguageProviderProps) => {
         setLanguageState('it');
       } else if (browserLang === 'de') {
         setLanguageState('de');
+      } else if (browserLang === 'ro') {
+        setLanguageState('ro');
       }
     }
   }, []);
