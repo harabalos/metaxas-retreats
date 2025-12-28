@@ -150,6 +150,13 @@ const translations: Record<Language, Record<string, string>> = {
     'detail.bathrooms': 'bathrooms',
     'detail.amenities': 'Amenities',
     
+    // Booking Summary
+    'summary.title': 'Booking Summary',
+    'summary.checkIn': 'Check-in',
+    'summary.checkOut': 'Check-out',
+    'summary.guests': 'Guests',
+    'summary.total': 'Total',
+    
     // Booking Page
     'booking.pageTitle': 'Contact Us for Booking',
     'booking.pageSubtitle': 'Contact us directly to confirm availability and complete your booking.',
@@ -344,6 +351,13 @@ const translations: Record<Language, Record<string, string>> = {
     'detail.beds': 'κρεβάτια',
     'detail.bathrooms': 'μπάνια',
     'detail.amenities': 'Παροχές',
+    
+    // Booking Summary
+    'summary.title': 'Σύνοψη Κράτησης',
+    'summary.checkIn': 'Άφιξη',
+    'summary.checkOut': 'Αναχώρηση',
+    'summary.guests': 'Επισκέπτες',
+    'summary.total': 'Σύνολο',
     
     // Booking Page
     'booking.pageTitle': 'Επικοινωνήστε για Κράτηση',
