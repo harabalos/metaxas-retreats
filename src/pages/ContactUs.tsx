@@ -141,37 +141,6 @@ const ContactUs = () => {
           </div>
         </div>
         
-        <Card className="mb-10">
-          <CardHeader>
-            <CardTitle className="text-forest-dark">{t('contact.reach')}</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="border-b pb-4">
-              <h3 className="font-medium text-forest text-lg mb-2">{t('contact.byCar')}</h3>
-              <p className="text-gray-700">
-                {language === 'el' 
-                  ? 'Από την πόλη της Λευκάδας, ακολουθήστε τις πινακίδες προς το Νυδρί και συνεχίστε νότια. Τα καταλύματά μας βρίσκονται στην περιοχή του Μικρού Γιαλού, μόλις 50μ από την παραλία.'
-                  : 'From Lefkada Town, follow the signs to Nidri and continue south. Our accommodations are located in the area of Mikros Gialos, just 50m from the beach.'}
-              </p>
-            </div>
-            <div className="border-b pb-4">
-              <h3 className="font-medium text-forest text-lg mb-2">{t('contact.byBus')}</h3>
-              <p className="text-gray-700">
-                {language === 'el'
-                  ? 'Υπάρχουν τακτικά δρομολόγια λεωφορείων από την πόλη της Λευκάδας προς τα Σύβοτα. Από τα Σύβοτα, μπορείτε να πάρετε ταξί για τον Μικρό Γιαλό (περίπου 5 χλμ).'
-                  : 'There are regular bus services from Lefkada Town to Sivota. From Sivota, you can take a taxi to Mikros Gialos (approximately 5km).'}
-              </p>
-            </div>
-            <div>
-              <h3 className="font-medium text-forest text-lg mb-2">{t('contact.byBoat')}</h3>
-              <p className="text-gray-700">
-                {language === 'el'
-                  ? 'Ο Μικρός Γιαλός είναι προσβάσιμος με σκάφος από διάφορα σημεία κατά μήκος της ανατολικής ακτής της Λευκάδας.'
-                  : 'Mikros Gialos is accessible by boat from various points along the east coast of Lefkada.'}
-              </p>
-            </div>
-          </CardContent>
-        </Card>
         
         <div className="bg-wood-light/20 rounded-lg p-6">
           <h2 className="text-2xl font-heading font-semibold text-forest-dark mb-4">{t('contact.book')}</h2>

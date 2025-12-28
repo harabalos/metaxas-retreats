@@ -34,9 +34,6 @@ const BookingSummary = ({
     });
   };
 
-  // Calculate the theoretical price on other platforms (15% more)
-  const otherPlatformsPrice = Math.round(totalPrice * 1.15);
-  const savings = otherPlatformsPrice - totalPrice;
 
   // Get translated accommodation name
   const translatedAccommodationName = accommodation.type === 'house' 
@@ -102,18 +99,6 @@ const BookingSummary = ({
             </div>
           </div>
           
-          <div className="bg-green-50 border border-green-200 p-3 rounded-md text-sm">
-            <p className="font-medium text-green-800">
-              {language === 'el' 
-                ? `Εξοικονομείτε €${savings}!` 
-                : `You save €${savings}!`}
-            </p>
-            <p className="text-green-700">
-              {language === 'el'
-                ? `Η απευθείας τιμή μας (€${totalPrice}) είναι 15% φθηνότερη από Airbnb/Booking.com (€${otherPlatformsPrice}).`
-                : `Our direct booking price (€${totalPrice}) is 15% cheaper than Airbnb/Booking.com (€${otherPlatformsPrice}).`}
-            </p>
-          </div>
         </div>
       </CardContent>
     </Card>
