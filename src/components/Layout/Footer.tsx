@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Mail, MapPin, Phone, Instagram, Facebook } from 'lucide-react';
+import { Mail, MapPin, Phone } from 'lucide-react';
 import { useLanguage } from '@/context/LanguageContext';
 
 const Footer = () => {
@@ -17,27 +17,6 @@ const Footer = () => {
           <div>
             <h3 className="text-xl font-heading font-semibold mb-4">Metaxas Retreats</h3>
             <p className="text-forest-light mb-4">{t('footer.about')}</p>
-            {/* Social Media Links */}
-            <div className="flex space-x-4 mt-4">
-              <a 
-                href="https://www.instagram.com/metaxasretreats" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="text-forest-light hover:text-wood transition-colors"
-                aria-label="Instagram"
-              >
-                <Instagram size={24} />
-              </a>
-              <a 
-                href="https://www.facebook.com/metaxasretreats" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="text-forest-light hover:text-wood transition-colors"
-                aria-label="Facebook"
-              >
-                <Facebook size={24} />
-              </a>
-            </div>
           </div>
 
           {/* Quick Links */}
