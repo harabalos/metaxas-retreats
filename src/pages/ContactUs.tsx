@@ -145,6 +145,13 @@ Thank you!`
       />
       <div className="min-h-screen bg-muted/30">
         <div className="container mx-auto px-4 py-12">
+          <h1 className="text-4xl font-heading font-bold text-forest-dark mb-4">
+            {t('contact.title')}
+          </h1>
+          <p className="text-lg text-muted-foreground mb-8 max-w-3xl">
+            {t('contact.subtitle')}
+          </p>
+          
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch">
             {/* Left Column - Contact Form */}
             <Card className="h-full">
