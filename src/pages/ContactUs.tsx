@@ -13,8 +13,7 @@ import { Link } from 'react-router-dom';
 import { toast } from 'sonner';
 import { contactFormSchema } from '@/lib/validationSchemas';
 import { z } from 'zod';
-
-const FORMSPREE_URL = 'https://formspree.io/f/mgoelyzg';
+import { supabase } from '@/integrations/supabase/client';
 
 const ContactUs = () => {
   const { t, language } = useLanguage();
@@ -87,27 +86,24 @@ const ContactUs = () => {
 
       setIsSubmitting(true);
 
-      const response = await fetch(FORMSPREE_URL, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          name: validatedData.fullName,
+      // Submit via server-side Edge Function for validation
+      const { data, error } = await supabase.functions.invoke('submit-contact', {
+        body: {
+          fullName: validatedData.fullName,
           email: validatedData.email,
-          phone: validatedData.phone || 'Not provided',
+          phone: validatedData.phone,
           message: validatedData.message,
-          _subject: `Contact Message - Metaxas Retreats`,
-        }),
+          _subject: 'Contact Message - Metaxas Retreats',
+        },
       });
 
-      if (response.ok) {
-        toast.success(language === 'el' ? 'Το μήνυμά σας στάλθηκε επιτυχώς!' : 'Your message has been sent successfully!');
-        setFormData({ fullName: '', email: '', phone: '', message: '' });
-        setAgreedToPolicy(false);
-      } else {
-        throw new Error('Failed to submit');
+      if (error) {
+        throw new Error(error.message || 'Failed to submit');
       }
+
+      toast.success(language === 'el' ? 'Το μήνυμά σας στάλθηκε επιτυχώς!' : 'Your message has been sent successfully!');
+      setFormData({ fullName: '', email: '', phone: '', message: '' });
+      setAgreedToPolicy(false);
     } catch (error) {
       if (error instanceof z.ZodError) {
         const firstError = error.errors[0];

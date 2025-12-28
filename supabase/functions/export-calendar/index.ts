@@ -20,22 +20,23 @@ serve(async (req) => {
     return new Response("Invalid accommodation id", { status: 400 });
   }
 
-  // Optional API key for enhanced security (if configured)
+  // API key authentication - REQUIRED for access
   const apiKey = req.headers.get('X-API-Key') || req.headers.get('x-api-key');
   const expectedApiKey = Deno.env.get('SYNC_API_KEY');
   
-  // If API key is configured, require it for access
-  if (expectedApiKey && apiKey !== expectedApiKey) {
-    // Log for audit trail
-    console.warn(`Calendar export accessed for ${accommodationId} without valid API key from ${req.headers.get('x-forwarded-for') || 'unknown'}`);
-  } else if (expectedApiKey && apiKey === expectedApiKey) {
-    console.log(`Authenticated calendar export for ${accommodationId}`);
+  // Require API key to be configured
+  if (!expectedApiKey) {
+    console.error('SYNC_API_KEY not configured - calendar export disabled');
+    return new Response('Server configuration error', { status: 500 });
   }
-
-  // Note: This endpoint intentionally allows unauthenticated access for external 
-  // booking platforms (Airbnb, Booking.com) that need to sync availability.
-  // The data exposed is only booking date ranges, which is publicly visible
-  // on booking platforms anyway.
+  
+  // Validate API key
+  if (!apiKey || apiKey !== expectedApiKey) {
+    console.warn(`Unauthorized calendar export attempt for ${accommodationId} from ${req.headers.get('x-forwarded-for') || 'unknown'}`);
+    return new Response('Unauthorized', { status: 401 });
+  }
+  
+  console.log(`Authenticated calendar export for ${accommodationId}`);
 
   const supabase = createClient(
     Deno.env.get("SUPABASE_URL") ?? "",
