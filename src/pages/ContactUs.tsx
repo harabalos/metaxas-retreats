@@ -6,7 +6,7 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Checkbox } from '@/components/ui/checkbox';
-import { MapPin, Phone, Mail, Instagram, Clock } from 'lucide-react';
+import { MapPin, Phone, Mail, MessageCircle } from 'lucide-react';
 import SEOHead from '@/components/SEO/SEOHead';
 import { useLanguage } from '@/context/LanguageContext';
 import { Link } from 'react-router-dom';
@@ -115,28 +115,23 @@ Thank you!`
       ]
     },
     {
-      icon: Phone,
-      title: language === 'el' ? 'Τηλέφωνο' : 'Phone',
-      lines: ['+30 6973219980', '+30 6980429891']
-    },
-    {
       icon: Mail,
       title: 'Email',
       lines: ['metaxasretreats@gmail.com']
-    },
-    {
-      icon: Instagram,
-      title: 'Instagram',
-      lines: ['@metaxasretreats']
-    },
-    {
-      icon: Clock,
-      title: language === 'el' ? 'Ώρες Λειτουργίας' : 'Opening Hours',
-      lines: [
-        language === 'el' ? 'Δευ - Κυρ: 8:00 πμ - 10:00 μμ' : 'Mon - Sun: 8:00 AM - 10:00 PM'
-      ]
     }
   ];
+
+  const whatsappNumbers = [
+    { number: '+30 6973219980', link: '306973219980' },
+    { number: '+30 6980429891', link: '306980429891' }
+  ];
+
+  const getWhatsAppMessage = () => {
+    const message = language === 'el'
+      ? 'Γεια σας! Θα ήθελα πληροφορίες για τα καταλύματά σας.'
+      : 'Hello! I would like information about your accommodations.';
+    return encodeURIComponent(message);
+  };
 
   return (
     <Layout>
@@ -259,7 +254,7 @@ Thank you!`
                         <div className="bg-sand/30 p-3 rounded-full flex-shrink-0">
                           <item.icon className="h-5 w-5 text-sand-dark" />
                         </div>
-                        <div>
+                        <div className="pt-0.5">
                           <h3 className="font-medium text-foreground">{item.title}</h3>
                           {item.lines.map((line, lineIndex) => (
                             <p key={lineIndex} className="text-muted-foreground text-sm">
@@ -269,6 +264,30 @@ Thank you!`
                         </div>
                       </div>
                     ))}
+                    
+                    {/* WhatsApp Section */}
+                    <div className="flex items-start gap-4">
+                      <div className="bg-green-100 p-3 rounded-full flex-shrink-0">
+                        <MessageCircle className="h-5 w-5 text-green-600" />
+                      </div>
+                      <div className="pt-0.5 flex-1">
+                        <h3 className="font-medium text-foreground">WhatsApp</h3>
+                        <div className="space-y-2 mt-1">
+                          {whatsappNumbers.map((item, index) => (
+                            <a 
+                              key={index}
+                              href={`https://wa.me/${item.link}?text=${getWhatsAppMessage()}`}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="flex items-center gap-2 text-sm text-green-700 hover:text-green-800 transition-colors"
+                            >
+                              <Phone className="h-3.5 w-3.5" />
+                              <span>{item.number}</span>
+                            </a>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </CardContent>
               </Card>
