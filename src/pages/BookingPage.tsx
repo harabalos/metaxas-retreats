@@ -4,13 +4,13 @@ import { differenceInDays } from 'date-fns';
 import Layout from '@/components/Layout/Layout';
 import { accommodations } from '@/data/accommodations';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
+import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import BookingSummary from '@/components/Booking/BookingSummary';
 import ContactSection from '@/components/Booking/ContactSection';
 import { format, eachDayOfInterval } from 'date-fns';
 import SEOHead from '@/components/SEO/SEOHead';
 import { useLanguage } from '@/context/LanguageContext';
-import { ExternalLink } from 'lucide-react';
+import { ExternalLink, Phone, MessageCircle } from 'lucide-react';
 
 const BookingPage = () => {
   const { id } = useParams<{ id: string }>();
@@ -59,12 +59,23 @@ const BookingPage = () => {
         return sum + dailyPrice;
       }, 0)
   : 0;
+  const formatDateDisplay = (date: Date) => format(date, 'dd/MM/yyyy');
   
   const getAccommodationDisplayName = () => {
     if (isGlampingTent) {
       return `${accommodation.name} (${t('booking.tent')} ${selectedTent})`;
     }
     return accommodation.name;
+  };
+
+  const getWhatsAppMessage = () => {
+    const checkIn = startDate ? formatDateDisplay(startDate) : '';
+    const checkOut = endDate ? formatDateDisplay(endDate) : '';
+    const accName = getAccommodationDisplayName();
+    const message = language === 'el'
+      ? `Γεια σας! Ενδιαφέρομαι για κράτηση στο ${accName}.\n\nΆφιξη: ${checkIn}\nΑναχώρηση: ${checkOut}\nΕπισκέπτες: ${guests}`
+      : `Hello! I'm interested in booking ${accName}.\n\nCheck-in: ${checkIn}\nCheck-out: ${checkOut}\nGuests: ${guests}`;
+    return encodeURIComponent(message);
   };
 
   const bookingSchema = {
@@ -111,8 +122,49 @@ const BookingPage = () => {
           {/* Left: Email Form + WhatsApp */}
           <ContactSection />
           
-          {/* Right: Booking Summary + Save 15% */}
+          {/* Right: WhatsApp + Booking Summary + Save 15% */}
           <div className="space-y-6">
+            {/* WhatsApp Contact */}
+            <Card>
+              <CardHeader className="pb-3">
+                <h3 className="flex items-center gap-2 font-semibold">
+                  <MessageCircle className="h-5 w-5 text-green-600" />
+                  {t('booking.callWhatsapp')}
+                </h3>
+              </CardHeader>
+              <CardContent className="space-y-3 pt-0">
+                <a 
+                  href={`https://wa.me/306973219980?text=${getWhatsAppMessage()}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-3 p-3 bg-green-50 hover:bg-green-100 rounded-lg border border-green-200 transition-colors"
+                >
+                  <div className="bg-green-500 p-2 rounded-full">
+                    <Phone className="h-4 w-4 text-white" />
+                  </div>
+                  <div>
+                    <p className="font-medium text-green-800">+30 6973219980</p>
+                    <p className="text-sm text-green-600">{language === 'el' ? 'Πατήστε για WhatsApp' : 'Tap for WhatsApp'}</p>
+                  </div>
+                </a>
+                
+                <a 
+                  href={`https://wa.me/306980429891?text=${getWhatsAppMessage()}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-3 p-3 bg-green-50 hover:bg-green-100 rounded-lg border border-green-200 transition-colors"
+                >
+                  <div className="bg-green-500 p-2 rounded-full">
+                    <Phone className="h-4 w-4 text-white" />
+                  </div>
+                  <div>
+                    <p className="font-medium text-green-800">+30 6980429891</p>
+                    <p className="text-sm text-green-600">{language === 'el' ? 'Πατήστε για WhatsApp' : 'Tap for WhatsApp'}</p>
+                  </div>
+                </a>
+              </CardContent>
+            </Card>
+
             <BookingSummary
               accommodation={accommodation}
               startDate={startDate}
