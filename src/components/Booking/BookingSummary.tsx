@@ -1,5 +1,3 @@
-
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import { Accommodation } from '@/data/accommodations';
 import { useLanguage } from '@/context/LanguageContext';
@@ -34,74 +32,63 @@ const BookingSummary = ({
     });
   };
 
-
-  // Get translated accommodation name
   const translatedAccommodationName = accommodation.type === 'house' 
     ? t('accommodation.woodenHouse')
     : t('accommodation.glampingTent');
 
-  // Get the accommodation name with tent number if applicable
   const accommodationName = selectedTent 
     ? `${translatedAccommodationName} (${t('booking.tent')} ${selectedTent})` 
     : translatedAccommodationName;
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>{t('summary.title')}</CardTitle>
-      </CardHeader>
-      <CardContent>
-        <div className="space-y-4">
-          <div className="flex items-start space-x-4">
-            <div className="w-20 h-20 rounded-md overflow-hidden flex-shrink-0">
-              <img
-                src={accommodation.images[0] || '/images/placeholder.svg'}
-                alt={translatedAccommodationName}
-                className="w-full h-full object-cover"
-                loading="lazy"
-              />
-            </div>
-            <div>
-              <h3 className="font-heading font-semibold text-sea-dark">
-                {accommodationName}
-              </h3>
-              <p className="text-sm text-gray-600">
-                {translatedAccommodationName}
-              </p>
-            </div>
+    <div>
+      <h3 className="font-semibold text-lg mb-4">{t('summary.title')}</h3>
+      
+      <div className="space-y-4">
+        <div className="flex items-start gap-4">
+          <div className="w-20 h-20 rounded-lg overflow-hidden flex-shrink-0">
+            <img
+              src={accommodation.images[0] || '/images/placeholder.svg'}
+              alt={translatedAccommodationName}
+              className="w-full h-full object-cover"
+              loading="lazy"
+            />
           </div>
-          
-          <Separator />
-          
-          <div className="space-y-2">
-            <div className="flex justify-between">
-              <span className="text-gray-600">{t('summary.checkIn')}</span>
-              <span className="font-medium">{formatDate(startDate)}</span>
-            </div>
-            <div className="flex justify-between">
-              <span className="text-gray-600">{t('summary.checkOut')}</span>
-              <span className="font-medium">{formatDate(endDate)}</span>
-            </div>
-            <div className="flex justify-between">
-              <span className="text-gray-600">{t('summary.guests')}</span>
-              <span className="font-medium">{guests}</span>
-            </div>
+          <div>
+            <h4 className="font-heading font-semibold text-sea-dark">
+              {accommodationName}
+            </h4>
+            <p className="text-sm text-muted-foreground">
+              {nights} {language === 'el' ? 'διανυκτερεύσεις' : 'nights'}
+            </p>
           </div>
-          
-          <Separator />
-          
-          <div className="space-y-2">
-            <div className="flex justify-between">
-            </div>
-            <div className="flex justify-between font-bold">
-              <span>{t('summary.total')}</span>
-              <span>€{totalPrice}</span>
-            </div>
-          </div>
-          
         </div>
-      </CardContent>
-    </Card>
+        
+        <Separator />
+        
+        <div className="grid grid-cols-2 gap-4 text-sm">
+          <div>
+            <p className="text-muted-foreground">{t('summary.checkIn')}</p>
+            <p className="font-medium">{formatDate(startDate)}</p>
+          </div>
+          <div>
+            <p className="text-muted-foreground">{t('summary.checkOut')}</p>
+            <p className="font-medium">{formatDate(endDate)}</p>
+          </div>
+          <div>
+            <p className="text-muted-foreground">{t('summary.guests')}</p>
+            <p className="font-medium">{guests}</p>
+          </div>
+        </div>
+        
+        <Separator />
+        
+        <div className="flex justify-between items-center">
+          <span className="font-semibold text-lg">{t('summary.total')}</span>
+          <span className="font-bold text-xl text-sea-dark">€{totalPrice}</span>
+        </div>
+      </div>
+    </div>
   );
 };
 

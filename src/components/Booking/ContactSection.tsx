@@ -1,15 +1,16 @@
 import { useState } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
-import { Mail, Send } from 'lucide-react';
+import { Mail, Send, MessageCircle, Phone } from 'lucide-react';
 import { useLanguage } from '@/context/LanguageContext';
 import { useSearchParams } from 'react-router-dom';
 import { accommodations } from '@/data/accommodations';
 import { format } from 'date-fns';
 import { toast } from 'sonner';
+import { Separator } from '@/components/ui/separator';
 
 const ContactSection = () => {
   const { t, language } = useLanguage();
@@ -38,10 +39,16 @@ const ContactSection = () => {
     ? `${t('accommodation.glampingTent')} (${t('booking.tent')} ${selectedTent})`
     : t('accommodation.woodenHouse');
 
-  const formatDate = (date: Date) => {
-    return format(date, 'dd/MM/yyyy');
-  };
+  const formatDate = (date: Date) => format(date, 'dd/MM/yyyy');
 
+  const getWhatsAppMessage = () => {
+    const checkIn = startDate ? formatDate(startDate) : '';
+    const checkOut = endDate ? formatDate(endDate) : '';
+    const message = language === 'el'
+      ? `Γεια σας! Ενδιαφέρομαι για κράτηση στο ${accommodationName}.\n\nΆφιξη: ${checkIn}\nΑναχώρηση: ${checkOut}\nΕπισκέπτες: ${guests}`
+      : `Hello! I'm interested in booking ${accommodationName}.\n\nCheck-in: ${checkIn}\nCheck-out: ${checkOut}\nGuests: ${guests}`;
+    return encodeURIComponent(message);
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -76,7 +83,7 @@ const ContactSection = () => {
 Email: ${formData.email}
 Τηλέφωνο: ${formData.phone || 'Δεν παρέχεται'}
 
-Ειδικά Αιτήματα:
+Μήνυμα:
 ${formData.specialRequests || 'Κανένα'}
 
 Ευχαριστώ!`
@@ -94,7 +101,7 @@ Full Name: ${formData.fullName}
 Email: ${formData.email}
 Phone: ${formData.phone || 'Not provided'}
 
-Special Requests:
+Message:
 ${formData.specialRequests || 'None'}
 
 Thank you!`
@@ -105,46 +112,88 @@ Thank you!`
   };
   
   return (
-    <div className="space-y-6">
-      {/* Minimal booking details */}
-      <div className="flex flex-wrap gap-x-6 gap-y-1 text-sm text-muted-foreground border-b pb-4">
-        <span><strong>{accommodationName}</strong></span>
-        <span>{startDate ? formatDate(startDate) : '-'} → {endDate ? formatDate(endDate) : '-'}</span>
-        <span>{guests} {language === 'el' ? 'επισκέπτες' : 'guests'}</span>
-      </div>
+    <Card className="h-full flex flex-col">
+      <CardContent className="p-6 flex flex-col h-full">
+        {/* Minimal booking details header */}
+        <div className="flex flex-wrap gap-x-4 gap-y-1 text-sm text-muted-foreground pb-4">
+          <span className="font-medium text-foreground">{accommodationName}</span>
+          <span>{startDate ? formatDate(startDate) : '-'} → {endDate ? formatDate(endDate) : '-'}</span>
+          <span>{guests} {language === 'el' ? 'επισκέπτες' : 'guests'}</span>
+        </div>
 
-      {/* Email Form */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
+        <Separator className="mb-6" />
+
+        {/* WhatsApp Section */}
+        <div className="mb-6">
+          <h3 className="flex items-center gap-2 font-semibold mb-3">
+            <MessageCircle className="h-5 w-5 text-green-600" />
+            {t('booking.callWhatsapp')}
+          </h3>
+          <div className="space-y-2">
+            <a 
+              href={`https://wa.me/306973219980?text=${getWhatsAppMessage()}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-3 p-3 bg-green-50 hover:bg-green-100 rounded-lg border border-green-200 transition-colors"
+            >
+              <div className="bg-green-500 p-2 rounded-full">
+                <Phone className="h-4 w-4 text-white" />
+              </div>
+              <div>
+                <p className="font-medium text-green-800">+30 6973219980</p>
+                <p className="text-xs text-green-600">{language === 'el' ? 'Πατήστε για WhatsApp' : 'Tap for WhatsApp'}</p>
+              </div>
+            </a>
+            
+            <a 
+              href={`https://wa.me/306980429891?text=${getWhatsAppMessage()}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-3 p-3 bg-green-50 hover:bg-green-100 rounded-lg border border-green-200 transition-colors"
+            >
+              <div className="bg-green-500 p-2 rounded-full">
+                <Phone className="h-4 w-4 text-white" />
+              </div>
+              <div>
+                <p className="font-medium text-green-800">+30 6980429891</p>
+                <p className="text-xs text-green-600">{language === 'el' ? 'Πατήστε για WhatsApp' : 'Tap for WhatsApp'}</p>
+              </div>
+            </a>
+          </div>
+        </div>
+
+        <Separator className="mb-6" />
+
+        {/* Email Form */}
+        <div className="flex-1">
+          <h3 className="flex items-center gap-2 font-semibold mb-3">
             <Mail className="h-5 w-5 text-sea" />
             {t('booking.emailUs')}
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
+          </h3>
           <form onSubmit={handleSubmit} className="space-y-4">
-            <div>
-              <Label htmlFor="fullName">{t('form.fullName')} *</Label>
-              <Input 
-                id="fullName"
-                type="text"
-                required
-                value={formData.fullName}
-                onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
-                placeholder={language === 'el' ? 'Το ονοματεπώνυμό σας' : 'Your full name'}
-              />
-            </div>
-            
-            <div>
-              <Label htmlFor="email">{t('form.email')} *</Label>
-              <Input 
-                id="email"
-                type="email"
-                required
-                value={formData.email}
-                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                placeholder={language === 'el' ? 'Το email σας' : 'Your email'}
-              />
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <Label htmlFor="fullName">{t('form.fullName')} *</Label>
+                <Input 
+                  id="fullName"
+                  type="text"
+                  required
+                  value={formData.fullName}
+                  onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
+                  placeholder={language === 'el' ? 'Ονοματεπώνυμο' : 'Full name'}
+                />
+              </div>
+              <div>
+                <Label htmlFor="email">{t('form.email')} *</Label>
+                <Input 
+                  id="email"
+                  type="email"
+                  required
+                  value={formData.email}
+                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                  placeholder={language === 'el' ? 'Email' : 'Email'}
+                />
+              </div>
             </div>
             
             <div>
@@ -154,7 +203,7 @@ Thank you!`
                 type="tel"
                 value={formData.phone}
                 onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                placeholder={language === 'el' ? 'Το τηλέφωνό σας' : 'Your phone number'}
+                placeholder={language === 'el' ? 'Τηλέφωνο' : 'Phone number'}
               />
             </div>
             
@@ -174,9 +223,9 @@ Thank you!`
               {t('form.sendRequest')}
             </Button>
           </form>
-        </CardContent>
-      </Card>
-    </div>
+        </div>
+      </CardContent>
+    </Card>
   );
 };
 
