@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 
 // Define available languages
-export type Language = 'en' | 'el' | 'it';
+export type Language = 'en' | 'el' | 'it' | 'de';
 
 type LanguageContextType = {
   language: Language;
@@ -619,6 +619,208 @@ const translations: Record<Language, Record<string, string>> = {
     // Footer
     'footer.privacy': 'Informativa sulla Privacy',
     'footer.terms': 'Termini di Servizio',
+  },
+  de: {
+    // Navigation
+    'nav.home': 'Startseite',
+    'nav.accommodations': 'Unterkünfte',
+    'nav.explore': 'Lefkada Entdecken',
+    'nav.about': 'Über Uns',
+    'nav.contact': 'Kontakt',
+    
+    // Homepage
+    'home.hero.welcome': 'Willkommen bei Metaxas Retreats',
+    'home.hero.subtitle': 'Luxuriöses Glamping-Erlebnis über dem perfekten türkisfarbenen Wasser der Bucht von Mikros Gialos auf Lefkada',
+    'home.hero.viewAccommodations': 'Unterkünfte Ansehen',
+    'home.section.title': 'Glamping auf Lefkada',
+    'home.section.description': 'Eingebettet zwischen Olivenbäumen mit Blick auf das kristallklare Wasser der Bucht von Mikros Gialos bieten unsere Unterkünfte eine unvergleichliche Mischung aus Luxus-Camping und authentischem griechischen Inselleben, nur wenige Schritte von einem der schönsten Strände Lefkadas entfernt.',
+    'home.wooden.title': 'Holzhaus',
+    'home.wooden.description': 'Unser geräumiges Holzhaus bietet einen Panoramablick auf das Meer der Bucht von Mikros Gialos für ein authentisches Inselerlebnis.',
+    'home.glamping.title': 'Glamping-Zelt',
+    'home.glamping.description': 'Erleben Sie Luxus-Camping in unserem eleganten Zelt mit Premium-Bettwäsche und Annehmlichkeiten, umgeben von Natur und nur wenige Gehminuten vom türkisfarbenen Wasser des Strandes von Mikros Gialos entfernt.',
+    'home.accommodations.title': 'Unsere Unterkünfte',
+    'home.reviews.title': 'Gästebewertungen',
+    'home.cta.title': 'Erleben Sie Lefkada mit Stil',
+    'home.cta.description': 'Buchen Sie jetzt Ihren Glamping-Urlaub und wachen Sie mit atemberaubendem Blick auf das türkisfarbene Wasser einer der schönsten Buchten Lefkadas auf.',
+    'home.cta.button': 'Jetzt Buchen',
+    
+    // Accommodation Card
+    'card.guests': 'Gäste',
+    'card.beds': 'Betten',
+    'card.viewDetails': 'Details Ansehen',
+    'card.fromPrice': 'Ab',
+    'card.perNight': '/Nacht',
+    
+    // About Page
+    'about.title': 'Über Uns',
+    'about.welcome': 'Willkommen bei Metaxas Retreats, Ihrem Tor zum authentischen griechischen Inselleben in der atemberaubenden Bucht von Mikros Gialos auf Lefkada.',
+    'about.founded': 'Gegründet von der Familie Metaxas mit tiefer Liebe zu dieser wunderschönen Ecke Lefkadas, bieten wir charmante Unterkünfte, die traditionelle griechische Elemente mit modernem Komfort verbinden.',
+    'about.location': 'Unsere Unterkünfte befinden sich in der ruhigen Gegend von Poros in Mikros Gialos, umgeben von Olivenbäumen und nur wenige Schritte von einem der schönsten Strände der Insel entfernt. Wir sind stolz darauf, unseren Gästen einen friedlichen Rückzugsort zu bieten, an dem sie die authentische Schönheit und den Rhythmus des griechischen Insellebens erleben können.',
+    'about.family.title': 'Unsere Familie',
+    'about.family.description': 'Seit drei Generationen heißt die Familie Metaxas Besucher in Mikros Gialos willkommen und teilt unsere Liebe zur natürlichen Schönheit Lefkadas und zur traditionellen Gastfreundschaft.',
+    'about.passion.title': 'Unsere Leidenschaft',
+    'about.passion.description': 'Wir sind leidenschaftlich daran interessiert, unvergessliche Erlebnisse für unsere Gäste zu schaffen und authentische Unterkünfte anzubieten, die den wahren Geist des griechischen Insellebens widerspiegeln.',
+    'about.promise.title': 'Unser Versprechen',
+    'about.promise.description': 'Wir versprechen persönliche Aufmerksamkeit, saubere und komfortable Unterkünfte sowie Insider-Wissen, um Ihnen zu helfen, das Beste von Lefkada zu entdecken.',
+    'about.story.title': 'Unsere Geschichte',
+    'about.story.p1': 'Die Geschichte von Metaxas Retreats begann in den 1980er Jahren, als Georgios Metaxas, verzaubert von der unberührten Schönheit von Mikros Gialos, ein Sommerhaus für seine Familie in dieser friedlichen Ecke Lefkadas baute. Als Freunde anfingen, in dieser idyllischen Lage übernachten zu wollen, wurde die Idee für Metaxas Retreats geboren.',
+    'about.story.p2': 'Im Laufe der Jahre hat sich das, was als einfaches Gästehaus begann, zu unserer heutigen Sammlung charmanter Unterkünfte entwickelt, die jeweils so gestaltet sind, dass sie Komfort bieten und gleichzeitig den authentischen Charakter des traditionellen griechischen Insellebens bewahren.',
+    'about.story.p3': 'Heute führen die zweite und dritte Generation der Familie Metaxas diese Tradition der Gastfreundschaft fort und heißen Gäste aus aller Welt willkommen, um die Magie von Mikros Gialos zu erleben.',
+    'about.story.p4': 'Während wir moderne Annehmlichkeiten und Komfort hinzugefügt haben, bleibt unsere Philosophie dieselbe: die authentische Schönheit, die Aromen und die Rhythmen des Lebens in dieser besonderen Ecke der Insel Lefkada zu teilen.',
+    'about.why.title': 'Warum Mikros Gialos wählen?',
+    'about.why.intro': 'Mikros Gialos ist eine der schönsten Buchten Lefkadas und bietet eine perfekte Balance aus natürlicher Schönheit, Ruhe und Bequemlichkeit. Unsere Lage in der Gegend von Poros bietet:',
+    'about.why.beach': 'Einen atemberaubenden Kiesstrand mit kristallklarem türkisfarbenem Wasser, ideal zum Schwimmen und Schnorcheln',
+    'about.why.peaceful': 'Friedliche Umgebung abseits der überfüllteren Gebiete der Insel',
+    'about.why.tavernas': 'Fußläufig zu ausgezeichneten lokalen Tavernen mit frischen Meeresfrüchten und traditioneller griechischer Küche',
+    'about.why.boats': 'Einfacher Zugang zu Bootsausflügen entlang der wunderschönen Ostküste Lefkadas',
+    'about.why.base': 'Perfekte Basis zur Erkundung der gesamten Insel, mit Lefkada-Stadt nur 25 km entfernt',
+    'about.why.beaches': 'In der Nähe anderer schöner Strände wie Agiofili und Vassiliki',
+    'about.why.cta': 'Erleben Sie den authentischen Charme des griechischen Insellebens bei Metaxas Retreats in Mikros Gialos!',
+    
+    // Explore Page
+    'explore.title': 'Die Insel Lefkada Entdecken',
+    'explore.intro': 'Entdecken Sie das smaragdgrüne Juwel des Ionischen Meeres. Lefkada bietet atemberaubende Strände, charmante Bergdörfer, köstliche lokale Küche und aufregende Aktivitäten für jeden Reisetyp.',
+    'explore.beaches': 'Strände',
+    'explore.villages': 'Dörfer',
+    'explore.activities': 'Aktivitäten',
+    'explore.cuisine': 'Lokale Küche',
+    'explore.plan.title': 'Planen Sie Ihren Perfekten Tag',
+    'explore.plan.beach.title': 'Strandtag',
+    'explore.plan.beach.description': 'Wachen Sie in Ihrem Glamping-Zelt in Mikros Gialos auf, gehen Sie zum Strand für ein morgendliches Bad, genießen Sie das Mittagessen in einer lokalen Taverne in Mikros Gialos oder Sivota, und beenden Sie den Tag mit Getränken zum Sonnenuntergang im Dorf Eksantheia.',
+    'explore.plan.village.title': 'Dorferkundung',
+    'explore.plan.village.description': 'Beginnen Sie Ihren Tag in Mikros Gialos oder Sivota, fahren Sie zum Bergdorf Karya zum Mittagessen, und beenden Sie Ihren Tag in Agios Nikitas mit Abendessen am Meer.',
+    'explore.plan.water.title': 'Wasseraktivitäten',
+    'explore.plan.water.description': 'Machen Sie einen morgendlichen Segeltörn von Nidri zu den nahegelegenen Inseln, genießen Sie das Mittagessen auf Meganisi, und verbringen Sie den Nachmittag mit Windsurfen in Vasiliki.',
+    'explore.specialties.title': 'Lokale Spezialitäten',
+    'explore.specialties.subtitle': 'Traditionelle Gerichte, die Sie probieren müssen',
+    'explore.restaurants.title': 'Wo Essen',
+    'explore.restaurants.subtitle': 'Empfohlene Restaurants und Tavernen',
+    'explore.products.title': 'Lokale Produkte',
+    'explore.products.subtitle': 'Nehmen Sie einen Geschmack von Lefkada mit nach Hause',
+    
+    // Contact Page
+    'contact.title': 'Kontaktieren Sie Uns',
+    'contact.subtitle': 'Wir freuen uns von Ihnen zu hören! Finden Sie uns in der schönen Gegend von Poros, Mikros Gialos auf der Insel Lefkada, oder kontaktieren Sie uns per Telefon oder E-Mail.',
+    'contact.visit': 'Besuchen Sie Uns',
+    'contact.call': 'Rufen Sie Uns An',
+    'contact.email': 'E-Mail',
+    'contact.location': 'Unser Standort',
+    'contact.mapNote': 'Hinweis: Mikros Gialos ist eine der schönsten Buchten Lefkadas mit kristallklarem Wasser und friedlicher Atmosphäre. Unsere Unterkünfte sind nur wenige Gehminuten vom Strand entfernt!',
+    'contact.reach': 'So Erreichen Sie Uns',
+    'contact.byCar': 'Mit dem Auto',
+    'contact.byBus': 'Mit dem Bus',
+    'contact.byBoat': 'Mit dem Boot',
+    'contact.book': 'Buchen Sie Ihren Aufenthalt in Mikros Gialos',
+    'contact.bookDescription': 'Erleben Sie die Schönheit und Ruhe der Bucht von Mikros Gialos mit ihrem kristallklaren türkisfarbenen Wasser, dem Kiesstrand und den charmanten Tavernen. Unsere Unterkünfte bieten die perfekte Basis, um dieses versteckte Juwel der Insel Lefkada zu erkunden.',
+    'contact.callToAction': 'Kontaktieren Sie uns jetzt, um die Verfügbarkeit für Ihre gewünschten Daten zu prüfen!',
+
+    // Footer
+    'footer.about': 'Erleben Sie die Magie des griechischen Insellebens mit unseren charmanten Unterkünften in Mikros Gialos, eingebettet zwischen schönen Bäumen und nur wenige Schritte vom azurblauen Ionischen Meer entfernt.',
+    'footer.quickLinks': 'Schnelllinks',
+    'footer.ourAccommodations': 'Unsere Unterkünfte',
+    'footer.contactUs': 'Kontakt',
+    'footer.rights': 'Alle Rechte vorbehalten.',
+    'footer.poweredBy': 'Powered by',
+    
+    // Accommodations
+    'accommodation.woodenHouse': 'Holzhaus',
+    'accommodation.glampingTent': 'Glamping-Zelt',
+    'accommodation.woodenHouse.description': 'Erleben Sie authentisches griechisches Inselleben in unserem charmanten Holzhaus. Eingebettet zwischen Olivenbäumen mit atemberaubendem Meerblick. Die geräumige Terrasse ist ideal, um die berühmten griechischen Sonnenuntergänge bei einem Glas lokalem Wein zu genießen. Im Inneren finden Sie eine voll ausgestattete Küche, einen gemütlichen Wohnbereich und durchdacht gestaltete Schlafzimmer mit Premium-Bettwäsche.',
+    'accommodation.woodenHouse.short': 'Charmantes Holzhaus mit Meerblick für einen komfortablen Urlaub',
+    'accommodation.glampingTent.description': 'Unser luxuriöses Glamping-Zelt bietet ein unvergessliches Erlebnis, das das Abenteuer des Campings mit hotelähnlichen Annehmlichkeiten verbindet. In einer ruhigen Lage zwischen alten Olivenbäumen gelegen, verfügt dieses geräumige Zelt über ein komfortables Doppelbett und 3 Einzelbetten mit Premium-Bettwäsche, Strom und stilvoller Einrichtung. Der private Außensitzbereich ist perfekt für den Morgenkaffee oder die abendliche Entspannung unter den Sternen. Erleben Sie die Magie des Insellebens mit allem Komfort, den Sie brauchen.',
+    'accommodation.glampingTent.short': 'Geräumiges Glamping-Erlebnis mit Hotelqualität, umgeben von schönen Bäumen',
+    
+    // Amenities
+    'amenity.seaView': 'Meerblick',
+    'amenity.parking': 'Parkplatz',
+    'amenity.beachDistance': '50m vom Strand',
+    'amenity.airConditioning': 'Klimaanlage',
+    'amenity.kitchen': 'Voll ausgestattete Küche',
+    'amenity.wifi': 'Highspeed-WLAN',
+    'amenity.terrace': 'Private Terrasse',
+    'amenity.outdoorDining': 'Essbereich im Freien',
+    'amenity.washingMachine': 'Waschmaschine',
+    'amenity.rampAccess': 'Rampe',
+    'amenity.outdoorSeating': 'Privater Außensitzbereich',
+    'amenity.ecoFriendly': 'Umweltfreundliche Ausstattung',
+    
+    // Accommodation Detail Page
+    'detail.notFound': 'Unterkunft Nicht Gefunden',
+    'detail.notFoundText': 'Die gesuchte Unterkunft existiert nicht.',
+    'detail.returnHome': 'Zurück zur Startseite',
+    'detail.about': 'Über diese Unterkunft',
+    'detail.features': 'Ausstattung',
+    'detail.guests': 'Gäste',
+    'detail.bedrooms': 'Schlafzimmer',
+    'detail.beds': 'Betten',
+    'detail.bathrooms': 'Badezimmer',
+    'detail.amenities': 'Ausstattung',
+    
+    // Booking Summary
+    'summary.title': 'Buchungsübersicht',
+    'summary.checkIn': 'Check-in',
+    'summary.checkOut': 'Check-out',
+    'summary.guests': 'Gäste',
+    'summary.total': 'Gesamt',
+    
+    // Booking Page
+    'booking.pageTitle': 'Kontaktieren Sie Uns für Buchung',
+    'booking.pageSubtitle': 'Kontaktieren Sie uns direkt, um die Verfügbarkeit zu bestätigen und Ihre Buchung abzuschließen.',
+    'booking.missingInfo': 'Buchungsinformationen Fehlen',
+    'booking.selectFirst': 'Bitte wählen Sie eine Unterkunft und Daten aus, bevor Sie fortfahren.',
+    'booking.tent': 'Zelt',
+    'booking.contactTitle': 'Kontakt für Buchung',
+    'booking.saveDiscount': 'Sparen Sie 15% bei Direktbuchung!',
+    'booking.discountDescription': 'Unsere Website-Preise sind 15% günstiger als Airbnb/Booking.com.',
+    'booking.callWhatsapp': 'Anrufen oder Schreiben (WhatsApp)',
+    'booking.emailUs': 'E-Mail Schreiben',
+    'booking.selectedDates': 'Ihre Ausgewählten Daten',
+    'booking.referenceDates': 'Bitte geben Sie Ihre ausgewählten Daten und die Unterkunft an, wenn Sie uns kontaktieren, damit wir Ihnen effizienter helfen können.',
+    'booking.alsoAvailable': 'Auch verfügbar auf:',
+    
+    // Privacy Policy
+    'privacy.title': 'Datenschutzerklärung',
+    'privacy.section1.title': '1. Einleitung',
+    'privacy.section1.content': 'Willkommen bei Metaxas Retreats ("wir" oder "uns"). Wir verpflichten uns, Ihre persönlichen Daten und Ihr Recht auf Privatsphäre zu schützen. Diese Datenschutzerklärung erklärt, wie wir Ihre Informationen sammeln, verwenden und teilen, wenn Sie unsere Website besuchen oder eine Buchung bei unserer Unterkunft in Mikros Gialos, Lefkada vornehmen.',
+    'privacy.section2.title': '2. Informationen, die Wir Sammeln',
+    'privacy.section2.intro': 'Wir sammeln persönliche Informationen, die Sie uns freiwillig zur Verfügung stellen, wenn Sie eine Reservierung vornehmen oder uns kontaktieren, einschließlich:',
+    'privacy.section2.item1': 'Namen und Kontaktdaten (E-Mail, Telefonnummer)',
+    'privacy.section2.item2': 'Buchungsdetails (An-/Abreisedaten, Anzahl der Gäste)',
+    'privacy.section2.item3': 'Zahlungsinformationen (Sicher verarbeitet durch unsere Zahlungsanbieter; wir speichern keine Kreditkartendaten auf unseren Servern)',
+    'privacy.section3.title': '3. Wie Wir Ihre Informationen Verwenden',
+    'privacy.section3.intro': 'Wir verwenden Ihre Informationen um:',
+    'privacy.section3.item1': 'Ihre Buchung zu erleichtern und angeforderte Dienstleistungen bereitzustellen.',
+    'privacy.section3.item2': 'Mit Ihnen bezüglich Ihres Aufenthalts zu kommunizieren (z.B. Check-in-Anweisungen).',
+    'privacy.section3.item3': 'Lokalen gesetzlichen Verpflichtungen nachzukommen (z.B. griechische Tourismussteueraufzeichnungen).',
+    'privacy.section4.title': '4. Cookies und Tracking',
+    'privacy.section4.content': 'Wir verwenden Cookies und ähnliche Tracking-Technologien (wie Google Analytics), um Informationen zu speichern oder darauf zuzugreifen. Dies hilft uns, den Website-Traffic zu analysieren und Ihre Benutzererfahrung zu verbessern. Sie können die Verwendung von Cookies ablehnen, indem Sie Ihre Browser-Einstellungen anpassen.',
+    'privacy.section5.title': '5. Datenaufbewahrung',
+    'privacy.section5.content': 'Wir bewahren Ihre Informationen so lange auf, wie es notwendig ist, um die in dieser Datenschutzerklärung beschriebenen Zwecke zu erfüllen, es sei denn, eine längere Aufbewahrungsfrist ist gesetzlich vorgeschrieben (wie Steuer-, Buchhaltungs- oder andere gesetzliche Anforderungen).',
+    'privacy.section6.title': '6. Kontaktieren Sie Uns',
+    'privacy.section6.content': 'Wenn Sie Fragen oder Kommentare zu dieser Erklärung haben, können Sie uns per E-Mail an metaxasretreats@gmail.com kontaktieren.',
+    
+    // Terms of Service
+    'terms.title': 'Nutzungsbedingungen',
+    'terms.section1.title': '1. Zustimmung zu den Bedingungen',
+    'terms.section1.content': 'Diese Nutzungsbedingungen stellen eine rechtsverbindliche Vereinbarung zwischen Ihnen ("dem Gast") und Metaxas Retreats bezüglich Ihres Aufenthalts in unserer Unterkunft auf Lefkada dar. Mit einer Reservierung stimmen Sie diesen Bedingungen zu.',
+    'terms.section2.title': '2. Buchung und Stornierung',
+    'terms.section2.checkin': 'Check-in: Nach 15:00 Uhr.',
+    'terms.section2.checkout': 'Check-out: Vor 11:00 Uhr.',
+    'terms.section2.cancellation': 'Stornierung: Vollständige Rückerstattung bei Stornierung 30 Tage vor Anreise. 50% Rückerstattung bei Stornierung 14 Tage vor Anreise. Keine Rückerstattung bei Stornierung innerhalb von 14 Tagen vor Anreise.',
+    'terms.section3.title': '3. Hausregeln',
+    'terms.section3.intro': 'Um einen angenehmen Aufenthalt für alle zu gewährleisten:',
+    'terms.section3.rule1': 'Rauchen in den Unterkünften ist nicht gestattet.',
+    'terms.section3.rule2': 'Keine Partys oder Veranstaltungen ohne vorherige Genehmigung.',
+    'terms.section3.rule3': 'Ruhezeiten sind von 23:00 bis 08:00 Uhr.',
+    'terms.section3.rule4': 'Gäste sind für alle während ihres Aufenthalts verursachten Schäden an der Unterkunft verantwortlich.',
+    'terms.section4.title': '4. Haftung',
+    'terms.section4.content': 'Metaxas Retreats haftet nicht für Verlust, Beschädigung oder Diebstahl von persönlichem Eigentum. Gäste nutzen die Einrichtungen auf eigenes Risiko. Wir sind nicht verantwortlich für Unfälle oder Verletzungen auf dem Gelände, es sei denn, sie wurden durch unsere nachgewiesene Fahrlässigkeit verursacht.',
+    'terms.section5.title': '5. Anwendbares Recht',
+    'terms.section5.content': 'Diese Bedingungen unterliegen den Gesetzen Griechenlands und werden nach diesen ausgelegt. Metaxas Retreats und Sie stimmen unwiderruflich zu, dass die Gerichte von Lefkada die ausschließliche Zuständigkeit haben, um alle Streitigkeiten zu lösen, die im Zusammenhang mit diesen Bedingungen entstehen können.',
+    
+    // Footer
+    'footer.privacy': 'Datenschutzerklärung',
+    'footer.terms': 'Nutzungsbedingungen',
   }
 };
 
@@ -633,7 +835,7 @@ export const LanguageProvider = ({ children }: LanguageProviderProps) => {
   // Load language preference from localStorage on component mount
   useEffect(() => {
     const savedLanguage = localStorage.getItem('language') as Language;
-    if (savedLanguage && (savedLanguage === 'en' || savedLanguage === 'el' || savedLanguage === 'it')) {
+    if (savedLanguage && (savedLanguage === 'en' || savedLanguage === 'el' || savedLanguage === 'it' || savedLanguage === 'de')) {
       setLanguageState(savedLanguage);
     } else {
       // Detect browser language
@@ -642,6 +844,8 @@ export const LanguageProvider = ({ children }: LanguageProviderProps) => {
         setLanguageState('el');
       } else if (browserLang === 'it') {
         setLanguageState('it');
+      } else if (browserLang === 'de') {
+        setLanguageState('de');
       }
     }
   }, []);
