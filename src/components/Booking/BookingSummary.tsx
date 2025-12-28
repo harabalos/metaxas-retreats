@@ -2,6 +2,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import { Accommodation } from '@/data/accommodations';
+import { useLanguage } from '@/context/LanguageContext';
 
 interface BookingSummaryProps {
   accommodation: Accommodation;
@@ -22,8 +23,10 @@ const BookingSummary = ({
   totalPrice,
   selectedTent
 }: BookingSummaryProps) => {
+  const { t, language } = useLanguage();
+  
   const formatDate = (date: Date) => {
-    return date.toLocaleDateString('en-US', {
+    return date.toLocaleDateString(language === 'el' ? 'el-GR' : 'en-US', {
       weekday: 'short',
       month: 'short',
       day: 'numeric',
@@ -35,15 +38,20 @@ const BookingSummary = ({
   const otherPlatformsPrice = Math.round(totalPrice * 1.15);
   const savings = otherPlatformsPrice - totalPrice;
 
+  // Get translated accommodation name
+  const translatedAccommodationName = accommodation.type === 'house' 
+    ? t('accommodation.woodenHouse')
+    : t('accommodation.glampingTent');
+
   // Get the accommodation name with tent number if applicable
   const accommodationName = selectedTent 
-    ? `${accommodation.name} (Tent ${selectedTent})` 
-    : accommodation.name;
+    ? `${translatedAccommodationName} (${t('booking.tent')} ${selectedTent})` 
+    : translatedAccommodationName;
 
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Booking Summary</CardTitle>
+        <CardTitle>{t('summary.title')}</CardTitle>
       </CardHeader>
       <CardContent>
         <div className="space-y-4">
@@ -51,8 +59,9 @@ const BookingSummary = ({
             <div className="w-20 h-20 rounded-md overflow-hidden flex-shrink-0">
               <img
                 src={accommodation.images[0] || '/images/placeholder.svg'}
-                alt={accommodation.name}
+                alt={translatedAccommodationName}
                 className="w-full h-full object-cover"
+                loading="lazy"
               />
             </div>
             <div>
@@ -60,7 +69,7 @@ const BookingSummary = ({
                 {accommodationName}
               </h3>
               <p className="text-sm text-gray-600">
-                {accommodation.type === 'house' ? 'Wooden House' : 'Glamping Tent'}
+                {translatedAccommodationName}
               </p>
             </div>
           </div>
@@ -69,15 +78,15 @@ const BookingSummary = ({
           
           <div className="space-y-2">
             <div className="flex justify-between">
-              <span className="text-gray-600">Check-in</span>
+              <span className="text-gray-600">{t('summary.checkIn')}</span>
               <span className="font-medium">{formatDate(startDate)}</span>
             </div>
             <div className="flex justify-between">
-              <span className="text-gray-600">Check-out</span>
+              <span className="text-gray-600">{t('summary.checkOut')}</span>
               <span className="font-medium">{formatDate(endDate)}</span>
             </div>
             <div className="flex justify-between">
-              <span className="text-gray-600">Guests</span>
+              <span className="text-gray-600">{t('summary.guests')}</span>
               <span className="font-medium">{guests}</span>
             </div>
           </div>
@@ -88,15 +97,21 @@ const BookingSummary = ({
             <div className="flex justify-between">
             </div>
             <div className="flex justify-between font-bold">
-              <span>Total</span>
+              <span>{t('summary.total')}</span>
               <span>€{totalPrice}</span>
             </div>
           </div>
           
           <div className="bg-green-50 border border-green-200 p-3 rounded-md text-sm">
-            <p className="font-medium text-green-800">You save €{savings}!</p>
+            <p className="font-medium text-green-800">
+              {language === 'el' 
+                ? `Εξοικονομείτε €${savings}!` 
+                : `You save €${savings}!`}
+            </p>
             <p className="text-green-700">
-              Our direct booking price (€{totalPrice}) is 15% cheaper than Airbnb/Booking.com (€{otherPlatformsPrice}).
+              {language === 'el'
+                ? `Η απευθείας τιμή μας (€${totalPrice}) είναι 15% φθηνότερη από Airbnb/Booking.com (€${otherPlatformsPrice}).`
+                : `Our direct booking price (€${totalPrice}) is 15% cheaper than Airbnb/Booking.com (€${otherPlatformsPrice}).`}
             </p>
           </div>
         </div>
