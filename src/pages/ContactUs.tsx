@@ -1,12 +1,19 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Layout from '@/components/Layout/Layout';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { MapPin, Phone, Mail } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
+import { Label } from '@/components/ui/label';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { MapPin, Phone, Mail, MessageCircle, Send } from 'lucide-react';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 import SEOHead from '@/components/SEO/SEOHead';
 import { useLanguage } from '@/context/LanguageContext';
+import { Link } from 'react-router-dom';
+import { toast } from 'sonner';
 
 // Fix the Leaflet default icon issue
 delete (L.Icon.Default.prototype as any)._getIconUrl;
@@ -19,6 +26,13 @@ L.Icon.Default.mergeOptions({
 const ContactUs = () => {
   const { t, language } = useLanguage();
   
+  const [formData, setFormData] = useState({
+    fullName: '',
+    email: '',
+    subject: '',
+    message: ''
+  });
+
   // Updated coordinates as requested - [lat, lng] format for Leaflet
   const metaxasRentsCoords: [number, number] = [38.640048782722396, 20.69898862142832];
   const position = metaxasRentsCoords;
@@ -54,6 +68,50 @@ const ContactUs = () => {
     }
   };
 
+  const getWhatsAppMessage = () => {
+    const message = language === 'el'
+      ? 'Γεια σας! Θα ήθελα πληροφορίες για τα καταλύματά σας.'
+      : 'Hello! I would like information about your accommodations.';
+    return encodeURIComponent(message);
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (!formData.fullName.trim() || !formData.email.trim() || !formData.message.trim()) {
+      toast.error(language === 'el' ? 'Παρακαλώ συμπληρώστε τα απαιτούμενα πεδία' : 'Please fill in the required fields');
+      return;
+    }
+
+    const subjectText = formData.subject || (language === 'el' ? 'Γενικό Ερώτημα' : 'General Inquiry');
+    const subject = encodeURIComponent(`${subjectText} - Metaxas Retreats`);
+    
+    const body = encodeURIComponent(
+      language === 'el'
+        ? `Γεια σας,
+
+${formData.message}
+
+Στοιχεία Επικοινωνίας:
+Ονοματεπώνυμο: ${formData.fullName}
+Email: ${formData.email}
+
+Ευχαριστώ!`
+        : `Hello,
+
+${formData.message}
+
+Contact Details:
+Full Name: ${formData.fullName}
+Email: ${formData.email}
+
+Thank you!`
+    );
+    
+    window.location.href = `mailto:metaxasretreats@gmail.com?subject=${subject}&body=${body}`;
+    toast.success(language === 'el' ? 'Ανοίγει η εφαρμογή email...' : 'Opening email app...');
+  };
+
   return (
     <Layout>
       <SEOHead
@@ -66,12 +124,13 @@ const ContactUs = () => {
       />
       <div className="container mx-auto px-4 py-12">
         <h1 className="text-4xl font-heading font-bold text-forest-dark mb-4">{t('contact.title')}</h1>
-        <p className="text-lg text-gray-700 mb-8 max-w-3xl">
+        <p className="text-lg text-muted-foreground mb-8 max-w-3xl">
           {t('contact.subtitle')}
         </p>
         
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-10">
-          <Card className="bg-white shadow-md hover:shadow-lg transition-shadow">
+        {/* Contact Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+          <Card className="bg-card shadow-md hover:shadow-lg transition-shadow">
             <CardHeader className="flex flex-row items-center gap-4">
               <div className="bg-forest-light/30 p-3 rounded-full">
                 <MapPin className="h-6 w-6 text-forest" />
@@ -79,27 +138,44 @@ const ContactUs = () => {
               <CardTitle className="text-forest-dark">{t('contact.visit')}</CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-gray-700">Metaxas Retreats</p>
-              <p className="text-gray-700">{language === 'el' ? 'Πόρος, Μικρός Γιαλός' : 'Poros, Mikros Gialos'}</p>
-              <p className="text-gray-700">{language === 'el' ? 'Λευκάδα, Ιόνια Νησιά' : 'Lefkada, Ionian Islands'}</p>
-              <p className="text-gray-700">{language === 'el' ? 'Ελλάδα' : 'Greece'}</p>
+              <p className="text-foreground">Metaxas Retreats</p>
+              <p className="text-foreground">{language === 'el' ? 'Πόρος, Μικρός Γιαλός' : 'Poros, Mikros Gialos'}</p>
+              <p className="text-foreground">{language === 'el' ? 'Λευκάδα, Ιόνια Νησιά' : 'Lefkada, Ionian Islands'}</p>
+              <p className="text-foreground">{language === 'el' ? 'Ελλάδα' : 'Greece'}</p>
             </CardContent>
           </Card>
           
-          <Card className="bg-white shadow-md hover:shadow-lg transition-shadow">
+          <Card className="bg-card shadow-md hover:shadow-lg transition-shadow">
             <CardHeader className="flex flex-row items-center gap-4">
-              <div className="bg-forest-light/30 p-3 rounded-full">
-                <Phone className="h-6 w-6 text-forest" />
+              <div className="bg-green-100 p-3 rounded-full">
+                <MessageCircle className="h-6 w-6 text-green-600" />
               </div>
               <CardTitle className="text-forest-dark">{t('contact.call')}</CardTitle>
             </CardHeader>
-            <CardContent>
-              <p className="text-gray-700">+30 6973219980 +30 6980429891</p>
-              <p className="text-gray-600 mt-2">{language === 'el' ? 'Διαθέσιμοι καθημερινά' : 'Available daily'}</p>
+            <CardContent className="space-y-2">
+              <a 
+                href={`https://wa.me/306973219980?text=${getWhatsAppMessage()}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 p-2 bg-green-50 hover:bg-green-100 rounded-lg transition-colors"
+              >
+                <Phone className="h-4 w-4 text-green-600" />
+                <span className="text-green-800 font-medium">+30 6973219980</span>
+              </a>
+              <a 
+                href={`https://wa.me/306980429891?text=${getWhatsAppMessage()}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 p-2 bg-green-50 hover:bg-green-100 rounded-lg transition-colors"
+              >
+                <Phone className="h-4 w-4 text-green-600" />
+                <span className="text-green-800 font-medium">+30 6980429891</span>
+              </a>
+              <p className="text-sm text-muted-foreground">{language === 'el' ? 'Διαθέσιμοι καθημερινά' : 'Available daily'}</p>
             </CardContent>
           </Card>
           
-          <Card className="bg-white shadow-md hover:shadow-lg transition-shadow">
+          <Card className="bg-card shadow-md hover:shadow-lg transition-shadow">
             <CardHeader className="flex flex-row items-center gap-4">
               <div className="bg-forest-light/30 p-3 rounded-full">
                 <Mail className="h-6 w-6 text-forest" />
@@ -107,13 +183,90 @@ const ContactUs = () => {
               <CardTitle className="text-forest-dark">{t('contact.email')}</CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-gray-700">metaxasretreats@gmail.com</p>
-              <p className="text-gray-600 mt-2">{language === 'el' ? 'Θα απαντήσουμε εντός μίας ώρας' : "We'll respond within an hour"}</p>
+              <p className="text-foreground">metaxasretreats@gmail.com</p>
+              <p className="text-sm text-muted-foreground mt-2">{language === 'el' ? 'Θα απαντήσουμε εντός μίας ώρας' : "We'll respond within an hour"}</p>
             </CardContent>
           </Card>
         </div>
+
+        {/* Inquiry Form */}
+        <Card className="mb-10">
+          <CardHeader>
+            <CardTitle className="text-forest-dark flex items-center gap-2">
+              <Send className="h-5 w-5" />
+              {t('form.sendMessage')}
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <form onSubmit={handleSubmit} className="space-y-4 max-w-2xl">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <Label htmlFor="fullName">{t('form.fullName')} *</Label>
+                  <Input 
+                    id="fullName"
+                    type="text"
+                    required
+                    value={formData.fullName}
+                    onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
+                    placeholder={language === 'el' ? 'Το ονοματεπώνυμό σας' : 'Your full name'}
+                  />
+                </div>
+                
+                <div>
+                  <Label htmlFor="email">{t('form.email')} *</Label>
+                  <Input 
+                    id="email"
+                    type="email"
+                    required
+                    value={formData.email}
+                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                    placeholder={language === 'el' ? 'Το email σας' : 'Your email'}
+                  />
+                </div>
+              </div>
+              
+              <div>
+                <Label htmlFor="subject">{t('form.subject')}</Label>
+                <Select value={formData.subject} onValueChange={(value) => setFormData({ ...formData, subject: value })}>
+                  <SelectTrigger>
+                    <SelectValue placeholder={language === 'el' ? 'Επιλέξτε θέμα' : 'Select a subject'} />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value={language === 'el' ? 'Γενικό Ερώτημα' : 'General Inquiry'}>
+                      {language === 'el' ? 'Γενικό Ερώτημα' : 'General Inquiry'}
+                    </SelectItem>
+                    <SelectItem value={language === 'el' ? 'Ερώτηση Διαθεσιμότητας' : 'Availability Question'}>
+                      {language === 'el' ? 'Ερώτηση Διαθεσιμότητας' : 'Availability Question'}
+                    </SelectItem>
+                    <SelectItem value={language === 'el' ? 'Άλλο' : 'Other'}>
+                      {language === 'el' ? 'Άλλο' : 'Other'}
+                    </SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              
+              <div>
+                <Label htmlFor="message">{t('form.message')} *</Label>
+                <Textarea 
+                  id="message"
+                  required
+                  value={formData.message}
+                  onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                  placeholder={language === 'el' ? 'Το μήνυμά σας...' : 'Your message...'}
+                  rows={5}
+                />
+              </div>
+
+              <Button type="submit" className="bg-sea hover:bg-sea-dark">
+                <Send className="h-4 w-4 mr-2" />
+                {t('form.sendMessage')}
+              </Button>
+            </form>
+          </CardContent>
+        </Card>
         
-        <div className="bg-white shadow-lg rounded-lg overflow-hidden mb-10">
+        {/* Map */}
+        <div className="bg-card shadow-lg rounded-lg overflow-hidden mb-10">
           <h2 className="text-2xl font-heading font-semibold text-forest-dark p-4 border-b">{t('contact.location')}</h2>
           <div className="h-[500px] relative">
             <MapContainer 
@@ -141,15 +294,17 @@ const ContactUs = () => {
           </div>
         </div>
         
-        
-        <div className="bg-wood-light/20 rounded-lg p-6">
-          <h2 className="text-2xl font-heading font-semibold text-forest-dark mb-4">{t('contact.book')}</h2>
-          <p className="text-gray-700 mb-4">
+        {/* CTA Banner */}
+        <div className="bg-sea-light/20 rounded-lg p-6 border border-sea/20">
+          <h2 className="text-2xl font-heading font-semibold text-sea-dark mb-4">{t('contact.book')}</h2>
+          <p className="text-muted-foreground mb-4">
             {t('contact.bookDescription')}
           </p>
-          <p className="text-forest-dark">
-            {t('contact.callToAction')}
-          </p>
+          <Link to="/#accommodations">
+            <Button className="bg-sea hover:bg-sea-dark">
+              {language === 'el' ? 'Δείτε τα Καταλύματά μας' : 'View Our Accommodations'}
+            </Button>
+          </Link>
         </div>
       </div>
     </Layout>
