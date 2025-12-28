@@ -31,6 +31,114 @@ const HomePage = () => {
     return () => { try { document.body.removeChild(script); } catch (e) {} };
   }, []);
 
+  // Campground/LodgingBusiness schema for homepage
+  const campgroundSchema = {
+    "@context": "https://schema.org",
+    "@type": ["Campground", "LodgingBusiness"],
+    "name": "Metaxas Retreats",
+    "alternateName": language === 'el' ? "Μεταξάς Ριτρίτς" : undefined,
+    "description": language === 'el' 
+      ? "Πολυτελές glamping και κάμπινγκ στη Λευκάδα, Ελλάδα. Ξύλινο σπίτι και σκηνές glamping με θέα στη θάλασσα στον κόλπο του Μικρού Γιαλού."
+      : "Luxury glamping and camping in Lefkada, Greece. Wooden house and glamping tents with sea views in Mikros Gialos bay.",
+    "url": "https://metaxasretreats.com",
+    "telephone": "+306972073025",
+    "email": "info@metaxasretreats.com",
+    "image": [
+      "https://metaxasretreats.com/assets/glamping-tent/view.jpg",
+      "https://metaxasretreats.com/assets/glamping-tent/prosopsi.jpg",
+      "https://metaxasretreats.com/assets/e9f9bd84-9f74-4189-bf30-d6640a566fd3.jpg"
+    ],
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Mikros Gialos, Poros",
+      "addressLocality": "Lefkada",
+      "addressRegion": "Ionian Islands",
+      "postalCode": "31082",
+      "addressCountry": "GR"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": "38.640048",
+      "longitude": "20.698988"
+    },
+    "amenityFeature": [
+      { "@type": "LocationFeatureSpecification", "name": "Sea View", "value": true },
+      { "@type": "LocationFeatureSpecification", "name": "Free Parking", "value": true },
+      { "@type": "LocationFeatureSpecification", "name": "Beach Access", "value": true },
+      { "@type": "LocationFeatureSpecification", "name": "Air Conditioning", "value": true },
+      { "@type": "LocationFeatureSpecification", "name": "Free WiFi", "value": true },
+      { "@type": "LocationFeatureSpecification", "name": "Kitchen", "value": true }
+    ],
+    "priceRange": "€50 - €140",
+    "checkinTime": "15:00",
+    "checkoutTime": "11:00",
+    "petsAllowed": false,
+    "starRating": {
+      "@type": "Rating",
+      "ratingValue": "4"
+    },
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "4.9",
+      "reviewCount": "47",
+      "bestRating": "5",
+      "worstRating": "1"
+    },
+    "hasMap": "https://maps.google.com/?q=38.640048,20.698988",
+    "containsPlace": [
+      {
+        "@type": "Accommodation",
+        "name": "Wooden House",
+        "description": "Charming wooden house with panoramic sea views"
+      },
+      {
+        "@type": "Accommodation", 
+        "name": "Glamping Tent",
+        "description": "Luxury glamping tent among olive trees"
+      }
+    ]
+  };
+
+  // VideoObject schema for hero video
+  const videoSchema = {
+    "@context": "https://schema.org",
+    "@type": "VideoObject",
+    "name": language === 'el' ? "Glamping Λευκάδα - Metaxas Retreats" : "Glamping Lefkada Greece - Metaxas Retreats",
+    "description": language === 'el' 
+      ? "Πολυτελής εμπειρία glamping στον Μικρό Γιαλό της Λευκάδας με θέα στη θάλασσα"
+      : "Luxury glamping experience in Mikros Gialos, Lefkada with stunning sea views over the Ionian Sea",
+    "thumbnailUrl": "https://metaxasretreats.com/assets/glamping-tent/view.jpg",
+    "uploadDate": "2024-01-01",
+    "contentUrl": "https://metaxasretreats.com/assets/video.mp4",
+    "embedUrl": "https://metaxasretreats.com/assets/video.mp4",
+    "duration": "PT30S",
+    "inLanguage": language,
+    "publisher": {
+      "@type": "Organization",
+      "name": "Metaxas Retreats",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://metaxasretreats.com/assets/glamping-tent/view.jpg"
+      }
+    }
+  };
+
+  // BreadcrumbList schema
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": language === 'el' ? "Αρχική" : "Home",
+        "item": "https://metaxasretreats.com/"
+      }
+    ]
+  };
+
+  const combinedSchema = [campgroundSchema, videoSchema, breadcrumbSchema];
+
   return (
     <Layout>
       <SEOHead
@@ -39,6 +147,7 @@ const HomePage = () => {
           ? "Ζήστε την πολυτελή εμπειρία glamping πάνω από τον κόλπο του Μικρού Γιαλού στη Λευκάδα. Ξύλινο σπίτι & σκηνές glamping με θέα στη θάλασσα, 50μ από την παραλία."
           : "Experience luxury glamping above Mikros Gialos bay in Lefkada, Greece. Wooden house & glamping tents with sea views, 50m from beach. Book direct for best rates."}
         canonicalUrl="/"
+        schema={combinedSchema}
       />
       <section className="hero-section h-[70vh] flex items-center text-white relative overflow-hidden">
         <div className="absolute inset-0 bg-black">
