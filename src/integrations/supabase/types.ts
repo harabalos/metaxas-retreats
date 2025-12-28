@@ -46,7 +46,24 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      booking_availability: {
+        Row: {
+          accommodation_id: string | null
+          end_date: string | null
+          start_date: string | null
+        }
+        Insert: {
+          accommodation_id?: string | null
+          end_date?: string | null
+          start_date?: string | null
+        }
+        Update: {
+          accommodation_id?: string | null
+          end_date?: string | null
+          start_date?: string | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
       [_ in never]: never
