@@ -12,6 +12,8 @@ import { useLanguage } from '@/context/LanguageContext';
 import { Link } from 'react-router-dom';
 import { toast } from 'sonner';
 
+const FORMSPREE_URL = 'https://formspree.io/f/mgoelyzg';
+
 const ContactUs = () => {
   const { t, language } = useLanguage();
   
@@ -22,6 +24,7 @@ const ContactUs = () => {
     message: ''
   });
   const [agreedToPolicy, setAgreedToPolicy] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   // Google Maps embed coordinates
   const lat = 38.64003296086357;
@@ -58,7 +61,7 @@ const ContactUs = () => {
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
     if (!formData.fullName.trim() || !formData.email.trim() || !formData.message.trim()) {
@@ -71,38 +74,35 @@ const ContactUs = () => {
       return;
     }
 
-    const subject = encodeURIComponent(
-      language === 'el' 
-        ? `Μήνυμα Επικοινωνίας - Metaxas Retreats` 
-        : `Contact Message - Metaxas Retreats`
-    );
-    
-    const body = encodeURIComponent(
-      language === 'el'
-        ? `Γεια σας,
+    setIsSubmitting(true);
 
-${formData.message}
+    try {
+      const response = await fetch(FORMSPREE_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: formData.fullName,
+          email: formData.email,
+          phone: formData.phone || 'Not provided',
+          message: formData.message,
+          _subject: `Contact Message - Metaxas Retreats`,
+        }),
+      });
 
-Στοιχεία Επικοινωνίας:
-Ονοματεπώνυμο: ${formData.fullName}
-Email: ${formData.email}
-Τηλέφωνο: ${formData.phone || 'Δεν παρέχεται'}
-
-Ευχαριστώ!`
-        : `Hello,
-
-${formData.message}
-
-Contact Details:
-Full Name: ${formData.fullName}
-Email: ${formData.email}
-Phone: ${formData.phone || 'Not provided'}
-
-Thank you!`
-    );
-    
-    window.location.href = `mailto:metaxasretreats@gmail.com?subject=${subject}&body=${body}`;
-    toast.success(language === 'el' ? 'Ανοίγει η εφαρμογή email...' : 'Opening email app...');
+      if (response.ok) {
+        toast.success(language === 'el' ? 'Το μήνυμά σας στάλθηκε επιτυχώς!' : 'Your message has been sent successfully!');
+        setFormData({ fullName: '', email: '', phone: '', message: '' });
+        setAgreedToPolicy(false);
+      } else {
+        throw new Error('Failed to submit');
+      }
+    } catch (error) {
+      toast.error(language === 'el' ? 'Υπήρξε πρόβλημα. Δοκιμάστε ξανά.' : 'There was a problem. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const contactItems = [
@@ -239,9 +239,12 @@ Thank you!`
 
                   <Button 
                     type="submit" 
-                    className="w-full bg-sand hover:bg-sand-dark text-sand-foreground py-6"
+                    disabled={isSubmitting}
+                    className="w-full bg-sea hover:bg-sea-dark text-white py-6"
                   >
-                    {language === 'el' ? 'Αποστολή Μηνύματος' : 'Send Message'}
+                    {isSubmitting 
+                      ? (language === 'el' ? 'Αποστολή...' : 'Sending...') 
+                      : (language === 'el' ? 'Αποστολή Μηνύματος' : 'Send Message')}
                   </Button>
                 </form>
               </CardContent>
