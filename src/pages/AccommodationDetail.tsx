@@ -7,10 +7,12 @@ import BookingForm from '@/components/Booking/BookingForm';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import SEOHead from '@/components/SEO/SEOHead';
+import { useLanguage } from '@/context/LanguageContext';
 
 const AccommodationDetail = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
+  const { t, language } = useLanguage();
   
   const accommodation = accommodations.find(acc => acc.id === id);
   
@@ -18,10 +20,10 @@ const AccommodationDetail = () => {
     return (
       <Layout>
         <div className="container mx-auto px-4 py-16 text-center">
-          <h1 className="text-3xl font-heading font-bold mb-4">Accommodation Not Found</h1>
-          <p className="mb-8">The accommodation you're looking for doesn't exist.</p>
+          <h1 className="text-3xl font-heading font-bold mb-4">{t('detail.notFound')}</h1>
+          <p className="mb-8">{t('detail.notFoundText')}</p>
           <Button onClick={() => navigate('/')} className="bg-sea hover:bg-sea-dark">
-            Return to Home
+            {t('detail.returnHome')}
           </Button>
         </div>
       </Layout>
@@ -156,14 +158,31 @@ const AccommodationDetail = () => {
   // Combined schemas
   const combinedSchema = [accommodationSchema, breadcrumbSchema];
 
-  // Enhanced SEO with camping/glamping keywords
-  const seoTitle = accommodation.type === 'house' 
-    ? "Wooden House Sea View | Lefkada Camping & Glamping Greece"
-    : "Luxury Glamping Tent | Camping Lefkada Greece - Best Accommodation";
+  // Enhanced SEO with camping/glamping keywords - bilingual
+  const seoTitle = language === 'el'
+    ? (accommodation.type === 'house' 
+      ? "Ξύλινο Σπίτι με Θέα Θάλασσα | Camping & Glamping Λευκάδα"
+      : "Πολυτελής Σκηνή Glamping | Camping Λευκάδα Ελλάδα")
+    : (accommodation.type === 'house' 
+      ? "Wooden House Sea View | Lefkada Camping & Glamping Greece"
+      : "Luxury Glamping Tent | Camping Lefkada Greece - Best Accommodation");
   
-  const seoDescription = accommodation.type === 'house'
-    ? `Book our charming wooden house in Lefkada, Greece. Sea views over Mikros Gialos bay, sleeps ${accommodation.guests}, 50m from beach. Best camping & glamping accommodation from €${accommodation.price}/night.`
-    : `Premium glamping tent in Lefkada, Greece - luxury camping among olive trees. Sleeps ${accommodation.guests}, sea views, A/C. Best glamping Greece from €${accommodation.price}/night. Book direct!`;
+  const seoDescription = language === 'el'
+    ? (accommodation.type === 'house'
+      ? `Κάντε κράτηση στο γοητευτικό ξύλινο σπίτι μας στη Λευκάδα. Θέα στον κόλπο του Μικρού Γιαλού, χωρητικότητα ${accommodation.guests} ατόμων, 50μ από την παραλία. Από €${accommodation.price}/βράδυ.`
+      : `Premium σκηνή glamping στη Λευκάδα - πολυτελής κατασκήνωση ανάμεσα σε ελαιόδεντρα. Χωρητικότητα ${accommodation.guests} ατόμων, θέα θάλασσα, κλιματισμός. Από €${accommodation.price}/βράδυ.`)
+    : (accommodation.type === 'house'
+      ? `Book our charming wooden house in Lefkada, Greece. Sea views over Mikros Gialos bay, sleeps ${accommodation.guests}, 50m from beach. Best camping & glamping accommodation from €${accommodation.price}/night.`
+      : `Premium glamping tent in Lefkada, Greece - luxury camping among olive trees. Sleeps ${accommodation.guests}, sea views, A/C. Best glamping Greece from €${accommodation.price}/night. Book direct!`);
+
+  // Get translated accommodation name and description
+  const accommodationName = accommodation.type === 'house' 
+    ? t('accommodation.woodenHouse')
+    : t('accommodation.glampingTent');
+  
+  const accommodationDescription = accommodation.type === 'house'
+    ? t('accommodation.woodenHouse.description')
+    : t('accommodation.glampingTent.description');
 
   return (
     <Layout>
@@ -185,7 +204,7 @@ const AccommodationDetail = () => {
             )}
           </div>
           <h1 className="text-3xl md:text-4xl font-heading font-bold text-forest-dark">
-            {accommodation?.name}
+            {accommodationName}
           </h1>
         </div>
         
@@ -196,7 +215,7 @@ const AccommodationDetail = () => {
             <div className="mb-8">
               <AccommodationGallery 
                 images={accommodation?.images || []} 
-                name={accommodation?.name || ''} 
+                name={accommodationName} 
               />
             </div>
             
@@ -204,34 +223,34 @@ const AccommodationDetail = () => {
               {/* Details */}
               <div className="mb-8">
                 <h2 className="text-2xl font-heading font-semibold mb-4 text-forest-dark">
-                  About this accommodation
+                  {t('detail.about')}
                 </h2>
                 <p className="text-gray-700 whitespace-pre-line">
-                  {accommodation?.description}
+                  {accommodationDescription}
                 </p>
               </div>
               
               {/* Features */}
               <div className="mb-8">
                 <h2 className="text-2xl font-heading font-semibold mb-4 text-forest-dark">
-                  Features
+                  {t('detail.features')}
                 </h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
                   <div className="flex items-center">
                     <Users className="h-5 w-5 text-forest mr-2" />
-                    <span>{accommodation?.guests} guests</span>
+                    <span>{accommodation?.guests} {t('detail.guests')}</span>
                   </div>
                   <div className="flex items-center">
                     <BedDouble className="h-5 w-5 text-forest mr-2" />
-                    <span>{accommodation?.bedrooms} bedrooms</span>
+                    <span>{accommodation?.bedrooms} {t('detail.bedrooms')}</span>
                   </div>
                   <div className="flex items-center">
                     <BedDouble className="h-5 w-5 text-forest mr-2" />
-                    <span>{accommodation?.beds} beds</span>
+                    <span>{accommodation?.beds} {t('detail.beds')}</span>
                   </div>
                   <div className="flex items-center">
                     <Bath className="h-5 w-5 text-forest mr-2" />
-                    <span>{accommodation?.bathrooms} bathrooms</span>
+                    <span>{accommodation?.bathrooms} {t('detail.bathrooms')}</span>
                   </div>
                 </div>
               </div>
@@ -241,7 +260,7 @@ const AccommodationDetail = () => {
               {/* Amenities */}
               <div className="mb-8">
                 <h2 className="text-2xl font-heading font-semibold mb-4 text-forest-dark">
-                  Amenities
+                  {t('detail.amenities')}
                 </h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {accommodation?.amenities.map((amenity, index) => (

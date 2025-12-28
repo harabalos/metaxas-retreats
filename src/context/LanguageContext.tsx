@@ -137,6 +137,18 @@ const translations: Record<Language, Record<string, string>> = {
     'amenity.ramp': 'Ramp access',
     'amenity.eco': 'Eco-friendly amenities',
     'amenity.outdoorSeating': 'Private outdoor seating',
+    
+    // Accommodation Detail Page
+    'detail.notFound': 'Accommodation Not Found',
+    'detail.notFoundText': 'The accommodation you\'re looking for doesn\'t exist.',
+    'detail.returnHome': 'Return to Home',
+    'detail.about': 'About this accommodation',
+    'detail.features': 'Features',
+    'detail.guests': 'guests',
+    'detail.bedrooms': 'bedrooms',
+    'detail.beds': 'beds',
+    'detail.bathrooms': 'bathrooms',
+    'detail.amenities': 'Amenities',
   },
   el: {
     // Navigation
@@ -261,6 +273,18 @@ const translations: Record<Language, Record<string, string>> = {
     'amenity.ramp': 'Πρόσβαση με ράμπα',
     'amenity.eco': 'Οικολογικές παροχές',
     'amenity.outdoorSeating': 'Ιδιωτικός εξωτερικός χώρος καθιστικού',
+    
+    // Accommodation Detail Page
+    'detail.notFound': 'Το Κατάλυμα δεν Βρέθηκε',
+    'detail.notFoundText': 'Το κατάλυμα που ψάχνετε δεν υπάρχει.',
+    'detail.returnHome': 'Επιστροφή στην Αρχική',
+    'detail.about': 'Σχετικά με αυτό το κατάλυμα',
+    'detail.features': 'Χαρακτηριστικά',
+    'detail.guests': 'άτομα',
+    'detail.bedrooms': 'υπνοδωμάτια',
+    'detail.beds': 'κρεβάτια',
+    'detail.bathrooms': 'μπάνια',
+    'detail.amenities': 'Παροχές',
   }
 };
 
