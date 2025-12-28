@@ -1,27 +1,16 @@
 import React, { useState } from 'react';
 import Layout from '@/components/Layout/Layout';
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { MapPin, Phone, Mail, MessageCircle, Send } from 'lucide-react';
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
-import 'leaflet/dist/leaflet.css';
-import L from 'leaflet';
+import { Checkbox } from '@/components/ui/checkbox';
+import { MapPin, Phone, Mail, Instagram, Clock } from 'lucide-react';
 import SEOHead from '@/components/SEO/SEOHead';
 import { useLanguage } from '@/context/LanguageContext';
 import { Link } from 'react-router-dom';
 import { toast } from 'sonner';
-
-// Fix the Leaflet default icon issue
-delete (L.Icon.Default.prototype as any)._getIconUrl;
-L.Icon.Default.mergeOptions({
-  iconRetinaUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png',
-  iconUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',
-  shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
-});
 
 const ContactUs = () => {
   const { t, language } = useLanguage();
@@ -29,13 +18,14 @@ const ContactUs = () => {
   const [formData, setFormData] = useState({
     fullName: '',
     email: '',
-    subject: '',
+    phone: '',
     message: ''
   });
+  const [agreedToPolicy, setAgreedToPolicy] = useState(false);
 
-  // Updated coordinates as requested - [lat, lng] format for Leaflet
-  const metaxasRentsCoords: [number, number] = [38.640048782722396, 20.69898862142832];
-  const position = metaxasRentsCoords;
+  // Google Maps embed coordinates
+  const lat = 38.64003296086357;
+  const lng = 20.699029254119495;
 
   const contactSchema = {
     "@context": "https://schema.org",
@@ -57,8 +47,8 @@ const ContactUs = () => {
     },
     "geo": {
       "@type": "GeoCoordinates",
-      "latitude": "38.640048",
-      "longitude": "20.698988"
+      "latitude": lat.toString(),
+      "longitude": lng.toString()
     },
     "openingHoursSpecification": {
       "@type": "OpeningHoursSpecification",
@@ -66,13 +56,6 @@ const ContactUs = () => {
       "opens": "08:00",
       "closes": "22:00"
     }
-  };
-
-  const getWhatsAppMessage = () => {
-    const message = language === 'el'
-      ? 'Γεια σας! Θα ήθελα πληροφορίες για τα καταλύματά σας.'
-      : 'Hello! I would like information about your accommodations.';
-    return encodeURIComponent(message);
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -83,8 +66,16 @@ const ContactUs = () => {
       return;
     }
 
-    const subjectText = formData.subject || (language === 'el' ? 'Γενικό Ερώτημα' : 'General Inquiry');
-    const subject = encodeURIComponent(`${subjectText} - Metaxas Retreats`);
+    if (!agreedToPolicy) {
+      toast.error(language === 'el' ? 'Παρακαλώ αποδεχτείτε την Πολιτική Απορρήτου' : 'Please accept the Privacy Policy');
+      return;
+    }
+
+    const subject = encodeURIComponent(
+      language === 'el' 
+        ? `Μήνυμα Επικοινωνίας - Metaxas Retreats` 
+        : `Contact Message - Metaxas Retreats`
+    );
     
     const body = encodeURIComponent(
       language === 'el'
@@ -95,6 +86,7 @@ ${formData.message}
 Στοιχεία Επικοινωνίας:
 Ονοματεπώνυμο: ${formData.fullName}
 Email: ${formData.email}
+Τηλέφωνο: ${formData.phone || 'Δεν παρέχεται'}
 
 Ευχαριστώ!`
         : `Hello,
@@ -104,6 +96,7 @@ ${formData.message}
 Contact Details:
 Full Name: ${formData.fullName}
 Email: ${formData.email}
+Phone: ${formData.phone || 'Not provided'}
 
 Thank you!`
     );
@@ -111,6 +104,39 @@ Thank you!`
     window.location.href = `mailto:metaxasretreats@gmail.com?subject=${subject}&body=${body}`;
     toast.success(language === 'el' ? 'Ανοίγει η εφαρμογή email...' : 'Opening email app...');
   };
+
+  const contactItems = [
+    {
+      icon: MapPin,
+      title: language === 'el' ? 'Διεύθυνση' : 'Address',
+      lines: [
+        language === 'el' ? 'Μικρός Γιαλός, Πόρος' : 'Mikros Gialos, Poros',
+        language === 'el' ? 'Λευκάδα, Ελλάδα 31082' : 'Lefkada, Greece 31082'
+      ]
+    },
+    {
+      icon: Phone,
+      title: language === 'el' ? 'Τηλέφωνο' : 'Phone',
+      lines: ['+30 6973219980', '+30 6980429891']
+    },
+    {
+      icon: Mail,
+      title: 'Email',
+      lines: ['metaxasretreats@gmail.com']
+    },
+    {
+      icon: Instagram,
+      title: 'Instagram',
+      lines: ['@metaxasretreats']
+    },
+    {
+      icon: Clock,
+      title: language === 'el' ? 'Ώρες Λειτουργίας' : 'Opening Hours',
+      lines: [
+        language === 'el' ? 'Δευ - Κυρ: 8:00 πμ - 10:00 μμ' : 'Mon - Sun: 8:00 AM - 10:00 PM'
+      ]
+    }
+  ];
 
   return (
     <Layout>
@@ -122,189 +148,148 @@ Thank you!`
         canonicalUrl="/contact"
         schema={contactSchema}
       />
-      <div className="container mx-auto px-4 py-12">
-        <h1 className="text-4xl font-heading font-bold text-forest-dark mb-4">{t('contact.title')}</h1>
-        <p className="text-lg text-muted-foreground mb-8 max-w-3xl">
-          {t('contact.subtitle')}
-        </p>
-        
-        {/* Contact Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
-          <Card className="bg-card shadow-md hover:shadow-lg transition-shadow">
-            <CardHeader className="flex flex-row items-center gap-4">
-              <div className="bg-forest-light/30 p-3 rounded-full">
-                <MapPin className="h-6 w-6 text-forest" />
-              </div>
-              <CardTitle className="text-forest-dark">{t('contact.visit')}</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-foreground">Metaxas Retreats</p>
-              <p className="text-foreground">{language === 'el' ? 'Πόρος, Μικρός Γιαλός' : 'Poros, Mikros Gialos'}</p>
-              <p className="text-foreground">{language === 'el' ? 'Λευκάδα, Ιόνια Νησιά' : 'Lefkada, Ionian Islands'}</p>
-              <p className="text-foreground">{language === 'el' ? 'Ελλάδα' : 'Greece'}</p>
-            </CardContent>
-          </Card>
-          
-          <Card className="bg-card shadow-md hover:shadow-lg transition-shadow">
-            <CardHeader className="flex flex-row items-center gap-4">
-              <div className="bg-green-100 p-3 rounded-full">
-                <MessageCircle className="h-6 w-6 text-green-600" />
-              </div>
-              <CardTitle className="text-forest-dark">{t('contact.call')}</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-2">
-              <a 
-                href={`https://wa.me/306973219980?text=${getWhatsAppMessage()}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-2 p-2 bg-green-50 hover:bg-green-100 rounded-lg transition-colors"
-              >
-                <Phone className="h-4 w-4 text-green-600" />
-                <span className="text-green-800 font-medium">+30 6973219980</span>
-              </a>
-              <a 
-                href={`https://wa.me/306980429891?text=${getWhatsAppMessage()}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-2 p-2 bg-green-50 hover:bg-green-100 rounded-lg transition-colors"
-              >
-                <Phone className="h-4 w-4 text-green-600" />
-                <span className="text-green-800 font-medium">+30 6980429891</span>
-              </a>
-              <p className="text-sm text-muted-foreground">{language === 'el' ? 'Διαθέσιμοι καθημερινά' : 'Available daily'}</p>
-            </CardContent>
-          </Card>
-          
-          <Card className="bg-card shadow-md hover:shadow-lg transition-shadow">
-            <CardHeader className="flex flex-row items-center gap-4">
-              <div className="bg-forest-light/30 p-3 rounded-full">
-                <Mail className="h-6 w-6 text-forest" />
-              </div>
-              <CardTitle className="text-forest-dark">{t('contact.email')}</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-foreground">metaxasretreats@gmail.com</p>
-              <p className="text-sm text-muted-foreground mt-2">{language === 'el' ? 'Θα απαντήσουμε εντός μίας ώρας' : "We'll respond within an hour"}</p>
-            </CardContent>
-          </Card>
-        </div>
-
-        {/* Inquiry Form */}
-        <Card className="mb-10">
-          <CardHeader>
-            <CardTitle className="text-forest-dark flex items-center gap-2">
-              <Send className="h-5 w-5" />
-              {t('form.sendMessage')}
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <form onSubmit={handleSubmit} className="space-y-4 max-w-2xl">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                  <Label htmlFor="fullName">{t('form.fullName')} *</Label>
-                  <Input 
-                    id="fullName"
-                    type="text"
-                    required
-                    value={formData.fullName}
-                    onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
-                    placeholder={language === 'el' ? 'Το ονοματεπώνυμό σας' : 'Your full name'}
-                  />
-                </div>
+      <div className="min-h-screen bg-muted/30">
+        <div className="container mx-auto px-4 py-12">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch">
+            {/* Left Column - Contact Form */}
+            <Card className="h-full">
+              <CardContent className="p-8">
+                <h2 className="text-2xl font-heading font-semibold text-foreground mb-6">
+                  {language === 'el' ? 'Αποστολή Μηνύματος' : 'Send Message'}
+                </h2>
                 
-                <div>
-                  <Label htmlFor="email">{t('form.email')} *</Label>
-                  <Input 
-                    id="email"
-                    type="email"
-                    required
-                    value={formData.email}
-                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    placeholder={language === 'el' ? 'Το email σας' : 'Your email'}
+                <form onSubmit={handleSubmit} className="space-y-5">
+                  <div>
+                    <Label htmlFor="fullName" className="text-foreground">
+                      {language === 'el' ? 'Ονοματεπώνυμο' : 'Full Name'} <span className="text-red-500">*</span>
+                    </Label>
+                    <Input 
+                      id="fullName"
+                      type="text"
+                      required
+                      value={formData.fullName}
+                      onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
+                      placeholder={language === 'el' ? 'Ονοματεπώνυμο' : 'Full name'}
+                      className="mt-1.5 bg-background"
+                    />
+                  </div>
+                  
+                  <div>
+                    <Label htmlFor="email" className="text-foreground">
+                      Email <span className="text-red-500">*</span>
+                    </Label>
+                    <Input 
+                      id="email"
+                      type="email"
+                      required
+                      value={formData.email}
+                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                      placeholder="Email"
+                      className="mt-1.5 bg-background"
+                    />
+                  </div>
+                  
+                  <div>
+                    <Label htmlFor="phone" className="text-foreground">
+                      {language === 'el' ? 'Τηλέφωνο' : 'Phone'}
+                    </Label>
+                    <Input 
+                      id="phone"
+                      type="tel"
+                      value={formData.phone}
+                      onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                      placeholder={language === 'el' ? 'Τηλέφωνο' : 'Phone'}
+                      className="mt-1.5 bg-background"
+                    />
+                  </div>
+                  
+                  <div>
+                    <Label htmlFor="message" className="text-foreground">
+                      {language === 'el' ? 'Μήνυμα' : 'Message'} <span className="text-red-500">*</span>
+                    </Label>
+                    <Textarea 
+                      id="message"
+                      required
+                      value={formData.message}
+                      onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                      placeholder={language === 'el' ? 'Μήνυμα' : 'Message'}
+                      rows={5}
+                      className="mt-1.5 bg-background resize-y"
+                    />
+                  </div>
+
+                  <div className="flex items-start gap-3">
+                    <Checkbox 
+                      id="privacy"
+                      checked={agreedToPolicy}
+                      onCheckedChange={(checked) => setAgreedToPolicy(checked === true)}
+                      className="mt-0.5"
+                    />
+                    <Label htmlFor="privacy" className="text-sm text-muted-foreground leading-relaxed cursor-pointer">
+                      {language === 'el' 
+                        ? 'Συμφωνώ με την Πολιτική Απορρήτου και την επεξεργασία των προσωπικών μου δεδομένων. '
+                        : 'I agree with the Privacy Policy and the processing of my personal data. '}
+                      <Link to="/privacy" className="text-sea hover:underline">
+                        {language === 'el' ? 'Πολιτική Απορρήτου' : 'Privacy Policy'}
+                      </Link>
+                    </Label>
+                  </div>
+
+                  <Button 
+                    type="submit" 
+                    className="w-full bg-sand hover:bg-sand-dark text-sand-foreground py-6"
+                  >
+                    {language === 'el' ? 'Αποστολή Μηνύματος' : 'Send Message'}
+                  </Button>
+                </form>
+              </CardContent>
+            </Card>
+            
+            {/* Right Column - Contact Details + Map */}
+            <div className="space-y-6">
+              <Card className="h-auto">
+                <CardContent className="p-8">
+                  <h2 className="text-2xl font-heading font-semibold text-foreground mb-6">
+                    {language === 'el' ? 'Στοιχεία Επικοινωνίας' : 'Contact Details'}
+                  </h2>
+                  
+                  <div className="space-y-5">
+                    {contactItems.map((item, index) => (
+                      <div key={index} className="flex items-start gap-4">
+                        <div className="bg-sand/30 p-3 rounded-full flex-shrink-0">
+                          <item.icon className="h-5 w-5 text-sand-dark" />
+                        </div>
+                        <div>
+                          <h3 className="font-medium text-foreground">{item.title}</h3>
+                          {item.lines.map((line, lineIndex) => (
+                            <p key={lineIndex} className="text-muted-foreground text-sm">
+                              {line}
+                            </p>
+                          ))}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+              
+              {/* Google Maps Embed */}
+              <Card className="overflow-hidden">
+                <div className="h-[280px]">
+                  <iframe
+                    src={`https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3000!2d${lng}!3d${lat}!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzjCsDM4JzI0LjEiTiAyMMKwNDEnNTYuNSJF!5e0!3m2!1sen!2sgr!4v1700000000000!5m2!1sen!2sgr`}
+                    width="100%"
+                    height="100%"
+                    style={{ border: 0 }}
+                    allowFullScreen
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                    title="Metaxas Retreats Location"
                   />
                 </div>
-              </div>
-              
-              <div>
-                <Label htmlFor="subject">{t('form.subject')}</Label>
-                <Select value={formData.subject} onValueChange={(value) => setFormData({ ...formData, subject: value })}>
-                  <SelectTrigger>
-                    <SelectValue placeholder={language === 'el' ? 'Επιλέξτε θέμα' : 'Select a subject'} />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value={language === 'el' ? 'Γενικό Ερώτημα' : 'General Inquiry'}>
-                      {language === 'el' ? 'Γενικό Ερώτημα' : 'General Inquiry'}
-                    </SelectItem>
-                    <SelectItem value={language === 'el' ? 'Ερώτηση Διαθεσιμότητας' : 'Availability Question'}>
-                      {language === 'el' ? 'Ερώτηση Διαθεσιμότητας' : 'Availability Question'}
-                    </SelectItem>
-                    <SelectItem value={language === 'el' ? 'Άλλο' : 'Other'}>
-                      {language === 'el' ? 'Άλλο' : 'Other'}
-                    </SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-              
-              <div>
-                <Label htmlFor="message">{t('form.message')} *</Label>
-                <Textarea 
-                  id="message"
-                  required
-                  value={formData.message}
-                  onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                  placeholder={language === 'el' ? 'Το μήνυμά σας...' : 'Your message...'}
-                  rows={5}
-                />
-              </div>
-
-              <Button type="submit" className="bg-sea hover:bg-sea-dark">
-                <Send className="h-4 w-4 mr-2" />
-                {t('form.sendMessage')}
-              </Button>
-            </form>
-          </CardContent>
-        </Card>
-        
-        {/* Map */}
-        <div className="bg-card shadow-lg rounded-lg overflow-hidden mb-10">
-          <h2 className="text-2xl font-heading font-semibold text-forest-dark p-4 border-b">{t('contact.location')}</h2>
-          <div className="h-[500px] relative">
-            <MapContainer 
-              center={position}
-              zoom={11} 
-              scrollWheelZoom={false}
-              style={{ height: "100%", width: "100%" }}
-            >
-              <TileLayer
-                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-              />
-              <Marker position={position}>
-                <Popup>
-                  <b>Metaxas Retreats</b><br />
-                  {language === 'el' ? 'Πόρος, Μικρός Γιαλός, Λευκάδα' : 'Poros, Mikros Gialos, Lefkada'}
-                </Popup>
-              </Marker>
-            </MapContainer>
+              </Card>
+            </div>
           </div>
-          <div className="p-4 bg-forest-light/10">
-            <p className="text-forest-dark">
-              <strong>{language === 'el' ? 'Σημείωση:' : 'Note:'}</strong> {t('contact.mapNote')}
-            </p>
-          </div>
-        </div>
-        
-        {/* CTA Banner */}
-        <div className="bg-sea-light/20 rounded-lg p-6 border border-sea/20">
-          <h2 className="text-2xl font-heading font-semibold text-sea-dark mb-4">{t('contact.book')}</h2>
-          <p className="text-muted-foreground mb-4">
-            {t('contact.bookDescription')}
-          </p>
-          <Link to="/#accommodations">
-            <Button className="bg-sea hover:bg-sea-dark">
-              {language === 'el' ? 'Δείτε τα Καταλύματά μας' : 'View Our Accommodations'}
-            </Button>
-          </Link>
         </div>
       </div>
     </Layout>
