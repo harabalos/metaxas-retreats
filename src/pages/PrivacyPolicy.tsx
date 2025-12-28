@@ -46,6 +46,7 @@ const PrivacyPolicy = () => {
                   <li>{t('privacy.section2.item1')}</li>
                   <li>{t('privacy.section2.item2')}</li>
                   <li>{t('privacy.section2.item3')}</li>
+                  <li>{t('privacy.section2.item4')}</li>
                 </ul>
               </section>
 
@@ -71,7 +72,23 @@ const PrivacyPolicy = () => {
 
               <section>
                 <h3 className="text-xl font-bold text-forest-dark mb-2">{t('privacy.section6.title')}</h3>
-                <p>{t('privacy.section6.content')}</p>
+                <p>
+                  {t('privacy.section6.content').split('https://formspree.io/legal/privacy-policy')[0]}
+                  <a 
+                    href="https://formspree.io/legal/privacy-policy" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="text-primary hover:underline"
+                  >
+                    https://formspree.io/legal/privacy-policy
+                  </a>
+                  {t('privacy.section6.content').split('https://formspree.io/legal/privacy-policy')[1]}
+                </p>
+              </section>
+
+              <section>
+                <h3 className="text-xl font-bold text-forest-dark mb-2">{t('privacy.section7.title')}</h3>
+                <p>{t('privacy.section7.content')}</p>
               </section>
             </div>
           </ScrollArea>
