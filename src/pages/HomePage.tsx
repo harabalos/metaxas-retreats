@@ -108,7 +108,7 @@ const HomePage = () => {
       ? "Πολυτελής εμπειρία glamping στον Μικρό Γιαλό της Λευκάδας με θέα στη θάλασσα"
       : "Luxury glamping experience in Mikros Gialos, Lefkada with stunning sea views over the Ionian Sea",
     "thumbnailUrl": "https://metaxasretreats.com/assets/glamping-tent/view.jpg",
-    "uploadDate": "2024-01-01",
+    "uploadDate": "2024-01-01T00:00:00+02:00",
     "contentUrl": "https://metaxasretreats.com/assets/video.mp4",
     "embedUrl": "https://metaxasretreats.com/assets/video.mp4",
     "duration": "PT30S",
