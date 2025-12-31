@@ -15,6 +15,7 @@ import { LanguageProvider } from "./context/LanguageContext";
 // --- NEW IMPORTS ---
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsOfService from "./pages/TermsOfService";
+import AboutUs from "./pages/AboutUs";
 import CookieConsent from "./components/Layout/CookieConsent";
 // -------------------
 
@@ -38,6 +39,7 @@ const App = () => (
             {/* --- NEW ROUTES --- */}
             <Route path="/privacy" element={<PrivacyPolicy />} />
             <Route path="/terms" element={<TermsOfService />} />
+            <Route path="/about" element={<AboutUs />} />
             {/* ------------------ */}
             
             <Route path="*" element={<NotFound />} />
