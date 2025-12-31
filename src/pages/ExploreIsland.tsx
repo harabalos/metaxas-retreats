@@ -2,7 +2,7 @@ import React from 'react';
 import Layout from '@/components/Layout/Layout';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { MapPin, Sailboat, Waves, Mountain, Coffee, UtensilsCrossed, Star } from 'lucide-react';
+import { MapPin, Sailboat, Waves, Mountain, Coffee, Star } from 'lucide-react';
 import SEOHead from '@/components/SEO/SEOHead';
 import { useLanguage } from '@/context/LanguageContext';
 
@@ -205,10 +205,6 @@ const ExploreIsland = () => {
               <Sailboat className="h-4 w-4" />
               <span>{t('explore.activities')}</span>
             </TabsTrigger>
-            <TabsTrigger value="cuisine" className="flex items-center gap-2">
-              <UtensilsCrossed className="h-4 w-4" />
-              <span>{t('explore.cuisine')}</span>
-            </TabsTrigger>
           </TabsList>
           
           <TabsContent value="beaches">
@@ -251,86 +247,6 @@ const ExploreIsland = () => {
             </div>
           </TabsContent>
           
-          <TabsContent value="cuisine">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
-              <Card>
-                <CardHeader>
-                  <CardTitle className="text-forest-dark">{t('explore.specialties.title')}</CardTitle>
-                  <CardDescription>{t('explore.specialties.subtitle')}</CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="border-b pb-2">
-                    <h4 className="font-medium text-forest">{language === 'el' ? 'Σαβόρο' : 'Savoro'}</h4>
-                    <p className="text-gray-600">{language === 'el' ? 'Ψάρι μαγειρεμένο σε σάλτσα σκόρδου, δεντρολίβανου και ξιδιού.' : 'Fish cooked in a garlic, rosemary, and vinegar sauce.'}</p>
-                  </div>
-                  <div className="border-b pb-2">
-                    <h4 className="font-medium text-forest">{language === 'el' ? 'Λαθόπιτα' : 'Lathopita'}</h4>
-                    <p className="text-gray-600">{language === 'el' ? 'Γλυκιά πίτα με ελαιόλαδο, ζάχαρη, κανέλα και πορτοκάλι.' : 'A sweet olive oil pie with sugar, cinnamon, and orange.'}</p>
-                  </div>
-                  <div className="border-b pb-2">
-                    <h4 className="font-medium text-forest">{language === 'el' ? 'Μπουρδέτο' : 'Bourdeto'}</h4>
-                    <p className="text-gray-600">{language === 'el' ? 'Πικάντικο ψαρόσουπα με πιπεριές και ντομάτες.' : 'Spicy fish stew with peppers and tomatoes.'}</p>
-                  </div>
-                  <div>
-                    <h4 className="font-medium text-forest">{language === 'el' ? 'Φακές Εγκλουβής' : 'Lentils Eglouvi'}</h4>
-                    <p className="text-gray-600">{language === 'el' ? 'Διάσημες φακές από το χωριό Εγκλουβή, γνωστές για την εξαιρετική τους γεύση.' : 'Famous lentils from the village of Eglouvi, known for their exceptional taste.'}</p>
-                  </div>
-                </CardContent>
-              </Card>
-              
-              <Card>
-                <CardHeader>
-                  <CardTitle className="text-forest-dark">{t('explore.restaurants.title')}</CardTitle>
-                  <CardDescription>{t('explore.restaurants.subtitle')}</CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="border-b pb-2">
-                    <h4 className="font-medium text-forest">{language === 'el' ? 'Εστιατόριο Ράχη' : 'Rachi Restaurant'}</h4>
-                    <p className="text-gray-600">{language === 'el' ? 'Στο χωριό Εξάνθεια, προσφέρει εκπληκτική θέα στο ηλιοβασίλεμα και εξαιρετικό φαγητό.' : 'In Exanthia village, offers stunning sunset views and excellent food.'}</p>
-                  </div>
-                  <div className="border-b pb-2">
-                    <h4 className="font-medium text-forest">{language === 'el' ? 'Ζόλιθρος' : 'Zolithros'}</h4>
-                    <p className="text-gray-600">{language === 'el' ? 'Παραθαλάσσια ταβέρνα στον Μικρό Γιαλό με φρέσκα θαλασσινά και τοπικά πιάτα.' : 'Seafront taverna in Mikros Gialos with fresh seafood and local dishes.'}</p>
-                  </div>
-                  <div className="border-b pb-2">
-                    <h4 className="font-medium text-forest">Basilico</h4>
-                    <p className="text-gray-600">{language === 'el' ? 'Ιταλοελληνική κουζίνα στο Νυδρί με υπέροχη θέα στο λιμάνι.' : 'Italian-Greek fusion in Nidri with magnificent harbor views.'}</p>
-                  </div>
-                  <div>
-                    <h4 className="font-medium text-forest">{language === 'el' ? 'Ελένη' : 'Elena'}</h4>
-                    <p className="text-gray-600">{language === 'el' ? 'Παραδοσιακή ταβέρνα στο Γένι που σερβίρει αυθεντική τοπική κουζίνα.' : 'Traditional taverna in Geni serving authentic local cuisine.'}</p>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-            
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-forest-dark">{t('explore.products.title')}</CardTitle>
-                <CardDescription>{t('explore.products.subtitle')}</CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="border-b pb-2 md:border-b-0 md:border-r md:pr-4">
-                    <h4 className="font-medium text-forest">{language === 'el' ? 'Ελαιόλαδο' : 'Olive Oil'}</h4>
-                    <p className="text-gray-600">{language === 'el' ? 'Εξαιρετικής ποιότητας ελαιόλαδο από αιωνόβια δέντρα.' : 'Exceptional quality olive oil from centuries-old trees.'}</p>
-                  </div>
-                  <div className="border-b pb-2 md:border-b-0 md:pl-4">
-                    <h4 className="font-medium text-forest">{language === 'el' ? 'Μέλι' : 'Honey'}</h4>
-                    <p className="text-gray-600">{language === 'el' ? 'Τοπικό θυμαρίσιο μέλι με ξεχωριστή γεύση και άρωμα.' : 'Local thyme honey with distinctive flavor and aroma.'}</p>
-                  </div>
-                  <div className="border-b pb-2 md:border-r md:pr-4">
-                    <h4 className="font-medium text-forest">{language === 'el' ? 'Κρασί' : 'Wine'}</h4>
-                    <p className="text-gray-600">{language === 'el' ? 'Δοκιμάστε το τοπικό κόκκινο κρασί Βερτζάμι, μοναδικό στην περιοχή.' : 'Try the local Vertzami red wine, unique to the region.'}</p>
-                  </div>
-                  <div>
-                    <h4 className="font-medium text-forest">{language === 'el' ? 'Φακές' : 'Lentils'}</h4>
-                    <p className="text-gray-600">{language === 'el' ? 'Οι διάσημες φακές Εγκλουβής, που θεωρούνται από τις καλύτερες στην Ελλάδα.' : 'The famous Eglouvi lentils, considered among the best in Greece.'}</p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </TabsContent>
         </Tabs>
         
         <section className="bg-wood-light/20 rounded-lg p-6 md:p-8">
