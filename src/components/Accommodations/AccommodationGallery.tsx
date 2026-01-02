@@ -134,12 +134,12 @@ const AccommodationGallery = ({ images, name }: AccommodationGalleryProps) => {
       {/* Lightbox Modal */}
       <Dialog open={isLightboxOpen} onOpenChange={setIsLightboxOpen}>
         <DialogContent className="max-w-[95vw] max-h-[95vh] w-full h-full p-0 bg-black/95 border-none [&>button]:hidden">
-          {/* Close button */}
+          {/* Close/Zoom out button - highly visible */}
           <button
             onClick={() => setIsLightboxOpen(false)}
-            className="absolute top-4 right-4 z-50 bg-black/60 hover:bg-black/80 hover:scale-110 p-3 rounded-full transition-all shadow-lg border border-white/20"
+            className="absolute top-6 right-6 z-50 bg-white hover:bg-gray-100 hover:scale-110 p-4 rounded-full transition-all shadow-2xl border-2 border-gray-300"
           >
-            <X className="h-6 w-6 text-white" />
+            <X className="h-8 w-8 text-black" />
             <span className="sr-only">Close</span>
           </button>
 
