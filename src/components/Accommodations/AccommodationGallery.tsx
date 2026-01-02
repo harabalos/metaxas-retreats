@@ -133,12 +133,15 @@ const AccommodationGallery = ({ images, name }: AccommodationGalleryProps) => {
 
       {/* Lightbox Modal */}
       <Dialog open={isLightboxOpen} onOpenChange={setIsLightboxOpen}>
-        <DialogContent className="max-w-[95vw] max-h-[95vh] w-full h-full p-0 bg-black/95 border-none">
+        <DialogContent className="max-w-[95vw] max-h-[95vh] w-full h-full p-0 bg-black/95 border-none [&>button]:hidden">
           {/* Close button */}
-          <DialogClose className="absolute top-4 right-4 z-50 bg-white/10 hover:bg-white/20 p-2 rounded-full transition-all">
+          <button
+            onClick={() => setIsLightboxOpen(false)}
+            className="absolute top-4 right-4 z-50 bg-black/60 hover:bg-black/80 hover:scale-110 p-3 rounded-full transition-all shadow-lg border border-white/20"
+          >
             <X className="h-6 w-6 text-white" />
             <span className="sr-only">Close</span>
-          </DialogClose>
+          </button>
 
           {/* Main lightbox image */}
           <div className="flex items-center justify-center w-full h-full relative">
@@ -148,28 +151,28 @@ const AccommodationGallery = ({ images, name }: AccommodationGalleryProps) => {
               className="max-w-full max-h-[85vh] object-contain"
             />
 
-            {/* Navigation arrows */}
+            {/* Navigation arrows - now much more visible */}
             {images.length > 1 && (
               <>
                 <button
                   onClick={prevImage}
-                  className="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 bg-white/10 hover:bg-white/20 p-3 md:p-4 rounded-full transition-all"
+                  className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 bg-black/60 hover:bg-black/80 hover:scale-110 p-4 md:p-5 rounded-full transition-all shadow-lg border border-white/20"
                   aria-label="Previous image"
                 >
-                  <ChevronLeft className="h-6 w-6 md:h-8 md:w-8 text-white" />
+                  <ChevronLeft className="h-8 w-8 md:h-10 md:w-10 text-white" />
                 </button>
                 <button
                   onClick={nextImage}
-                  className="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 bg-white/10 hover:bg-white/20 p-3 md:p-4 rounded-full transition-all"
+                  className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 bg-black/60 hover:bg-black/80 hover:scale-110 p-4 md:p-5 rounded-full transition-all shadow-lg border border-white/20"
                   aria-label="Next image"
                 >
-                  <ChevronRight className="h-6 w-6 md:h-8 md:w-8 text-white" />
+                  <ChevronRight className="h-8 w-8 md:h-10 md:w-10 text-white" />
                 </button>
               </>
             )}
 
             {/* Image counter */}
-            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black/70 text-white px-4 py-2 rounded-full text-sm">
+            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black/70 text-white px-4 py-2 rounded-full text-sm border border-white/20">
               {currentImageIndex + 1} / {images.length}
             </div>
           </div>
