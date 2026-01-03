@@ -11,6 +11,7 @@ import { useLanguage } from '@/context/LanguageContext';
 const HomePage = () => {
   const location = useLocation();
   const accommodationsRef = useRef<HTMLDivElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
   const { t, language } = useLanguage();
 
   const scrollToAccommodations = () => {
@@ -29,6 +30,16 @@ const HomePage = () => {
     script.async = true;
     document.body.appendChild(script);
     return () => { try { document.body.removeChild(script); } catch (e) {} };
+  }, []);
+
+  // Force video autoplay on iOS
+  useEffect(() => {
+    const video = videoRef.current;
+    if (video) {
+      video.play().catch(() => {
+        // Autoplay prevented - poster image will show as fallback
+      });
+    }
   }, []);
 
   // Campground/LodgingBusiness schema for homepage
@@ -151,7 +162,15 @@ const HomePage = () => {
       />
       <section className="hero-section h-[90vh] flex items-center text-white relative overflow-hidden">
         <div className="absolute inset-0 bg-black">
-          <video autoPlay muted loop playsInline className="absolute inset-0 w-full h-full object-cover opacity-60">
+          <video 
+            ref={videoRef}
+            autoPlay 
+            muted 
+            loop 
+            playsInline
+            poster="/assets/glamping-tent/view.jpg"
+            className="absolute inset-0 w-full h-full object-cover opacity-60 [&::-webkit-media-controls]:hidden [&::-webkit-media-controls-start-playback-button]:hidden"
+          >
             <source src="/assets/video.mp4" type="video/mp4" />
           </video>
         </div>
