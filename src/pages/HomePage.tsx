@@ -26,8 +26,9 @@ const HomePage = () => {
 
   useEffect(() => {
     const script = document.createElement('script');
-    script.src = "https://elfsightcdn.com/platform.js";
-    script.async = true;
+    script.src = "https://featurable.com/assets/bundle.js";
+    script.defer = true;
+    script.charset = "UTF-8";
     document.body.appendChild(script);
     return () => { try { document.body.removeChild(script); } catch (e) {} };
   }, []);
@@ -225,7 +226,7 @@ const HomePage = () => {
       <section className="py-16 bg-wood-light/20">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl md:text-4xl font-heading font-bold mb-8 text-center text-forest-dark">{t('home.reviews.title')}</h2>
-          <div className="elfsight-app-08c2814a-39d2-4b24-af1d-0694c0b45eb6" data-elfsight-app-lazy></div>
+          <div id="featurable-a9c57a0b-0fd9-435e-aab6-af85639915b3" data-featurable-async></div>
         </div>
       </section>
 
