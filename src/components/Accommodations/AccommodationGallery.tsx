@@ -15,20 +15,15 @@ interface AccommodationGalleryProps {
 
 const AccommodationGallery = ({ images, name }: AccommodationGalleryProps) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [loadedImages, setLoadedImages] = useState<Record<number, boolean>>({0: true});
   const [isLightboxOpen, setIsLightboxOpen] = useState(false);
 
   const nextImage = useCallback(() => {
-    const nextIndex = (currentImageIndex + 1) % images.length;
-    setCurrentImageIndex(nextIndex);
-    setLoadedImages(prev => ({...prev, [nextIndex]: true}));
-  }, [currentImageIndex, images.length]);
+    setCurrentImageIndex((prev) => (prev + 1) % images.length);
+  }, [images.length]);
 
   const prevImage = useCallback(() => {
-    const prevIndex = (currentImageIndex - 1 + images.length) % images.length;
-    setCurrentImageIndex(prevIndex);
-    setLoadedImages(prev => ({...prev, [prevIndex]: true}));
-  }, [currentImageIndex, images.length]);
+    setCurrentImageIndex((prev) => (prev - 1 + images.length) % images.length);
+  }, [images.length]);
 
   // Keyboard navigation for lightbox
   useEffect(() => {
@@ -46,7 +41,6 @@ const AccommodationGallery = ({ images, name }: AccommodationGalleryProps) => {
 
   const handleThumbnailClick = (index: number) => {
     setCurrentImageIndex(index);
-    setLoadedImages(prev => ({...prev, [index]: true}));
   };
 
   const openLightbox = () => {
@@ -103,29 +97,23 @@ const AccommodationGallery = ({ images, name }: AccommodationGalleryProps) => {
         </div>
       </div>
       
-      {/* Thumbnails with lazy loading */}
+      {/* Thumbnails */}
       {images.length > 1 && (
         <div className="flex mt-4 space-x-2 overflow-x-auto pb-2 max-h-24">
           {images.map((image, index) => (
             <button
               key={index}
               onClick={() => handleThumbnailClick(index)}
-              className={`flex-shrink-0 w-24 h-24 rounded-md overflow-hidden transition-all ${
+              className={`flex-shrink-0 w-24 h-24 rounded-md overflow-hidden transition-all bg-muted ${
                 index === currentImageIndex ? 'ring-2 ring-forest' : 'opacity-70 hover:opacity-100'
               }`}
             >
-              {(loadedImages[index] || index === currentImageIndex - 1 || index === currentImageIndex + 1) ? (
-                <img
-                  src={image}
-                  alt={`${name} thumbnail ${index + 1}`}
-                  className="w-full h-full object-contain"
-                  loading="eager"
-                />
-              ) : (
-                <div className="w-full h-full bg-gray-200 flex items-center justify-center">
-                  <span className="text-xs text-gray-400">Loading...</span>
-                </div>
-              )}
+              <img
+                src={image}
+                alt={`${name} thumbnail ${index + 1}`}
+                className="w-full h-full object-cover"
+                loading={index < 5 ? "eager" : "lazy"}
+              />
             </button>
           ))}
         </div>
