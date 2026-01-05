@@ -52,13 +52,13 @@ const HomePage = () => {
     "description": language === 'el' 
       ? "Πολυτελές glamping και κάμπινγκ στη Λευκάδα, Ελλάδα. Ξύλινο σπίτι και σκηνές glamping με θέα στη θάλασσα στον κόλπο του Μικρού Γιαλού."
       : "Luxury glamping and camping in Lefkada, Greece. Wooden house and glamping tents with sea views in Mikros Gialos bay.",
-    "url": "https://metaxasretreats.com",
+    "url": "https://metaxasretreats.gr",
     "telephone": "+306972073025",
-    "email": "info@metaxasretreats.com",
+    "email": "info@metaxasretreats.gr",
     "image": [
-      "https://metaxasretreats.com/assets/glamping-tent/view.jpg",
-      "https://metaxasretreats.com/assets/glamping-tent/prosopsi.jpg",
-      "https://metaxasretreats.com/assets/e9f9bd84-9f74-4189-bf30-d6640a566fd3.jpg"
+      "https://metaxasretreats.gr/assets/glamping-tent/view.jpg",
+      "https://metaxasretreats.gr/assets/glamping-tent/prosopsi.jpg",
+      "https://metaxasretreats.gr/assets/e9f9bd84-9f74-4189-bf30-d6640a566fd3.jpg"
     ],
     "address": {
       "@type": "PostalAddress",
@@ -119,10 +119,10 @@ const HomePage = () => {
     "description": language === 'el' 
       ? "Πολυτελής εμπειρία glamping στον Μικρό Γιαλό της Λευκάδας με θέα στη θάλασσα"
       : "Luxury glamping experience in Mikros Gialos, Lefkada with stunning sea views over the Ionian Sea",
-    "thumbnailUrl": "https://metaxasretreats.com/assets/glamping-tent/view.jpg",
+    "thumbnailUrl": "https://metaxasretreats.gr/assets/glamping-tent/view.jpg",
     "uploadDate": "2024-01-01T00:00:00+02:00",
-    "contentUrl": "https://metaxasretreats.com/assets/video.mp4",
-    "embedUrl": "https://metaxasretreats.com/assets/video.mp4",
+    "contentUrl": "https://metaxasretreats.gr/assets/video.mp4",
+    "embedUrl": "https://metaxasretreats.gr/assets/video.mp4",
     "duration": "PT30S",
     "inLanguage": language,
     "publisher": {
@@ -130,7 +130,7 @@ const HomePage = () => {
       "name": "Metaxas Retreats",
       "logo": {
         "@type": "ImageObject",
-        "url": "https://metaxasretreats.com/assets/glamping-tent/view.jpg"
+        "url": "https://metaxasretreats.gr/assets/glamping-tent/view.jpg"
       }
     }
   };
@@ -144,7 +144,7 @@ const HomePage = () => {
         "@type": "ListItem",
         "position": 1,
         "name": language === 'el' ? "Αρχική" : "Home",
-        "item": "https://metaxasretreats.com/"
+        "item": "https://metaxasretreats.gr/"
       }
     ]
   };

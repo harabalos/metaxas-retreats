@@ -17,7 +17,7 @@ const SEOHead = ({
   title,
   description,
   canonicalUrl,
-  image = 'https://metaxasretreats.com/assets/glamping-tent/view.jpg',
+  image = 'https://metaxasretreats.gr/assets/glamping-tent/view.jpg',
   type = 'website',
   schema,
   keywords,
@@ -31,7 +31,7 @@ const SEOHead = ({
   const displayDescription = language === 'el' && descriptionEl ? descriptionEl : description;
   
   const fullTitle = `${displayTitle} | Metaxas Retreats`;
-  const siteUrl = 'https://metaxasretreats.com';
+  const siteUrl = 'https://metaxasretreats.gr';
   const fullUrl = canonicalUrl ? `${siteUrl}${canonicalUrl}` : siteUrl;
   
   // Default keywords for glamping/camping SEO - bilingual

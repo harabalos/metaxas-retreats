@@ -38,7 +38,7 @@ const ContactUs = () => {
     "description": language === 'el' 
       ? "Πολυτελές glamping και ενοικιαζόμενα διαμερίσματα διακοπών στον Μικρό Γιαλό, Λευκάδα, Ελλάδα"
       : "Luxury glamping and vacation rentals in Mikros Gialos, Lefkada, Greece",
-    "url": "https://metaxasretreats.com/contact",
+    "url": "https://metaxasretreats.gr/contact",
     "telephone": "+30 6973219980",
     "email": "metaxasretreats@gmail.com",
     "address": {
