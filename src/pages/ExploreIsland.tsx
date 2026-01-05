@@ -16,7 +16,7 @@ const ExploreIsland = () => {
     "description": language === 'el' 
       ? "Ανακαλύψτε τις εκπληκτικές παραλίες της Λευκάδας, τα γραφικά χωριά, τα θαλάσσια σπορ και την τοπική κουζίνα. Ο πλήρης οδηγός σας για τα ελληνικά νησιά."
       : "Discover Lefkada's stunning beaches, charming villages, water sports, and local cuisine. Your complete Greek island travel guide.",
-    "url": "https://metaxasretreats.com/explore",
+    "url": "https://metaxasretreats.gr/explore",
     "touristType": ["Beach lovers", "Nature enthusiasts", "Adventure seekers", "Food lovers"],
     "includesAttraction": [
       {

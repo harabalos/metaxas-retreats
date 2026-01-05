@@ -36,8 +36,8 @@ const AccommodationDetail = () => {
     "@type": "VacationRental",
     "name": `${accommodation.name} - Metaxas Retreats Lefkada`,
     "description": accommodation.description,
-    "url": `https://metaxasretreats.com/accommodation/${accommodation.id}`,
-    "image": accommodation.images.map(img => `https://metaxasretreats.com${img}`),
+    "url": `https://metaxasretreats.gr/accommodation/${accommodation.id}`,
+    "image": accommodation.images.map(img => `https://metaxasretreats.gr${img}`),
     "numberOfRooms": accommodation.bedrooms,
     "occupancy": {
       "@type": "QuantitativeValue",
@@ -108,15 +108,15 @@ const AccommodationDetail = () => {
       "highPrice": accommodation.type === 'house' ? "140" : "120",
       "offerCount": "1",
       "availability": "https://schema.org/InStock",
-      "priceValidUntil": "2025-12-31",
-      "url": `https://metaxasretreats.com/accommodation/${accommodation.id}`
+      "priceValidUntil": "2026-12-31",
+      "url": `https://metaxasretreats.gr/accommodation/${accommodation.id}`
     },
     // BookAction for direct booking in search results
     "potentialAction": {
       "@type": "ReserveAction",
       "target": {
         "@type": "EntryPoint",
-        "urlTemplate": `https://metaxasretreats.com/booking/${accommodation.id}?startDate={checkInDate}&endDate={checkOutDate}&guests={guests}`,
+        "urlTemplate": `https://metaxasretreats.gr/booking/${accommodation.id}?startDate={checkInDate}&endDate={checkOutDate}&guests={guests}`,
         "actionPlatform": [
           "http://schema.org/DesktopWebPlatform",
           "http://schema.org/MobileWebPlatform"
@@ -138,19 +138,19 @@ const AccommodationDetail = () => {
         "@type": "ListItem",
         "position": 1,
         "name": "Home",
-        "item": "https://metaxasretreats.com/"
+        "item": "https://metaxasretreats.gr/"
       },
       {
         "@type": "ListItem",
         "position": 2,
         "name": "Accommodations",
-        "item": "https://metaxasretreats.com/#accommodations"
+        "item": "https://metaxasretreats.gr/#accommodations"
       },
       {
         "@type": "ListItem",
         "position": 3,
         "name": accommodation.name,
-        "item": `https://metaxasretreats.com/accommodation/${accommodation.id}`
+        "item": `https://metaxasretreats.gr/accommodation/${accommodation.id}`
       }
     ]
   };
@@ -190,7 +190,7 @@ const AccommodationDetail = () => {
         title={seoTitle}
         description={seoDescription}
         canonicalUrl={`/accommodation/${accommodation.id}`}
-        image={`https://metaxasretreats.com${accommodation.images[0]}`}
+        image={`https://metaxasretreats.gr${accommodation.images[0]}`}
         schema={combinedSchema}
       />
       <div className="container mx-auto px-4 py-8 max-w-7xl">
