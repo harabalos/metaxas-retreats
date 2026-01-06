@@ -25,22 +25,39 @@ const HomePage = () => {
   }, [location]);
 
   useEffect(() => {
-    const script = document.createElement('script');
-    script.src = "https://featurable.com/assets/bundle.js";
-    script.defer = true;
-    script.charset = "UTF-8";
-    document.body.appendChild(script);
-    return () => { try { document.body.removeChild(script); } catch (e) {} };
+    const timer = setTimeout(() => {
+      const script = document.createElement('script');
+      script.src = "https://featurable.com/assets/bundle.js";
+      script.defer = true;
+      script.charset = "UTF-8";
+      document.body.appendChild(script);
+    }, 2000);
+    return () => {
+      clearTimeout(timer);
+      try { 
+        const script = document.querySelector('script[src="https://featurable.com/assets/bundle.js"]');
+        if (script) document.body.removeChild(script); 
+      } catch (e) {}
+    };
   }, []);
 
   // Force video autoplay on iOS
   useEffect(() => {
     const video = videoRef.current;
-    if (video) {
-      video.play().catch(() => {
-        // Autoplay prevented - poster image will show as fallback
-      });
-    }
+    if (!video) return;
+
+    const playVideo = () => {
+      video.play().catch(() => {});
+    };
+
+    playVideo();
+    video.addEventListener('canplaythrough', playVideo);
+    video.addEventListener('loadeddata', playVideo);
+
+    return () => {
+      video.removeEventListener('canplaythrough', playVideo);
+      video.removeEventListener('loadeddata', playVideo);
+    };
   }, []);
 
   // Campground/LodgingBusiness schema for homepage
@@ -169,6 +186,7 @@ const HomePage = () => {
             muted 
             loop 
             playsInline
+            preload="auto"
             poster="/assets/glamping-tent/view.jpg"
             className="absolute inset-0 w-full h-full object-cover opacity-60 [&::-webkit-media-controls]:hidden [&::-webkit-media-controls-start-playback-button]:hidden"
           >
