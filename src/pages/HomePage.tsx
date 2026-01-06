@@ -1,4 +1,4 @@
-import { useRef, useEffect, useState } from 'react';
+import { useRef, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { ArrowDown, Tent, Home } from 'lucide-react';
 import Layout from '@/components/Layout/Layout';
@@ -12,7 +12,6 @@ const HomePage = () => {
   const location = useLocation();
   const accommodationsRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
-  const [videoLoaded, setVideoLoaded] = useState(false);
   const { t, language } = useLanguage();
 
   const scrollToAccommodations = () => {
@@ -163,17 +162,15 @@ const HomePage = () => {
         schema={combinedSchema}
       />
       <section className="hero-section h-[90vh] flex items-center text-white relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-forest-dark to-black">
-          <div className={`absolute inset-0 bg-gradient-to-b from-forest-dark to-black transition-opacity duration-700 ${videoLoaded ? 'opacity-0' : 'opacity-100'}`} />
+        <div className="absolute inset-0 bg-black">
           <video 
             ref={videoRef}
             autoPlay 
             muted 
             loop 
             playsInline
-            preload="auto"
-            onCanPlayThrough={() => setVideoLoaded(true)}
-            className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 [&::-webkit-media-controls]:hidden [&::-webkit-media-controls-start-playback-button]:hidden ${videoLoaded ? 'opacity-60' : 'opacity-0'}`}
+            poster="/assets/glamping-tent/view.jpg"
+            className="absolute inset-0 w-full h-full object-cover opacity-60 [&::-webkit-media-controls]:hidden [&::-webkit-media-controls-start-playback-button]:hidden"
           >
             <source src="/assets/video.mp4" type="video/mp4" />
           </video>
