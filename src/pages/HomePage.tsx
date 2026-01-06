@@ -1,4 +1,4 @@
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { ArrowDown, Tent, Home } from 'lucide-react';
 import Layout from '@/components/Layout/Layout';
@@ -12,6 +12,7 @@ const HomePage = () => {
   const location = useLocation();
   const accommodationsRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
+  const [videoReady, setVideoReady] = useState(false);
   const { t, language } = useLanguage();
 
   const scrollToAccommodations = () => {
@@ -33,14 +34,35 @@ const HomePage = () => {
     return () => { try { document.body.removeChild(script); } catch (e) {} };
   }, []);
 
-  // Force video autoplay on iOS
+  // Force video autoplay with retry mechanism
   useEffect(() => {
     const video = videoRef.current;
-    if (video) {
+    if (!video) return;
+
+    const attemptPlay = () => {
       video.play().catch(() => {
-        // Autoplay prevented - poster image will show as fallback
+        // Retry after a short delay
+        setTimeout(() => {
+          video.play().catch(() => {});
+        }, 1000);
       });
+    };
+
+    const handleCanPlay = () => {
+      setVideoReady(true);
+      attemptPlay();
+    };
+
+    video.addEventListener('canplay', handleCanPlay);
+    
+    // Initial attempt if video is already loaded
+    if (video.readyState >= 3) {
+      handleCanPlay();
     }
+
+    return () => {
+      video.removeEventListener('canplay', handleCanPlay);
+    };
   }, []);
 
   // Campground/LodgingBusiness schema for homepage
@@ -163,14 +185,20 @@ const HomePage = () => {
       />
       <section className="hero-section h-[90vh] flex items-center text-white relative overflow-hidden">
         <div className="absolute inset-0 bg-black">
+          {/* Poster image shown until video is ready */}
+          <img 
+            src="/assets/glamping-tent/view.jpg" 
+            alt="Glamping view"
+            className={`absolute inset-0 w-full h-full object-cover opacity-60 transition-opacity duration-1000 ${videoReady ? 'opacity-0' : 'opacity-60'}`}
+          />
           <video 
             ref={videoRef}
             autoPlay 
             muted 
             loop 
             playsInline
-            poster="/assets/glamping-tent/view.jpg"
-            className="absolute inset-0 w-full h-full object-cover opacity-60 [&::-webkit-media-controls]:hidden [&::-webkit-media-controls-start-playback-button]:hidden"
+            preload="auto"
+            className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 [&::-webkit-media-controls]:hidden [&::-webkit-media-controls-start-playback-button]:hidden ${videoReady ? 'opacity-60' : 'opacity-0'}`}
           >
             <source src="/assets/video.mp4" type="video/mp4" />
           </video>
