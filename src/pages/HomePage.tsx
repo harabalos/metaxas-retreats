@@ -36,20 +36,11 @@ const HomePage = () => {
   // Force video autoplay on iOS
   useEffect(() => {
     const video = videoRef.current;
-    if (!video) return;
-
-    const attemptPlay = () => {
-      video.play().catch(() => {});
-    };
-
-    attemptPlay();
-    video.addEventListener('loadeddata', attemptPlay);
-    video.addEventListener('canplay', attemptPlay);
-
-    return () => {
-      video.removeEventListener('loadeddata', attemptPlay);
-      video.removeEventListener('canplay', attemptPlay);
-    };
+    if (video) {
+      video.play().catch(() => {
+        // Autoplay prevented - poster image will show as fallback
+      });
+    }
   }, []);
 
   // Campground/LodgingBusiness schema for homepage
@@ -178,10 +169,8 @@ const HomePage = () => {
             muted 
             loop 
             playsInline
-            preload="auto"
-            controls={false}
-            className="absolute inset-0 w-full h-full object-cover opacity-60 [&::-webkit-media-controls]:!hidden [&::-webkit-media-controls-panel]:!hidden [&::-webkit-media-controls-start-playback-button]:!hidden [&::-webkit-media-controls-play-button]:!hidden"
-            style={{ pointerEvents: 'none' }}
+            poster="/assets/glamping-tent/view.jpg"
+            className="absolute inset-0 w-full h-full object-cover opacity-60 [&::-webkit-media-controls]:hidden [&::-webkit-media-controls-start-playback-button]:hidden"
           >
             <source src="/assets/video.mp4" type="video/mp4" />
           </video>
