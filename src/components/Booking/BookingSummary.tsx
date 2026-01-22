@@ -38,10 +38,6 @@ const BookingSummary = ({
     ? `${translatedAccommodationName} (${t('booking.tent')} ${selectedTent})` 
     : translatedAccommodationName;
 
-  // Get price range for display
-  const minPrice = accommodation.price;
-  const maxPrice = Math.max(...accommodation.priceRanges.map(r => r.price));
-
   return (
     <div>
       <h3 className="font-semibold text-lg mb-4">{t('summary.title')}</h3>
@@ -83,22 +79,6 @@ const BookingSummary = ({
           </div>
         </div>
         
-        <Separator />
-        
-        {/* Price Range Instead of Total */}
-        <div className="bg-muted/50 rounded-lg p-4">
-          <div className="flex justify-between items-center mb-2">
-            <span className="text-sm text-muted-foreground">{t('pricing.estimatedRange')}</span>
-          </div>
-          <div className="flex items-baseline gap-1">
-            <span className="font-bold text-xl text-sea-dark">€{minPrice * nights}</span>
-            <span className="text-muted-foreground">-</span>
-            <span className="font-bold text-xl text-sea-dark">€{maxPrice * nights}</span>
-          </div>
-          <p className="text-xs text-muted-foreground mt-2">
-            {t('pricing.finalPriceNote')}
-          </p>
-        </div>
       </div>
     </div>
   );
