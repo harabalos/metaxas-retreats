@@ -1,7 +1,7 @@
-
 import { useLocation, useNavigate } from 'react-router-dom';
 import { CheckCircle, CreditCard, Bitcoin, Banknote } from 'lucide-react';
 import Layout from '@/components/Layout/Layout';
+import SEOHead from '@/components/SEO/SEOHead';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
@@ -113,6 +113,11 @@ const BookingConfirmation = () => {
   
   return (
     <Layout>
+      <SEOHead
+        title="Booking Confirmation"
+        description="Your booking confirmation at Metaxas Retreats glamping in Lefkada, Greece."
+        robots="noindex, nofollow"
+      />
       <div className="container mx-auto px-4 py-12 max-w-3xl">
         <div className="text-center mb-10">
           <div className="flex justify-center mb-4">
