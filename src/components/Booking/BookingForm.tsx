@@ -4,14 +4,14 @@ import { useNavigate } from 'react-router-dom';
 import { differenceInDays } from 'date-fns';
 import { Calendar, Users, Tent } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import DateRangePicker from './DateRangePicker';
 import { Accommodation } from '@/data/accommodations';
 import { toast } from 'sonner';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
-import { format, eachDayOfInterval } from 'date-fns';
+import { useLanguage } from '@/context/LanguageContext';
 
 interface BookingFormProps {
   accommodation: Accommodation;
@@ -20,6 +20,7 @@ interface BookingFormProps {
 
 const BookingForm = ({ accommodation, isDetail = false }: BookingFormProps) => {
   const navigate = useNavigate();
+  const { t, language } = useLanguage();
   const [startDate, setStartDate] = useState<Date | undefined>(undefined);
   const [endDate, setEndDate] = useState<Date | undefined>(undefined);
   const [guests, setGuests] = useState<number>(1);
@@ -28,16 +29,8 @@ const BookingForm = ({ accommodation, isDetail = false }: BookingFormProps) => {
   // Determine if we're booking a glamping tent
   const isGlampingTent = accommodation.id === 'glamping-tent';
 
-  // Calculate number of nights and total price
+  // Calculate number of nights
   const nights = startDate && endDate ? differenceInDays(endDate, startDate) : 0;
-  const totalPrice = (startDate && endDate)
-  ? eachDayOfInterval({ start: startDate, end: new Date(endDate.getTime() - 86400000) }) // exclude checkout day
-      .reduce((sum, date) => {
-        const dateStr = format(date, 'yyyy-MM-dd');
-        const dailyPrice = accommodation.dailyPricing?.[dateStr] ?? accommodation.price;
-        return sum + dailyPrice;
-      }, 0)
-  : 0;
 
   const handleDateChange = (start: Date | undefined, end: Date | undefined) => {
     setStartDate(start);
@@ -56,20 +49,19 @@ const BookingForm = ({ accommodation, isDetail = false }: BookingFormProps) => {
     e.preventDefault();
     
     if (!startDate || !endDate) {
-      toast.error('Please select check-in and check-out dates');
+      toast.error(language === 'el' ? 'Παρακαλώ επιλέξτε ημερομηνίες' : 'Please select check-in and check-out dates');
       return;
     }
     
     if (guests < 1 || guests > accommodation.guests) {
-      toast.error(`Please select between 1 and ${accommodation.guests} guests`);
+      toast.error(`${language === 'el' ? 'Παρακαλώ επιλέξτε μεταξύ 1 και' : 'Please select between 1 and'} ${accommodation.guests} ${language === 'el' ? 'επισκέπτες' : 'guests'}`);
       return;
     }
     
     // Add tent selection to query params if it's a glamping tent
     const tentParam = isGlampingTent ? `&tent=${selectedTent}` : '';
     
-    // In a real application, you would send this data to your backend
-    // For now, we'll just navigate to a booking page with query params
+    // Navigate to booking page with dates and guests (no price)
     navigate(`/booking/${accommodation.id}?start=${startDate.toISOString()}&end=${endDate.toISOString()}&guests=${guests}${tentParam}`);
   };
 
@@ -81,22 +73,31 @@ const BookingForm = ({ accommodation, isDetail = false }: BookingFormProps) => {
     return accommodation.id;
   };
 
+  // Get min and max price for display
+  const minPrice = accommodation.price;
+  const maxPrice = Math.max(...accommodation.priceRanges.map(r => r.price));
+
   return (
     <Card className={`shadow ${isDetail ? 'w-full md:w-[350px] lg:w-[400px] h-fit sticky top-24' : ''}`}>
       {isDetail && (
-        <CardHeader>
-          <CardTitle className="flex items-center">
+        <CardHeader className="pb-2">
+          <CardTitle className="text-lg text-forest-dark">
+            {t('pricing.startingFrom')} €{minPrice}
+            <span className="text-sm font-normal text-muted-foreground">/{language === 'el' ? 'βράδυ' : 'night'}</span>
           </CardTitle>
+          <p className="text-xs text-muted-foreground">
+            {language === 'el' ? `Έως €${maxPrice}/βράδυ τον Αύγουστο` : `Up to €${maxPrice}/night in August`}
+          </p>
         </CardHeader>
       )}
-      <CardContent>
+      <CardContent className={isDetail ? 'pt-4' : ''}>
         <form onSubmit={handleSubmit}>
           <div className="space-y-4">
             {isGlampingTent && (
               <div className="space-y-2">
                 <Label className="flex items-center">
                   <Tent className="h-4 w-4 mr-2 text-sea" />
-                  <span>Select Tent</span>
+                  <span>{language === 'el' ? 'Επιλέξτε Σκηνή' : 'Select Tent'}</span>
                 </Label>
                 <RadioGroup
                   value={selectedTent}
@@ -105,11 +106,11 @@ const BookingForm = ({ accommodation, isDetail = false }: BookingFormProps) => {
                 >
                   <div className="flex items-center space-x-2">
                     <RadioGroupItem value="1" id="tent1" />
-                    <Label htmlFor="tent1" className="cursor-pointer">Tent 1</Label>
+                    <Label htmlFor="tent1" className="cursor-pointer">{t('booking.tent')} 1</Label>
                   </div>
                   <div className="flex items-center space-x-2">
                     <RadioGroupItem value="2" id="tent2" />
-                    <Label htmlFor="tent2" className="cursor-pointer">Tent 2</Label>
+                    <Label htmlFor="tent2" className="cursor-pointer">{t('booking.tent')} 2</Label>
                   </div>
                 </RadioGroup>
               </div>
@@ -118,7 +119,7 @@ const BookingForm = ({ accommodation, isDetail = false }: BookingFormProps) => {
             <div className="space-y-2">
               <Label htmlFor="date-range" className="flex items-center">
                 <Calendar className="h-4 w-4 mr-2 text-sea" />
-                <span>Dates</span>
+                <span>{language === 'el' ? 'Ημερομηνίες' : 'Dates'}</span>
               </Label>
               <DateRangePicker
                 startDate={startDate}
@@ -131,7 +132,7 @@ const BookingForm = ({ accommodation, isDetail = false }: BookingFormProps) => {
             <div className="space-y-2">
               <Label htmlFor="guests" className="flex items-center">
                 <Users className="h-4 w-4 mr-2 text-sea" />
-                <span>Guests</span>
+                <span>{language === 'el' ? 'Επισκέπτες' : 'Guests'}</span>
               </Label>
               <Input
                 id="guests"
@@ -142,15 +143,19 @@ const BookingForm = ({ accommodation, isDetail = false }: BookingFormProps) => {
                 onChange={(e) => setGuests(Number(e.target.value))}
                 className="border-sea-light focus-visible:ring-sea-light"
               />
-              <p className="text-xs text-gray-500">Max {accommodation.guests} guests</p>
+              <p className="text-xs text-gray-500">
+                {language === 'el' ? `Μέγιστο ${accommodation.guests} άτομα` : `Max ${accommodation.guests} guests`}
+              </p>
             </div>
             
             {(startDate && endDate) && (
               <div className="border-t border-gray-200 pt-4 space-y-2">
-                <div className="flex justify-between font-bold">
-                  <span>Total</span>
-                  <span>€{totalPrice}</span>
+                <div className="flex justify-between text-sm">
+                  <span>{nights} {language === 'el' ? 'διανυκτερεύσεις' : 'nights'}</span>
                 </div>
+                <p className="text-xs text-muted-foreground">
+                  {t('pricing.contactForQuote')}
+                </p>
               </div>
             )}
           </div>
@@ -160,7 +165,10 @@ const BookingForm = ({ accommodation, isDetail = false }: BookingFormProps) => {
             className="w-full mt-4 bg-forest hover:bg-forest-dark text-white"
             disabled={!startDate || !endDate}
           >
-            {isDetail ? 'Reserve' : 'Check Availability'}
+            {isDetail 
+              ? (language === 'el' ? 'Ζητήστε Προσφορά' : 'Get Quote') 
+              : (language === 'el' ? 'Ελέγξτε Διαθεσιμότητα' : 'Check Availability')
+            }
           </Button>
         </form>
       </CardContent>

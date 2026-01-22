@@ -5,7 +5,6 @@ import { DayPicker, DayPickerProps } from "react-day-picker";
 
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
-import { accommodations } from "@/data/accommodations";
 
 export type CalendarProps = DayPickerProps & {
   accommodationId?: string;
@@ -18,9 +17,6 @@ function Calendar({
   accommodationId,
   ...props
 }: CalendarProps) {
-  const pricing =
-    accommodations.find((acc) => acc.id === accommodationId)?.dailyPricing || {};
-
   return (
     <DayPicker
       showOutsideDays={showOutsideDays}
@@ -57,14 +53,9 @@ function Calendar({
         IconLeft: () => <ChevronLeft className="h-4 w-4" />,
         IconRight: () => <ChevronRight className="h-4 w-4" />,
         DayContent: ({ date }) => {
-          const dateStr = format(date, "yyyy-MM-dd");
-          const price = pricing[dateStr];
           return (
             <div className="flex flex-col items-center justify-center text-xs">
               <span>{format(date, "d")}</span>
-              {price !== undefined && (
-                <span className="text-[10px] text-gray-500">€{price}</span>
-              )}
             </div>
           );
         },

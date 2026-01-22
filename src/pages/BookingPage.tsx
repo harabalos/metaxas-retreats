@@ -7,7 +7,6 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import BookingSummary from '@/components/Booking/BookingSummary';
 import ContactSection from '@/components/Booking/ContactSection';
-import { format, eachDayOfInterval } from 'date-fns';
 import SEOHead from '@/components/SEO/SEOHead';
 import { useLanguage } from '@/context/LanguageContext';
 import { ExternalLink } from 'lucide-react';
@@ -52,21 +51,13 @@ const BookingPage = () => {
   }
   
   const nights = differenceInDays(endDate!, startDate!);
-  const totalPrice = (startDate && endDate)
-  ? eachDayOfInterval({ start: startDate, end: new Date(endDate.getTime() - 86400000) })
-      .reduce((sum, date) => {
-        const dateStr = format(date, 'yyyy-MM-dd');
-        const dailyPrice = accommodation.dailyPricing?.[dateStr] ?? accommodation.price;
-        return sum + dailyPrice;
-      }, 0)
-  : 0;
 
   const bookingSchema = {
     "@context": "https://schema.org",
     "@type": "ReservationAction",
     "target": {
       "@type": "EntryPoint",
-      "urlTemplate": `https://metaxasretreats.com/booking/${id}`,
+      "urlTemplate": `https://metaxasretreats.gr/booking/${id}`,
       "actionPlatform": ["http://schema.org/DesktopWebPlatform", "http://schema.org/MobileWebPlatform"]
     },
     "object": {
@@ -115,7 +106,6 @@ const BookingPage = () => {
                 endDate={endDate}
                 guests={guests}
                 nights={nights}
-                totalPrice={totalPrice}
                 selectedTent={isGlampingTent ? selectedTent : undefined}
               />
               
