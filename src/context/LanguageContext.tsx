@@ -157,6 +157,18 @@ const translations: Record<Language, Record<string, string>> = {
     'summary.guests': 'Guests',
     'summary.total': 'Total',
     
+    // Pricing
+    'pricing.startingFrom': 'From',
+    'pricing.contactForQuote': 'Contact us for your personalized quote',
+    'pricing.estimatedRange': 'Estimated price range',
+    'pricing.finalPriceNote': 'Final price confirmed via WhatsApp',
+    'pricing.seasonalPrices': 'Seasonal Prices',
+    'pricing.lowSeason': 'Low Season',
+    'pricing.midSeason': 'Mid Season',
+    'pricing.shoulderSeason': 'Shoulder Season',
+    'pricing.highSeason': 'High Season',
+    'pricing.peakSeason': 'Peak Season',
+    
     // Booking Page
     'booking.pageTitle': 'Contact Us for Booking',
     'booking.pageSubtitle': 'Contact us directly to confirm availability and complete your booking.',
@@ -368,6 +380,18 @@ const translations: Record<Language, Record<string, string>> = {
     'summary.checkOut': 'Αναχώρηση',
     'summary.guests': 'Επισκέπτες',
     'summary.total': 'Σύνολο',
+    
+    // Pricing
+    'pricing.startingFrom': 'Από',
+    'pricing.contactForQuote': 'Επικοινωνήστε μαζί μας για προσωποποιημένη προσφορά',
+    'pricing.estimatedRange': 'Εκτιμώμενο εύρος τιμών',
+    'pricing.finalPriceNote': 'Τελική τιμή επιβεβαιώνεται μέσω WhatsApp',
+    'pricing.seasonalPrices': 'Εποχιακές Τιμές',
+    'pricing.lowSeason': 'Χαμηλή Σεζόν',
+    'pricing.midSeason': 'Μέση Σεζόν',
+    'pricing.shoulderSeason': 'Μεταβατική Σεζόν',
+    'pricing.highSeason': 'Υψηλή Σεζόν',
+    'pricing.peakSeason': 'Αιχμή Σεζόν',
     
     // Booking Page
     'booking.pageTitle': 'Επικοινωνήστε για Κράτηση',
@@ -581,6 +605,18 @@ const translations: Record<Language, Record<string, string>> = {
     'summary.guests': 'Ospiti',
     'summary.total': 'Totale',
     
+    // Pricing
+    'pricing.startingFrom': 'Da',
+    'pricing.contactForQuote': 'Contattaci per un preventivo personalizzato',
+    'pricing.estimatedRange': 'Fascia di prezzo stimata',
+    'pricing.finalPriceNote': 'Prezzo finale confermato via WhatsApp',
+    'pricing.seasonalPrices': 'Prezzi Stagionali',
+    'pricing.lowSeason': 'Bassa Stagione',
+    'pricing.midSeason': 'Media Stagione',
+    'pricing.shoulderSeason': 'Mezza Stagione',
+    'pricing.highSeason': 'Alta Stagione',
+    'pricing.peakSeason': 'Altissima Stagione',
+    
     // Booking Page
     'booking.pageTitle': 'Contattaci per Prenotare',
     'booking.pageSubtitle': 'Contattaci direttamente per confermare la disponibilità e completare la tua prenotazione.',
@@ -793,6 +829,18 @@ const translations: Record<Language, Record<string, string>> = {
     'summary.guests': 'Gäste',
     'summary.total': 'Gesamt',
     
+    // Pricing
+    'pricing.startingFrom': 'Ab',
+    'pricing.contactForQuote': 'Kontaktieren Sie uns für ein persönliches Angebot',
+    'pricing.estimatedRange': 'Geschätzte Preisspanne',
+    'pricing.finalPriceNote': 'Endpreis per WhatsApp bestätigt',
+    'pricing.seasonalPrices': 'Saisonpreise',
+    'pricing.lowSeason': 'Nebensaison',
+    'pricing.midSeason': 'Zwischensaison',
+    'pricing.shoulderSeason': 'Übergangssaison',
+    'pricing.highSeason': 'Hochsaison',
+    'pricing.peakSeason': 'Hauptsaison',
+    
     // Booking Page
     'booking.pageTitle': 'Kontaktieren Sie Uns für Buchung',
     'booking.pageSubtitle': 'Kontaktieren Sie uns direkt, um die Verfügbarkeit zu bestätigen und Ihre Buchung abzuschließen.',
@@ -1004,6 +1052,18 @@ const translations: Record<Language, Record<string, string>> = {
     'summary.checkOut': 'Check-out',
     'summary.guests': 'Oaspeți',
     'summary.total': 'Total',
+    
+    // Pricing
+    'pricing.startingFrom': 'De la',
+    'pricing.contactForQuote': 'Contactează-ne pentru o ofertă personalizată',
+    'pricing.estimatedRange': 'Interval de preț estimat',
+    'pricing.finalPriceNote': 'Prețul final confirmat prin WhatsApp',
+    'pricing.seasonalPrices': 'Prețuri Sezoniere',
+    'pricing.lowSeason': 'Extrasezon',
+    'pricing.midSeason': 'Sezon Mediu',
+    'pricing.shoulderSeason': 'Intersezon',
+    'pricing.highSeason': 'Sezon Înalt',
+    'pricing.peakSeason': 'Vârf de Sezon',
     
     // Booking Page
     'booking.pageTitle': 'Contactează-ne pentru Rezervare',
