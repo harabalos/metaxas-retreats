@@ -11,6 +11,7 @@ interface SEOHeadProps {
   keywords?: string;
   titleEl?: string;
   descriptionEl?: string;
+  robots?: string;
 }
 
 const SEOHead = ({
@@ -22,7 +23,8 @@ const SEOHead = ({
   schema,
   keywords,
   titleEl,
-  descriptionEl
+  descriptionEl,
+  robots
 }: SEOHeadProps) => {
   const { language } = useLanguage();
   
@@ -66,7 +68,7 @@ const SEOHead = ({
       )}
       
       {/* Enhanced robots directive */}
-      <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+      <meta name="robots" content={robots || "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"} />
 
       {/* Open Graph / Facebook */}
       <meta property="og:type" content={type} />
