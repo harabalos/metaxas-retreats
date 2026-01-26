@@ -73,21 +73,13 @@ const BookingForm = ({ accommodation, isDetail = false }: BookingFormProps) => {
     return accommodation.id;
   };
 
-  // Get min and max price for display
-  const minPrice = accommodation.price;
-  const maxPrice = Math.max(...accommodation.priceRanges.map(r => r.price));
-
   return (
     <Card className={`shadow ${isDetail ? 'w-full md:w-[350px] lg:w-[400px] h-fit sticky top-24' : ''}`}>
       {isDetail && (
         <CardHeader className="pb-2">
           <CardTitle className="text-lg text-forest-dark">
-            {t('pricing.startingFrom')} €{minPrice}
-            <span className="text-sm font-normal text-muted-foreground">/{language === 'el' ? 'βράδυ' : 'night'}</span>
+            {language === 'el' ? 'Κάντε Κράτηση' : 'Book Your Stay'}
           </CardTitle>
-          <p className="text-xs text-muted-foreground">
-            {language === 'el' ? `Έως €${maxPrice}/βράδυ τον Αύγουστο` : `Up to €${maxPrice}/night in August`}
-          </p>
         </CardHeader>
       )}
       <CardContent className={isDetail ? 'pt-4' : ''}>
