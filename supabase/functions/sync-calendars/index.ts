@@ -17,8 +17,14 @@ const CALENDAR_URLS: Record<string, string[]> = {
     Deno.env.get("AIRBNB_WOODEN_HOUSE_URL") || "",
     Deno.env.get("BOOKING_WOODEN_HOUSE_URL") || ""
   ].filter(url => url !== ""),
-  "glamping-tent-1": [Deno.env.get("AIRBNB_TENT_1_URL") || ""].filter(url => url !== ""),
-  "glamping-tent-2": [Deno.env.get("AIRBNB_TENT_2_URL") || ""].filter(url => url !== "")
+  "glamping-tent-1": [
+    Deno.env.get("AIRBNB_TENT_1_URL") || "",
+    Deno.env.get("BOOKING_TENT_1_URL") || ""
+  ].filter(url => url !== ""),
+  "glamping-tent-2": [
+    Deno.env.get("AIRBNB_TENT_2_URL") || "",
+    Deno.env.get("BOOKING_TENT_2_URL") || ""
+  ].filter(url => url !== "")
 };
 
 const corsHeaders = {
