@@ -11,10 +11,14 @@ interface ICalEvent {
 }
 
 // Calendar URLs loaded from environment variables (secrets)
+// Support multiple URLs per accommodation for cross-platform sync
 const CALENDAR_URLS: Record<string, string[]> = {
-  "wooden-house": [Deno.env.get("AIRBNB_WOODEN_HOUSE_URL") || ""],
-  "glamping-tent-1": [Deno.env.get("AIRBNB_TENT_1_URL") || ""],
-  "glamping-tent-2": [Deno.env.get("AIRBNB_TENT_2_URL") || ""]
+  "wooden-house": [
+    Deno.env.get("AIRBNB_WOODEN_HOUSE_URL") || "",
+    Deno.env.get("BOOKING_WOODEN_HOUSE_URL") || ""
+  ].filter(url => url !== ""),
+  "glamping-tent-1": [Deno.env.get("AIRBNB_TENT_1_URL") || ""].filter(url => url !== ""),
+  "glamping-tent-2": [Deno.env.get("AIRBNB_TENT_2_URL") || ""].filter(url => url !== "")
 };
 
 const corsHeaders = {
@@ -50,23 +54,21 @@ serve(async (req) => {
 
   console.log('API key validated successfully, proceeding with calendar sync');
 
-  // Validate that all calendar URLs are configured
-  const missingUrls: string[] = [];
+  // Check which accommodations have at least one URL configured
+  const accommodationsWithUrls: string[] = [];
+  const accommodationsWithoutUrls: string[] = [];
+  
   for (const [accommodation, urls] of Object.entries(CALENDAR_URLS)) {
-    if (!urls[0]) {
-      missingUrls.push(accommodation);
+    if (urls.length > 0) {
+      accommodationsWithUrls.push(accommodation);
+      console.log(`${accommodation}: ${urls.length} iCal source(s) configured`);
+    } else {
+      accommodationsWithoutUrls.push(accommodation);
     }
   }
   
-  if (missingUrls.length > 0) {
-    console.error(`Missing calendar URLs for: ${missingUrls.join(', ')}`);
-    return new Response(
-      JSON.stringify({ 
-        success: false, 
-        error: `Missing calendar URL secrets for: ${missingUrls.join(', ')}. Please configure AIRBNB_WOODEN_HOUSE_URL, AIRBNB_TENT_1_URL, and AIRBNB_TENT_2_URL in Edge Function secrets.`
-      }),
-      { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
-    );
+  if (accommodationsWithoutUrls.length > 0) {
+    console.warn(`No calendar URLs configured for: ${accommodationsWithoutUrls.join(', ')}`);
   }
 
   const supabase = createClient(
@@ -77,72 +79,112 @@ serve(async (req) => {
   const results: string[] = [];
 
   for (const [accommodationId, urls] of Object.entries(CALENDAR_URLS)) {
-    for (const url of urls) {
-      try {
-        console.log(`Fetching calendar for ${accommodationId}`);
-        
-        // STEP 1: Delete ALL existing external bookings for this accommodation
-        // This ensures unblocked dates in Airbnb get removed from our database
-        const { error: deleteError } = await supabase
-          .from('bookings')
-          .delete()
-          .eq('accommodation_id', accommodationId)
-          .eq('source', 'external');
+    // Skip if no URLs configured for this accommodation
+    if (urls.length === 0) {
+      results.push(`${accommodationId}: Skipped - no iCal URLs configured`);
+      continue;
+    }
 
-        if (deleteError) {
-          console.error(`Failed to delete old bookings for ${accommodationId}:`, deleteError);
-        } else {
-          console.log(`Deleted existing external bookings for ${accommodationId}`);
-        }
-        
-        // STEP 2: Fetch fresh data from Airbnb
-        const response = await fetch(url);
-        if (!response.ok) {
-          throw new Error(`Failed to download calendar: ${response.statusText}`);
-        }
-        const icsText = await response.text();
+    try {
+      console.log(`Processing ${accommodationId} with ${urls.length} iCal source(s)`);
+      
+      // STEP 1: Delete ALL existing external bookings for this accommodation
+      // This ensures unblocked dates in external platforms get removed from our database
+      const { error: deleteError } = await supabase
+        .from('bookings')
+        .delete()
+        .eq('accommodation_id', accommodationId)
+        .eq('source', 'external');
 
-        // Parse the ICS content
-        const events = await ical.async.parseICS(icsText);
-        
-        let syncedCount = 0;
-        
-        // STEP 3: Insert fresh bookings from Airbnb
-        for (const key of Object.keys(events)) {
-          const event = events[key] as ICalEvent;
+      if (deleteError) {
+        console.error(`Failed to delete old bookings for ${accommodationId}:`, deleteError);
+      } else {
+        console.log(`Deleted existing external bookings for ${accommodationId}`);
+      }
+      
+      // STEP 2: Collect events from ALL iCal sources for this accommodation
+      // Use a Set to deduplicate by date range (same dates from different platforms = one booking)
+      const seenDates = new Set<string>();
+      const eventsToInsert: Array<{
+        accommodation_id: string;
+        start_date: string;
+        end_date: string;
+        source: string;
+        external_id: string;
+      }> = [];
+      
+      for (let urlIndex = 0; urlIndex < urls.length; urlIndex++) {
+        const url = urls[urlIndex];
+        try {
+          console.log(`Fetching iCal source ${urlIndex + 1}/${urls.length} for ${accommodationId}`);
           
-          if (event.type === 'VEVENT' && event.start && event.end) {
-            const startDate = new Date(event.start);
-            const endDate = new Date(event.end);
+          const response = await fetch(url);
+          if (!response.ok) {
+            throw new Error(`Failed to download calendar: ${response.statusText}`);
+          }
+          const icsText = await response.text();
+
+          // Parse the ICS content
+          const events = await ical.async.parseICS(icsText);
+          
+          // Collect events from this source
+          for (const key of Object.keys(events)) {
+            const event = events[key] as ICalEvent;
             
-            // Log each event for debugging
-            console.log(`Event for ${accommodationId}: ${event.uid}, Start: ${startDate.toISOString().split('T')[0]}, End: ${endDate.toISOString().split('T')[0]}`);
-
-            const { error } = await supabase
-              .from('bookings')
-              .insert({
+            if (event.type === 'VEVENT' && event.start && event.end) {
+              const startDate = new Date(event.start);
+              const endDate = new Date(event.end);
+              const startDateStr = startDate.toISOString().split('T')[0];
+              const endDateStr = endDate.toISOString().split('T')[0];
+              
+              // Create unique key for deduplication (same date range = same booking)
+              const dateKey = `${startDateStr}_${endDateStr}`;
+              
+              if (seenDates.has(dateKey)) {
+                console.log(`Skipping duplicate: ${accommodationId} ${dateKey}`);
+                continue;
+              }
+              seenDates.add(dateKey);
+              
+              console.log(`Event for ${accommodationId}: ${event.uid}, Start: ${startDateStr}, End: ${endDateStr}`);
+              
+              eventsToInsert.push({
                 accommodation_id: accommodationId,
-                start_date: startDate.toISOString().split('T')[0],
-                end_date: endDate.toISOString().split('T')[0],
+                start_date: startDateStr,
+                end_date: endDateStr,
                 source: 'external',
-                external_id: event.uid || `${startDate.toISOString()}-${accommodationId}`
+                external_id: event.uid || `${startDateStr}-${accommodationId}`
               });
-
-            if (error) {
-              console.error(`Database error for ${accommodationId}:`, error);
-            } else {
-              syncedCount++;
             }
           }
+        } catch (urlError) {
+          const errorMessage = urlError instanceof Error ? urlError.message : String(urlError);
+          console.error(`Failed to fetch iCal source ${urlIndex + 1} for ${accommodationId}:`, errorMessage);
+          // Continue with other URLs even if one fails
         }
-        
-        console.log(`Synced ${syncedCount} events for ${accommodationId}`);
-        results.push(`${accommodationId}: Cleared old data, synced ${syncedCount} fresh events`);
-      } catch (err) {
-        const errorMessage = err instanceof Error ? err.message : String(err);
-        console.error(`Failed to sync calendar for ${accommodationId}:`, errorMessage);
-        results.push(`Failed: ${accommodationId} - ${errorMessage}`);
       }
+      
+      // STEP 3: Insert all deduplicated events
+      let syncedCount = 0;
+      for (const eventData of eventsToInsert) {
+        const { error } = await supabase
+          .from('bookings')
+          .insert(eventData);
+
+        if (error) {
+          console.error(`Database error for ${accommodationId}:`, error);
+        } else {
+          syncedCount++;
+        }
+      }
+      
+      console.log(`Synced ${syncedCount} unique events for ${accommodationId} from ${urls.length} source(s)`);
+      results.push(`${accommodationId}: Synced ${syncedCount} events from ${urls.length} iCal source(s)`);
+      
+    } catch (err) {
+      const errorMessage = err instanceof Error ? err.message : String(err);
+      console.error(`Failed to sync calendar for ${accommodationId}:`, errorMessage);
+      results.push(`Failed: ${accommodationId} - ${errorMessage}`);
     }
   }
 
