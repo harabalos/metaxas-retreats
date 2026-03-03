@@ -22,7 +22,14 @@ const TermsOfService = React.lazy(() => import("./pages/TermsOfService"));
 const AdminAuth = React.lazy(() => import("./pages/AdminAuth"));
 const AdminDashboard = React.lazy(() => import("./pages/AdminDashboard"));
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 1000 * 60 * 5,
+      gcTime: 1000 * 60 * 10,
+    },
+  },
+});
 
 // Simple loading fallback
 const PageLoader = () => (

@@ -2,6 +2,11 @@ import { useQuery } from '@tanstack/react-query';
 import { supabase } from '../integrations/supabase/client';
 import { useLanguage } from '../context/LanguageContext';
 import { Accommodation, PriceRange } from '../data/accommodations';
+import { Database } from '../integrations/supabase/types';
+
+type AccommodationRow = Database['public']['Tables']['accommodations']['Row'] & {
+  accommodation_prices: Database['public']['Tables']['accommodation_prices']['Row'][];
+};
 
 export const useAccommodations = () => {
   const { language } = useLanguage();
@@ -23,14 +28,14 @@ export const useAccommodations = () => {
       }
 
       // Map Supabase DB response to the frontend Accommodation type
-      return data.map((acc: any) => {
+      return (data as AccommodationRow[]).map((acc) => {
         // Extract correct language string from JSONb (fallback to 'en')
-        const name = acc.name[language] || acc.name['en'] || '';
-        const description = acc.description[language] || acc.description['en'] || '';
-        const shortDescription = acc.short_description[language] || acc.short_description['en'] || '';
+        const name = (acc.name as Record<string, string>)[language] || (acc.name as Record<string, string>)['en'] || '';
+        const description = (acc.description as Record<string, string>)[language] || (acc.description as Record<string, string>)['en'] || '';
+        const shortDescription = (acc.short_description as Record<string, string>)[language] || (acc.short_description as Record<string, string>)['en'] || '';
 
         const priceRanges: PriceRange[] = acc.accommodation_prices
-          ? acc.accommodation_prices.map((pr: any) => ({
+          ? acc.accommodation_prices.map((pr) => ({
               season: pr.season,
               price: pr.price,
               months: pr.months,
@@ -50,8 +55,8 @@ export const useAccommodations = () => {
           bedrooms: acc.bedrooms,
           beds: acc.beds,
           bathrooms: acc.bathrooms,
-          amenities: acc.amenities || [],
-          images: acc.images || [],
+          amenities: (acc.amenities as string[]) || [],
+          images: (acc.images as string[]) || [],
         };
       });
     },

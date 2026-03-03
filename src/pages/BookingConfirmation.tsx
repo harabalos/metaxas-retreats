@@ -131,6 +131,7 @@ const BookingConfirmation = () => {
                   <img
                     src={accommodation.images[0] || '/images/placeholder.svg'}
                     alt={accommodation.name}
+                    loading="lazy"
                     className="w-full h-full object-cover"
                   />
                 </div>

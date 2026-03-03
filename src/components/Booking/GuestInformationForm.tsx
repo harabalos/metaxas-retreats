@@ -1,5 +1,5 @@
-
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -18,6 +18,7 @@ interface GuestInformationFormProps {
 }
 
 const GuestInformationForm = ({ onSubmit }: GuestInformationFormProps) => {
+  const { t } = useTranslation();
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
@@ -26,36 +27,30 @@ const GuestInformationForm = ({ onSubmit }: GuestInformationFormProps) => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!firstName || !lastName || !email) {
-      toast.error('Please fill in all required fields');
+      toast.error(t('form.errorRequired'));
       return;
     }
-    
+
     if (!validateEmail(email)) {
-      toast.error('Please enter a valid email address');
+      toast.error(t('form.errorEmail'));
       return;
     }
-    
-    onSubmit({
-      firstName,
-      lastName,
-      email,
-      phone,
-      specialRequests
-    });
+
+    onSubmit({ firstName, lastName, email, phone, specialRequests });
   };
 
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Guest Information</CardTitle>
+        <CardTitle>{t('form.guestInfo')}</CardTitle>
       </CardHeader>
       <CardContent>
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-2">
-              <Label htmlFor="firstName">First Name *</Label>
+              <Label htmlFor="firstName">{t('form.firstName')} *</Label>
               <Input
                 id="firstName"
                 value={firstName}
@@ -64,7 +59,7 @@ const GuestInformationForm = ({ onSubmit }: GuestInformationFormProps) => {
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="lastName">Last Name *</Label>
+              <Label htmlFor="lastName">{t('form.lastName')} *</Label>
               <Input
                 id="lastName"
                 value={lastName}
@@ -73,10 +68,10 @@ const GuestInformationForm = ({ onSubmit }: GuestInformationFormProps) => {
               />
             </div>
           </div>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-2">
-              <Label htmlFor="email">Email *</Label>
+              <Label htmlFor="email">{t('form.email')} *</Label>
               <Input
                 id="email"
                 type="email"
@@ -86,7 +81,7 @@ const GuestInformationForm = ({ onSubmit }: GuestInformationFormProps) => {
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="phone">Phone Number</Label>
+              <Label htmlFor="phone">{t('form.phone')}</Label>
               <Input
                 id="phone"
                 value={phone}
@@ -94,18 +89,18 @@ const GuestInformationForm = ({ onSubmit }: GuestInformationFormProps) => {
               />
             </div>
           </div>
-          
+
           <div className="space-y-2">
-            <Label htmlFor="specialRequests">Special Requests</Label>
+            <Label htmlFor="specialRequests">{t('form.specialRequests')}</Label>
             <Input
               id="specialRequests"
               value={specialRequests}
               onChange={(e) => setSpecialRequests(e.target.value)}
             />
           </div>
-          
+
           <Button type="submit" className="w-full md:w-auto bg-sea hover:bg-sea-dark">
-            Complete Booking
+            {t('form.completeBooking')}
           </Button>
         </form>
       </CardContent>

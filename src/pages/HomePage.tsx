@@ -188,7 +188,7 @@ const HomePage = () => {
             loop
             playsInline
             preload="auto"
-            poster="/assets/glamping-tent/view.jpg"
+            poster="/assets/video-poster.jpg"
             className="absolute inset-0 w-full h-full object-cover opacity-60 [&::-webkit-media-controls]:hidden [&::-webkit-media-controls-start-playback-button]:hidden"
           >
             <source src="/assets/video.mp4" type="video/mp4" />

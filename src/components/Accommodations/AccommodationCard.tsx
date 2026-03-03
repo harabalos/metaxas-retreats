@@ -24,6 +24,7 @@ const AccommodationCard = ({ accommodation }: AccommodationCardProps) => {
         <img
           src={images[0] || '/images/placeholder.svg'}
           alt={translatedName}
+          loading="lazy"
           className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
         />
         <div className="absolute top-3 right-3 bg-white rounded-full p-2 shadow">
