@@ -7,8 +7,8 @@ import { Label } from '@/components/ui/label';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Mail, Send, MessageCircle, Phone } from 'lucide-react';
 import { useLanguage } from '@/context/LanguageContext';
-import { useSearchParams, Link } from 'react-router-dom';
-import { accommodations } from '@/data/accommodations';
+import { useSearchParams, Link, useParams } from 'react-router-dom';
+import { useAccommodations } from '@/hooks/useAccommodations';
 import { format } from 'date-fns';
 import { toast } from 'sonner';
 import { Separator } from '@/components/ui/separator';
@@ -19,19 +19,20 @@ import { supabase } from '@/integrations/supabase/client';
 const ContactSection = () => {
   const { t, language } = useLanguage();
   const [searchParams] = useSearchParams();
-  
+
   const startParam = searchParams.get('start');
   const endParam = searchParams.get('end');
   const guestsParam = searchParams.get('guests');
-  const id = window.location.pathname.split('/').pop();
+  const { id } = useParams<{ id: string }>();
   const tentParam = searchParams.get('tent');
-  
-  const accommodation = accommodations.find(acc => acc.id === id);
+
+  const { data: accommodations } = useAccommodations();
+  const accommodation = accommodations?.find(acc => acc.id === id);
   const startDate = startParam ? new Date(startParam) : undefined;
   const endDate = endParam ? new Date(endParam) : undefined;
   const guests = guestsParam ? parseInt(guestsParam) : 1;
   const selectedTent = tentParam || "1";
-  
+
   const [formData, setFormData] = useState({
     fullName: '',
     email: '',
@@ -41,7 +42,7 @@ const ContactSection = () => {
   const [agreedToPolicy, setAgreedToPolicy] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const accommodationName = accommodation?.type === 'tent' 
+  const accommodationName = accommodation?.type === 'tent'
     ? `${t('accommodation.glampingTent')} (${t('booking.tent')} ${selectedTent})`
     : t('accommodation.woodenHouse');
 
@@ -58,7 +59,7 @@ const ContactSection = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     try {
       // Validate with Zod
       const validatedData = contactFormSchema.parse({
@@ -111,7 +112,7 @@ const ContactSection = () => {
       setIsSubmitting(false);
     }
   };
-  
+
   return (
     <Card className="h-full flex flex-col">
       <CardContent className="p-6 flex flex-col h-full">
@@ -131,7 +132,7 @@ const ContactSection = () => {
             {t('booking.callWhatsapp')}
           </h3>
           <div className="space-y-2">
-            <a 
+            <a
               href={`https://wa.me/306973219980?text=${getWhatsAppMessage()}`}
               target="_blank"
               rel="noopener noreferrer"
@@ -145,8 +146,8 @@ const ContactSection = () => {
                 <p className="text-xs text-green-600">{language === 'el' ? 'Πατήστε για WhatsApp' : 'Tap for WhatsApp'}</p>
               </div>
             </a>
-            
-            <a 
+
+            <a
               href={`https://wa.me/306980429891?text=${getWhatsAppMessage()}`}
               target="_blank"
               rel="noopener noreferrer"
@@ -175,7 +176,7 @@ const ContactSection = () => {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
                 <Label htmlFor="fullName">{t('form.fullName')} *</Label>
-                <Input 
+                <Input
                   id="fullName"
                   name="fullName"
                   type="text"
@@ -188,7 +189,7 @@ const ContactSection = () => {
               </div>
               <div>
                 <Label htmlFor="email">{t('form.email')} *</Label>
-                <Input 
+                <Input
                   id="email"
                   name="email"
                   type="email"
@@ -200,10 +201,10 @@ const ContactSection = () => {
                 />
               </div>
             </div>
-            
+
             <div>
               <Label htmlFor="phone">{t('form.phone')}</Label>
-              <Input 
+              <Input
                 id="phone"
                 name="phone"
                 type="tel"
@@ -213,10 +214,10 @@ const ContactSection = () => {
                 className="bg-background"
               />
             </div>
-            
+
             <div>
               <Label htmlFor="specialRequests">{t('form.message')}</Label>
-              <Textarea 
+              <Textarea
                 id="specialRequests"
                 name="message"
                 value={formData.specialRequests}
@@ -228,14 +229,14 @@ const ContactSection = () => {
             </div>
 
             <div className="flex items-start gap-3">
-              <Checkbox 
+              <Checkbox
                 id="privacy-booking"
                 checked={agreedToPolicy}
                 onCheckedChange={(checked) => setAgreedToPolicy(checked === true)}
                 className="mt-0.5"
               />
               <Label htmlFor="privacy-booking" className="text-sm text-muted-foreground leading-relaxed cursor-pointer">
-                {language === 'el' 
+                {language === 'el'
                   ? 'Συμφωνώ με την Πολιτική Απορρήτου και την επεξεργασία των προσωπικών μου δεδομένων. '
                   : 'I agree with the Privacy Policy and the processing of my personal data. '}
                 <Link to="/privacy" className="text-sea hover:underline">
@@ -244,14 +245,14 @@ const ContactSection = () => {
               </Label>
             </div>
 
-            <Button 
-              type="submit" 
+            <Button
+              type="submit"
               disabled={isSubmitting}
               className="w-full py-6 bg-primary text-primary-foreground hover:bg-primary/90"
             >
               <Send className="h-4 w-4 mr-2" />
-              {isSubmitting 
-                ? (language === 'el' ? 'Αποστολή...' : 'Sending...') 
+              {isSubmitting
+                ? (language === 'el' ? 'Αποστολή...' : 'Sending...')
                 : t('form.sendRequest')}
             </Button>
           </form>

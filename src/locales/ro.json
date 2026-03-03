@@ -187,5 +187,9 @@
   "form.subject": "Subiect",
   "form.message": "Mesaj",
   "footer.privacy": "Politica de Confidențialitate",
-  "footer.terms": "Termeni și Condiții"
+  "footer.terms": "Termeni și Condiții",
+  "cookie.text": "Folosim cookie-uri pentru a îmbunătăți experiența dvs. de navigare și a analiza traficul nostru. Făcând clic pe 'Accept', sunteți de acord cu utilizarea cookie-urilor. Consultați",
+  "cookie.privacyLink": "Politica de Confidențialitate",
+  "cookie.accept": "Accept",
+  "cookie.decline": "Refuz"
 }

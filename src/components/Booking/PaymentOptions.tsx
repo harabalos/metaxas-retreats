@@ -2,9 +2,8 @@ import { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Label } from '@/components/ui/label';
-import { Bitcoin, CreditCard, Banknote, ExternalLink } from 'lucide-react';
+import { Banknote, ExternalLink } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { QRCodeCanvas } from 'qrcode.react';
 
 interface PaymentOptionsProps {
   totalPrice: number;
@@ -12,8 +11,7 @@ interface PaymentOptionsProps {
 }
 
 const PaymentOptions = ({ totalPrice, onSelectPaymentMethod }: PaymentOptionsProps) => {
-  const [paymentMethod, setPaymentMethod] = useState('card');
-  const [selectedCrypto, setSelectedCrypto] = useState<'btc' | 'eth' | 'sol'>('btc');
+  const [paymentMethod, setPaymentMethod] = useState('deposit');
 
   const isDepositOnly = paymentMethod === 'deposit';
   const depositAmount = Math.round(totalPrice * 0.25);
@@ -70,76 +68,6 @@ const PaymentOptions = ({ totalPrice, onSelectPaymentMethod }: PaymentOptionsPro
             )}
           </div>
           
-          <div 
-            className="border rounded-lg p-4 hover:bg-gray-50 transition-colors cursor-pointer"
-            onClick={() => handleBoxClick('crypto')}
-          >
-            <div className="flex items-center space-x-2">
-              <RadioGroupItem value="crypto" id="crypto" />
-              <Label htmlFor="crypto" className="flex items-center cursor-pointer">
-                <Bitcoin className="h-5 w-5 mr-2 text-sea" />
-                <span>Crypto Payment</span>
-              </Label>
-            </div>
-            <div className="pl-7 mt-2 text-sm text-gray-600">
-              Pay with Bitcoin (BTC), Ethereum (ETH), USDT, MATIC, or Solana (SOL)
-            </div>
-          </div>
-
-          {paymentMethod === 'crypto' && (
-            <div className="pl-7 mt-3 bg-gray-50 p-4 rounded border text-sm space-y-4">
-              <p className="font-medium text-gray-800 mb-2">Choose a cryptocurrency:</p>
-
-              <div className="flex flex-wrap gap-2">
-                <Button 
-                  variant={selectedCrypto === 'btc' ? 'default' : 'outline'} 
-                  onClick={() => setSelectedCrypto('btc')}
-                >
-                  Bitcoin (BTC)
-                </Button>
-                <Button 
-                  variant={selectedCrypto === 'eth' ? 'default' : 'outline'} 
-                  onClick={() => setSelectedCrypto('eth')}
-                >
-                  Ethereum / USDT / MATIC
-                </Button>
-                <Button 
-                  variant={selectedCrypto === 'sol' ? 'default' : 'outline'} 
-                  onClick={() => setSelectedCrypto('sol')}
-                >
-                  Solana (SOL)
-                </Button>
-              </div>
-
-              {selectedCrypto === 'btc' && (
-                <div>
-                  <p className="font-semibold mt-4">Bitcoin (BTC) Address:</p>
-                  <p className="break-all text-gray-700 mb-2">bc1qyourbitcoinaddresshere</p>
-                  <QRCodeCanvas value="bc1qyourbitcoinaddresshere" size={120} />
-                </div>
-              )}
-
-              {selectedCrypto === 'eth' && (
-                <div>
-                  <p className="font-semibold mt-4">Ethereum / USDT / MATIC Address:</p>
-                  <p className="break-all text-gray-700 mb-2">0xyourethereumwalletaddress</p>
-                  <QRCodeCanvas value="0xyourethereumwalletaddress" size={120} />
-                </div>
-              )}
-
-              {selectedCrypto === 'sol' && (
-                <div>
-                  <p className="font-semibold mt-4">Solana (SOL) Address:</p>
-                  <p className="break-all text-gray-700 mb-2">yourSolanaWalletAddress</p>
-                  <QRCodeCanvas value="yourSolanaWalletAddress" size={120} />
-                </div>
-              )}
-
-              <p className="text-xs text-gray-500 mt-4">
-                Please include your booking name and dates in the transaction note (if possible) and email us the transaction ID for confirmation.
-              </p>
-            </div>
-          )}
         </RadioGroup>
 
         <div className="border-t border-gray-200 pt-4 flex items-center justify-between">

@@ -1,5 +1,5 @@
 import { useLocation, useNavigate } from 'react-router-dom';
-import { CheckCircle, CreditCard, Bitcoin, Banknote } from 'lucide-react';
+import { CheckCircle, CreditCard, Banknote } from 'lucide-react';
 import Layout from '@/components/Layout/Layout';
 import SEOHead from '@/components/SEO/SEOHead';
 import { Button } from '@/components/ui/button';
@@ -84,18 +84,6 @@ const BookingConfirmation = () => {
               <p>Bank: Piraeus Bank</p>
               <p>Beneficiary: Metaxas Retreats</p>
               <p>Amount: €{isDepositOnly ? depositAmount : totalPrice}</p>
-            </div>
-          )
-        };
-      case 'crypto':
-        return {
-          title: 'Cryptocurrency Payment',
-          icon: <Bitcoin className="text-sea h-5 w-5 mr-2" />,
-          description: `Payment of €${totalPrice} in cryptocurrency.`,
-          extraInfo: (
-            <div className="mt-2 text-sm text-green-600">
-              <p>We've received confirmation of your cryptocurrency payment request.</p>
-              <p>You will receive an email with the payment verification details.</p>
             </div>
           )
         };

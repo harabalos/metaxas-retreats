@@ -1,3 +1,8 @@
+// ⚠️  DEPRECATED — this file is no longer imported anywhere.
+// Blocked dates are now stored in the Supabase `bookings` table
+// and read via src/hooks/useBlockedDates.ts.
+// The 2025 dates below are stale and kept only for historical reference.
+
 import { parseISO, isSameDay, isWithinInterval } from 'date-fns';
 
 export interface BlockedDateRange {

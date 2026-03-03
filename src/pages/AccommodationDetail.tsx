@@ -1,7 +1,7 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import { Home, Tent, Users, BedDouble, Bath, Coffee } from 'lucide-react';
 import Layout from '@/components/Layout/Layout';
-import { accommodations } from '@/data/accommodations';
+import { useAccommodations } from '@/hooks/useAccommodations';
 import AccommodationGallery from '@/components/Accommodations/AccommodationGallery';
 import BookingForm from '@/components/Booking/BookingForm';
 import { Button } from '@/components/ui/button';
@@ -13,9 +13,21 @@ const AccommodationDetail = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const { t, language } = useLanguage();
-  
-  const accommodation = accommodations.find(acc => acc.id === id);
-  
+  const { data: accommodations, isLoading } = useAccommodations();
+
+  if (isLoading) {
+    return (
+      <Layout>
+        <div className="container mx-auto px-4 py-32 text-center flex flex-col items-center justify-center">
+          <div className="w-12 h-12 border-4 border-ocean border-t-transparent rounded-full animate-spin mb-4"></div>
+          <p className="text-gray-500">{t('Loading...')}</p>
+        </div>
+      </Layout>
+    );
+  }
+
+  const accommodation = accommodations?.find(acc => acc.id === id);
+
   if (!accommodation) {
     return (
       <Layout>
@@ -160,13 +172,13 @@ const AccommodationDetail = () => {
 
   // Enhanced SEO with camping/glamping keywords - bilingual
   const seoTitle = language === 'el'
-    ? (accommodation.type === 'house' 
+    ? (accommodation.type === 'house'
       ? "Ξύλινο Σπίτι με Θέα Θάλασσα | Camping & Glamping Λευκάδα"
       : "Πολυτελής Σκηνή Glamping | Camping Λευκάδα Ελλάδα")
-    : (accommodation.type === 'house' 
+    : (accommodation.type === 'house'
       ? "Wooden House Sea View | Lefkada Camping & Glamping Greece"
       : "Luxury Glamping Tent | Camping Lefkada Greece - Best Accommodation");
-  
+
   const seoDescription = language === 'el'
     ? (accommodation.type === 'house'
       ? `Κάντε κράτηση στο γοητευτικό ξύλινο σπίτι μας στη Λευκάδα. Θέα στον κόλπο του Μικρού Γιαλού, χωρητικότητα ${accommodation.guests} ατόμων, 50μ από την παραλία. Από €${accommodation.price}/βράδυ.`
@@ -176,10 +188,10 @@ const AccommodationDetail = () => {
       : `Premium glamping tent in Lefkada, Greece - luxury camping among olive trees. Sleeps ${accommodation.guests}, sea views, A/C. Best glamping Greece from €${accommodation.price}/night. Book direct!`);
 
   // Get translated accommodation name and description
-  const accommodationName = accommodation.type === 'house' 
+  const accommodationName = accommodation.type === 'house'
     ? t('accommodation.woodenHouse')
     : t('accommodation.glampingTent');
-  
+
   const accommodationDescription = accommodation.type === 'house'
     ? t('accommodation.woodenHouse.description')
     : t('accommodation.glampingTent.description');
@@ -207,18 +219,18 @@ const AccommodationDetail = () => {
             {accommodationName}
           </h1>
         </div>
-        
+
         {/* Main content with optimized loading */}
         <div className="flex flex-col lg:flex-row gap-8">
           <div className="flex-grow lg:max-w-4xl">
             {/* Gallery with lazy loading */}
             <div className="mb-8">
-              <AccommodationGallery 
-                images={accommodation?.images || []} 
-                name={accommodationName} 
+              <AccommodationGallery
+                images={accommodation?.images || []}
+                name={accommodationName}
               />
             </div>
-            
+
             <div className="mt-4">
               {/* Details */}
               <div className="mb-8">
@@ -229,7 +241,7 @@ const AccommodationDetail = () => {
                   {accommodationDescription}
                 </p>
               </div>
-              
+
               {/* Features */}
               <div className="mb-8">
                 <h2 className="text-2xl font-heading font-semibold mb-4 text-forest-dark">
@@ -254,9 +266,9 @@ const AccommodationDetail = () => {
                   </div>
                 </div>
               </div>
-              
+
               <Separator className="my-8" />
-              
+
               {/* Amenities */}
               <div className="mb-8">
                 <h2 className="text-2xl font-heading font-semibold mb-4 text-forest-dark">
@@ -280,10 +292,10 @@ const AccommodationDetail = () => {
                       'Private outdoor seating': 'amenity.outdoorSeating',
                       'Eco-friendly amenities': 'amenity.ecoFriendly',
                     };
-                    
+
                     const translationKey = amenityKeyMap[amenity];
                     const translatedAmenity = translationKey ? t(translationKey) : amenity;
-                    
+
                     return (
                       <div key={index} className="flex items-center">
                         <Coffee className="h-5 w-5 text-forest mr-2" />
@@ -295,7 +307,7 @@ const AccommodationDetail = () => {
               </div>
             </div>
           </div>
-          
+
           {/* Booking form */}
           <div className="lg:w-1/3 mt-8 lg:mt-0">
             <BookingForm accommodation={accommodation} isDetail={true} />

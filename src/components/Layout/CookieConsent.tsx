@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
+import { useLanguage } from '@/context/LanguageContext';
 
 const GA_MEASUREMENT_ID = 'G-ZDD9NS3KDN';
 
 export default function CookieConsent() {
+  const { t } = useLanguage();
   const [isVisible, setIsVisible] = useState(false);
 
   const loadGoogleAnalytics = () => {
@@ -64,24 +66,23 @@ export default function CookieConsent() {
       <div className="container mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
         <div className="flex-1 text-sm text-gray-600">
           <p>
-            We use cookies to enhance your browsing experience and analyze our traffic. 
-            By clicking "Accept", you consent to our use of cookies. 
-            See our <Link to="/privacy" className="text-forest hover:underline underline-offset-4">Privacy Policy</Link>.
+            {t('cookie.text')}{' '}
+            <Link to="/privacy" className="text-forest hover:underline underline-offset-4">{t('cookie.privacyLink')}</Link>.
           </p>
         </div>
         <div className="flex gap-3">
-          <Button 
-            variant="outline" 
+          <Button
+            variant="outline"
             onClick={declineCookies}
             className="text-gray-500 border-gray-300 hover:bg-gray-100"
           >
-            Decline
+            {t('cookie.decline')}
           </Button>
-          <Button 
+          <Button
             onClick={acceptCookies}
             className="bg-forest hover:bg-forest-dark text-white"
           >
-            Accept
+            {t('cookie.accept')}
           </Button>
         </div>
       </div>

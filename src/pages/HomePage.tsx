@@ -3,7 +3,7 @@ import { useLocation } from 'react-router-dom';
 import { ArrowDown, Tent, Home } from 'lucide-react';
 import Layout from '@/components/Layout/Layout';
 import AccommodationCard from '@/components/Accommodations/AccommodationCard';
-import { accommodations } from '@/data/accommodations';
+import { useAccommodations } from '@/hooks/useAccommodations';
 import { Button } from '@/components/ui/button';
 import SEOHead from '@/components/SEO/SEOHead';
 import { useLanguage } from '@/context/LanguageContext';
@@ -13,6 +13,7 @@ const HomePage = () => {
   const accommodationsRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const { t, language } = useLanguage();
+  const { data: accommodations, isLoading } = useAccommodations();
 
   const scrollToAccommodations = () => {
     accommodationsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -34,10 +35,10 @@ const HomePage = () => {
     }, 2000);
     return () => {
       clearTimeout(timer);
-      try { 
+      try {
         const script = document.querySelector('script[src="https://featurable.com/assets/bundle.js"]');
-        if (script) document.body.removeChild(script); 
-      } catch (e) {}
+        if (script) document.body.removeChild(script);
+      } catch (e) { }
     };
   }, []);
 
@@ -47,7 +48,7 @@ const HomePage = () => {
     if (!video) return;
 
     const playVideo = () => {
-      video.play().catch(() => {});
+      video.play().catch(() => { });
     };
 
     playVideo();
@@ -66,7 +67,7 @@ const HomePage = () => {
     "@type": ["Campground", "LodgingBusiness"],
     "name": "Metaxas Retreats",
     "alternateName": language === 'el' ? "Μεταξάς Ριτρίτς" : undefined,
-    "description": language === 'el' 
+    "description": language === 'el'
       ? "Πολυτελές glamping και κάμπινγκ στη Λευκάδα, Ελλάδα. Ξύλινο σπίτι και σκηνές glamping με θέα στη θάλασσα στον κόλπο του Μικρού Γιαλού."
       : "Luxury glamping and camping in Lefkada, Greece. Wooden house and glamping tents with sea views in Mikros Gialos bay.",
     "url": "https://metaxasretreats.gr",
@@ -121,7 +122,7 @@ const HomePage = () => {
         "description": "Charming wooden house with panoramic sea views"
       },
       {
-        "@type": "Accommodation", 
+        "@type": "Accommodation",
         "name": "Glamping Tent",
         "description": "Luxury glamping tent among olive trees"
       }
@@ -133,7 +134,7 @@ const HomePage = () => {
     "@context": "https://schema.org",
     "@type": "VideoObject",
     "name": language === 'el' ? "Glamping Λευκάδα - Metaxas Retreats" : "Glamping Lefkada Greece - Metaxas Retreats",
-    "description": language === 'el' 
+    "description": language === 'el'
       ? "Πολυτελής εμπειρία glamping στον Μικρό Γιαλό της Λευκάδας με θέα στη θάλασσα"
       : "Luxury glamping experience in Mikros Gialos, Lefkada with stunning sea views over the Ionian Sea",
     "thumbnailUrl": "https://metaxasretreats.gr/assets/glamping-tent/view.jpg",
@@ -172,7 +173,7 @@ const HomePage = () => {
     <Layout>
       <SEOHead
         title={language === 'el' ? "Πολυτελές Glamping στη Λευκάδα, Ελλάδα" : "Luxury Glamping in Lefkada, Greece"}
-        description={language === 'el' 
+        description={language === 'el'
           ? "Ζήστε την πολυτελή εμπειρία glamping πάνω από τον κόλπο του Μικρού Γιαλού στη Λευκάδα. Ξύλινο σπίτι & σκηνές glamping με θέα στη θάλασσα, 50μ από την παραλία."
           : "Experience luxury glamping above Mikros Gialos bay in Lefkada, Greece. Wooden house & glamping tents with sea views, 50m from beach. Book direct for best rates."}
         canonicalUrl="/"
@@ -180,11 +181,11 @@ const HomePage = () => {
       />
       <section className="hero-section h-[90vh] flex items-center text-white relative overflow-hidden">
         <div className="absolute inset-0 bg-black">
-          <video 
+          <video
             ref={videoRef}
-            autoPlay 
-            muted 
-            loop 
+            autoPlay
+            muted
+            loop
             playsInline
             preload="auto"
             poster="/assets/glamping-tent/view.jpg"
@@ -193,7 +194,7 @@ const HomePage = () => {
             <source src="/assets/video.mp4" type="video/mp4" />
           </video>
         </div>
-        
+
         <div className="container mx-auto px-4 z-10 relative">
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-heading font-bold mb-4 max-w-3xl">
             {t('home.hero.welcome')}
@@ -214,7 +215,7 @@ const HomePage = () => {
             <h2 className="text-3xl md:text-4xl font-heading font-bold mb-6 text-forest-dark">{t('home.section.title')}</h2>
             <p className="text-lg mb-8 text-gray-700">{t('home.section.description')}</p>
           </div>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto mt-12">
             <div className="bg-white p-6 rounded-lg shadow-md flex flex-col items-center text-center">
               <div className="bg-forest-light p-4 rounded-full mb-4"><Home className="h-8 w-8 text-forest" /></div>
@@ -234,7 +235,12 @@ const HomePage = () => {
         <div className="container mx-auto px-4">
           <h2 className="text-3xl md:text-4xl font-heading font-bold mb-2 text-center text-forest-dark">{t('home.accommodations.title')}</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto mt-8">
-            {accommodations?.map((accommodation) => (
+            {isLoading ? (
+              <div className="col-span-1 md:col-span-2 text-center text-gray-500 py-12">
+                <div className="w-8 h-8 border-4 border-ocean border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+                {t('Loading...')}
+              </div>
+            ) : accommodations?.map((accommodation) => (
               <AccommodationCard key={accommodation.id} accommodation={accommodation} />
             ))}
           </div>

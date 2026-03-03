@@ -187,5 +187,9 @@
   "form.subject": "Oggetto",
   "form.message": "Messaggio",
   "footer.privacy": "Informativa sulla Privacy",
-  "footer.terms": "Termini di Servizio"
+  "footer.terms": "Termini di Servizio",
+  "cookie.text": "Utilizziamo i cookie per migliorare la tua esperienza di navigazione e analizzare il nostro traffico. Cliccando su \"Accetta\", acconsenti all'uso dei cookie. Vedi la nostra",
+  "cookie.privacyLink": "Informativa sulla Privacy",
+  "cookie.accept": "Accetta",
+  "cookie.decline": "Rifiuta"
 }

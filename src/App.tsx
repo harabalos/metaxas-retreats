@@ -6,6 +6,8 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { LanguageProvider } from "./context/LanguageContext";
 import CookieConsent from "./components/Layout/CookieConsent";
+import ErrorBoundary from "./components/ErrorBoundary";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 // Lazy-loaded pages
 const HomePage = React.lazy(() => import("./pages/HomePage"));
@@ -17,7 +19,8 @@ const ContactUs = React.lazy(() => import("./pages/ContactUs"));
 const NotFound = React.lazy(() => import("./pages/NotFound"));
 const PrivacyPolicy = React.lazy(() => import("./pages/PrivacyPolicy"));
 const TermsOfService = React.lazy(() => import("./pages/TermsOfService"));
-const AboutUs = React.lazy(() => import("./pages/AboutUs"));
+const AdminAuth = React.lazy(() => import("./pages/AdminAuth"));
+const AdminDashboard = React.lazy(() => import("./pages/AdminDashboard"));
 
 const queryClient = new QueryClient();
 
@@ -35,6 +38,7 @@ const App = () => (
         <Toaster />
         <Sonner />
         <BrowserRouter>
+          <ErrorBoundary>
           <Suspense fallback={<PageLoader />}>
             <Routes>
               <Route path="/" element={<HomePage />} />
@@ -43,14 +47,17 @@ const App = () => (
               <Route path="/booking-confirmation" element={<BookingConfirmation />} />
               <Route path="/explore" element={<ExploreIsland />} />
               <Route path="/contact" element={<ContactUs />} />
+              <Route path="/admin/login" element={<AdminAuth />} />
+              <Route path="/admin" element={<ProtectedRoute><AdminDashboard /></ProtectedRoute>} />
 
               <Route path="/privacy" element={<PrivacyPolicy />} />
               <Route path="/terms" element={<TermsOfService />} />
-              <Route path="/about" element={<AboutUs />} />
+
 
               <Route path="*" element={<NotFound />} />
             </Routes>
           </Suspense>
+          </ErrorBoundary>
 
           <CookieConsent />
 

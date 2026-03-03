@@ -187,5 +187,9 @@
   "form.subject": "Betreff",
   "form.message": "Nachricht",
   "footer.privacy": "Datenschutzerklärung",
-  "footer.terms": "Nutzungsbedingungen"
+  "footer.terms": "Nutzungsbedingungen",
+  "cookie.text": "Wir verwenden Cookies, um Ihr Surferlebnis zu verbessern und unseren Datenverkehr zu analysieren. Mit Klick auf 'Akzeptieren' stimmen Sie der Nutzung von Cookies zu. Weitere Informationen in unserer",
+  "cookie.privacyLink": "Datenschutzerklärung",
+  "cookie.accept": "Akzeptieren",
+  "cookie.decline": "Ablehnen"
 }

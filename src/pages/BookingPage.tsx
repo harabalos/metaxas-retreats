@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useParams, useSearchParams, useNavigate } from 'react-router-dom';
 import { differenceInDays } from 'date-fns';
 import Layout from '@/components/Layout/Layout';
-import { accommodations } from '@/data/accommodations';
+import { useAccommodations } from '@/hooks/useAccommodations';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import BookingSummary from '@/components/Booking/BookingSummary';
@@ -17,25 +17,37 @@ const BookingPage = () => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const { t, language } = useLanguage();
-  
-  const accommodation = accommodations.find(acc => acc.id === id);
-  
+  const { data: accommodations, isLoading } = useAccommodations();
+
+  if (isLoading) {
+    return (
+      <Layout>
+        <div className="container mx-auto px-4 py-32 text-center flex flex-col items-center justify-center">
+          <div className="w-12 h-12 border-4 border-ocean border-t-transparent rounded-full animate-spin mb-4"></div>
+          <p className="text-gray-500">{t('Loading...')}</p>
+        </div>
+      </Layout>
+    );
+  }
+
+  const accommodation = accommodations?.find(acc => acc.id === id);
+
   const startParam = searchParams.get('start');
   const endParam = searchParams.get('end');
   const guestsParam = searchParams.get('guests');
   const tentParam = searchParams.get('tent');
-  
+
   const startDate = startParam ? new Date(startParam) : undefined;
   const endDate = endParam ? new Date(endParam) : undefined;
   const guests = guestsParam ? parseInt(guestsParam) : 1;
   const selectedTent = tentParam || "1";
-  
+
   const isGlampingTent = id === 'glamping-tent';
-  
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
-  
+
   if (!accommodation || !startDate || !endDate) {
     return (
       <Layout>
@@ -49,7 +61,7 @@ const BookingPage = () => {
       </Layout>
     );
   }
-  
+
   const nights = differenceInDays(endDate!, startDate!);
 
   const bookingSchema = {
@@ -73,7 +85,7 @@ const BookingPage = () => {
       }
     }
   };
-  
+
   return (
     <Layout>
       <SEOHead
@@ -91,11 +103,11 @@ const BookingPage = () => {
         <p className="mb-8 text-muted-foreground">
           {t('booking.pageSubtitle')}
         </p>
-        
+
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch">
           {/* Left: Contact Card */}
           <ContactSection />
-          
+
           {/* Right: Summary Card */}
           <Card className="h-full flex flex-col">
             <CardContent className="p-6 flex flex-col h-full">
@@ -108,33 +120,33 @@ const BookingPage = () => {
                 nights={nights}
                 selectedTent={isGlampingTent ? selectedTent : undefined}
               />
-              
+
               <Separator className="my-6" />
-              
+
               {/* Save ~15% Banner */}
               <div className="bg-green-50 border border-green-200 rounded-lg p-4">
                 <p className="font-semibold text-green-800 text-lg">{t('booking.saveDiscount')}</p>
                 <p className="text-green-700 text-sm">{t('booking.discountDescription')}</p>
               </div>
-              
+
               <Separator className="my-6" />
-              
+
               {/* Also available on */}
               <div className="text-sm text-muted-foreground mt-auto">
                 <p className="mb-2">{t('booking.alsoAvailable')}</p>
                 <div className="flex gap-4">
-                  <a 
-                    href="https://www.airbnb.gr/rooms/936140564087838043?source_impression_id=p3_1745246045_P32OFwyiKEHNkXyt" 
-                    target="_blank" 
+                  <a
+                    href="https://www.airbnb.gr/rooms/936140564087838043?source_impression_id=p3_1745246045_P32OFwyiKEHNkXyt"
+                    target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-center text-foreground hover:text-sea transition-colors"
                   >
                     <span>Airbnb</span>
                     <ExternalLink className="ml-1 h-3 w-3" />
                   </a>
-                  <a 
-                    href="https://www.booking.com/hotel/gr/metaxaki.el.html" 
-                    target="_blank" 
+                  <a
+                    href="https://www.booking.com/hotel/gr/metaxaki.el.html"
+                    target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-center text-foreground hover:text-sea transition-colors"
                   >

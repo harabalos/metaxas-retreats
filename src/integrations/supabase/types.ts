@@ -14,6 +14,95 @@ export type Database = {
   }
   public: {
     Tables: {
+      accommodation_prices: {
+        Row: {
+          accommodation_id: string | null
+          created_at: string
+          id: string
+          months: string
+          price: number
+          season: string
+        }
+        Insert: {
+          accommodation_id?: string | null
+          created_at?: string
+          id?: string
+          months: string
+          price: number
+          season: string
+        }
+        Update: {
+          accommodation_id?: string | null
+          created_at?: string
+          id?: string
+          months?: string
+          price?: number
+          season?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "accommodation_prices_accommodation_id_fkey"
+            columns: ["accommodation_id"]
+            isOneToOne: false
+            referencedRelation: "accommodations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      accommodations: {
+        Row: {
+          amenities: Json
+          base_price: number
+          bathrooms: number
+          bedrooms: number
+          beds: number
+          created_at: string
+          description: Json
+          guests: number
+          id: string
+          images: Json
+          name: Json
+          short_description: Json
+          slug: string
+          type: string
+          updated_at: string
+        }
+        Insert: {
+          amenities?: Json
+          base_price: number
+          bathrooms: number
+          bedrooms: number
+          beds: number
+          created_at?: string
+          description: Json
+          guests: number
+          id?: string
+          images?: Json
+          name: Json
+          short_description: Json
+          slug: string
+          type: string
+          updated_at?: string
+        }
+        Update: {
+          amenities?: Json
+          base_price?: number
+          bathrooms?: number
+          bedrooms?: number
+          beds?: number
+          created_at?: string
+          description?: Json
+          guests?: number
+          id?: string
+          images?: Json
+          name?: Json
+          short_description?: Json
+          slug?: string
+          type?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       bookings: {
         Row: {
           accommodation_id: string
