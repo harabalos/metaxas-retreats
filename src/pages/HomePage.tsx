@@ -326,9 +326,9 @@ const HomePage = () => {
                   <div className="flex h-full">
                     {[
                       { src: "/assets/glamping-tent/view.jpg", alt: "Sea view" },
+                      { src: "/assets/glamping-tent/view2.jpg", alt: "Sea view 2" },
                       { src: "/assets/glamping-tent/prosopsi.jpg", alt: "Glamping tent" },
-                      { src: "/assets/e9f9bd84-9f74-4189-bf30-d6640a566fd3.jpg", alt: "Lefkada" },
-                      { src: "/assets/wooden-house/wooden-house-view.jpg", alt: "Wooden house" }
+                      { src: "/assets/e9f9bd84-9f74-4189-bf30-d6640a566fd3.jpg", alt: "Lefkada" }
                     ].map((img, idx) => (
                       <div key={idx} className="flex-[0_0_100%] min-w-0 h-full relative">
                         <img
