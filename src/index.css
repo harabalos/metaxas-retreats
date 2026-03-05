@@ -141,14 +141,14 @@
   --featurable-bg: transparent;
 }
 
-/* Hide Featurable branding/watermark */
+/* Hide Featurable branding/watermark - Temporarily disabled to prevent anti-tampering blocks
 .featurable-reviews-wrapper [class*="powered"],
 .featurable-reviews-wrapper [class*="watermark"],
 .featurable-reviews-wrapper [class*="branding"],
 .featurable-reviews-wrapper a[href*="featurable"],
 .featurable-reviews-wrapper [data-featurable-badge] {
   display: none !important;
-}
+} */
 
 /* Card styling on dark background */
 .featurable-reviews-wrapper [class*="card"],
