@@ -120,11 +120,18 @@ const Footer = () => {
                   {t('footer.address')}
                 </span>
               </li>
-              <li className="flex items-center gap-3">
-                <Phone className="h-4 w-4 text-wood/60 flex-shrink-0" />
-                <a href="tel:+306973219980" className="text-sand-dark/60 text-sm hover:text-wood transition-colors">
-                  +30 697 321 9980
-                </a>
+              <li className="flex flex-col gap-2">
+                <div className="flex items-center gap-3">
+                  <Phone className="h-4 w-4 text-wood/60 flex-shrink-0" />
+                  <a href="tel:+306973219980" className="text-sand-dark/60 text-sm hover:text-wood transition-colors">
+                    +30 697 321 9980
+                  </a>
+                </div>
+                <div className="flex items-center gap-3 ml-7">
+                  <a href="tel:+306980429891" className="text-sand-dark/60 text-sm hover:text-wood transition-colors">
+                    +30 698 042 9891
+                  </a>
+                </div>
               </li>
               <li className="flex items-center gap-3">
                 <Mail className="h-4 w-4 text-wood/60 flex-shrink-0" />
