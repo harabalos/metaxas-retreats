@@ -45,9 +45,7 @@ const ContactSection = () => {
   const getWhatsAppMessage = () => {
     const checkIn = startDate ? formatDate(startDate) : '';
     const checkOut = endDate ? formatDate(endDate) : '';
-    const msg = language === 'el'
-      ? `Γεια σας! Ενδιαφέρομαι για κράτηση στο ${accommodationName}.\n\nΆφιξη: ${checkIn}\nΑναχώρηση: ${checkOut}\nΕπισκέπτες: ${guests}`
-      : `Hello! I'm interested in booking ${accommodationName}.\n\nCheck-in: ${checkIn}\nCheck-out: ${checkOut}\nGuests: ${guests}`;
+    const msg = `${t('booking.whatsapp.greeting')} ${accommodationName}.\n\n${t('booking.whatsapp.checkIn')}: ${checkIn}\n${t('booking.whatsapp.checkOut')}: ${checkOut}\n${t('booking.whatsapp.guests')}: ${guests}`;
     return encodeURIComponent(msg);
   };
 
@@ -56,7 +54,7 @@ const ContactSection = () => {
     try {
       const validated = contactFormSchema.parse(formData);
       if (!agreedToPolicy) {
-        toast.error(language === 'el' ? 'Παρακαλώ αποδεχτείτε την Πολιτική Απορρήτου' : 'Please accept the Privacy Policy');
+        toast.error(t('booking.error.privacy'));
         return;
       }
       setIsSubmitting(true);
@@ -79,7 +77,7 @@ const ContactSection = () => {
       if (err instanceof z.ZodError) {
         toast.error(err.errors[0].message);
       } else {
-        toast.error(language === 'el' ? 'Υπήρξε πρόβλημα. Δοκιμάστε ξανά.' : 'There was a problem. Please try again.');
+        toast.error(t('booking.error.general'));
       }
     } finally {
       setIsSubmitting(false);
@@ -113,7 +111,7 @@ const ContactSection = () => {
               </div>
               <div>
                 <p className="font-sans font-semibold text-gray-800">{display}</p>
-                <p className="text-xs text-gray-400">{language === 'el' ? 'Πατήστε για WhatsApp' : 'Tap to open WhatsApp'}</p>
+                <p className="text-xs text-gray-400">{t('booking.whatsapp.tapToOpen')}</p>
               </div>
               {/* WhatsApp logo pill */}
               <span className="ml-auto text-xs font-semibold text-green-600 bg-green-100 px-2.5 py-1 rounded-full">WhatsApp</span>
@@ -125,7 +123,7 @@ const ContactSection = () => {
       {/* Divider */}
       <div className="relative flex items-center gap-3">
         <div className="flex-1 h-px bg-gray-100" />
-        <span className="text-xs text-gray-400 font-sans">{language === 'el' ? 'ή στείλτε email' : 'or send an email'}</span>
+        <span className="text-xs text-gray-400 font-sans">{t('booking.email.orSend')}</span>
         <div className="flex-1 h-px bg-gray-100" />
       </div>
 
@@ -154,12 +152,10 @@ const ContactSection = () => {
                 <CheckCircle className="h-7 w-7 text-forest" />
               </motion.div>
               <h3 className="font-heading font-semibold text-xl text-forest-dark mb-2">
-                {language === 'el' ? 'Το μήνυμά σας στάλθηκε!' : 'Message sent!'}
+                {t('booking.success.title')}
               </h3>
               <p className="text-gray-500 text-sm">
-                {language === 'el'
-                  ? 'Θα σας απαντήσουμε σύντομα — συνήθως εντός μερικών ωρών.'
-                  : "We'll get back to you soon — usually within a few hours."}
+                {t('booking.success.desc')}
               </p>
             </motion.div>
           ) : (
@@ -173,7 +169,7 @@ const ContactSection = () => {
                     required
                     value={formData.fullName}
                     onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
-                    placeholder={language === 'el' ? 'Ονοματεπώνυμο' : 'Full name'}
+                    placeholder={t('form.fullNamePlaceholder')}
                     className="rounded-xl border-gray-200 focus-visible:ring-forest/30 focus-visible:border-forest"
                   />
                 </div>
@@ -198,7 +194,7 @@ const ContactSection = () => {
                   type="tel"
                   value={formData.phone}
                   onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                  placeholder={language === 'el' ? 'Τηλέφωνο' : 'Phone number'}
+                  placeholder={t('form.phonePlaceholder')}
                   className="rounded-xl border-gray-200 focus-visible:ring-forest/30 focus-visible:border-forest"
                 />
               </div>
@@ -209,7 +205,7 @@ const ContactSection = () => {
                   id="specialRequests"
                   value={formData.specialRequests}
                   onChange={(e) => setFormData({ ...formData, specialRequests: e.target.value })}
-                  placeholder={language === 'el' ? 'Ειδικές απαιτήσεις ή ερωτήσεις...' : 'Special requests or questions...'}
+                  placeholder={t('form.messagePlaceholder')}
                   rows={3}
                   className="rounded-xl border-gray-200 focus-visible:ring-forest/30 focus-visible:border-forest resize-none"
                 />
@@ -223,15 +219,11 @@ const ContactSection = () => {
                   className="mt-0.5"
                 />
                 <Label htmlFor="privacy-booking" className="text-xs text-gray-500 leading-relaxed cursor-pointer">
-                  {language === 'el'
-                    ? 'Συμφωνώ με την '
-                    : 'I agree with the '}
+                  {t('booking.privacy.agreePart1')}
                   <Link to="/privacy" className="text-forest hover:underline">
-                    {language === 'el' ? 'Πολιτική Απορρήτου' : 'Privacy Policy'}
+                    {t('booking.privacy.link')}
                   </Link>
-                  {language === 'el'
-                    ? ' και την επεξεργασία των προσωπικών μου δεδομένων.'
-                    : ' and the processing of my personal data.'}
+                  {t('booking.privacy.agreePart2')}
                 </Label>
               </div>
 
@@ -242,7 +234,7 @@ const ContactSection = () => {
               >
                 <Send className="h-4 w-4" />
                 {isSubmitting
-                  ? (language === 'el' ? 'Αποστολή...' : 'Sending...')
+                  ? t('form.sending')
                   : t('form.sendRequest')}
               </button>
             </motion.form>

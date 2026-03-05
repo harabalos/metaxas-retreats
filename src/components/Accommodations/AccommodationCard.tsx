@@ -20,8 +20,8 @@ const AccommodationCard = ({ accommodation, index = 0 }: AccommodationCardProps)
 
   const nickname = id === 'wooden-house' ? 'Metaxaki' : 'Metaxoula';
   const tag = id === 'wooden-house'
-    ? (language === 'el' ? 'Ξύλινη Κατοικία' : 'Wooden House')
-    : (language === 'el' ? 'Σκηνή Glamping' : 'Glamping Tent');
+    ? t('accommodation.woodenHouse')
+    : t('accommodation.glampingTent');
 
   return (
     <motion.div

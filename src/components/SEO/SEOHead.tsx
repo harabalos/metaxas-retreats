@@ -26,25 +26,34 @@ const SEOHead = ({
   descriptionEl,
   robots
 }: SEOHeadProps) => {
-  const { language } = useLanguage();
-  
+  const { t, language } = useLanguage();
+
   // Use language-specific content
   const displayTitle = language === 'el' && titleEl ? titleEl : title;
   const displayDescription = language === 'el' && descriptionEl ? descriptionEl : description;
-  
+
   const fullTitle = `${displayTitle} | Metaxas Retreats`;
   const siteUrl = 'https://metaxasretreats.gr';
   const fullUrl = canonicalUrl ? `${siteUrl}${canonicalUrl}` : siteUrl;
-  
-  // Default keywords for glamping/camping SEO - bilingual
-  const defaultKeywords = language === 'el' 
-    ? 'glamping Λευκάδα, glamping Ελλάδα, κάμπινγκ Ελλάδα, κάμπινγκ Λευκάδα, πολυτελής κατασκήνωση ελληνικά νησιά, διαμονή παραλία Ελλάδα, Μικρός Γιαλός, ενοικίαση διακοπών Λευκάδα'
-    : 'glamping Lefkada, glamping Greece, camping Greece, camping Lefkada, luxury camping Greek islands, beach accommodation Greece, Lefkada vacation rental, eco camping, beachfront glamping';
+
+  const defaultKeywords = t('seo.defaultKeywords');
   const metaKeywords = keywords || defaultKeywords;
 
+  // Compute locale from language for og tags
+  const getLocale = (lang: string) => {
+    switch (lang) {
+      case 'el': return 'el_GR';
+      case 'it': return 'it_IT';
+      case 'de': return 'de_DE';
+      case 'ro': return 'ro_RO';
+      default: return 'en_US';
+    }
+  };
+  const ogLocale = getLocale(language);
+
   // Handle both single schema and array of schemas
-  const schemaString = schema 
-    ? Array.isArray(schema) 
+  const schemaString = schema
+    ? Array.isArray(schema)
       ? JSON.stringify(schema)
       : JSON.stringify(schema)
     : null;
@@ -57,7 +66,7 @@ const SEOHead = ({
       <meta name="description" content={displayDescription} />
       <meta name="keywords" content={metaKeywords} />
       {canonicalUrl && <link rel="canonical" href={fullUrl} />}
-      
+
       {/* Hreflang tags for international SEO */}
       {canonicalUrl && (
         <>
@@ -66,7 +75,7 @@ const SEOHead = ({
           <link rel="alternate" hrefLang="x-default" href={`${siteUrl}${canonicalUrl}`} />
         </>
       )}
-      
+
       {/* Enhanced robots directive */}
       <meta name="robots" content={robots || "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"} />
 
@@ -77,8 +86,7 @@ const SEOHead = ({
       <meta property="og:description" content={displayDescription} />
       <meta property="og:image" content={image} />
       <meta property="og:site_name" content="Metaxas Retreats" />
-      <meta property="og:locale" content={language === 'el' ? 'el_GR' : 'en_US'} />
-      <meta property="og:locale:alternate" content={language === 'el' ? 'en_US' : 'el_GR'} />
+      <meta property="og:locale" content={ogLocale} />
 
       {/* Twitter Card */}
       <meta name="twitter:card" content="summary_large_image" />

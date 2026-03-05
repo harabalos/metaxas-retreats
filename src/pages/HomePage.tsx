@@ -98,9 +98,7 @@ const HomePage = () => {
     '@context': 'https://schema.org',
     '@type': ['Campground', 'LodgingBusiness'],
     name: 'Metaxas Retreats',
-    description: language === 'el'
-      ? 'Πολυτελές glamping στη Λευκάδα, Ελλάδα.'
-      : 'Luxury glamping in Lefkada, Greece.',
+    description: t('seo.homeDescription'),
     url: 'https://metaxasretreats.gr',
     telephone: '+306973219980',
     address: { '@type': 'PostalAddress', addressLocality: 'Lefkada', addressCountry: 'GR' },
@@ -112,10 +110,8 @@ const HomePage = () => {
   return (
     <Layout>
       <SEOHead
-        title={language === 'el' ? 'Πολυτελές Glamping στη Λευκάδα, Ελλάδα' : 'Luxury Glamping in Lefkada, Greece'}
-        description={language === 'el'
-          ? 'Ζήστε την πολυτελή εμπειρία glamping πάνω από τον κόλπο του Μικρού Γιαλού στη Λευκάδα.'
-          : 'Experience luxury glamping above Mikros Gialos bay in Lefkada, Greece. Sea views, olive groves, private beach.'}
+        title={t('seo.homeTitle')}
+        description={t('seo.homeSeoDesc')}
         canonicalUrl="/"
         schema={campgroundSchema}
       />
@@ -279,12 +275,10 @@ const HomePage = () => {
           <FadeUp delay={0.2}>
             <div className="mt-10 text-center">
               <p className="text-sm font-sans text-muted-foreground">
-                {language === 'el'
-                  ? 'Κράτηση απευθείας = καλύτερη τιμή, χωρίς χρεώσεις πλατφόρμας'
-                  : 'Book direct = best rate, no platform fees'}
+                {t('home.accommodations.directBook')}
                 {' '}·{' '}
                 <Link to="/contact" className="text-forest underline underline-offset-2 hover:text-wood transition-colors">
-                  {language === 'el' ? 'Επικοινωνήστε μαζί μας' : 'Get in touch'}
+                  {t('home.accommodations.getInTouch')}
                 </Link>
               </p>
             </div>
@@ -300,20 +294,14 @@ const HomePage = () => {
               <div>
                 <p className="text-wood text-xs font-sans font-semibold tracking-[0.25em] uppercase mb-5">The Experience</p>
                 <h2 className="font-heading font-light text-forest text-display-lg mb-7 text-balance">
-                  {language === 'el'
-                    ? 'Ξυπνήστε με τον ήχο των κυμάτων'
-                    : 'Wake up to the sound of the waves'}
+                  {t('home.experience.title')}
                 </h2>
                 <div className="space-y-5 text-muted-foreground font-sans font-light leading-relaxed">
                   <p>
-                    {language === 'el'
-                      ? 'Το Metaxas Retreats βρίσκεται πάνω από τον μαγευτικό κόλπο του Μικρού Γιαλού — ένας κρυμμένος παράδεισος μεταξύ ελαιώνων και Ιόνιας θάλασσας.'
-                      : 'Metaxas Retreats sits above the breathtaking bay of Mikros Gialos — a hidden paradise between olive groves and the Ionian Sea.'}
+                    {t('home.experience.desc1')}
                   </p>
                   <p>
-                    {language === 'el'
-                      ? 'Στα 50 μόλις μέτρα, η παραλία σας προσκαλεί για πρωινό μπάνιο. Τα βράδια, τα αστέρια είναι το μόνο φως που χρειάζεστε.'
-                      : 'Just 50 metres away, the beach invites you for a morning swim. In the evenings, the stars are the only light you need.'}
+                    {t('home.experience.desc2')}
                   </p>
                 </div>
                 <div className="mt-10">
@@ -321,7 +309,7 @@ const HomePage = () => {
                     to="/explore"
                     className="inline-flex items-center gap-2 text-sm font-sans font-semibold text-forest border-b border-forest/30 pb-0.5 hover:border-forest transition-colors"
                   >
-                    {language === 'el' ? 'Εξερευνήστε τη Λευκάδα' : 'Explore Lefkada'}
+                    {t('home.experience.explore')}
                     <span className="text-wood">→</span>
                   </Link>
                 </div>
