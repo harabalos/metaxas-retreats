@@ -32,12 +32,13 @@ serve(async (req) => {
   if (expectedApiKey && apiKey === expectedApiKey) {
     isAuthorized = true;
   } else if (authHeader?.startsWith('Bearer ')) {
-    // Validate Supabase JWT
+    // Validate Supabase JWT and verify caller is the admin
     const anonKey = Deno.env.get("SUPABASE_ANON_KEY") ?? "";
+    const adminEmail = Deno.env.get("ADMIN_EMAIL") ?? "";
     const anonClient = createClient(supabaseUrl, anonKey);
     const token = authHeader.replace('Bearer ', '');
     const { data: { user }, error } = await anonClient.auth.getUser(token);
-    if (!error && user) isAuthorized = true;
+    if (!error && user && adminEmail && user.email === adminEmail) isAuthorized = true;
   }
 
   if (!isAuthorized) {
