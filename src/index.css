@@ -1,5 +1,4 @@
-
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -67,7 +66,12 @@
     background-color: #FAFAF5;
   }
 
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     @apply font-heading;
   }
 }
@@ -76,15 +80,19 @@
 .booking-calendar .react-datepicker {
   @apply font-sans border-0 shadow-lg rounded-lg;
 }
+
 .booking-calendar .react-datepicker__month-container {
   @apply p-4;
 }
+
 .booking-calendar .react-datepicker__day--selected {
   @apply bg-forest text-white rounded-full;
 }
+
 .booking-calendar .react-datepicker__day--in-range {
   @apply bg-forest-light/30 text-forest-dark;
 }
+
 .booking-calendar .react-datepicker__day--outside-month {
   @apply text-gray-300;
 }
@@ -97,16 +105,19 @@
   color: white !important;
   font-weight: 600;
 }
+
 .rdp-day_range_start,
 .rdp-day_range_end {
   background-color: #1E3B2F !important;
   color: white !important;
   font-weight: 600;
 }
+
 .rdp-day_range_middle {
   background-color: rgba(94, 138, 107, 0.18) !important;
   color: #122418 !important;
 }
+
 .rdp-day_today {
   border: 2px solid #1E3B2F !important;
   font-weight: 600;
@@ -119,7 +130,7 @@
 
 /* ─── Hero section fallback bg ─── */
 .hero-section {
-  background-image: linear-gradient(rgba(18,36,24,0.55), rgba(18,36,24,0.35)), url('/images/hero-beach.jpg');
+  background-image: linear-gradient(rgba(18, 36, 24, 0.55), rgba(18, 36, 24, 0.35)), url('/images/hero-beach.jpg');
   background-size: cover;
   background-position: center;
 }
@@ -129,6 +140,7 @@
   /* Blend widget background into our dark forest section */
   --featurable-bg: transparent;
 }
+
 /* Hide Featurable branding/watermark */
 .featurable-reviews-wrapper [class*="powered"],
 .featurable-reviews-wrapper [class*="watermark"],
@@ -137,29 +149,33 @@
 .featurable-reviews-wrapper [data-featurable-badge] {
   display: none !important;
 }
+
 /* Card styling on dark background */
 .featurable-reviews-wrapper [class*="card"],
 .featurable-reviews-wrapper [class*="review-card"],
 .featurable-reviews-wrapper [class*="widget"] {
-  background-color: rgba(255,255,255,0.06) !important;
-  border: 1px solid rgba(255,255,255,0.1) !important;
+  background-color: rgba(255, 255, 255, 0.06) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
   border-radius: 16px !important;
-  color: rgba(255,255,255,0.85) !important;
+  color: rgba(255, 255, 255, 0.85) !important;
 }
+
 /* Star colors */
 .featurable-reviews-wrapper [class*="star"] svg,
 .featurable-reviews-wrapper [class*="star"] path {
   fill: #C9A44A !important;
   color: #C9A44A !important;
 }
+
 /* Reviewer name */
 .featurable-reviews-wrapper [class*="author"],
 .featurable-reviews-wrapper [class*="name"],
 .featurable-reviews-wrapper [class*="reviewer"] {
   color: #C9A44A !important;
 }
+
 /* Widget container background */
-.featurable-reviews-wrapper > div,
+.featurable-reviews-wrapper>div,
 .featurable-reviews-wrapper [class*="container"],
 .featurable-reviews-wrapper [class*="wrapper"] {
   background: transparent !important;
@@ -168,29 +184,45 @@
 
 /* ─── Book Now button shimmer ─── */
 @keyframes shimmer-sweep {
-  0%   { transform: translateX(-100%) skewX(-15deg); }
-  100% { transform: translateX(250%) skewX(-15deg); }
+  0% {
+    transform: translateX(-100%) skewX(-15deg);
+  }
+
+  100% {
+    transform: translateX(250%) skewX(-15deg);
+  }
 }
+
 .btn-shimmer {
   position: relative;
   overflow: hidden;
 }
+
 .btn-shimmer::after {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.28) 50%, transparent 100%);
+  background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.28) 50%, transparent 100%);
   transform: translateX(-100%) skewX(-15deg);
 }
+
 .btn-shimmer:hover::after {
   animation: shimmer-sweep 0.65s ease forwards;
 }
 
 /* ─── WhatsApp FAB pulse ─── */
 @keyframes wa-pulse {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(37,211,102,0.4); }
-  50% { box-shadow: 0 0 0 10px rgba(37,211,102,0); }
+
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.4);
+  }
+
+  50% {
+    box-shadow: 0 0 0 10px rgba(37, 211, 102, 0);
+  }
 }
+
 .wa-fab {
   animation: wa-pulse 2.5s ease-in-out infinite;
 }

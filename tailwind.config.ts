@@ -70,8 +70,8 @@ export default {
 			},
 			fontFamily: {
 				sans: ['"DM Sans"', 'sans-serif'],
-				heading: ['"Cormorant Garamond"', 'Georgia', 'serif'],
-				display: ['"Cormorant Garamond"', 'Georgia', 'serif'],
+				heading: ['"EB Garamond"', 'Georgia', 'serif'],
+				display: ['"EB Garamond"', 'Georgia', 'serif'],
 			},
 			fontSize: {
 				'display-2xl': ['clamp(3rem,8vw,7rem)', { lineHeight: '1.05', letterSpacing: '-0.02em' }],
