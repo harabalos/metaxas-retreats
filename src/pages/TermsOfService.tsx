@@ -1,20 +1,60 @@
 import Layout from '@/components/Layout/Layout';
-import { ScrollArea } from '@/components/ui/scroll-area';
 import SEOHead from '@/components/SEO/SEOHead';
 import { useLanguage } from '@/context/LanguageContext';
+import { motion } from 'framer-motion';
+
+const FadeUp = ({ children, delay = 0 }: { children: React.ReactNode; delay?: number }) => (
+  <motion.div
+    initial={{ opacity: 0, y: 20 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    viewport={{ once: true, margin: '-40px' }}
+    transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1], delay }}
+  >
+    {children}
+  </motion.div>
+);
 
 const TermsOfService = () => {
   const { language, t } = useLanguage();
 
   const termsSchema = {
-    "@context": "https://schema.org",
-    "@type": "WebPage",
-    "name": language === 'el' ? "Όροι Χρήσης - Metaxas Retreats" : "Terms of Service - Metaxas Retreats",
-    "description": language === 'el'
-      ? "Όροι χρήσης και κανονισμοί διαμονής στο Metaxas Retreats στη Λευκάδα"
-      : "Terms of service and house rules for staying at Metaxas Retreats in Lefkada",
-    "url": "https://metaxasretreats.com/terms"
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: language === 'el' ? 'Όροι Χρήσης - Metaxas Retreats' : 'Terms of Service - Metaxas Retreats',
+    description:
+      language === 'el'
+        ? 'Όροι χρήσης και κανονισμοί διαμονής στο Metaxas Retreats στη Λευκάδα'
+        : 'Terms of service and house rules for staying at Metaxas Retreats in Lefkada',
+    url: 'https://metaxasretreats.gr/terms',
   };
+
+  const sections = [
+    { title: t('terms.section1.title'), content: <p>{t('terms.section1.content')}</p> },
+    {
+      title: t('terms.section2.title'),
+      content: (
+        <ul className="list-disc pl-5 space-y-1.5">
+          <li>{t('terms.section2.checkin')}</li>
+          <li>{t('terms.section2.checkout')}</li>
+        </ul>
+      ),
+    },
+    {
+      title: t('terms.section3.title'),
+      content: (
+        <>
+          <p className="mb-2">{t('terms.section3.intro')}</p>
+          <ul className="list-disc pl-5 space-y-1.5">
+            <li>{t('terms.section3.rule1')}</li>
+            <li>{t('terms.section3.rule2')}</li>
+            <li>{t('terms.section3.rule3')}</li>
+            <li>{t('terms.section3.rule4')}</li>
+          </ul>
+        </>
+      ),
+    },
+    { title: t('terms.section4.title'), content: <p>{t('terms.section4.content')}</p> },
+  ];
 
   return (
     <Layout>
@@ -26,44 +66,27 @@ const TermsOfService = () => {
         canonicalUrl="/terms"
         schema={termsSchema}
       />
-      <div className="container mx-auto px-4 py-12 md:py-20">
-        <h1 className="text-4xl font-heading font-bold text-forest-dark mb-8 text-center">
-          {t('terms.title')}
-        </h1>
-        
-        <div className="max-w-3xl mx-auto bg-white p-8 rounded-lg shadow-sm border border-gray-100">
-          <ScrollArea className="h-[600px] pr-4">
-            <div className="prose prose-green max-w-none text-gray-700 space-y-6">
-              <section>
-                <h3 className="text-xl font-bold text-forest-dark mb-2">{t('terms.section1.title')}</h3>
-                <p>{t('terms.section1.content')}</p>
-              </section>
 
-              <section>
-                <h3 className="text-xl font-bold text-forest-dark mb-2">{t('terms.section2.title')}</h3>
-                <ul className="list-disc pl-5 mt-2 space-y-1">
-                  <li><strong>{t('terms.section2.checkin')}</strong></li>
-                  <li><strong>{t('terms.section2.checkout')}</strong></li>
-                </ul>
-              </section>
+      <div className="max-w-3xl mx-auto px-5 sm:px-8 py-16 md:py-24">
+        <FadeUp>
+          <div className="mb-12">
+            <p className="text-wood text-xs font-sans font-semibold uppercase tracking-widest mb-3">Legal</p>
+            <h1 className="text-4xl md:text-5xl font-heading font-semibold text-forest-dark mb-4">{t('terms.title')}</h1>
+            <p className="text-gray-400 text-sm font-sans">
+              {language === 'el' ? 'Τελευταία ενημέρωση: Μάρτιος 2026' : 'Last updated: March 2026'}
+            </p>
+          </div>
+        </FadeUp>
 
-              <section>
-                <h3 className="text-xl font-bold text-forest-dark mb-2">{t('terms.section3.title')}</h3>
-                <p>{t('terms.section3.intro')}</p>
-                <ul className="list-disc pl-5 mt-2 space-y-1">
-                  <li>{t('terms.section3.rule1')}</li>
-                  <li>{t('terms.section3.rule2')}</li>
-                  <li>{t('terms.section3.rule3')}</li>
-                  <li>{t('terms.section3.rule4')}</li>
-                </ul>
-              </section>
-
-              <section>
-                <h3 className="text-xl font-bold text-forest-dark mb-2">{t('terms.section4.title')}</h3>
-                <p>{t('terms.section4.content')}</p>
-              </section>
-            </div>
-          </ScrollArea>
+        <div className="space-y-10">
+          {sections.map((section, i) => (
+            <FadeUp key={i} delay={i * 0.04}>
+              <div className="border-t border-gray-100 pt-8">
+                <h2 className="text-lg font-heading font-semibold text-forest-dark mb-3">{section.title}</h2>
+                <div className="text-gray-600 text-sm leading-relaxed space-y-2">{section.content}</div>
+              </div>
+            </FadeUp>
+          ))}
         </div>
       </div>
     </Layout>

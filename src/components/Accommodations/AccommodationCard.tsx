@@ -1,64 +1,84 @@
 import { Link } from 'react-router-dom';
-import { Home, Tent, Users, BedDouble } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardFooter } from '@/components/ui/card';
+import { Users, BedDouble, ArrowRight } from 'lucide-react';
+import { motion } from 'framer-motion';
 import { Accommodation } from '@/data/accommodations';
 import { useLanguage } from '@/context/LanguageContext';
 
 interface AccommodationCardProps {
   accommodation: Accommodation;
+  index?: number;
 }
 
-const AccommodationCard = ({ accommodation }: AccommodationCardProps) => {
-  const { id, name, type, shortDescription, guests, beds, images } = accommodation;
+const AccommodationCard = ({ accommodation, index = 0 }: AccommodationCardProps) => {
+  const { id, guests, beds, images } = accommodation;
   const { t, language } = useLanguage();
 
   const translatedName = id === 'wooden-house' ? t('accommodation.woodenHouse') : t('accommodation.glampingTent');
-  const translatedDescription = id === 'wooden-house' 
-    ? t('accommodation.woodenHouse.short') 
+  const translatedDescription = id === 'wooden-house'
+    ? t('accommodation.woodenHouse.short')
     : t('accommodation.glampingTent.short');
 
+  const nickname = id === 'wooden-house' ? 'Metaxaki' : 'Metaxoula';
+  const tag = id === 'wooden-house'
+    ? (language === 'el' ? 'Ξύλινη Κατοικία' : 'Wooden House')
+    : (language === 'el' ? 'Σκηνή Glamping' : 'Glamping Tent');
+
   return (
-    <Card className="overflow-hidden transition-all hover:shadow-lg">
-      <div className="relative h-52 overflow-hidden">
-        <img
-          src={images[0] || '/images/placeholder.svg'}
-          alt={translatedName}
-          loading="lazy"
-          className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
-        />
-        <div className="absolute top-3 right-3 bg-white rounded-full p-2 shadow">
-          {type === 'house' ? (
-            <Home className="h-5 w-5 text-forest" />
-          ) : (
-            <Tent className="h-5 w-5 text-leaf" />
-          )}
-        </div>
-      </div>
-      
-      <CardContent className="p-5">
-        <h3 className="text-xl font-heading font-semibold text-forest-dark mb-0">{translatedName}</h3>
-        <p className="text-sm text-forest mb-3">{id === "wooden-house" ? "Metaxaki" : "Metaxoula"}</p>
-        <p className="text-gray-600 mb-4 line-clamp-2">{translatedDescription}</p>
-        
-        <div className="flex space-x-4 text-sm">
-          <div className="flex items-center text-leaf">
-            <Users className="mr-1 h-4 w-4" />
-            <span>{guests} {t('card.guests')}</span>
+    <motion.div
+      initial={{ opacity: 0, y: 32 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: '-60px' }}
+      transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1], delay: index * 0.12 }}
+    >
+      <Link
+        to={`/accommodation/${id}`}
+        onClick={() => window.scrollTo(0, 0)}
+        className="group block bg-white rounded-2xl overflow-hidden shadow-card hover:shadow-card-hover transition-all duration-400"
+      >
+        {/* Image */}
+        <div className="relative h-64 overflow-hidden">
+          <img
+            src={images[0] || '/images/placeholder.svg'}
+            alt={translatedName}
+            loading="lazy"
+            className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+          />
+          {/* Gradient */}
+          <div className="absolute inset-0 bg-gradient-to-t from-forest-dark/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-400" />
+
+          {/* Tag pill */}
+          <div className="absolute top-4 left-4 px-3 py-1 rounded-full bg-white/90 backdrop-blur-sm text-forest-dark text-xs font-sans font-semibold tracking-wide">
+            {tag}
           </div>
-          <div className="flex items-center text-leaf">
-            <BedDouble className="mr-1 h-4 w-4" />
-            <span>{beds} {t('card.beds')}</span>
+
+          {/* Arrow on hover */}
+          <div className="absolute bottom-4 right-4 w-9 h-9 rounded-full bg-wood flex items-center justify-center opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300">
+            <ArrowRight className="h-4 w-4 text-forest-dark" />
           </div>
         </div>
-      </CardContent>
-      
-      <CardFooter className="px-5 py-4 border-t flex justify-between items-center">
-        <Link to={`/accommodation/${id}`} onClick={() => window.scrollTo(0, 0)}>
-          <Button className="bg-forest hover:bg-forest-dark">{t('card.viewDetails')}</Button>
-        </Link>
-      </CardFooter>
-    </Card>
+
+        {/* Content */}
+        <div className="p-6">
+          <p className="text-wood text-xs font-sans font-semibold uppercase tracking-widest mb-1">{nickname}</p>
+          <h3 className="text-xl font-heading font-semibold text-forest-dark mb-2 group-hover:text-forest transition-colors">
+            {translatedName}
+          </h3>
+          <p className="text-sm text-gray-500 leading-relaxed line-clamp-2 mb-4">{translatedDescription}</p>
+
+          {/* Stats */}
+          <div className="flex items-center gap-5 text-sm text-gray-500 border-t border-gray-100 pt-4">
+            <div className="flex items-center gap-1.5">
+              <Users className="h-4 w-4 text-forest/60" />
+              <span>{guests} {t('card.guests')}</span>
+            </div>
+            <div className="flex items-center gap-1.5">
+              <BedDouble className="h-4 w-4 text-forest/60" />
+              <span>{beds} {t('card.beds')}</span>
+            </div>
+          </div>
+        </div>
+      </Link>
+    </motion.div>
   );
 };
 

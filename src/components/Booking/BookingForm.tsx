@@ -1,10 +1,7 @@
-
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { differenceInDays } from 'date-fns';
 import { Calendar, Users, Tent } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import DateRangePicker from './DateRangePicker';
@@ -24,12 +21,9 @@ const BookingForm = ({ accommodation, isDetail = false }: BookingFormProps) => {
   const [startDate, setStartDate] = useState<Date | undefined>(undefined);
   const [endDate, setEndDate] = useState<Date | undefined>(undefined);
   const [guests, setGuests] = useState<number>(1);
-  const [selectedTent, setSelectedTent] = useState<"1" | "2">("1");
-  
-  // Determine if we're booking a glamping tent
-  const isGlampingTent = accommodation.id === 'glamping-tent';
+  const [selectedTent, setSelectedTent] = useState<'1' | '2'>('1');
 
-  // Calculate number of nights
+  const isGlampingTent = accommodation.id === 'glamping-tent';
   const nights = startDate && endDate ? differenceInDays(endDate, startDate) : 0;
 
   const handleDateChange = (start: Date | undefined, end: Date | undefined) => {
@@ -37,7 +31,6 @@ const BookingForm = ({ accommodation, isDetail = false }: BookingFormProps) => {
     setEndDate(end);
   };
 
-  // Reset dates when the tent selection changes
   useEffect(() => {
     if (isGlampingTent) {
       setStartDate(undefined);
@@ -47,124 +40,128 @@ const BookingForm = ({ accommodation, isDetail = false }: BookingFormProps) => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!startDate || !endDate) {
       toast.error(language === 'el' ? 'Παρακαλώ επιλέξτε ημερομηνίες' : 'Please select check-in and check-out dates');
       return;
     }
-    
+
     if (guests < 1 || guests > accommodation.guests) {
       toast.error(`${language === 'el' ? 'Παρακαλώ επιλέξτε μεταξύ 1 και' : 'Please select between 1 and'} ${accommodation.guests} ${language === 'el' ? 'επισκέπτες' : 'guests'}`);
       return;
     }
-    
-    // Add tent selection to query params if it's a glamping tent
+
     const tentParam = isGlampingTent ? `&tent=${selectedTent}` : '';
-    
-    // Navigate to booking page with dates and guests (no price)
     navigate(`/booking/${accommodation.id}?start=${startDate.toISOString()}&end=${endDate.toISOString()}&guests=${guests}${tentParam}`);
   };
 
-  // Get actual accommodation ID for the calendar based on tent selection
   const getCalendarAccommodationId = () => {
-    if (isGlampingTent) {
-      return `${accommodation.id}-${selectedTent}`;
-    }
+    if (isGlampingTent) return `${accommodation.id}-${selectedTent}`;
     return accommodation.id;
   };
 
   return (
-    <Card className={`shadow ${isDetail ? 'w-full md:w-[350px] lg:w-[400px] h-fit sticky top-24' : ''}`}>
+    <div className={`bg-white rounded-2xl border border-gray-100 shadow-card ${isDetail ? 'p-6' : 'p-5'}`}>
       {isDetail && (
-        <CardHeader className="pb-2">
-          <CardTitle className="text-lg text-forest-dark">
+        <div className="mb-5 pb-4 border-b border-gray-100">
+          <p className="text-xs font-sans font-semibold uppercase tracking-widest text-wood mb-1">
+            {language === 'el' ? 'Κρατήστε Τώρα' : 'Reserve Your Stay'}
+          </p>
+          <h3 className="text-xl font-heading font-semibold text-forest-dark">
             {language === 'el' ? 'Κάντε Κράτηση' : 'Book Your Stay'}
-          </CardTitle>
-        </CardHeader>
+          </h3>
+        </div>
       )}
-      <CardContent className={isDetail ? 'pt-4' : ''}>
-        <form onSubmit={handleSubmit}>
-          <div className="space-y-4">
-            {isGlampingTent && (
-              <div className="space-y-2">
-                <Label className="flex items-center">
-                  <Tent className="h-4 w-4 mr-2 text-sea" />
-                  <span>{language === 'el' ? 'Επιλέξτε Σκηνή' : 'Select Tent'}</span>
-                </Label>
-                <RadioGroup
-                  value={selectedTent}
-                  onValueChange={(value) => setSelectedTent(value as "1" | "2")}
-                  className="flex gap-4"
+
+      <form onSubmit={handleSubmit} className="space-y-4">
+        {/* Tent selector */}
+        {isGlampingTent && (
+          <div>
+            <Label className="flex items-center gap-2 text-sm font-sans font-medium text-gray-700 mb-2">
+              <Tent className="h-4 w-4 text-forest/60" />
+              {language === 'el' ? 'Επιλέξτε Σκηνή' : 'Select Tent'}
+            </Label>
+            <RadioGroup
+              value={selectedTent}
+              onValueChange={(v) => setSelectedTent(v as '1' | '2')}
+              className="flex gap-3"
+            >
+              {['1', '2'].map((n) => (
+                <label
+                  key={n}
+                  htmlFor={`tent${n}`}
+                  className={`flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl border cursor-pointer transition-all text-sm font-sans font-medium ${
+                    selectedTent === n
+                      ? 'border-forest bg-forest text-white'
+                      : 'border-gray-200 text-gray-600 hover:border-forest/40'
+                  }`}
                 >
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="1" id="tent1" />
-                    <Label htmlFor="tent1" className="cursor-pointer">{t('booking.tent')} 1</Label>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="2" id="tent2" />
-                    <Label htmlFor="tent2" className="cursor-pointer">{t('booking.tent')} 2</Label>
-                  </div>
-                </RadioGroup>
-              </div>
-            )}
-            
-            <div className="space-y-2">
-              <Label htmlFor="date-range" className="flex items-center">
-                <Calendar className="h-4 w-4 mr-2 text-sea" />
-                <span>{language === 'el' ? 'Ημερομηνίες' : 'Dates'}</span>
-              </Label>
-              <DateRangePicker
-                startDate={startDate}
-                endDate={endDate}
-                onDateChange={handleDateChange}
-                accommodationId={getCalendarAccommodationId()}
-              />
-            </div>
-            
-            <div className="space-y-2">
-              <Label htmlFor="guests" className="flex items-center">
-                <Users className="h-4 w-4 mr-2 text-sea" />
-                <span>{language === 'el' ? 'Επισκέπτες' : 'Guests'}</span>
-              </Label>
-              <Input
-                id="guests"
-                type="number"
-                min={1}
-                max={accommodation.guests}
-                value={guests}
-                onChange={(e) => setGuests(Number(e.target.value))}
-                className="border-sea-light focus-visible:ring-sea-light"
-              />
-              <p className="text-xs text-gray-500">
-                {language === 'el' ? `Μέγιστο ${accommodation.guests} άτομα` : `Max ${accommodation.guests} guests`}
-              </p>
-            </div>
-            
-            {(startDate && endDate) && (
-              <div className="border-t border-gray-200 pt-4 space-y-2">
-                <div className="flex justify-between text-sm">
-                  <span>{nights} {language === 'el' ? 'διανυκτερεύσεις' : 'nights'}</span>
-                </div>
-                <p className="text-xs text-muted-foreground">
-                  {t('pricing.contactForQuote')}
-                </p>
-              </div>
-            )}
+                  <RadioGroupItem value={n} id={`tent${n}`} className="sr-only" />
+                  {t('booking.tent')} {n}
+                </label>
+              ))}
+            </RadioGroup>
           </div>
-          
-          <Button 
-            type="submit" 
-            className="w-full mt-4 bg-forest hover:bg-forest-dark text-white"
-            disabled={!startDate || !endDate}
-          >
-            {isDetail 
-              ? (language === 'el' ? 'Ζητήστε Προσφορά' : 'Get Quote') 
-              : (language === 'el' ? 'Ελέγξτε Διαθεσιμότητα' : 'Check Availability')
-            }
-          </Button>
-        </form>
-      </CardContent>
-    </Card>
+        )}
+
+        {/* Date picker */}
+        <div>
+          <Label className="flex items-center gap-2 text-sm font-sans font-medium text-gray-700 mb-2">
+            <Calendar className="h-4 w-4 text-forest/60" />
+            {language === 'el' ? 'Ημερομηνίες' : 'Dates'}
+          </Label>
+          <DateRangePicker
+            startDate={startDate}
+            endDate={endDate}
+            onDateChange={handleDateChange}
+            accommodationId={getCalendarAccommodationId()}
+          />
+        </div>
+
+        {/* Guests */}
+        <div>
+          <Label htmlFor="guests" className="flex items-center gap-2 text-sm font-sans font-medium text-gray-700 mb-2">
+            <Users className="h-4 w-4 text-forest/60" />
+            {language === 'el' ? 'Επισκέπτες' : 'Guests'}
+          </Label>
+          <Input
+            id="guests"
+            type="number"
+            min={1}
+            max={accommodation.guests}
+            value={guests}
+            onChange={(e) => setGuests(Number(e.target.value))}
+            className="border-gray-200 focus-visible:ring-forest/30 focus-visible:border-forest rounded-xl"
+          />
+          <p className="text-xs text-gray-400 mt-1">
+            {language === 'el' ? `Μέγιστο ${accommodation.guests} άτομα` : `Max ${accommodation.guests} guests`}
+          </p>
+        </div>
+
+        {/* Nights summary */}
+        {nights > 0 && (
+          <div className="flex items-center justify-between py-3 px-4 rounded-xl bg-forest/4 text-sm">
+            <span className="text-gray-600">
+              {nights} {language === 'el' ? 'διανυκτερεύσεις' : nights === 1 ? 'night' : 'nights'}
+            </span>
+            <span className="text-xs text-gray-400 italic">
+              {t('pricing.contactForQuote')}
+            </span>
+          </div>
+        )}
+
+        {/* Submit */}
+        <button
+          type="submit"
+          disabled={!startDate || !endDate}
+          className="w-full py-3.5 rounded-xl bg-wood text-forest-dark font-sans font-semibold text-sm tracking-wide transition-all duration-300 hover:bg-wood-light hover:shadow-cta active:scale-[0.98] disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:shadow-none disabled:hover:bg-wood"
+        >
+          {isDetail
+            ? (language === 'el' ? 'Ζητήστε Προσφορά' : 'Get Quote')
+            : (language === 'el' ? 'Ελέγξτε Διαθεσιμότητα' : 'Check Availability')}
+        </button>
+      </form>
+    </div>
   );
 };
 

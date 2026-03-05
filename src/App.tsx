@@ -3,11 +3,12 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { LanguageProvider } from "./context/LanguageContext";
 import CookieConsent from "./components/Layout/CookieConsent";
 import ErrorBoundary from "./components/ErrorBoundary";
 import ProtectedRoute from "./components/ProtectedRoute";
+import { AnimatePresence, motion } from "framer-motion";
 
 // Lazy-loaded pages
 const HomePage = React.lazy(() => import("./pages/HomePage"));
@@ -33,10 +34,42 @@ const queryClient = new QueryClient({
 
 // Simple loading fallback
 const PageLoader = () => (
-  <div className="flex items-center justify-center min-h-screen bg-sand/10">
-    <div className="w-8 h-8 border-4 border-ocean border-t-transparent rounded-full animate-spin"></div>
+  <div className="flex items-center justify-center min-h-screen bg-cream">
+    <div className="w-8 h-8 border-2 border-forest/20 border-t-forest rounded-full animate-spin" />
   </div>
 );
+
+// Fade transition wrapper — must live inside BrowserRouter to use useLocation
+const AnimatedRoutes = () => {
+  const location = useLocation();
+  return (
+    <AnimatePresence mode="wait" initial={false}>
+      <motion.div
+        key={location.pathname}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.18, ease: 'easeInOut' }}
+      >
+        <Suspense fallback={<PageLoader />}>
+          <Routes location={location}>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/accommodation/:id" element={<AccommodationDetail />} />
+            <Route path="/booking/:id" element={<BookingPage />} />
+            <Route path="/booking-confirmation" element={<BookingConfirmation />} />
+            <Route path="/explore" element={<ExploreIsland />} />
+            <Route path="/contact" element={<ContactUs />} />
+            <Route path="/mx-portal/login" element={<AdminAuth />} />
+            <Route path="/mx-portal" element={<ProtectedRoute><ChannelManager /></ProtectedRoute>} />
+            <Route path="/privacy" element={<PrivacyPolicy />} />
+            <Route path="/terms" element={<TermsOfService />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </Suspense>
+      </motion.div>
+    </AnimatePresence>
+  );
+};
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
@@ -46,28 +79,9 @@ const App = () => (
         <Sonner />
         <BrowserRouter>
           <ErrorBoundary>
-          <Suspense fallback={<PageLoader />}>
-            <Routes>
-              <Route path="/" element={<HomePage />} />
-              <Route path="/accommodation/:id" element={<AccommodationDetail />} />
-              <Route path="/booking/:id" element={<BookingPage />} />
-              <Route path="/booking-confirmation" element={<BookingConfirmation />} />
-              <Route path="/explore" element={<ExploreIsland />} />
-              <Route path="/contact" element={<ContactUs />} />
-              <Route path="/mx-portal/login" element={<AdminAuth />} />
-              <Route path="/mx-portal" element={<ProtectedRoute><ChannelManager /></ProtectedRoute>} />
-
-              <Route path="/privacy" element={<PrivacyPolicy />} />
-              <Route path="/terms" element={<TermsOfService />} />
-
-
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </Suspense>
+            <AnimatedRoutes />
           </ErrorBoundary>
-
           <CookieConsent />
-
         </BrowserRouter>
       </LanguageProvider>
     </TooltipProvider>
