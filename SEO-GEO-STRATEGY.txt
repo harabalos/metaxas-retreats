@@ -1,0 +1,304 @@
+================================================================================
+  METAXAS RETREATS — SEO & GEO DOMINATION STRATEGY
+  Created: March 2026
+================================================================================
+
+
+THE HONEST TRUTH FIRST
+──────────────────────
+Your technical SEO is already excellent — schema markup, hreflang, CSP,
+structured data. What you are missing is the stuff that actually moves rankings:
+CONTENT AUTHORITY and OFF-SITE SIGNALS.
+
+Google does not just rank a nice website. It ranks the most trusted resource
+on a topic. That is the gap we are closing.
+
+
+================================================================================
+  PART 1 — TARGET KEYWORDS
+================================================================================
+
+TIER 1 — TRANSACTIONAL (people ready to book)
+  - glamping Lefkada                          ~1,200/mo   LOW competition
+  - camping Lefkada                           ~2,900/mo   LOW competition
+  - luxury camping Greece                     ~800/mo     MEDIUM competition
+  - accommodation Mikros Gialos              ~200/mo     VERY LOW competition
+  - glamping tent Greece sea view             ~300/mo     VERY LOW competition
+  - eco glamping Ionian islands               ~150/mo     VERY LOW competition
+  - wooden house rental Lefkada               ~120/mo     VERY LOW competition
+
+TIER 2 — INFORMATIONAL (attract visitors, then convert)
+  - best beaches Lefkada                      ~8,100/mo
+  - things to do Lefkada                      ~5,400/mo
+  - Lefkada travel guide                      ~3,200/mo
+  - Mikros Gialos beach                       ~1,600/mo
+  - eco tourism Lefkada                       ~400/mo
+  - Lefkada shoulder season travel            ~300/mo
+
+TIER 3 — GEO / AI QUERIES (ChatGPT, Perplexity, Google AI Overviews)
+  - "best glamping in the Ionian islands"
+  - "eco-friendly accommodation Greece"
+  - "unique places to stay Lefkada"
+  - "glamping near a beach in Greece"
+  - "best camping in Greece with sea view"
+  - "alternative accommodation Greek islands"
+
+
+================================================================================
+  PART 2 — THE 4 PILLARS
+================================================================================
+
+────────────────────────────────────────────────────────────────────────────────
+PILLAR 1 — GOOGLE BUSINESS PROFILE
+        *** MOST IMPORTANT THING YOU CAN DO TODAY ***
+────────────────────────────────────────────────────────────────────────────────
+
+This drives the LOCAL PACK — the 3 map results that appear above ALL organic
+results. Nothing beats it for local searches on mobile.
+
+ACTION ITEMS:
+  1. Claim and verify at business.google.com
+  2. Set categories:
+       Primary:   Campground
+       Secondary: Glamping site, Vacation home rental, Eco lodge
+  3. Add EVERY photo (exterior, interior, sea view, beach, sunset, food)
+  4. Write a full description using your top keywords
+  5. Add all attributes: sea view, WiFi, parking, pets, air conditioning, etc.
+  6. Add your exact address, phone, website, opening hours
+  7. Post updates weekly — seasonal offers, new photos, events
+  8. TEXT EVERY PAST GUEST asking for a Google review
+     (reviews are the #1 local ranking factor)
+
+TARGET: 50+ Google reviews with 4.8+ average within 6 months
+
+
+────────────────────────────────────────────────────────────────────────────────
+PILLAR 2 — BLOG / CONTENT HUB
+        *** BIGGEST MISSING PIECE ON THE SITE ***
+────────────────────────────────────────────────────────────────────────────────
+
+Google ranks AUTHORITY, not just pages. You need to own the topic of
+"Lefkada travel" so any search about the island eventually touches your site.
+Each article is its own ranking opportunity and a funnel to your booking page.
+
+ARTICLES TO WRITE (in priority order):
+
+  1. "Complete Guide to Glamping in Lefkada 2026"
+     Target: glamping Lefkada
+     Why: Direct transactional. Covers what glamping is, why Lefkada,
+          what to expect, prices, best season. CTA: Book at Metaxas Retreats.
+     Length: 2,000+ words
+
+  2. "10 Best Beaches in Lefkada (Local's Guide)"
+     Target: best beaches Lefkada
+     Why: Highest traffic keyword. Position yourselves as the local expert.
+          Mikros Gialos is #1 on the list, linking to your property.
+     Length: 2,500+ words with photos of each beach
+
+  3. "Mikros Gialos Beach — The Complete Guide"
+     Target: Mikros Gialos beach
+     Why: Own your exact micro-location. Anyone searching for this
+          beach finds you first.
+     Length: 1,500+ words
+
+  4. "Eco Tourism in Lefkada — A Practical Guide"
+     Target: eco tourism Lefkada, eco camping Greece
+     Why: Positions brand as eco-conscious. Growing travel segment.
+     Length: 1,800+ words
+
+  5. "Camping vs Glamping in Greece — What Should You Choose?"
+     Target: camping glamping Greece
+     Why: Captures both audiences and converts them to glamping.
+     Length: 1,500+ words
+
+  6. "Best Things to Do Near Mikros Gialos, Lefkada"
+     Target: things to do Lefkada
+     Why: Informational funnel. Visitors stay longer, trust grows.
+     Length: 2,000+ words
+
+  7. "Lefkada in May, June & September — Why Shoulder Season is Best"
+     Target: Lefkada shoulder season
+     Why: Very low competition, high purchase intent for off-peak dates.
+     Length: 1,200+ words
+
+  8. "The Ultimate Lefkada Travel Guide 2026"
+     Target: Lefkada travel guide
+     Why: Pillar page that links to all other articles. Builds topical authority.
+     Length: 3,000+ words
+
+RULES FOR EVERY ARTICLE:
+  - 1,500 words minimum (2,000+ preferred)
+  - Include real photos (not stock)
+  - Internal link to accommodation pages and booking
+  - Use target keyword in: title, H1, first paragraph, subheadings, URL
+  - Add structured data (Article schema) to each post
+  - End every article with a CTA to book direct
+
+
+────────────────────────────────────────────────────────────────────────────────
+PILLAR 3 — OFF-SITE AUTHORITY (Backlinks + Citations)
+────────────────────────────────────────────────────────────────────────────────
+
+Google counts links from other sites as votes of trust. More quality votes =
+higher rankings. This is the hardest pillar but the most powerful long-term.
+
+QUICK WINS (Free, do immediately):
+  - TripAdvisor: Create listing, start getting reviews
+  - visitgreece.gr: Submit property to official Greek tourism portal
+  - lefkada.gr: Local Lefkada directory listing
+  - Google Maps: Verify your pin is perfectly accurate with full info
+  - Booking.com + Airbnb: These already link back — make sure profiles are complete
+
+MEDIUM EFFORT (High reward):
+  - Email 20 travel bloggers who wrote about Lefkada
+    Offer a free stay in exchange for an honest review post with a link
+    Search: "best things to do Lefkada" blog posts from 2023-2025
+  - Find all "best glamping in Greece" listicle articles
+    Email the author asking to be included (you now have a great site to show)
+  - Reach out to German and Italian travel blogs
+    (your biggest non-Greek international markets)
+
+DIRECTORIES TO SUBMIT TO:
+  - glamping.com
+  - coolcamping.com
+  - ecobnb.com
+  - hipcamp.com
+  - glamping.nl (Dutch market)
+  - naturisteurope.com (eco travellers)
+  - kayak.com (add your property)
+  - expedia.com (add your property)
+
+TARGET: 30+ quality backlinks from travel and tourism sites within 6 months
+
+
+────────────────────────────────────────────────────────────────────────────────
+PILLAR 4 — GEO (Generative Engine Optimization)
+           Rank in ChatGPT, Perplexity, Google AI Overviews
+────────────────────────────────────────────────────────────────────────────────
+
+AI systems answer questions by pulling from the most cited, clearest sources.
+To appear when someone asks ChatGPT "best glamping in Greece":
+
+  1. ENTITY CLARITY
+     Keep NAP identical everywhere online:
+       Name:    Metaxas Retreats
+       Address: Mikros Gialos, Poros, Lefkada, 31082, Greece
+       Phone:   +30 6973219980
+       Email:   metaxasretreats@gmail.com
+
+  2. BE CITED IN ARTICLES
+     If 10+ travel blogs mention you by name, AI systems learn you exist.
+     This is why the backlink strategy above directly feeds GEO too.
+
+  3. EXPAND FAQ CONTENT ON-PAGE
+     Current FAQ is only in schema (invisible to users).
+     Add a visible FAQ section to the homepage and blog articles.
+     AI systems love direct question-answer format.
+
+  4. YOUTUBE VIDEO
+     A 2-min "Tour of Metaxas Retreats" uploaded to YouTube with keyword-rich
+     title and description gets you into Google's video index.
+     Google AI Overviews regularly feature YouTube videos.
+     Title example: "Glamping in Lefkada Greece — Metaxas Retreats (Sea View)"
+
+  5. WIKIPEDIA-STYLE CLARITY
+     Structured headings (H1, H2, H3), clear direct answers, no fluff.
+     AI systems scrape clean, structured content.
+
+
+================================================================================
+  PART 3 — PRIORITY ROADMAP
+================================================================================
+
+WEEK 1 (FREE — 4 HOURS TOTAL)
+  □ Set up / optimize Google Business Profile
+  □ Add all photos to GBP (minimum 20 photos)
+  □ Create TripAdvisor listing
+  □ Submit to visitgreece.gr
+  □ Text all past guests asking for a Google review
+
+MONTH 1
+  □ Build blog section on the website (/blog route + article pages)
+  □ Write 3 cornerstone articles:
+      - Complete Guide to Glamping in Lefkada
+      - 10 Best Beaches in Lefkada
+      - Mikros Gialos Beach Guide
+  □ Submit to glamping.com, coolcamping.com, ecobnb.com
+  □ Identify 20 Lefkada travel bloggers to contact
+
+MONTH 2
+  □ Write 3 more blog articles
+  □ Send outreach emails to travel bloggers (offer free stay)
+  □ Create YouTube channel, film and upload property tour video
+  □ Submit to remaining directories (kayak, expedia, hipcamp)
+
+MONTH 3
+  □ Write remaining 2 blog articles (8 total)
+  □ Follow up with bloggers
+  □ 50+ consistent citations across directories
+  □ Begin monitoring rankings via Google Search Console
+
+MONTH 4-6
+  □ 5+ travel blog features with backlinks achieved
+  □ 50+ Google reviews achieved
+  □ Analyse which articles get most traffic and write more on that topic
+  □ Update all articles with fresh 2026 seasonal info
+  □ Consider translating top 3 articles to German and Greek
+
+
+================================================================================
+  PART 4 — TOOLS TO USE (ALL FREE)
+================================================================================
+
+  Google Search Console   → Track rankings, clicks, impressions
+                            search.google.com/search-console
+
+  Google Analytics 4      → Already installed (consent-gated)
+                            Track which pages drive bookings
+
+  Google Business Profile → business.google.com
+                            Manage reviews, posts, photos
+
+  PageSpeed Insights      → pagespeed.web.dev
+                            Monitor Core Web Vitals
+
+  Ubersuggest             → Free keyword research
+                            app.neilpatel.com/en/ubersuggest
+
+  Answer The Public       → Find what questions people ask
+                            answerthepublic.com
+
+
+================================================================================
+  PART 5 — THE #1 RULE
+================================================================================
+
+  Google ranks PAGES, not websites.
+
+  Each blog article is its own ranking opportunity.
+  One article about "best beaches Lefkada" can bring 500 visitors/month.
+  All 500 see your property. That is the compounding power of content.
+
+  The sites that dominate any niche do so because they are the most helpful
+  resource on the internet for that topic. Become the definitive source for
+  "Lefkada travel" and bookings will follow automatically.
+
+
+================================================================================
+  CURRENT SITE STATUS (March 2026)
+================================================================================
+
+  Technical SEO:      ✓ EXCELLENT — schema, hreflang, CSP, meta, Open Graph
+  Page Speed:         ✓ GOOD — Vite + React SPA, optimized build
+  Structured Data:    ✓ STRONG — LodgingBusiness, Campground, FAQPage, etc.
+  Multilingual:       ✓ DONE — EN, EL, DE, IT, RO
+  Google Analytics:   ✓ DONE — GA4 consent-gated (GDPR compliant)
+  Blog / Content:     ✗ MISSING — highest priority to build
+  Google Business:    ? NOT CONFIRMED — verify and optimize immediately
+  Backlinks:          ✗ WEAK — outreach campaign needed
+  Reviews:            ✗ LOW — active acquisition strategy needed
+
+
+================================================================================
+  END OF STRATEGY DOCUMENT
+================================================================================
