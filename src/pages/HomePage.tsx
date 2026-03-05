@@ -93,7 +93,7 @@ const HomePage = () => {
     };
   }, []);
 
-  // Schema
+  // Schema 
   const campgroundSchema = {
     '@context': 'https://schema.org',
     '@type': ['Campground', 'LodgingBusiness'],
