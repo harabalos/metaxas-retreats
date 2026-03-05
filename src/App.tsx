@@ -9,6 +9,8 @@ import CookieConsent from "./components/Layout/CookieConsent";
 import ErrorBoundary from "./components/ErrorBoundary";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { AnimatePresence, motion } from "framer-motion";
+import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/react";
 
 // Lazy-loaded pages
 const HomePage = React.lazy(() => import("./pages/HomePage"));
@@ -84,6 +86,8 @@ const App = () => (
           <CookieConsent />
         </BrowserRouter>
       </LanguageProvider>
+      <Analytics />
+      <SpeedInsights />
     </TooltipProvider>
   </QueryClientProvider>
 );
