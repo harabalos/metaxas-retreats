@@ -135,29 +135,50 @@
   background-position: center;
 }
 
-/* ─── Featurable Google Reviews Widget — dark theme override ─── */
-.featurable-reviews-wrapper {
-  /* Blend widget background into our dark forest section */
-  --featurable-bg: transparent;
+/* ─── Elfsight Google Reviews Widget — dark theme styling ─── */
+.elfsight-reviews-wrapper {
+  color-scheme: dark;
 }
 
-/* Hide Featurable branding/watermark - Temporarily disabled to prevent anti-tampering blocks
-.featurable-reviews-wrapper [class*="powered"],
-.featurable-reviews-wrapper [class*="watermark"],
-.featurable-reviews-wrapper [class*="branding"],
-.featurable-reviews-wrapper a[href*="featurable"],
-.featurable-reviews-wrapper [data-featurable-badge] {
+/* Hide Elfsight branding/watermark */
+.elfsight-reviews-wrapper [class*="Carousel__CarouselContainer"]+div,
+.elfsight-reviews-wrapper [class*="CarouselControlContainer"]+div,
+.elfsight-reviews-wrapper a[href*="elfsight.com"],
+.elfsight-reviews-wrapper [class*="BadgeContainer"] {
   display: none !important;
-} */
+  visibility: hidden !important;
+  height: 0 !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
 
-/* Card styling on dark background */
-.featurable-reviews-wrapper [class*="card"],
-.featurable-reviews-wrapper [class*="review-card"],
-.featurable-reviews-wrapper [class*="widget"] {
-  background-color: rgba(255, 255, 255, 0.06) !important;
+/* Force text readability in dark theme */
+.elfsight-reviews-wrapper [class*="TextContainer"],
+.elfsight-reviews-wrapper [class*="ReviewText"],
+.elfsight-reviews-wrapper [class*="ItemName"],
+.elfsight-reviews-wrapper [class*="ReviewAuthorName"],
+.elfsight-reviews-wrapper span,
+.elfsight-reviews-wrapper div {
+  color: rgba(255, 255, 255, 0.9) !important;
+}
+
+/* Style cards for better contrast */
+.elfsight-reviews-wrapper [class*="ItemContainer"],
+.elfsight-reviews-wrapper [class*="ReviewCard"] {
+  background-color: rgba(255, 255, 255, 0.05) !important;
   border: 1px solid rgba(255, 255, 255, 0.1) !important;
-  border-radius: 16px !important;
-  color: rgba(255, 255, 255, 0.85) !important;
+  border-radius: 12px !important;
+  backdrop-filter: blur(10px);
+}
+
+/* Style navigation dots */
+.elfsight-reviews-wrapper [class*="Dot__DotComponent"] {
+  background-color: rgba(255, 255, 255, 0.2) !important;
+}
+
+.elfsight-reviews-wrapper [class*="Dot__DotComponent"][class*="active"] {
+  background-color: #d4a373 !important;
+  /* wood color */
 }
 
 /* Star colors */
