@@ -61,18 +61,19 @@ const HomePage = () => {
     }
   }, [location]);
 
-  // Load Elfsight reviews widget deferred
+  // Load Featurable reviews widget deferred
   useEffect(() => {
     const timer = setTimeout(() => {
       const script = document.createElement('script');
-      script.src = 'https://elfsightcdn.com/platform.js';
+      script.src = 'https://featurable.com/assets/bundle.js';
       script.defer = true;
+      script.charset = 'UTF-8';
       document.body.appendChild(script);
     }, 2500);
     return () => {
       clearTimeout(timer);
       try {
-        const s = document.querySelector('script[src="https://elfsightcdn.com/platform.js"]');
+        const s = document.querySelector('script[src="https://featurable.com/assets/bundle.js"]');
         if (s) document.body.removeChild(s);
       } catch { }
     };
@@ -350,10 +351,10 @@ const HomePage = () => {
             </h2>
           </FadeUp>
 
-          {/* Elfsight widget — real Google reviews */}
+          {/* Featurable widget — real Google reviews */}
           <FadeUp delay={0.1}>
-            <div className="elfsight-reviews-wrapper">
-              <div className="elfsight-app-08c2814a-39d2-4b24-af1d-0694c0b45eb6" data-elfsight-app-lazy></div>
+            <div className="featurable-reviews-wrapper">
+              <div id="featurable-a9c57a0b-0fd9-435e-aab6-af85639915b3" data-featurable-async />
             </div>
           </FadeUp>
         </div>
