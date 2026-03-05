@@ -1,12 +1,29 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Mail, MapPin, Phone } from 'lucide-react';
 import { useLanguage } from '@/context/LanguageContext';
+import { useRef } from 'react';
 
 const Footer = () => {
   const { t, language } = useLanguage();
-  
+  const navigate = useNavigate();
+  const clickCountRef = useRef(0);
+  const clickTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleSecretClick = () => {
+    clickCountRef.current += 1;
+    if (clickTimerRef.current) clearTimeout(clickTimerRef.current);
+    if (clickCountRef.current >= 5) {
+      clickCountRef.current = 0;
+      navigate('/mx-portal/login');
+    } else {
+      clickTimerRef.current = setTimeout(() => {
+        clickCountRef.current = 0;
+      }, 3000);
+    }
   };
 
   return (
@@ -107,7 +124,9 @@ const Footer = () => {
 
         <div className="border-t border-forest-light mt-8 pt-8 flex flex-col md:flex-row justify-between items-center text-forest-light">
           <div className="flex flex-col md:flex-row items-center gap-4 md:gap-8">
-            <p>&copy; {new Date().getFullYear()} Metaxas Retreats. {t('footer.rights')}</p>
+            <p onClick={handleSecretClick} style={{ cursor: 'default', userSelect: 'none' }}>
+            &copy; {new Date().getFullYear()} Metaxas Retreats. {t('footer.rights')}
+          </p>
             
             <div className="flex gap-4 text-sm">
               <Link to="/privacy" className="hover:text-wood underline transition-colors" onClick={scrollToTop}>

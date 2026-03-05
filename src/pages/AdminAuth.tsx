@@ -17,13 +17,13 @@ const AdminAuth = () => {
         // Check if already logged in
         supabase.auth.getSession().then(({ data: { session } }) => {
             if (session) {
-                navigate('/admin');
+                navigate('/mx-portal');
             }
         });
 
         const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
             if (session) {
-                navigate('/admin');
+                navigate('/mx-portal');
             }
         });
 
@@ -42,7 +42,7 @@ const AdminAuth = () => {
 
             if (error) throw error;
             toast.success('Logged in successfully');
-            navigate('/admin');
+            navigate('/mx-portal');
         } catch (error: any) {
             toast.error(error.message || 'Failed to login');
         } finally {

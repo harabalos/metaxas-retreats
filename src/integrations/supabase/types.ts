@@ -106,30 +106,189 @@ export type Database = {
       bookings: {
         Row: {
           accommodation_id: string
+          booking_reference: string | null
           created_at: string | null
           end_date: string
           external_id: string | null
+          guest_email: string | null
+          guest_name: string | null
+          guest_phone: string | null
           id: string
+          notes: string | null
+          num_guests: number | null
+          payment_status: string | null
+          platform_url: string | null
           source: string
           start_date: string
+          total_price: number | null
         }
         Insert: {
           accommodation_id: string
+          booking_reference?: string | null
           created_at?: string | null
           end_date: string
           external_id?: string | null
+          guest_email?: string | null
+          guest_name?: string | null
+          guest_phone?: string | null
           id?: string
+          notes?: string | null
+          num_guests?: number | null
+          payment_status?: string | null
+          platform_url?: string | null
           source: string
           start_date: string
+          total_price?: number | null
         }
         Update: {
           accommodation_id?: string
+          booking_reference?: string | null
           created_at?: string | null
           end_date?: string
           external_id?: string | null
+          guest_email?: string | null
+          guest_name?: string | null
+          guest_phone?: string | null
           id?: string
+          notes?: string | null
+          num_guests?: number | null
+          payment_status?: string | null
+          platform_url?: string | null
           source?: string
           start_date?: string
+          total_price?: number | null
+        }
+        Relationships: []
+      }
+      calendar_sources: {
+        Row: {
+          accommodation_id: string
+          created_at: string
+          enabled: boolean
+          ical_url: string
+          id: string
+          last_sync_count: number | null
+          last_sync_error: string | null
+          last_sync_status: string | null
+          last_synced_at: string | null
+          platform: string
+        }
+        Insert: {
+          accommodation_id: string
+          created_at?: string
+          enabled?: boolean
+          ical_url: string
+          id?: string
+          last_sync_count?: number | null
+          last_sync_error?: string | null
+          last_sync_status?: string | null
+          last_synced_at?: string | null
+          platform: string
+        }
+        Update: {
+          accommodation_id?: string
+          created_at?: string
+          enabled?: boolean
+          ical_url?: string
+          id?: string
+          last_sync_count?: number | null
+          last_sync_error?: string | null
+          last_sync_status?: string | null
+          last_synced_at?: string | null
+          platform?: string
+        }
+        Relationships: []
+      }
+      inquiries: {
+        Row: {
+          accommodation_id: string | null
+          check_in: string | null
+          check_out: string | null
+          created_at: string
+          email: string | null
+          guest_name: string | null
+          id: string
+          message: string | null
+          notes: string | null
+          num_guests: number | null
+          phone: string | null
+          status: string
+        }
+        Insert: {
+          accommodation_id?: string | null
+          check_in?: string | null
+          check_out?: string | null
+          created_at?: string
+          email?: string | null
+          guest_name?: string | null
+          id?: string
+          message?: string | null
+          notes?: string | null
+          num_guests?: number | null
+          phone?: string | null
+          status?: string
+        }
+        Update: {
+          accommodation_id?: string | null
+          check_in?: string | null
+          check_out?: string | null
+          created_at?: string
+          email?: string | null
+          guest_name?: string | null
+          id?: string
+          message?: string | null
+          notes?: string | null
+          num_guests?: number | null
+          phone?: string | null
+          status?: string
+        }
+        Relationships: []
+      }
+      settings: {
+        Row: {
+          key: string
+          updated_at: string
+          value: string | null
+        }
+        Insert: {
+          key: string
+          updated_at?: string
+          value?: string | null
+        }
+        Update: {
+          key?: string
+          updated_at?: string
+          value?: string | null
+        }
+        Relationships: []
+      }
+      sync_logs: {
+        Row: {
+          accommodation_id: string | null
+          error_message: string | null
+          events_synced: number
+          id: string
+          platform: string | null
+          status: string | null
+          synced_at: string
+        }
+        Insert: {
+          accommodation_id?: string | null
+          error_message?: string | null
+          events_synced?: number
+          id?: string
+          platform?: string | null
+          status?: string | null
+          synced_at?: string
+        }
+        Update: {
+          accommodation_id?: string | null
+          error_message?: string | null
+          events_synced?: number
+          id?: string
+          platform?: string | null
+          status?: string | null
+          synced_at?: string
         }
         Relationships: []
       }

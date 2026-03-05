@@ -30,7 +30,7 @@ const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
   }
 
   if (status === 'unauthenticated') {
-    return <Navigate to="/admin/login" replace />;
+    return <Navigate to="/mx-portal/login" replace />;
   }
 
   return <>{children}</>;

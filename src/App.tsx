@@ -20,7 +20,7 @@ const NotFound = React.lazy(() => import("./pages/NotFound"));
 const PrivacyPolicy = React.lazy(() => import("./pages/PrivacyPolicy"));
 const TermsOfService = React.lazy(() => import("./pages/TermsOfService"));
 const AdminAuth = React.lazy(() => import("./pages/AdminAuth"));
-const AdminDashboard = React.lazy(() => import("./pages/AdminDashboard"));
+const ChannelManager = React.lazy(() => import("./pages/ChannelManager"));
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -54,8 +54,8 @@ const App = () => (
               <Route path="/booking-confirmation" element={<BookingConfirmation />} />
               <Route path="/explore" element={<ExploreIsland />} />
               <Route path="/contact" element={<ContactUs />} />
-              <Route path="/admin/login" element={<AdminAuth />} />
-              <Route path="/admin" element={<ProtectedRoute><AdminDashboard /></ProtectedRoute>} />
+              <Route path="/mx-portal/login" element={<AdminAuth />} />
+              <Route path="/mx-portal" element={<ProtectedRoute><ChannelManager /></ProtectedRoute>} />
 
               <Route path="/privacy" element={<PrivacyPolicy />} />
               <Route path="/terms" element={<TermsOfService />} />
