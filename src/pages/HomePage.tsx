@@ -215,9 +215,7 @@ const HomePage = () => {
           <FadeUp>
             <p className="text-wood text-xs font-sans font-semibold tracking-[0.25em] uppercase mb-6">Mikros Gialos Bay</p>
             <h2 className="font-heading font-light text-forest text-display-lg leading-snug text-balance">
-              {language === 'el'
-                ? 'Τρία στρέμματα ελαιώνων, ιώνιος αέρας και ηρεμία — σας περιμένουν στην ακτή της Λευκάδας.'
-                : 'Three acres of olive groves, sea air, and stillness — waiting for you on the coast of Lefkada.'}
+              {t('home.brandStatement')}
             </h2>
           </FadeUp>
           <FadeUp delay={0.15}>
