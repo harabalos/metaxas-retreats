@@ -47,15 +47,7 @@ const Footer = () => {
 
             {/* Social */}
             <div className="flex gap-3">
-              <a
-                href="https://www.instagram.com/metaxasretreats"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Instagram"
-                className="w-9 h-9 rounded-full border border-white/10 flex items-center justify-center text-sand-dark/50 hover:border-wood/50 hover:text-wood transition-all duration-200"
-              >
-                <Instagram className="h-4 w-4" />
-              </a>
+
               <a
                 href="https://wa.me/306973219980"
                 target="_blank"
