@@ -32,11 +32,12 @@ const FadeUp = ({
 );
 
 
-const FEATURES = [
-  { icon: Waves, label: '50m from the beach', desc: 'A short walk to Mikros Gialos bay' },
-  { icon: Trees, label: 'Olive Grove Setting', desc: '3 acres of nature & silence' },
-  { icon: Sun, label: 'Panoramic Sea Views', desc: 'Ionian sunrise to sunset' },
-  { icon: Wind, label: 'Secluded & Private', desc: 'Away from crowds and noise' },
+const FEATURE_ICONS = [Waves, Trees, Sun, Wind];
+const FEATURE_KEYS = [
+  { label: 'home.features.beach.label', desc: 'home.features.beach.desc' },
+  { label: 'home.features.olive.label', desc: 'home.features.olive.desc' },
+  { label: 'home.features.views.label', desc: 'home.features.views.desc' },
+  { label: 'home.features.secluded.label', desc: 'home.features.secluded.desc' },
 ];
 
 // ─── Main Component ────────────────────────────────────────────────────────────
@@ -228,17 +229,20 @@ const HomePage = () => {
       {/* ─── FEATURE PILLARS ───────────────────────────────────────────────── */}
       <section className="py-6 px-5 sm:px-10 pb-20">
         <div className="max-w-5xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-6">
-          {FEATURES.map(({ icon: Icon, label, desc }, i) => (
+          {FEATURE_KEYS.map(({ label, desc }, i) => {
+            const Icon = FEATURE_ICONS[i];
+            return (
             <FadeUp key={label} delay={i * 0.1}>
               <div className="text-center group">
                 <div className="w-12 h-12 rounded-full bg-sand flex items-center justify-center mx-auto mb-4 group-hover:bg-forest/10 transition-colors duration-300">
                   <Icon className="h-5 w-5 text-forest" />
                 </div>
-                <p className="font-sans font-semibold text-sm text-forest-dark mb-1">{label}</p>
-                <p className="text-xs text-muted-foreground font-sans">{desc}</p>
+                <p className="font-sans font-semibold text-sm text-forest-dark mb-1">{t(label)}</p>
+                <p className="text-xs text-muted-foreground font-sans">{t(desc)}</p>
               </div>
             </FadeUp>
-          ))}
+            );
+          })}
         </div>
       </section>
 
