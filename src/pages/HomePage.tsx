@@ -1,8 +1,8 @@
-import { useRef, useEffect, useCallback } from 'react';
+import { useRef, useEffect, useCallback, useState } from 'react';
 import useEmblaCarousel from 'embla-carousel-react';
 import Autoplay from 'embla-carousel-autoplay';
 import { useLocation, Link } from 'react-router-dom';
-import { ArrowDown, Waves, Trees, Sun, Wind } from 'lucide-react';
+import { ArrowDown, Waves, Trees, Sun, Wind, ChevronDown } from 'lucide-react';
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
 import Layout from '@/components/Layout/Layout';
 import AccommodationCard from '@/components/Accommodations/AccommodationCard';
@@ -39,6 +39,54 @@ const FEATURE_KEYS = [
   { label: 'home.features.views.label', desc: 'home.features.views.desc' },
   { label: 'home.features.secluded.label', desc: 'home.features.secluded.desc' },
 ];
+
+// ─── FAQ Accordion ─────────────────────────────────────────────────────────────
+const faqItems = [
+  { q: 'faq.q1', a: 'faq.a1' },
+  { q: 'faq.q2', a: 'faq.a2' },
+  { q: 'faq.q3', a: 'faq.a3' },
+  { q: 'faq.q4', a: 'faq.a4' },
+  { q: 'faq.q5', a: 'faq.a5' },
+  { q: 'faq.q6', a: 'faq.a6' },
+  { q: 'faq.q7', a: 'faq.a7' },
+];
+
+const FAQAccordion = ({ t }: { t: (key: string) => string }) => {
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
+
+  const toggle = (i: number) => setOpenIndex(openIndex === i ? null : i);
+
+  return (
+    <div className="divide-y divide-forest/10 border-t border-b border-forest/10">
+      {faqItems.map((item, i) => {
+        const isOpen = openIndex === i;
+        return (
+          <div key={i}>
+            <button
+              onClick={() => toggle(i)}
+              className="w-full flex items-center justify-between py-5 text-left gap-4 group cursor-pointer"
+              aria-expanded={isOpen}
+            >
+              <span className="font-sans font-medium text-forest text-[15px] sm:text-base leading-snug group-hover:text-forest-dark transition-colors">
+                {t(item.q)}
+              </span>
+              <ChevronDown
+                className={`w-5 h-5 text-forest/40 shrink-0 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`}
+              />
+            </button>
+            <div
+              className={`overflow-hidden transition-all duration-300 ease-in-out ${isOpen ? 'max-h-80 pb-5' : 'max-h-0'}`}
+            >
+              <p className="text-muted-foreground font-sans font-light text-[15px] leading-relaxed pr-10">
+                {t(item.a)}
+              </p>
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  );
+};
 
 // ─── Main Component ────────────────────────────────────────────────────────────
 const HomePage = () => {
@@ -110,7 +158,7 @@ const HomePage = () => {
     address: { '@type': 'PostalAddress', addressLocality: 'Lefkada', addressCountry: 'GR' },
     geo: { '@type': 'GeoCoordinates', latitude: '38.640048', longitude: '20.698988' },
     priceRange: '€50 - €160',
-    aggregateRating: { '@type': 'AggregateRating', ratingValue: '4.9', reviewCount: '47', bestRating: '5' },
+    aggregateRating: { '@type': 'AggregateRating', ratingValue: '4.9', bestRating: '5' },
   };
 
   return (
@@ -329,10 +377,10 @@ const HomePage = () => {
                 <div className="overflow-hidden h-full" ref={emblaRef}>
                   <div className="flex h-full">
                     {[
-                      { src: "/assets/glamping-tent/view.jpg", alt: "Sea view" },
-                      { src: "/assets/glamping-tent/view2.jpg", alt: "Sea view 2" },
-                      { src: "/assets/glamping-tent/prosopsi.jpg", alt: "Glamping tent" },
-                      { src: "/assets/e9f9bd84-9f74-4189-bf30-d6640a566fd3.jpg", alt: "Lefkada" }
+                      { src: "/assets/glamping-tent/view.jpg", alt: "Glamping tent with panoramic sea view over Mikros Gialos bay, Lefkada Greece" },
+                      { src: "/assets/glamping-tent/view2.jpg", alt: "Stunning Ionian Sea view from Metaxas Retreats glamping accommodation, Lefkada" },
+                      { src: "/assets/glamping-tent/prosopsi.jpg", alt: "Luxury glamping tent exterior among olive trees at Metaxas Retreats, Lefkada Greece" },
+                      { src: "/assets/e9f9bd84-9f74-4189-bf30-d6640a566fd3.jpg", alt: "Wooden house sea view accommodation at Mikros Gialos beach, Lefkada Greece" }
                     ].map((img, idx) => (
                       <div key={idx} className="flex-[0_0_100%] min-w-0 h-full relative">
                         <img
@@ -365,6 +413,22 @@ const HomePage = () => {
             <div className="elfsight-reviews-wrapper">
               <div className="elfsight-app-08c2814a-39d2-4b24-af1d-0694c0b45eb6" data-elfsight-app-lazy></div>
             </div>
+          </FadeUp>
+        </div>
+      </section>
+
+      {/* ─── FAQ ───────────────────────────────────────────────────────────── */}
+      <section id="faq" className="py-20 px-5 sm:px-10 bg-cream">
+        <div className="max-w-3xl mx-auto">
+          <FadeUp className="text-center mb-12">
+            <p className="text-wood text-xs font-sans font-semibold tracking-[0.25em] uppercase mb-3">FAQ</p>
+            <h2 className="font-heading font-light text-forest text-display-lg">
+              {t('faq.title')}
+            </h2>
+          </FadeUp>
+
+          <FadeUp delay={0.1}>
+            <FAQAccordion t={t} />
           </FadeUp>
         </div>
       </section>
