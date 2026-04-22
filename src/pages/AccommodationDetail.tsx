@@ -110,7 +110,7 @@ const AccommodationDetail = () => {
     "address": { "@type": "PostalAddress", "streetAddress": "Mikros Gialos, Poros", "addressLocality": "Lefkada", "addressRegion": "Ionian Islands", "addressCountry": "GR" },
     "geo": { "@type": "GeoCoordinates", "latitude": "38.640048", "longitude": "20.698988" },
     "aggregateRating": { "@type": "AggregateRating", "ratingValue": "4.9", "bestRating": "5", "worstRating": "1" },
-    "offers": { "@type": "AggregateOffer", "priceCurrency": "EUR", "lowPrice": "50", "highPrice": accommodation.type === 'house' ? "140" : "120", "offerCount": "1", "availability": "https://schema.org/InStock", "priceValidUntil": "2026-12-31", "url": `https://metaxasretreats.gr/accommodation/${accommodation.id}` },
+    "offers": { "@type": "Offer", "availability": "https://schema.org/InStock", "url": `https://metaxasretreats.gr/accommodation/${accommodation.id}` },
     "potentialAction": { "@type": "ReserveAction", "target": { "@type": "EntryPoint", "urlTemplate": `https://metaxasretreats.gr/booking/${accommodation.id}?startDate={checkInDate}&endDate={checkOutDate}&guests={guests}`, "actionPlatform": ["http://schema.org/DesktopWebPlatform", "http://schema.org/MobileWebPlatform"] }, "result": { "@type": "LodgingReservation", "name": `Book ${accommodation.name}` } }
   };
   const breadcrumbSchema = {
@@ -130,11 +130,11 @@ const AccommodationDetail = () => {
 
   const seoDescription = language === 'el'
     ? (accommodation.type === 'house'
-      ? `Κάντε κράτηση στο γοητευτικό ξύλινο σπίτι μας στη Λευκάδα. Θέα στον κόλπο του Μικρού Γιαλού, χωρητικότητα ${accommodation.guests} ατόμων, 50μ από την παραλία. Από €${accommodation.price}/βράδυ.`
-      : `Premium σκηνή glamping στη Λευκάδα - πολυτελής κατασκήνωση ανάμεσα σε ελαιόδεντρα. Χωρητικότητα ${accommodation.guests} ατόμων, θέα θάλασσα, κλιματισμός. Από €${accommodation.price}/βράδυ.`)
+      ? `Κάντε κράτηση στο γοητευτικό ξύλινο σπίτι μας στη Λευκάδα. Θέα στον κόλπο του Μικρού Γιαλού, χωρητικότητα ${accommodation.guests} ατόμων, 50μ από την παραλία.`
+      : `Premium σκηνή glamping στη Λευκάδα - πολυτελής κατασκήνωση ανάμεσα σε ελαιόδεντρα. Χωρητικότητα ${accommodation.guests} ατόμων, θέα θάλασσα, κλιματισμός.`)
     : (accommodation.type === 'house'
-      ? `Book our charming wooden house in Lefkada, Greece. Sea views over Mikros Gialos bay, sleeps ${accommodation.guests}, 50m from beach. Best camping & glamping accommodation from €${accommodation.price}/night.`
-      : `Premium glamping tent in Lefkada, Greece - luxury camping among olive trees. Sleeps ${accommodation.guests}, sea views, A/C. Best glamping Greece from €${accommodation.price}/night. Book direct!`);
+      ? `Book our charming wooden house in Lefkada, Greece. Sea views over Mikros Gialos bay, sleeps ${accommodation.guests}, 50m from beach. Best camping & glamping accommodation.`
+      : `Premium glamping tent in Lefkada, Greece - luxury camping among olive trees. Sleeps ${accommodation.guests}, sea views, A/C. Best glamping in Greece. Book direct!`);
 
   const accommodationName = accommodation.type === 'house' ? t('accommodation.woodenHouse') : t('accommodation.glampingTent');
   const accommodationDescription = accommodation.type === 'house' ? t('accommodation.woodenHouse.description') : t('accommodation.glampingTent.description');

@@ -157,7 +157,7 @@ const HomePage = () => {
     telephone: '+306973219980',
     address: { '@type': 'PostalAddress', addressLocality: 'Lefkada', addressCountry: 'GR' },
     geo: { '@type': 'GeoCoordinates', latitude: '38.640048', longitude: '20.698988' },
-    priceRange: '€50 - €160',
+    priceRange: '€€',
     aggregateRating: { '@type': 'AggregateRating', ratingValue: '4.9', bestRating: '5' },
   };
 
