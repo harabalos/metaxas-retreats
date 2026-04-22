@@ -2,6 +2,7 @@ import { useLocation, Link } from 'react-router-dom';
 import { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import Layout from '@/components/Layout/Layout';
+import SEOHead from '@/components/SEO/SEOHead';
 import { useLanguage } from '@/context/LanguageContext';
 import { Home, ArrowRight } from 'lucide-react';
 
@@ -24,6 +25,11 @@ const NotFound = () => {
 
   return (
     <Layout>
+      <SEOHead
+        title="Page Not Found"
+        description="The page you're looking for doesn't exist."
+        robots="noindex, nofollow"
+      />
       <div className="min-h-[85vh] flex items-center justify-center px-5">
         <motion.div
           variants={containerVariants}

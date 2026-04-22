@@ -7,7 +7,6 @@ import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { LanguageProvider } from "./context/LanguageContext";
 import CookieConsent from "./components/Layout/CookieConsent";
 import ErrorBoundary from "./components/ErrorBoundary";
-import ProtectedRoute from "./components/ProtectedRoute";
 import { AnimatePresence, motion } from "framer-motion";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/react";
@@ -22,8 +21,6 @@ const ContactUs = React.lazy(() => import("./pages/ContactUs"));
 const NotFound = React.lazy(() => import("./pages/NotFound"));
 const PrivacyPolicy = React.lazy(() => import("./pages/PrivacyPolicy"));
 const TermsOfService = React.lazy(() => import("./pages/TermsOfService"));
-const AdminAuth = React.lazy(() => import("./pages/AdminAuth"));
-const ChannelManager = React.lazy(() => import("./pages/ChannelManager"));
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -61,8 +58,6 @@ const AnimatedRoutes = () => {
             <Route path="/booking-confirmation" element={<BookingConfirmation />} />
             <Route path="/explore" element={<ExploreIsland />} />
             <Route path="/contact" element={<ContactUs />} />
-            <Route path="/mx-portal/login" element={<AdminAuth />} />
-            <Route path="/mx-portal" element={<ProtectedRoute><ChannelManager /></ProtectedRoute>} />
             <Route path="/privacy" element={<PrivacyPolicy />} />
             <Route path="/terms" element={<TermsOfService />} />
             <Route path="*" element={<NotFound />} />

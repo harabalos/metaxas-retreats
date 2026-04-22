@@ -10,7 +10,7 @@ interface ICalEvent {
 }
 
 const corsHeaders = {
-  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Origin': 'https://metaxasretreats.gr',
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-api-key',
 };
 
@@ -23,23 +23,9 @@ serve(async (req) => {
   const serviceRoleKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? "";
   const expectedApiKey = Deno.env.get('SYNC_API_KEY');
 
-  // Accept either X-API-Key (for cron) or valid Supabase JWT (for admin UI)
+  // Authenticate via API key (cron / server-to-server only)
   const apiKey = req.headers.get('X-API-Key') || req.headers.get('x-api-key');
-  const authHeader = req.headers.get('Authorization');
-
-  let isAuthorized = false;
-
-  if (expectedApiKey && apiKey === expectedApiKey) {
-    isAuthorized = true;
-  } else if (authHeader?.startsWith('Bearer ')) {
-    // Validate Supabase JWT and verify caller is the admin
-    const anonKey = Deno.env.get("SUPABASE_ANON_KEY") ?? "";
-    const adminEmail = Deno.env.get("ADMIN_EMAIL") ?? "";
-    const anonClient = createClient(supabaseUrl, anonKey);
-    const token = authHeader.replace('Bearer ', '');
-    const { data: { user }, error } = await anonClient.auth.getUser(token);
-    if (!error && user && adminEmail && user.email === adminEmail) isAuthorized = true;
-  }
+  const isAuthorized = !!(expectedApiKey && apiKey === expectedApiKey);
 
   if (!isAuthorized) {
     return new Response(

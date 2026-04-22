@@ -1,28 +1,11 @@
-import { useRef } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { Mail, MapPin, Phone, Instagram } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
+import { Mail, MapPin, Phone } from 'lucide-react';
 import { useLanguage } from '@/context/LanguageContext';
 
 const Footer = () => {
   const { t, language } = useLanguage();
-  const navigate = useNavigate();
-  const clickCountRef = useRef(0);
-  const clickTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
-
-  // Hidden 5-click portal trigger
-  const handleSecretClick = () => {
-    clickCountRef.current += 1;
-    if (clickTimerRef.current) clearTimeout(clickTimerRef.current);
-    if (clickCountRef.current >= 5) {
-      clickCountRef.current = 0;
-      navigate('/mx-portal/login');
-    } else {
-      clickTimerRef.current = setTimeout(() => { clickCountRef.current = 0; }, 3000);
-    }
-  };
 
   const linkClass = 'text-sand-dark/60 hover:text-wood text-sm transition-colors duration-200';
 
@@ -138,8 +121,7 @@ const Footer = () => {
         {/* Bottom bar */}
         <div className="mt-14 pt-6 border-t border-white/8 flex flex-col sm:flex-row items-center justify-between gap-4">
           <p
-            onClick={handleSecretClick}
-            className="text-sand-dark/30 text-xs select-none cursor-default"
+            className="text-sand-dark/30 text-xs select-none"
           >
             &copy; {new Date().getFullYear()} Metaxas Retreats. {t('footer.rights')}
           </p>

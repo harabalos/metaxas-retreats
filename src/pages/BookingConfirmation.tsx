@@ -34,11 +34,8 @@ const BookingConfirmation = () => {
   const remainingAmount = totalPrice - depositAmount;
 
   const bankDetails = (
-    <div className="mt-3 p-4 rounded-xl bg-forest/4 text-sm space-y-1 font-mono">
-      <p><span className="text-gray-400">IBAN:</span> <span className="text-gray-800">GR16 0172 2020 0052 2012 9152 477</span></p>
-      <p><span className="text-gray-400">BIC/SWIFT:</span> <span className="text-gray-800">PIRBGRAA</span></p>
-      <p><span className="text-gray-400">Bank:</span> <span className="text-gray-800">Piraeus Bank</span></p>
-      <p><span className="text-gray-400">Beneficiary:</span> <span className="text-gray-800">Metaxas Retreats</span></p>
+    <div className="mt-3 p-4 rounded-xl bg-forest/4 text-sm space-y-1">
+      <p className="text-gray-600">Payment details will be shared upon confirmation. Please contact us via WhatsApp or email.</p>
     </div>
   );
 

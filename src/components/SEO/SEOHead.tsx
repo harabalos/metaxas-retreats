@@ -72,6 +72,9 @@ const SEOHead = ({
         <>
           <link rel="alternate" hrefLang="en" href={`${siteUrl}${canonicalUrl}`} />
           <link rel="alternate" hrefLang="el" href={`${siteUrl}${canonicalUrl}`} />
+          <link rel="alternate" hrefLang="it" href={`${siteUrl}${canonicalUrl}`} />
+          <link rel="alternate" hrefLang="de" href={`${siteUrl}${canonicalUrl}`} />
+          <link rel="alternate" hrefLang="ro" href={`${siteUrl}${canonicalUrl}`} />
           <link rel="alternate" hrefLang="x-default" href={`${siteUrl}${canonicalUrl}`} />
         </>
       )}

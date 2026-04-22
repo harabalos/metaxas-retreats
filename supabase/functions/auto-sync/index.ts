@@ -4,7 +4,7 @@ import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 // It simply invokes the sync-calendars function with the SYNC_API_KEY.
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
-    return new Response(null, { headers: { 'Access-Control-Allow-Origin': '*' } });
+    return new Response(null, { headers: { 'Access-Control-Allow-Origin': 'https://metaxasretreats.gr' } });
   }
 
   // Validate cron secret so only our Vercel cron can call this

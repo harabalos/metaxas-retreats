@@ -60,12 +60,8 @@ const PaymentOptions = ({ totalPrice, onSelectPaymentMethod }: PaymentOptionsPro
             {paymentMethod === 'deposit' && (
               <div className="pl-7 mt-2 bg-gray-50 p-3 rounded border text-sm">
                 <p className="font-medium mb-1">{t('payment.bankTitle')}</p>
-                <p>IBAN: GR16 0172 2020 0052 2012 9152 477</p>
-                <p>BIC/SWIFT: PIRBGRAA</p>
-                <p>Bank: Piraeus Bank</p>
-                <p>Beneficiary: Metaxas Retreats</p>
+                <p>{t('payment.contactForDetails')}</p>
                 <p>Amount: €{depositAmount}</p>
-                <p className="mt-2 text-xs text-gray-500">{t('payment.bankNote')}</p>
               </div>
             )}
           </div>
