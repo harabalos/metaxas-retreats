@@ -117,10 +117,10 @@ INSERT INTO settings (key, value) VALUES
   ('contact_whatsapp_1', '+306973219980'),
   ('contact_whatsapp_2', ''),
   ('contact_address', 'Poros, Mikros Gialos, Lefkada, Greece'),
-  ('bank_name', 'Piraeus Bank'),
+  ('bank_name', ''),
   ('bank_holder', ''),
-  ('bank_iban', 'GR16 0172 2020 0052 2012 9152 477'),
-  ('bank_bic', 'PIRBGRAA'),
-  ('bank_note', 'Please use your full name and check-in date as payment reference.'),
+  ('bank_iban', ''),
+  ('bank_bic', ''),
+  ('bank_note', ''),
   ('notification_email', 'metaxasretreats@gmail.com')
 ON CONFLICT (key) DO NOTHING;
