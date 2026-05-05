@@ -18,7 +18,7 @@ const SEOHead = ({
   title,
   description,
   canonicalUrl,
-  image = 'https://metaxasretreats.gr/assets/glamping-tent/view.jpg',
+  image = 'https://www.metaxasretreats.gr/assets/glamping-tent/view.jpg',
   type = 'website',
   schema,
   keywords,
@@ -33,7 +33,7 @@ const SEOHead = ({
   const displayDescription = language === 'el' && descriptionEl ? descriptionEl : description;
 
   const fullTitle = `${displayTitle} | Metaxas Retreats`;
-  const siteUrl = 'https://metaxasretreats.gr';
+  const siteUrl = 'https://www.metaxasretreats.gr';
   const fullUrl = canonicalUrl ? `${siteUrl}${canonicalUrl}` : siteUrl;
 
   const defaultKeywords = t('seo.defaultKeywords');

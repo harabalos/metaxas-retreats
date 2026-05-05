@@ -36,10 +36,19 @@
       ]
     }
   ],
+  "cleanUrls": true,
   "rewrites": [
     {
-      "source": "/(.*)",
-      "destination": "/"
+      "source": "/booking/:id",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/booking-confirmation",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/((?!api|assets|accommodation|explore|contact|privacy|terms|sitemap|robots|favicon).*)",
+      "destination": "/index.html"
     }
   ]
 }
