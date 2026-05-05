@@ -1,7 +1,7 @@
 /**
  * Post-build script: generates route-specific HTML files with unique meta tags.
  * Crawlers that don't execute JavaScript (Ahrefs, Bing, etc.) will see
- * the correct title, description, canonical, and H1 for each page.
+ * the correct title, description, canonical, H1, and nav links for each page.
  *
  * Run after `vite build`: node scripts/prerender-meta.js
  */
@@ -21,42 +21,49 @@ const routes = [
     title: 'Glamping & Beach Accommodation in Lefkada | Metaxas Retreats',
     description: 'Glamping tents & wooden house 50m from Mikros Gialos beach, Lefkada. Sea views, olive groves, private setting. Book direct & save.',
     h1: 'Glamping & Beach Accommodation in Lefkada, Greece',
+    content: 'Luxury glamping tents and a charming wooden house nestled among olive trees, just 50 meters from the crystal-clear waters of Mikros Gialos beach. Experience authentic Greek island living with modern comforts including sea views, air conditioning, fully equipped kitchens, and free WiFi. Our family-run retreat offers the perfect escape on Lefkada island.',
   },
   {
     path: '/accommodation/wooden-house',
     title: 'Wooden House with Sea View in Lefkada | Metaxas Retreats',
     description: 'Charming wooden house above Mikros Gialos bay, Lefkada. Sleeps 4, sea views, private terrace, 50m from beach. Book direct.',
     h1: 'Wooden House — Sea View Accommodation in Lefkada',
+    content: 'A charming wooden house perched above Mikros Gialos bay with panoramic sea views. Sleeps up to 4 guests with a private terrace, fully equipped kitchen, air conditioning, and direct beach access just 50 meters away. The ideal choice for couples or small families seeking comfort and tranquility on Lefkada island.',
   },
   {
     path: '/accommodation/glamping-tent-1',
-    title: 'Glamping Tent 1 in Lefkada — Luxury Camping | Metaxas Retreats',
+    title: 'Glamping Tent 1 Lefkada — Luxury Camping | Metaxas Retreats',
     description: 'Luxury glamping tent among olive trees, Lefkada. Sleeps 5, sea views, full kitchen, A/C, 50m from Mikros Gialos beach.',
     h1: 'Glamping Tent 1 — Luxury Camping in Lefkada',
+    content: 'Spacious luxury glamping tent set among ancient olive trees with stunning views of Mikros Gialos bay. Sleeps up to 5 guests with a comfortable double bed, sofa bed, fully equipped kitchen, air conditioning, private bathroom, and outdoor dining area. Just 50 meters from the beach.',
   },
   {
     path: '/accommodation/glamping-tent-2',
-    title: 'Glamping Tent 2 in Lefkada — Luxury Camping | Metaxas Retreats',
+    title: 'Glamping Tent 2 Lefkada — Luxury Camping | Metaxas Retreats',
     description: 'Second glamping tent in olive grove, Lefkada. Sleeps 5, sea views, full kitchen, A/C, 50m from Mikros Gialos beach.',
     h1: 'Glamping Tent 2 — Luxury Camping in Lefkada',
+    content: 'Our second luxury glamping tent offers the same premium experience in a private setting among olive trees. Sleeps up to 5 guests with full kitchen facilities, air conditioning, private bathroom, and breathtaking sea views. Located just 50 meters from the crystal-clear waters of Mikros Gialos beach.',
   },
   {
     path: '/explore',
-    title: 'Explore Lefkada Island — Beaches, Activities & More | Metaxas Retreats',
+    title: 'Explore Lefkada — Beaches & Activities | Metaxas Retreats',
     description: 'Discover Lefkada: Porto Katsiki, Kathisma beach, Nidri waterfalls, boat trips & local tavernas. Your guide to the island.',
     h1: 'Explore Lefkada Island',
+    content: 'Discover the best of Lefkada island. Visit world-famous Porto Katsiki beach, swim at Kathisma, explore the Nidri waterfalls, and enjoy boat trips around the Ionian Sea. From charming villages to stunning beaches, Lefkada offers endless adventures just minutes from Metaxas Retreats.',
   },
   {
     path: '/contact',
     title: 'Contact Metaxas Retreats — Book Direct in Lefkada',
     description: 'Get in touch with Metaxas Retreats. Book your glamping tent or wooden house in Lefkada directly. Email, phone & contact form.',
     h1: 'Contact Us',
+    content: 'Book directly with Metaxas Retreats for the best rates and personal service. Reach us by email at metaxasretreats@gmail.com or by phone. We are happy to help you plan your perfect Lefkada getaway.',
   },
   {
     path: '/privacy',
     title: 'Privacy Policy | Metaxas Retreats',
     description: 'Privacy policy for Metaxas Retreats website. How we handle your personal data and booking information.',
     h1: 'Privacy Policy',
+    content: '',
     robots: 'noindex, follow',
   },
   {
@@ -64,9 +71,26 @@ const routes = [
     title: 'Terms of Service | Metaxas Retreats',
     description: 'Terms and conditions for booking at Metaxas Retreats, Lefkada, Greece.',
     h1: 'Terms of Service',
+    content: '',
     robots: 'noindex, follow',
   },
 ];
+
+// Navigation links for crawlers (all indexable pages)
+const navLinks = routes
+  .filter(r => !r.robots)
+  .map(r => {
+    const href = r.path === '/' ? '/' : r.path;
+    const label = r.path === '/' ? 'Home'
+      : r.path === '/accommodation/wooden-house' ? 'Wooden House'
+      : r.path === '/accommodation/glamping-tent-1' ? 'Glamping Tent 1'
+      : r.path === '/accommodation/glamping-tent-2' ? 'Glamping Tent 2'
+      : r.path === '/explore' ? 'Explore Lefkada'
+      : r.path === '/contact' ? 'Contact'
+      : r.h1;
+    return `<a href="${href}">${label}</a>`;
+  })
+  .join(' | ');
 
 // Read the base index.html built by Vite
 const baseHtml = readFileSync(join(distDir, 'index.html'), 'utf-8');
@@ -100,14 +124,8 @@ for (const route of routes) {
     `<link rel="canonical" href="${canonicalUrl}" />`
   );
 
-  // Replace hreflang URLs
-  const hreflangs = ['en', 'el', 'it', 'de', 'ro', 'x-default'];
-  for (const lang of hreflangs) {
-    html = html.replace(
-      new RegExp(`<link rel="alternate" hreflang="${lang}" href="[^"]*"\\s*\\/?>`),
-      `<link rel="alternate" hreflang="${lang}" href="${canonicalUrl}" />`
-    );
-  }
+  // Remove all hreflang tags (single-URL multilingual site doesn't need them)
+  html = html.replace(/\s*<link rel="alternate" hreflang="[^"]*" href="[^"]*"\s*\/?>\s*/g, '\n');
 
   // Replace OG URL
   html = html.replace(
@@ -153,10 +171,17 @@ for (const route of routes) {
     );
   }
 
-  // Inject an H1 tag right after <div id="root"> so crawlers see it
+  // Build the crawler-visible content block with H1, description, and nav
+  const contentBlock = [
+    `<h1>${route.h1}</h1>`,
+    route.content ? `<p>${route.content}</p>` : '',
+    `<nav>${navLinks}</nav>`,
+  ].filter(Boolean).join('');
+
+  // Inject content inside <div id="root"> — visually hidden but accessible to crawlers
   html = html.replace(
     '<div id="root"></div>',
-    `<div id="root"><h1 style="position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0">${route.h1}</h1></div>`
+    `<div id="root"><div style="position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0">${contentBlock}</div></div>`
   );
 
   // Determine output path
