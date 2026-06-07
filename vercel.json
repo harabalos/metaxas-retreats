@@ -37,6 +37,18 @@
     }
   ],
   "cleanUrls": true,
+  "redirects": [
+    {
+      "source": "/accommodation/glamping-tent-1",
+      "destination": "/accommodation/glamping-tent",
+      "permanent": true
+    },
+    {
+      "source": "/accommodation/glamping-tent-2",
+      "destination": "/accommodation/glamping-tent",
+      "permanent": true
+    }
+  ],
   "rewrites": [
     {
       "source": "/booking/:id",

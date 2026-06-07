@@ -28,7 +28,7 @@ export const useAccommodations = () => {
       }
 
       // Map Supabase DB response to the frontend Accommodation type
-      return (data as AccommodationRow[]).map((acc) => {
+      const mapped = (data as AccommodationRow[]).map((acc) => {
         // Extract correct language string from JSONb (fallback to 'en')
         const name = (acc.name as Record<string, string>)[language] || (acc.name as Record<string, string>)['en'] || '';
         const description = (acc.description as Record<string, string>)[language] || (acc.description as Record<string, string>)['en'] || '';
@@ -59,6 +59,31 @@ export const useAccommodations = () => {
           images: (acc.images as string[]) || [],
         };
       });
+
+      // ── Merge the two identical glamping tents into a single listing ──
+      // Tent 1 & Tent 2 are physically identical (same photos, layout, view);
+      // only their calendars differ. We present them as ONE "Glamping Tent"
+      // and combine availability in useBlockedDates (free if either tent is free).
+      // The two separate calendars stay intact in the backend (iCal sync per tent).
+      const isTent = (id: string) => id === 'glamping-tent-1' || id === 'glamping-tent-2';
+      const result: Accommodation[] = [];
+      let tentMerged = false;
+      for (const acc of mapped) {
+        if (isTent(acc.id)) {
+          if (!tentMerged) {
+            const base = mapped.find((a) => a.id === 'glamping-tent-1') || acc;
+            result.push({
+              ...base,
+              id: 'glamping-tent',
+              name: base.name.replace(/\s*\d+\s*$/, ''), // "Glamping Tent 1" → "Glamping Tent"
+            });
+            tentMerged = true;
+          }
+          continue;
+        }
+        result.push(acc);
+      }
+      return result;
     },
   });
 };

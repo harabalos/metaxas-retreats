@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
-import { parseISO, isSameDay } from "date-fns";
+import { parseISO, isSameDay, addDays, format } from "date-fns";
 
-interface Booking {
+interface AvailabilityRow {
+  accommodation_id: string;
   start_date: string;
   end_date: string;
 }
@@ -17,30 +18,49 @@ export const useBlockedDates = (accommodationId: string) => {
     const fetchBookings = async () => {
       try {
         setLoading(true);
-        // Fetch from booking_availability view (restricted to only date columns - no PII)
+
+        // The "glamping-tent" listing is two identical physical tents.
+        // A date is only unavailable when BOTH tents are booked, so we fetch
+        // both calendars and block the intersection (free if either is free).
+        const ids =
+          accommodationId === "glamping-tent"
+            ? ["glamping-tent-1", "glamping-tent-2"]
+            : [accommodationId];
+
         const { data, error } = await supabase
           .from("booking_availability")
-          .select("start_date, end_date")
-          .eq("accommodation_id", accommodationId);
+          .select("accommodation_id, start_date, end_date")
+          .in("accommodation_id", ids);
 
         if (error) {
           console.error("Supabase Error:", error);
-          return; 
+          return;
         }
 
         if (data && mounted) {
-          const dates: Date[] = [];
-          (data as Booking[]).forEach((booking) => {
+          // For each calendar day, track which tents are booked on it.
+          const bookedBy = new Map<string, Set<string>>();
+
+          (data as AvailabilityRow[]).forEach((booking) => {
             let current = parseISO(booking.start_date);
             const end = parseISO(booking.end_date);
-
-            // Block all dates from start up to (but not including) end
-            // End date is checkout day, so it should remain bookable
+            // End date is checkout day → remains bookable
             while (current < end) {
-              dates.push(new Date(current));
-              current.setDate(current.getDate() + 1);
+              const key = format(current, "yyyy-MM-dd");
+              if (!bookedBy.has(key)) bookedBy.set(key, new Set());
+              bookedBy.get(key)!.add(booking.accommodation_id);
+              current = addDays(current, 1);
             }
           });
+
+          // A date is blocked only when every required unit is booked.
+          // single unit  → blocked when that one is booked (size >= 1)
+          // merged tents → blocked only when BOTH are booked (size >= 2)
+          const dates: Date[] = [];
+          bookedBy.forEach((units, key) => {
+            if (units.size >= ids.length) dates.push(parseISO(key));
+          });
+
           setBlockedDates(dates);
         }
       } catch (err) {

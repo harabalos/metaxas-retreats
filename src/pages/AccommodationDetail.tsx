@@ -1,4 +1,4 @@
-import { useParams, useNavigate, Link } from 'react-router-dom';
+import { useParams, useNavigate, Link, Navigate } from 'react-router-dom';
 import { Users, BedDouble, Bath, Wifi, Wind, Car, Waves, Sun, Coffee, TreePine, UtensilsCrossed, ChevronLeft, CalendarDays } from 'lucide-react';
 import { motion } from 'framer-motion';
 import Layout from '@/components/Layout/Layout';
@@ -57,6 +57,11 @@ const AccommodationDetail = () => {
   const navigate = useNavigate();
   const { t, language } = useLanguage();
   const { data: accommodations, isLoading } = useAccommodations();
+
+  // The two identical tents are now one merged listing — redirect old URLs.
+  if (id === 'glamping-tent-1' || id === 'glamping-tent-2') {
+    return <Navigate to="/accommodation/glamping-tent" replace />;
+  }
 
   if (isLoading) {
     return (

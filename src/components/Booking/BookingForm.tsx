@@ -1,13 +1,12 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { differenceInDays } from 'date-fns';
-import { Calendar, Users, Tent } from 'lucide-react';
+import { Calendar, Users } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import DateRangePicker from './DateRangePicker';
 import { Accommodation } from '@/data/accommodations';
 import { toast } from 'sonner';
-import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { useLanguage } from '@/context/LanguageContext';
 
 interface BookingFormProps {
@@ -21,22 +20,13 @@ const BookingForm = ({ accommodation, isDetail = false }: BookingFormProps) => {
   const [startDate, setStartDate] = useState<Date | undefined>(undefined);
   const [endDate, setEndDate] = useState<Date | undefined>(undefined);
   const [guests, setGuests] = useState<number>(1);
-  const [selectedTent, setSelectedTent] = useState<'1' | '2'>('1');
 
-  const isGlampingTent = accommodation.id === 'glamping-tent';
   const nights = startDate && endDate ? differenceInDays(endDate, startDate) : 0;
 
   const handleDateChange = (start: Date | undefined, end: Date | undefined) => {
     setStartDate(start);
     setEndDate(end);
   };
-
-  useEffect(() => {
-    if (isGlampingTent) {
-      setStartDate(undefined);
-      setEndDate(undefined);
-    }
-  }, [selectedTent, isGlampingTent]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -51,13 +41,7 @@ const BookingForm = ({ accommodation, isDetail = false }: BookingFormProps) => {
       return;
     }
 
-    const tentParam = isGlampingTent ? `&tent=${selectedTent}` : '';
-    navigate(`/booking/${accommodation.id}?start=${startDate.toISOString()}&end=${endDate.toISOString()}&guests=${guests}${tentParam}`);
-  };
-
-  const getCalendarAccommodationId = () => {
-    if (isGlampingTent) return `${accommodation.id}-${selectedTent}`;
-    return accommodation.id;
+    navigate(`/booking/${accommodation.id}?start=${startDate.toISOString()}&end=${endDate.toISOString()}&guests=${guests}`);
   };
 
   return (
@@ -74,36 +58,6 @@ const BookingForm = ({ accommodation, isDetail = false }: BookingFormProps) => {
       )}
 
       <form onSubmit={handleSubmit} className="space-y-4">
-        {/* Tent selector */}
-        {isGlampingTent && (
-          <div>
-            <Label className="flex items-center gap-2 text-sm font-sans font-medium text-gray-700 mb-2">
-              <Tent className="h-4 w-4 text-forest/60" />
-              {language === 'el' ? 'Επιλέξτε Σκηνή' : 'Select Tent'}
-            </Label>
-            <RadioGroup
-              value={selectedTent}
-              onValueChange={(v) => setSelectedTent(v as '1' | '2')}
-              className="flex gap-3"
-            >
-              {['1', '2'].map((n) => (
-                <label
-                  key={n}
-                  htmlFor={`tent${n}`}
-                  className={`flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl border cursor-pointer transition-all text-sm font-sans font-medium ${
-                    selectedTent === n
-                      ? 'border-forest bg-forest text-white'
-                      : 'border-gray-200 text-gray-600 hover:border-forest/40'
-                  }`}
-                >
-                  <RadioGroupItem value={n} id={`tent${n}`} className="sr-only" />
-                  {t('booking.tent')} {n}
-                </label>
-              ))}
-            </RadioGroup>
-          </div>
-        )}
-
         {/* Date picker */}
         <div>
           <Label className="flex items-center gap-2 text-sm font-sans font-medium text-gray-700 mb-2">
@@ -114,7 +68,7 @@ const BookingForm = ({ accommodation, isDetail = false }: BookingFormProps) => {
             startDate={startDate}
             endDate={endDate}
             onDateChange={handleDateChange}
-            accommodationId={getCalendarAccommodationId()}
+            accommodationId={accommodation.id}
           />
         </div>
 

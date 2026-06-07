@@ -34,13 +34,10 @@ const BookingPage = () => {
   const startParam = searchParams.get('start');
   const endParam = searchParams.get('end');
   const guestsParam = searchParams.get('guests');
-  const tentParam = searchParams.get('tent');
 
   const startDate = startParam ? new Date(startParam) : undefined;
   const endDate = endParam ? new Date(endParam) : undefined;
   const guests = guestsParam ? parseInt(guestsParam) : 1;
-  const selectedTent = tentParam || '1';
-  const isGlampingTent = id === 'glamping-tent';
 
   if (!accommodation || !startDate || !endDate) {
     return (
@@ -109,7 +106,6 @@ const BookingPage = () => {
             </div>
             <div className="px-4 py-2 bg-wood/10 rounded-full text-sm text-wood font-semibold">
               {accommodationName}
-              {isGlampingTent && ` · Tent ${selectedTent}`}
             </div>
           </div>
         </motion.div>
@@ -141,7 +137,6 @@ const BookingPage = () => {
                 endDate={endDate}
                 guests={guests}
                 nights={nights}
-                selectedTent={isGlampingTent ? selectedTent : undefined}
               />
             </div>
 

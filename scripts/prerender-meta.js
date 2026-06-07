@@ -31,18 +31,11 @@ const routes = [
     content: 'A charming wooden house perched above Mikros Gialos bay with panoramic sea views. Sleeps up to 4 guests with a private terrace, fully equipped kitchen, air conditioning, and direct beach access just 50 meters away. The ideal choice for couples or small families seeking comfort and tranquility on Lefkada island.',
   },
   {
-    path: '/accommodation/glamping-tent-1',
-    title: 'Glamping Tent 1 Lefkada — Luxury Camping | Metaxas Retreats',
+    path: '/accommodation/glamping-tent',
+    title: 'Glamping Tent Lefkada — Luxury Camping | Metaxas Retreats',
     description: 'Luxury glamping tent among olive trees, Lefkada. Sleeps 5, sea views, full kitchen, A/C, 50m from Mikros Gialos beach.',
-    h1: 'Glamping Tent 1 — Luxury Camping in Lefkada',
+    h1: 'Glamping Tent — Luxury Camping in Lefkada',
     content: 'Spacious luxury glamping tent set among ancient olive trees with stunning views of Mikros Gialos bay. Sleeps up to 5 guests with a comfortable double bed, sofa bed, fully equipped kitchen, air conditioning, private bathroom, and outdoor dining area. Just 50 meters from the beach.',
-  },
-  {
-    path: '/accommodation/glamping-tent-2',
-    title: 'Glamping Tent 2 Lefkada — Luxury Camping | Metaxas Retreats',
-    description: 'Second glamping tent in olive grove, Lefkada. Sleeps 5, sea views, full kitchen, A/C, 50m from Mikros Gialos beach.',
-    h1: 'Glamping Tent 2 — Luxury Camping in Lefkada',
-    content: 'Our second luxury glamping tent offers the same premium experience in a private setting among olive trees. Sleeps up to 5 guests with full kitchen facilities, air conditioning, private bathroom, and breathtaking sea views. Located just 50 meters from the crystal-clear waters of Mikros Gialos beach.',
   },
   {
     path: '/explore',
@@ -83,8 +76,7 @@ const navLinks = routes
     const href = r.path === '/' ? '/' : r.path;
     const label = r.path === '/' ? 'Home'
       : r.path === '/accommodation/wooden-house' ? 'Wooden House'
-      : r.path === '/accommodation/glamping-tent-1' ? 'Glamping Tent 1'
-      : r.path === '/accommodation/glamping-tent-2' ? 'Glamping Tent 2'
+      : r.path === '/accommodation/glamping-tent' ? 'Glamping Tent'
       : r.path === '/explore' ? 'Explore Lefkada'
       : r.path === '/contact' ? 'Contact'
       : r.h1;
