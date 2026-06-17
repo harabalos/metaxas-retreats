@@ -354,9 +354,11 @@ const AccommodationGallery = ({ images, name }: AccommodationGalleryProps) => {
               onDoubleClick={(e) => { e.stopPropagation(); toggleZoom(); }}
               style={{ cursor: zoom > 1 ? 'grab' : 'zoom-in' }}
             >
-              {/* Zoom/pan wrapper — plain div so framer-motion can't override transform */}
+              {/* Zoom/pan wrapper — plain div so framer-motion can't override transform.
+                  Must FILL the viewport (w/h-full) so the image's object-contain
+                  constrains against the screen, not against a shrink-wrapped box. */}
               <div
-                className="flex items-center justify-center max-w-full max-h-full"
+                className="w-full h-full flex items-center justify-center"
                 style={{
                   transform: `translate(${offset.x}px, ${offset.y}px) scale(${zoom})`,
                   transition: g.current.mode === 'none' ? 'transform 0.2s ease-out' : 'none',
