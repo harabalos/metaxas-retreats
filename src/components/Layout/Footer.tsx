@@ -138,6 +138,10 @@ const Footer = () => {
               <a href="https://www.amox.gr" target="_blank" rel="noopener noreferrer" className="hover:text-wood transition-colors">
                 Amox
               </a>
+              {' & '}
+              <a href="https://www.thebluehourvillas.com/" target="_blank" rel="noopener noreferrer" className="hover:text-wood transition-colors">
+                The Blue Hour Villas
+              </a>
             </span>
           </div>
         </div>
