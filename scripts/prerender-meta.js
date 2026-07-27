@@ -69,6 +69,20 @@ const routes = [
   },
 ];
 
+// Rendered into the served HTML outside #root, so it survives without JS.
+// The React footer carries the same two links for the styled version once the
+// app has mounted, but that is client-side only and Googlebot reads the served
+// HTML first. Background matches the app footer above so the two read as one
+// band.
+const CREDIT_FOOTER =
+  '<footer style="text-align:center;padding:0 16px 22px;font-size:.75rem;' +
+  'font-family:system-ui,sans-serif;background:#122418;color:rgba(253,252,247,.3)">' +
+  'Sister property: <a href="https://www.thebluehourvillas.com/" rel="noopener" ' +
+  'style="color:inherit">The Blue Hour Villas, Lefkada</a>' +
+  '<span style="padding:0 8px">·</span>' +
+  'Powered by <a href="https://www.amox.gr" rel="noopener" ' +
+  'style="color:inherit">Amox</a></footer>';
+
 // Navigation links for crawlers (all indexable pages)
 const navLinks = routes
   .filter(r => !r.robots)
@@ -174,6 +188,17 @@ for (const route of routes) {
   html = html.replace(
     '<div id="root"></div>',
     `<div id="root"><div style="position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0">${contentBlock}</div></div>`
+  );
+
+  // Sister-property link, outside #root so React never replaces it.
+  // The React footer renders the same link once the app mounts, but that is
+  // client-side only — Googlebot reads the served HTML on its first pass and
+  // executes JavaScript on a later, less reliable one. This is deliberately
+  // visible rather than hidden: a link only crawlers can see is the wrong
+  // pattern, and this one is true and useful to a reader.
+  html = html.replace(
+    '</body>',
+    `  ${CREDIT_FOOTER}\n</body>`
   );
 
   // Determine output path

@@ -134,13 +134,15 @@ const Footer = () => {
               {t('footer.terms')}
             </Link>
             <span>
+              {t('footer.sisterProperty')}:{' '}
+              <a href="https://www.thebluehourvillas.com/" target="_blank" rel="noopener" className="hover:text-wood transition-colors">
+                The Blue Hour Villas, Lefkada
+              </a>
+            </span>
+            <span>
               {t('footer.poweredBy')}{' '}
               <a href="https://www.amox.gr" target="_blank" rel="noopener noreferrer" className="hover:text-wood transition-colors">
                 Amox
-              </a>
-              {' & '}
-              <a href="https://www.thebluehourvillas.com/" target="_blank" rel="noopener noreferrer" className="hover:text-wood transition-colors">
-                The Blue Hour Villas
               </a>
             </span>
           </div>
