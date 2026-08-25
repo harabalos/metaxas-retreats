@@ -1,89 +1,64 @@
 import { useState, useEffect } from "react";
-import { supabase } from "@/integrations/supabase/client";
-import { parseISO, isSameDay, addDays, format } from "date-fns";
 
-interface AvailabilityRow {
-  accommodation_id: string;
-  start_date: string;
-  end_date: string;
-}
+/** Local calendar day as `YYYY-MM-DD` — the picker hands us local midnights, so
+ *  formatting from local parts (not toISOString) keeps the day from shifting. */
+const dayKey = (date: Date) =>
+  `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
 
+/**
+ * Unavailable nights for an accommodation, read live from /api/availability
+ * (which reads the Airbnb iCal feeds server-side and is CDN-cached).
+ *
+ * `unavailable` means we could not reach the calendar at all — the UI should say
+ * so rather than imply everything is free.
+ */
 export const useBlockedDates = (accommodationId: string) => {
-  const [blockedDates, setBlockedDates] = useState<Date[]>([]);
+  const [blockedDates, setBlockedDates] = useState<Set<string>>(new Set());
   const [loading, setLoading] = useState(true);
+  const [unavailable, setUnavailable] = useState(false);
 
   useEffect(() => {
+    if (!accommodationId) {
+      setLoading(false);
+      return;
+    }
+
+    const controller = new AbortController();
     let mounted = true;
 
-    const fetchBookings = async () => {
+    const fetchAvailability = async () => {
+      setLoading(true);
+      setUnavailable(false);
       try {
-        setLoading(true);
+        const response = await fetch(
+          `/api/availability?id=${encodeURIComponent(accommodationId)}`,
+          { signal: controller.signal },
+        );
+        if (!response.ok) throw new Error(`Availability request failed: ${response.status}`);
 
-        // The "glamping-tent" listing is two identical physical tents.
-        // A date is only unavailable when BOTH tents are booked, so we fetch
-        // both calendars and block the intersection (free if either is free).
-        const ids =
-          accommodationId === "glamping-tent"
-            ? ["glamping-tent-1", "glamping-tent-2"]
-            : [accommodationId];
-
-        const { data, error } = await supabase
-          .from("booking_availability")
-          .select("accommodation_id, start_date, end_date")
-          .in("accommodation_id", ids);
-
-        if (error) {
-          console.error("Supabase Error:", error);
-          return;
-        }
-
-        if (data && mounted) {
-          // For each calendar day, track which tents are booked on it.
-          const bookedBy = new Map<string, Set<string>>();
-
-          (data as AvailabilityRow[]).forEach((booking) => {
-            let current = parseISO(booking.start_date);
-            const end = parseISO(booking.end_date);
-            // End date is checkout day → remains bookable
-            while (current < end) {
-              const key = format(current, "yyyy-MM-dd");
-              if (!bookedBy.has(key)) bookedBy.set(key, new Set());
-              bookedBy.get(key)!.add(booking.accommodation_id);
-              current = addDays(current, 1);
-            }
-          });
-
-          // A date is blocked only when every required unit is booked.
-          // single unit  → blocked when that one is booked (size >= 1)
-          // merged tents → blocked only when BOTH are booked (size >= 2)
-          const dates: Date[] = [];
-          bookedBy.forEach((units, key) => {
-            if (units.size >= ids.length) dates.push(parseISO(key));
-          });
-
-          setBlockedDates(dates);
-        }
+        const data: { blockedDates?: string[] } = await response.json();
+        if (mounted) setBlockedDates(new Set(data.blockedDates ?? []));
       } catch (err) {
-        console.error("Unexpected error fetching dates:", err);
+        if ((err as Error)?.name === "AbortError") return;
+        console.error("Could not load availability:", err);
+        if (mounted) {
+          setBlockedDates(new Set());
+          setUnavailable(true);
+        }
       } finally {
         if (mounted) setLoading(false);
       }
     };
 
-    if (accommodationId) {
-      fetchBookings();
-    } else {
-      setLoading(false);
-    }
+    fetchAvailability();
 
     return () => {
       mounted = false;
+      controller.abort();
     };
   }, [accommodationId]);
 
-  const isDateBlocked = (date: Date) => {
-    return blockedDates.some((blockedDate) => isSameDay(date, blockedDate));
-  };
+  const isDateBlocked = (date: Date) => blockedDates.has(dayKey(date));
 
-  return { blockedDates, isDateBlocked, loading };
+  return { blockedDates, isDateBlocked, loading, unavailable };
 };

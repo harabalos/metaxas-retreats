@@ -12,6 +12,17 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { useBlockedDates } from "@/hooks/useBlockedDates";
+import { useLanguage } from "@/context/LanguageContext";
+
+// Shown when the live calendar can't be reached — better to admit we don't know
+// than to imply every date is free.
+const UNAVAILABLE_NOTE: Record<string, string> = {
+  en: "We couldn't check live availability — we'll confirm your dates by email.",
+  el: "Δεν ήταν δυνατός ο έλεγχος διαθεσιμότητας — θα επιβεβαιώσουμε τις ημερομηνίες με email.",
+  it: "Impossibile verificare la disponibilità — confermeremo le date via email.",
+  de: "Verfügbarkeit nicht abrufbar — wir bestätigen Ihre Daten per E-Mail.",
+  ro: "Nu am putut verifica disponibilitatea — confirmăm datele prin email.",
+};
 
 interface DateRangePickerProps {
   startDate: Date | undefined;
@@ -31,9 +42,10 @@ export function DateRangePicker({
   className,
 }: DateRangePickerProps) {
   const [isCalendarOpen, setIsCalendarOpen] = React.useState(false);
-  
-  // Fetch real blocked dates from Supabase
-  const { isDateBlocked, loading } = useBlockedDates(accommodationId);
+  const { language } = useLanguage();
+
+  // Live availability, read from the Airbnb feeds via /api/availability
+  const { isDateBlocked, loading, unavailable } = useBlockedDates(accommodationId);
 
   // Helper: Check if a range hits a blocked date
   const isRangeBlocked = (start: Date, end: Date) => {
@@ -115,6 +127,11 @@ export function DateRangePicker({
           </Button>
         </PopoverTrigger>
         <PopoverContent className="w-auto p-0" align="start">
+          {unavailable && (
+            <p className="px-3 pt-3 pb-1 text-xs text-amber-700 max-w-xs leading-snug">
+              {UNAVAILABLE_NOTE[language] || UNAVAILABLE_NOTE.en}
+            </p>
+          )}
           <Calendar
             initialFocus
             mode="range"
