@@ -8,7 +8,19 @@
       "Bash(ffmpeg -i /Users/harabalos/Desktop/island-dream-bookings/public/assets/video.mp4 -vf \"select=eq\\(n\\\\,0\\)\" -vframes 1 -q:v 2 /Users/harabalos/Desktop/island-dream-bookings/public/assets/video-poster.jpg -y)",
       "Bash(ffmpeg -i /Users/harabalos/Desktop/island-dream-bookings/public/assets/video.mp4 -vf \"select=eq\\(n\\\\,0\\)\" -vframes 1 -q:v 2 -update 1 /Users/harabalos/Desktop/island-dream-bookings/public/assets/video-poster.jpg -y)",
       "Bash(grep -n \"Also available\\\\|Continue\\\\|Complete Booking\\\\|Please fill\\\\|Please enter\\\\|PayPal\\\\|Card\\\\|€\" /Users/harabalos/Desktop/island-dream-bookings/src/components/Booking/*.tsx)",
-      "Bash(git fetch:*)"
+      "Bash(git fetch:*)",
+      "Bash(find /Users/harabalos/Desktop/AMOX/websites/metaxas-retreats/src -name \"*.tsx\" -type f -exec grep -l \"loading=\\\\\"lazy\\\\\"\" {} \\\\;)",
+      "WebFetch(domain:metaxasretreats.gr)",
+      "Bash(npm run *)",
+      "Bash(git add *)",
+      "Bash(git push *)",
+      "mcp__supabase__list_tables",
+      "mcp__supabase__execute_sql",
+      "mcp__supabase__apply_migration",
+      "WebFetch(domain:www.airbnb.gr)",
+      "mcp__Claude_in_Chrome__tabs_context_mcp",
+      "mcp__supabase__list_edge_functions",
+      "mcp__supabase__deploy_edge_function"
     ]
   }
 }

@@ -89,7 +89,7 @@ export function DateRangePicker({
   const isDateDisabled = (date: Date) => {
     // 1. Disable past dates
     if (isBefore(date, startOfToday())) return true;
-    // 2. Disable dates blocked in Supabase
+    // 2. Disable nights that are already booked
     if (isDateBlocked(date)) return true;
     
     return false;

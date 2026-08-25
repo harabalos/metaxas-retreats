@@ -172,7 +172,7 @@
   "privacy.section5.title": "5. Conservazione dei Dati",
   "privacy.section5.content": "Conserviamo le tue informazioni per il tempo necessario a soddisfare gli scopi delineati in questa informativa sulla privacy, a meno che un periodo di conservazione più lungo sia richiesto dalla legge (come requisiti fiscali, contabili o altri requisiti legali).",
   "privacy.section6.title": "6. Servizi di Terze Parti",
-  "privacy.section6.content": "Utilizziamo Supabase (supabase.com) per archiviare in modo sicuro i moduli di contatto e le richieste di prenotazione. Supabase archivia i dati su server all'interno dell'Unione Europea. Utilizziamo anche Google Analytics 4 per analizzare il traffico del sito — solo dopo che hai dato il consenso esplicito tramite il banner dei cookie. Per maggiori informazioni, consulta la Privacy Policy di Google su https://policies.google.com/privacy.",
+  "privacy.section6.content": "Utilizziamo Formspree (formspree.io) per inviarci via email i moduli di contatto e le richieste di prenotazione. Utilizziamo anche Google Analytics 4 per analizzare il traffico del sito — solo dopo che hai dato il consenso esplicito tramite il banner dei cookie. Per maggiori informazioni, consulta la Privacy Policy di Google su https://policies.google.com/privacy.",
   "privacy.section7.title": "7. Contattaci",
   "privacy.section7.content": "Se hai domande o commenti su questa informativa, puoi scriverci a metaxasretreats@gmail.com.",
   "terms.title": "Termini di Servizio",

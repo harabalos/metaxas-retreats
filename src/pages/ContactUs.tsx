@@ -11,7 +11,6 @@ import { Link } from 'react-router-dom';
 import { toast } from 'sonner';
 import { contactFormSchema } from '@/lib/validationSchemas';
 import { z } from 'zod';
-import { supabase } from '@/integrations/supabase/client';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const FadeUp = ({ children, delay = 0 }: { children: React.ReactNode; delay?: number }) => (
@@ -56,10 +55,12 @@ const ContactUs = () => {
       if (!validated.message?.trim()) { toast.error(language === 'el' ? 'Παρακαλώ συμπληρώστε το μήνυμα' : 'Please fill in the message'); return; }
       if (!agreedToPolicy) { toast.error(language === 'el' ? 'Παρακαλώ αποδεχτείτε την Πολιτική Απορρήτου' : 'Please accept the Privacy Policy'); return; }
       setIsSubmitting(true);
-      const { error } = await supabase.functions.invoke('submit-contact', {
-        body: { fullName: validated.fullName, email: validated.email, phone: validated.phone, message: validated.message, _subject: 'Contact Message - Metaxas Retreats' },
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ fullName: validated.fullName, email: validated.email, phone: validated.phone, message: validated.message, _subject: 'Contact Message - Metaxas Retreats' }),
       });
-      if (error) throw new Error(error.message);
+      if (!response.ok) throw new Error('Failed to send message');
       setSubmitted(true);
     } catch (err) {
       if (err instanceof z.ZodError) { toast.error(err.errors[0].message); }

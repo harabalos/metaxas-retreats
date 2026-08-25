@@ -11,7 +11,6 @@ import { format } from 'date-fns';
 import { toast } from 'sonner';
 import { contactFormSchema } from '@/lib/validationSchemas';
 import { z } from 'zod';
-import { supabase } from '@/integrations/supabase/client';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const ContactSection = () => {
@@ -22,14 +21,12 @@ const ContactSection = () => {
   const startParam = searchParams.get('start');
   const endParam = searchParams.get('end');
   const guestsParam = searchParams.get('guests');
-  const tentParam = searchParams.get('tent');
 
   const { data: accommodations } = useAccommodations();
   const accommodation = accommodations?.find(acc => acc.id === id);
   const startDate = startParam ? new Date(startParam) : undefined;
   const endDate = endParam ? new Date(endParam) : undefined;
   const guests = guestsParam ? parseInt(guestsParam) : 1;
-  const selectedTent = tentParam || '1';
 
   const [formData, setFormData] = useState({ fullName: '', email: '', phone: '', specialRequests: '' });
   const [agreedToPolicy, setAgreedToPolicy] = useState(false);
@@ -37,7 +34,7 @@ const ContactSection = () => {
   const [submitted, setSubmitted] = useState(false);
 
   const accommodationName = accommodation?.type === 'tent'
-    ? `${t('accommodation.glampingTent')} (${t('booking.tent')} ${selectedTent})`
+    ? t('accommodation.glampingTent')
     : t('accommodation.woodenHouse');
 
   const formatDate = (date: Date) => format(date, 'dd/MM/yyyy');
@@ -58,8 +55,10 @@ const ContactSection = () => {
         return;
       }
       setIsSubmitting(true);
-      const { error } = await supabase.functions.invoke('submit-contact', {
-        body: {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
           fullName: validated.fullName,
           email: validated.email,
           phone: validated.phone,
@@ -69,9 +68,9 @@ const ContactSection = () => {
           checkOut: endDate ? formatDate(endDate) : '',
           guests,
           _subject: `Booking Request - ${accommodationName}`,
-        },
+        }),
       });
-      if (error) throw new Error(error.message);
+      if (!response.ok) throw new Error('Failed to send message');
       setSubmitted(true);
     } catch (err) {
       if (err instanceof z.ZodError) {

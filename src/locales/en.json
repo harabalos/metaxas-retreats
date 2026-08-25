@@ -172,7 +172,7 @@
   "privacy.section5.title": "5. Data Retention",
   "privacy.section5.content": "We keep your information for as long as necessary to fulfill the purposes outlined in this privacy policy, unless a longer retention period is required by law (such as tax, accounting, or other legal requirements).",
   "privacy.section6.title": "6. Third-Party Services",
-  "privacy.section6.content": "We use Supabase (supabase.com) to securely store contact form submissions and booking requests. Supabase stores data on servers within the European Union. We also use Google Analytics 4 to analyze website traffic — this is only activated after you have given explicit consent via the cookie banner. Google Analytics uses cookies to collect anonymized usage data. For more information, see Google's Privacy Policy at https://policies.google.com/privacy.",
+  "privacy.section6.content": "We use Formspree (formspree.io) to deliver contact form submissions and booking requests to us by email. We also use Google Analytics 4 to analyze website traffic — this is only activated after you have given explicit consent via the cookie banner. Google Analytics uses cookies to collect anonymized usage data. For more information, see Google's Privacy Policy at https://policies.google.com/privacy.",
   "privacy.section7.title": "7. Contact Us",
   "privacy.section7.content": "If you have questions or comments about this policy, you may email us at metaxasretreats@gmail.com.",
   "terms.title": "Terms of Service",
