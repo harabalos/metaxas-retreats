@@ -1,8 +1,9 @@
 import { format } from 'date-fns';
-import { el, enUS } from 'date-fns/locale';
 import { CalendarDays, Users, Moon } from 'lucide-react';
 import { Accommodation } from '@/data/accommodations';
 import { useLanguage } from '@/context/LanguageContext';
+import { imageUrl } from '@/lib/images';
+import { dateLocale } from '@/lib/dateLocale';
 
 interface BookingSummaryProps {
   accommodation: Accommodation;
@@ -16,7 +17,7 @@ interface BookingSummaryProps {
 const BookingSummary = ({ accommodation, startDate, endDate, guests, nights, selectedTent }: BookingSummaryProps) => {
   const { t, language } = useLanguage();
 
-  const locale = language === 'el' ? el : enUS;
+  const locale = dateLocale(language);
   const fmt = (d: Date) => format(d, 'EEE, d MMM yyyy', { locale });
 
   const accommodationName = accommodation.type === 'house'
@@ -35,16 +36,16 @@ const BookingSummary = ({ accommodation, startDate, endDate, guests, nights, sel
       <div className="flex items-center gap-4">
         <div className="w-20 h-20 rounded-xl overflow-hidden flex-shrink-0">
           <img
-            src={accommodation.images[0] || '/images/placeholder.svg'}
+            src={imageUrl(accommodation.images[0] || '/images/placeholder.svg', 160)}
             alt={accommodationName}
             className="w-full h-full object-cover"
             loading="lazy"
           />
         </div>
         <div>
-          <p className="text-xs text-wood font-sans font-semibold uppercase tracking-widest mb-0.5">{nickname}</p>
+          <p className="text-xs text-wood-deep font-sans font-semibold uppercase tracking-widest mb-0.5">{nickname}</p>
           <h4 className="font-heading font-semibold text-forest-dark leading-tight">{fullName}</h4>
-          <p className="text-xs text-gray-400 mt-0.5">Mikros Gialos, Lefkada</p>
+          <p className="text-xs text-gray-500 mt-0.5">Mikros Gialos, Lefkada</p>
         </div>
       </div>
 
@@ -57,11 +58,11 @@ const BookingSummary = ({ accommodation, startDate, endDate, guests, nights, sel
           <div className="text-sm">
             <div className="flex gap-4">
               <div>
-                <p className="text-xs text-gray-400 mb-0.5">{t('summary.checkIn')}</p>
+                <p className="text-xs text-gray-500 mb-0.5">{t('summary.checkIn')}</p>
                 <p className="font-medium text-gray-800">{fmt(startDate)}</p>
               </div>
               <div>
-                <p className="text-xs text-gray-400 mb-0.5">{t('summary.checkOut')}</p>
+                <p className="text-xs text-gray-500 mb-0.5">{t('summary.checkOut')}</p>
                 <p className="font-medium text-gray-800">{fmt(endDate)}</p>
               </div>
             </div>
@@ -70,19 +71,19 @@ const BookingSummary = ({ accommodation, startDate, endDate, guests, nights, sel
 
         <div className="flex items-center gap-3 text-sm">
           <Moon className="h-4 w-4 text-forest/60 flex-shrink-0" />
-          <span className="text-gray-700">{nights} {language === 'el' ? 'διανυκτερεύσεις' : nights === 1 ? 'night' : 'nights'}</span>
+          <span className="text-gray-700">{t('common.nights', { count: nights })}</span>
         </div>
 
         <div className="flex items-center gap-3 text-sm">
           <Users className="h-4 w-4 text-forest/60 flex-shrink-0" />
-          <span className="text-gray-700">{guests} {language === 'el' ? 'επισκέπτες' : guests === 1 ? 'guest' : 'guests'}</span>
+          <span className="text-gray-700">{t('common.guests', { count: guests })}</span>
         </div>
       </div>
 
       <div className="h-px bg-gray-100" />
 
       {/* Pricing note */}
-      <p className="text-xs text-gray-400 italic leading-relaxed">
+      <p className="text-xs text-gray-500 italic leading-relaxed">
         {t('pricing.contactForQuote')}
       </p>
     </div>

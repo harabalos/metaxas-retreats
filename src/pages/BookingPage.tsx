@@ -1,20 +1,22 @@
 import { useEffect } from 'react';
 import { useParams, useSearchParams, useNavigate } from 'react-router-dom';
 import { differenceInDays, format } from 'date-fns';
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import Layout from '@/components/Layout/Layout';
 import { useAccommodations } from '@/hooks/useAccommodations';
 import BookingSummary from '@/components/Booking/BookingSummary';
 import ContactSection from '@/components/Booking/ContactSection';
 import SEOHead from '@/components/SEO/SEOHead';
 import { useLanguage } from '@/context/LanguageContext';
+import { dateLocale } from '@/lib/dateLocale';
 import { ExternalLink, CalendarDays, Users } from 'lucide-react';
+import { fromDateParam } from '@/lib/dateParams';
 
 const BookingPage = () => {
   const { id } = useParams<{ id: string }>();
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
-  const { t, language } = useLanguage();
+  const { t, language, localize } = useLanguage();
   const { data: accommodations, isLoading } = useAccommodations();
 
   useEffect(() => { window.scrollTo(0, 0); }, []);
@@ -35,8 +37,8 @@ const BookingPage = () => {
   const endParam = searchParams.get('end');
   const guestsParam = searchParams.get('guests');
 
-  const startDate = startParam ? new Date(startParam) : undefined;
-  const endDate = endParam ? new Date(endParam) : undefined;
+  const startDate = fromDateParam(startParam);
+  const endDate = fromDateParam(endParam);
   const guests = guestsParam ? parseInt(guestsParam) : 1;
 
   if (!accommodation || !startDate || !endDate) {
@@ -46,7 +48,7 @@ const BookingPage = () => {
           <div>
             <h1 className="text-3xl font-heading font-semibold text-forest-dark mb-4">{t('booking.missingInfo')}</h1>
             <p className="text-gray-500 mb-8">{t('booking.selectFirst')}</p>
-            <button onClick={() => navigate('/')} className="px-6 py-3 rounded-full bg-forest text-white font-sans font-semibold text-sm hover:bg-forest-dark transition-colors">
+            <button onClick={() => navigate(localize('/'))} className="px-6 py-3 rounded-full bg-forest text-white font-sans font-semibold text-sm hover:bg-forest-dark transition-colors">
               {t('detail.returnHome')}
             </button>
           </div>
@@ -58,35 +60,25 @@ const BookingPage = () => {
   const nights = differenceInDays(endDate, startDate);
   const accommodationName = accommodation.type === 'house' ? t('accommodation.woodenHouse') : t('accommodation.glampingTent');
 
-  const bookingSchema = {
-    "@context": "https://schema.org",
-    "@type": "ReservationAction",
-    "target": { "@type": "EntryPoint", "urlTemplate": `https://metaxasretreats.gr/booking/${id}`, "actionPlatform": ["http://schema.org/DesktopWebPlatform", "http://schema.org/MobileWebPlatform"] },
-    "object": { "@type": "LodgingReservation", "reservationFor": { "@type": "LodgingBusiness", "name": accommodation.name, "address": { "@type": "PostalAddress", "addressLocality": "Mikros Gialos, Lefkada", "addressCountry": "GR" } } }
-  };
-
   return (
     <Layout>
       <SEOHead
-        title={`Book ${accommodation.name} - Metaxas Retreats`}
-        titleEl={`Κράτηση ${language === 'el' ? t(`accommodation.${id === 'wooden-house' ? 'woodenHouse' : 'glampingTent'}`) : accommodation.name} - Metaxas Retreats`}
-        description={`Book your stay at ${accommodation.name} in Mikros Gialos, Lefkada. Direct booking saves 15% compared to Airbnb/Booking.com.`}
-        descriptionEl={`Κάντε κράτηση στο ${t(`accommodation.${id === 'wooden-house' ? 'woodenHouse' : 'glampingTent'}`)} στον Μικρό Γιαλό, Λευκάδα. Απευθείας κράτηση με 15% έκπτωση.`}
-        canonicalUrl={`/booking/${id}`}
-        schema={bookingSchema}
+        title={t('seo.booking.title')}
+        description={t('seo.booking.description')}
+        robots="noindex, nofollow"
       />
 
       <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 py-12">
 
         {/* Header */}
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
           className="mb-10"
         >
-          <p className="text-wood text-xs font-sans font-semibold uppercase tracking-widest mb-2">
-            {language === 'el' ? 'Βήμα 2 — Επικοινωνία' : 'Step 2 — Contact'}
+          <p className="text-wood-deep text-xs font-sans font-semibold uppercase tracking-widest mb-2">
+            {t('booking.step2')}
           </p>
           <h1 className="text-4xl md:text-5xl font-heading font-semibold text-forest-dark mb-4">
             {t('booking.pageTitle')}
@@ -96,34 +88,34 @@ const BookingPage = () => {
           <div className="flex flex-wrap gap-3">
             <div className="flex items-center gap-2 px-4 py-2 bg-forest/5 rounded-full text-sm text-forest-dark">
               <CalendarDays className="h-4 w-4 text-forest/60" />
-              <span>{format(startDate, 'dd MMM')} → {format(endDate, 'dd MMM yyyy')}</span>
-              <span className="text-gray-400">·</span>
-              <span>{nights} {language === 'el' ? 'νύχτες' : 'nights'}</span>
+              <span>{format(startDate, 'dd MMM', { locale: dateLocale(language) })} → {format(endDate, 'dd MMM yyyy', { locale: dateLocale(language) })}</span>
+              <span className="text-gray-500">·</span>
+              <span>{t('common.nights', { count: nights })}</span>
             </div>
             <div className="flex items-center gap-2 px-4 py-2 bg-forest/5 rounded-full text-sm text-forest-dark">
               <Users className="h-4 w-4 text-forest/60" />
-              <span>{guests} {language === 'el' ? 'επισκέπτες' : 'guests'}</span>
+              <span>{t('common.guests', { count: guests })}</span>
             </div>
-            <div className="px-4 py-2 bg-wood/10 rounded-full text-sm text-wood font-semibold">
+            <div className="px-4 py-2 bg-wood/10 rounded-full text-sm text-wood-deep font-semibold">
               {accommodationName}
             </div>
           </div>
-        </motion.div>
+        </m.div>
 
         {/* Two-column layout */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
 
           {/* Left — contact (email + WhatsApp) */}
-          <motion.div
+          <m.div
             initial={{ opacity: 0, x: -24 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
           >
             <ContactSection />
-          </motion.div>
+          </m.div>
 
           {/* Right — summary + direct booking nudge */}
-          <motion.div
+          <m.div
             initial={{ opacity: 0, x: 24 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1], delay: 0.18 }}
@@ -150,7 +142,7 @@ const BookingPage = () => {
 
             {/* Also available on */}
             <div className="bg-white rounded-2xl border border-gray-100 p-5">
-              <p className="text-xs font-sans font-semibold uppercase tracking-widest text-gray-400 mb-3">
+              <p className="text-xs font-sans font-semibold uppercase tracking-widest text-gray-500 mb-3">
                 {t('booking.alsoAvailable')}
               </p>
               <div className="flex gap-4">
@@ -172,7 +164,7 @@ const BookingPage = () => {
                 </a>
               </div>
             </div>
-          </motion.div>
+          </m.div>
         </div>
       </div>
     </Layout>

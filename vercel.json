@@ -5,7 +5,7 @@
       "headers": [
         {
           "key": "Content-Security-Policy",
-          "value": "default-src 'self'; script-src 'self' 'unsafe-inline' https://*.elfsight.com https://*.elfsightcdn.com https://static.elfsight.com https://elfsightcdn.com https://universe-static.elfsightcdn.com https://core.service.elfsight.com https://featurable.com https://www.googletagmanager.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https: blob:; connect-src 'self' https://*.elfsight.com https://core.service.elfsight.com https://featurable.com https://www.google-analytics.com; frame-src 'self' https://www.google.com https://maps.google.com https://static.elfsight.com https://elfsightcdn.com https://core.service.elfsight.com https://*.elfsight.com; child-src 'self' https://static.elfsight.com https://elfsightcdn.com https://core.service.elfsight.com https://*.elfsight.com;"
+          "value": "default-src 'self'; script-src 'self' 'unsafe-inline' https://*.googletagmanager.com; style-src 'self' 'unsafe-inline'; font-src 'self' data:; img-src 'self' data: https: blob:; connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com; frame-src 'self' https://www.google.com https://maps.google.com; child-src 'self';"
         },
         {
           "key": "X-Content-Type-Options",
@@ -28,6 +28,51 @@
           "value": "camera=(), microphone=(), geolocation=(), interest-cohort=()"
         }
       ]
+    },
+    {
+      "source": "/_app/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    },
+    {
+      "source": "/assets/opt/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    },
+    {
+      "source": "/assets/((?!opt/).*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=86400, stale-while-revalidate=604800"
+        }
+      ]
+    },
+    {
+      "source": "/booking(.*)",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        }
+      ]
+    },
+    {
+      "source": "/:lang(el|it|de|ro)/booking(.*)",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        }
+      ]
     }
   ],
   "cleanUrls": true,
@@ -46,15 +91,11 @@
   "rewrites": [
     {
       "source": "/booking/:id",
-      "destination": "/index.html"
+      "destination": "/booking"
     },
     {
-      "source": "/booking-confirmation",
-      "destination": "/index.html"
-    },
-    {
-      "source": "/((?!api|assets|accommodation|explore|contact|privacy|terms|sitemap|robots|favicon).*)",
-      "destination": "/index.html"
+      "source": "/:lang(el|it|de|ro)/booking/:id",
+      "destination": "/booking"
     }
   ]
 }

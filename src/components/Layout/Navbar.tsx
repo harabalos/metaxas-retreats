@@ -1,18 +1,21 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { m, AnimatePresence } from 'framer-motion';
 import { useLanguage } from '@/context/LanguageContext';
 import LanguageSwitcher from './LanguageSwitcher';
+import LogoMark from './LogoMark';
+import { splitLanguage } from '@/lib/i18nRoutes';
+import { scrollBehavior } from '@/lib/motion';
 
 const Navbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
-  const { t } = useLanguage();
+  const { t, localize } = useLanguage();
 
-  const isHome = location.pathname === '/';
+  const isHome = splitLanguage(location.pathname).path === '/';
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
@@ -25,9 +28,23 @@ const Navbar = () => {
 
   const scrollToAccommodations = () => {
     if (isHome) {
-      document.getElementById('accommodations')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      document.getElementById('accommodations')?.scrollIntoView({ behavior: scrollBehavior(), block: 'start' });
     } else {
-      navigate('/?scrollToAccommodations=true');
+      navigate(`${localize('/')}#accommodations`);
+    }
+  };
+
+  // "Book Now" leads to availability: the date picker on an accommodation page,
+  // otherwise the two accommodations on the home page to choose from.
+  const onAccommodationPage = splitLanguage(location.pathname).path.startsWith('/accommodation/');
+  const bookHref = onAccommodationPage ? '#book' : `${localize('/')}#accommodations`;
+  const bookNow = (e: React.MouseEvent) => {
+    e.preventDefault();
+    setMobileMenuOpen(false);
+    if (onAccommodationPage) {
+      document.getElementById('book')?.scrollIntoView({ behavior: scrollBehavior(), block: 'start' });
+    } else {
+      scrollToAccommodations();
     }
   };
 
@@ -44,14 +61,14 @@ const Navbar = () => {
   const logoColor = (isHome && !scrolled) ? 'text-white' : 'text-sand-light';
 
   const navLinks = [
-    { label: t('nav.accommodations'), onClick: scrollToAccommodations },
-    { label: t('nav.explore'), to: '/explore' },
-    { label: t('nav.contact'), to: '/contact' },
+    { label: t('nav.accommodations'), href: `${localize('/')}#accommodations`, onClick: scrollToAccommodations },
+    { label: t('nav.explore'), to: localize('/explore') },
+    { label: t('nav.contact'), to: localize('/contact') },
   ];
 
   return (
     <>
-      <motion.nav
+      <m.nav
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${navBg}`}
         initial={{ y: -80, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
@@ -61,24 +78,26 @@ const Navbar = () => {
           <div className="flex items-center justify-between h-16 lg:h-20">
 
             {/* Logo */}
-            <Link to="/" className="flex items-center gap-2 group">
-              <span className={`text-xl lg:text-2xl font-heading font-semibold tracking-wide transition-colors duration-300 ${logoColor}`}>
+            <Link to={localize('/')} className="flex items-center gap-2 group">
+              <LogoMark className="h-8 w-8 lg:h-9 lg:w-9 text-wood shrink-0" />
+              <span className={`text-xl lg:text-2xl font-brand font-semibold tracking-wide transition-colors duration-300 ${logoColor}`}>
                 Metaxas Retreats
               </span>
             </Link>
 
             {/* Desktop links */}
             <div className="hidden md:flex items-center gap-8">
-              {navLinks.map(({ label, onClick, to }) =>
+              {navLinks.map(({ label, onClick, to, href }) =>
                 onClick ? (
-                  <button
+                  <a
                     key={label}
-                    onClick={onClick}
+                    href={href}
+                    onClick={(e) => { e.preventDefault(); onClick(); }}
                     className={`text-sm font-sans font-medium tracking-wide transition-colors duration-200 relative group ${textColor} ${hoverColor}`}
                   >
                     {label}
                     <span className="absolute -bottom-0.5 left-0 w-0 h-px bg-wood transition-all duration-300 group-hover:w-full" />
-                  </button>
+                  </a>
                 ) : (
                   <Link
                     key={label}
@@ -92,12 +111,13 @@ const Navbar = () => {
               )}
 
               {/* Book Now CTA */}
-              <Link
-                to="/contact"
+              <a
+                href={bookHref}
+                onClick={bookNow}
                 className="btn-shimmer ml-2 px-5 py-2 rounded-full bg-wood text-forest-dark text-sm font-sans font-semibold tracking-wide transition-all duration-300 hover:bg-wood-light hover:shadow-cta active:scale-95"
               >
-                {t('nav.bookNow') || 'Book Now'}
-              </Link>
+                {t('nav.bookNow')}
+              </a>
 
               <LanguageSwitcher isLight={isHome && !scrolled} />
             </div>
@@ -112,7 +132,7 @@ const Navbar = () => {
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               >
                 <AnimatePresence mode="wait" initial={false}>
-                  <motion.span
+                  <m.span
                     key={mobileMenuOpen ? 'x' : 'menu'}
                     initial={{ opacity: 0, rotate: -90 }}
                     animate={{ opacity: 1, rotate: 0 }}
@@ -120,18 +140,18 @@ const Navbar = () => {
                     transition={{ duration: 0.15 }}
                   >
                     {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-                  </motion.span>
+                  </m.span>
                 </AnimatePresence>
               </button>
             </div>
           </div>
         </div>
-      </motion.nav>
+      </m.nav>
 
       {/* Mobile menu */}
       <AnimatePresence>
         {mobileMenuOpen && (
-          <motion.div
+          <m.div
             key="mobile-menu"
             initial={{ opacity: 0, y: -16 }}
             animate={{ opacity: 1, y: 0 }}
@@ -140,20 +160,21 @@ const Navbar = () => {
             className="fixed top-16 left-0 right-0 z-40 bg-forest/97 backdrop-blur-md shadow-xl md:hidden"
           >
             <div className="px-6 py-6 space-y-1">
-              {navLinks.map(({ label, onClick, to }, i) => (
-                <motion.div
+              {navLinks.map(({ label, onClick, to, href }, i) => (
+                <m.div
                   key={label}
                   initial={{ opacity: 0, x: -16 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: i * 0.07, duration: 0.22 }}
                 >
                   {onClick ? (
-                    <button
-                      onClick={() => { onClick(); setMobileMenuOpen(false); }}
-                      className="w-full text-left py-3 px-2 text-base font-sans text-sand-light/90 hover:text-wood border-b border-white/8 transition-colors"
+                    <a
+                      href={href}
+                      onClick={(e) => { e.preventDefault(); onClick(); setMobileMenuOpen(false); }}
+                      className="block w-full text-left py-3 px-2 text-base font-sans text-sand-light/90 hover:text-wood border-b border-white/8 transition-colors"
                     >
                       {label}
-                    </button>
+                    </a>
                   ) : (
                     <Link
                       to={to!}
@@ -163,24 +184,24 @@ const Navbar = () => {
                       {label}
                     </Link>
                   )}
-                </motion.div>
+                </m.div>
               ))}
-              <motion.div
+              <m.div
                 initial={{ opacity: 0, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.25, duration: 0.22 }}
                 className="pt-4"
               >
-                <Link
-                  to="/contact"
-                  onClick={() => setMobileMenuOpen(false)}
+                <a
+                  href={bookHref}
+                  onClick={bookNow}
                   className="block w-full text-center py-3 rounded-full bg-wood text-forest-dark font-sans font-semibold text-sm tracking-wide"
                 >
-                  {t('nav.bookNow') || 'Book Now'}
-                </Link>
-              </motion.div>
+                  {t('nav.bookNow')}
+                </a>
+              </m.div>
             </div>
-          </motion.div>
+          </m.div>
         )}
       </AnimatePresence>
     </>

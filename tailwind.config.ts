@@ -1,5 +1,6 @@
 
 import type { Config } from "tailwindcss";
+import animate from "tailwindcss-animate";
 
 export default {
 	darkMode: ["class"],
@@ -50,6 +51,9 @@ export default {
 					light: '#E2C98A',
 					DEFAULT: '#C9A44A',
 					dark: '#9A7A2E',
+					// Gold for text on cream/white/sand: 5.7:1 on cream (DEFAULT is 2.3:1,
+					// fine only on the dark green sections).
+					deep: '#7D5F1A',
 				},
 				leaf: {
 					light: '#C1D9A3',
@@ -69,9 +73,11 @@ export default {
 				cream: '#FAFAF5',
 			},
 			fontFamily: {
-				sans: ['"DM Sans"', 'sans-serif'],
-				heading: ['"EB Garamond"', 'Georgia', 'serif'],
-				display: ['"EB Garamond"', 'Georgia', 'serif'],
+				sans: ['"Commissioner Variable"', 'system-ui', 'sans-serif'],
+				heading: ['"EB Garamond Variable"', 'Georgia', 'serif'],
+				display: ['"EB Garamond Variable"', 'Georgia', 'serif'],
+				// The "Metaxas Retreats" wordmark: EB Garamond in every language.
+				brand: ['"EB Garamond Variable"', 'Georgia', 'serif'],
 			},
 			fontSize: {
 				'display-2xl': ['clamp(3rem,8vw,7rem)', { lineHeight: '1.05', letterSpacing: '-0.02em' }],
@@ -115,5 +121,5 @@ export default {
 			},
 		}
 	},
-	plugins: [require("tailwindcss-animate")],
+	plugins: [animate],
 } satisfies Config;

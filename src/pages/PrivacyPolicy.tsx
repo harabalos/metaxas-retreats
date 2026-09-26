@@ -1,31 +1,17 @@
 import Layout from '@/components/Layout/Layout';
 import SEOHead from '@/components/SEO/SEOHead';
 import { useLanguage } from '@/context/LanguageContext';
-import { motion } from 'framer-motion';
-
-const FadeUp = ({ children, delay = 0 }: { children: React.ReactNode; delay?: number }) => (
-  <motion.div
-    initial={{ opacity: 0, y: 20 }}
-    whileInView={{ opacity: 1, y: 0 }}
-    viewport={{ once: true, margin: '-40px' }}
-    transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1], delay }}
-  >
-    {children}
-  </motion.div>
-);
+import FadeUp from '@/components/FadeUp';
 
 const PrivacyPolicy = () => {
-  const { language, t } = useLanguage();
+  const { t } = useLanguage();
 
   const privacySchema = {
     '@context': 'https://schema.org',
     '@type': 'WebPage',
-    name: language === 'el' ? 'Πολιτική Απορρήτου - Metaxas Retreats' : 'Privacy Policy - Metaxas Retreats',
-    description:
-      language === 'el'
-        ? 'Πολιτική απορρήτου του Metaxas Retreats για την προστασία των προσωπικών σας δεδομένων'
-        : 'Privacy policy of Metaxas Retreats regarding the protection of your personal data',
-    url: 'https://metaxasretreats.gr/privacy',
+    name: `${t('privacy.title')} - Metaxas Retreats`,
+    description: t('privacy.schema.description'),
+    url: 'https://www.metaxasretreats.gr/privacy',
   };
 
   const sections = [
@@ -79,21 +65,20 @@ const PrivacyPolicy = () => {
   return (
     <Layout>
       <SEOHead
-        title="Privacy Policy - Metaxas Retreats"
-        titleEl="Πολιτική Απορρήτου - Metaxas Retreats"
-        description="Learn how Metaxas Retreats protects your personal information. Our privacy policy explains data collection, usage, and your rights."
-        descriptionEl="Μάθετε πώς το Metaxas Retreats προστατεύει τα προσωπικά σας δεδομένα. Η πολιτική απορρήτου μας εξηγεί τη συλλογή, χρήση δεδομένων και τα δικαιώματά σας."
+        title={t('privacy.title')}
+        description={t('privacy.schema.description')}
         canonicalUrl="/privacy"
+        robots="noindex, follow"
         schema={privacySchema}
       />
 
       <div className="max-w-3xl mx-auto px-5 sm:px-8 py-16 md:py-24">
-        <FadeUp>
+        <FadeUp eager>
           <div className="mb-12">
-            <p className="text-wood text-xs font-sans font-semibold uppercase tracking-widest mb-3">Legal</p>
+            <p className="text-wood-deep text-xs font-sans font-semibold uppercase tracking-widest mb-3">{t('legal.eyebrow')}</p>
             <h1 className="text-4xl md:text-5xl font-heading font-semibold text-forest-dark mb-4">{t('privacy.title')}</h1>
-            <p className="text-gray-400 text-sm font-sans">
-              {language === 'el' ? 'Τελευταία ενημέρωση: Μάρτιος 2026' : 'Last updated: March 2026'}
+            <p className="text-gray-500 text-sm font-sans">
+              {t('legal.lastUpdated')}
             </p>
           </div>
         </FadeUp>

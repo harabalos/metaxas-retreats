@@ -1,5 +1,6 @@
 import { Helmet } from 'react-helmet-async';
 import { useLanguage } from '@/context/LanguageContext';
+import { LANGUAGES, localizePath } from '@/lib/i18nRoutes';
 
 interface SEOHeadProps {
   title: string;
@@ -9,8 +10,6 @@ interface SEOHeadProps {
   type?: 'website' | 'article' | 'product';
   schema?: object | object[];
   keywords?: string;
-  titleEl?: string;
-  descriptionEl?: string;
   robots?: string;
 }
 
@@ -22,19 +21,22 @@ const SEOHead = ({
   type = 'website',
   schema,
   keywords,
-  titleEl,
-  descriptionEl,
   robots
 }: SEOHeadProps) => {
   const { t, language } = useLanguage();
 
-  // Use language-specific content
-  const displayTitle = language === 'el' && titleEl ? titleEl : title;
-  const displayDescription = language === 'el' && descriptionEl ? descriptionEl : description;
+  // Pages pass text already translated for the current language.
+  const displayTitle = title;
+  const displayDescription = description;
 
-  const fullTitle = `${displayTitle} | Metaxas Retreats`;
+  // Some page titles already end in the brand ("… | Metaxas Retreats"); don't add it twice.
+  const fullTitle = displayTitle.includes('Metaxas Retreats')
+    ? displayTitle
+    : `${displayTitle} | Metaxas Retreats`;
   const siteUrl = 'https://www.metaxasretreats.gr';
-  const fullUrl = canonicalUrl ? `${siteUrl}${canonicalUrl}` : siteUrl;
+  // canonicalUrl is the page's language-neutral path; each language has its own URL.
+  const fullUrl = canonicalUrl ? `${siteUrl}${localizePath(language, canonicalUrl)}` : siteUrl;
+  const indexable = !robots?.includes('noindex');
 
   const defaultKeywords = t('seo.defaultKeywords');
   const metaKeywords = keywords || defaultKeywords;
@@ -66,18 +68,11 @@ const SEOHead = ({
       <meta name="description" content={displayDescription} />
       <meta name="keywords" content={metaKeywords} />
       {canonicalUrl && <link rel="canonical" href={fullUrl} />}
-
-      {/* Hreflang tags for international SEO */}
-      {canonicalUrl && (
-        <>
-          <link rel="alternate" hrefLang="en" href={`${siteUrl}${canonicalUrl}`} />
-          <link rel="alternate" hrefLang="el" href={`${siteUrl}${canonicalUrl}`} />
-          <link rel="alternate" hrefLang="it" href={`${siteUrl}${canonicalUrl}`} />
-          <link rel="alternate" hrefLang="de" href={`${siteUrl}${canonicalUrl}`} />
-          <link rel="alternate" hrefLang="ro" href={`${siteUrl}${canonicalUrl}`} />
-          <link rel="alternate" hrefLang="x-default" href={`${siteUrl}${canonicalUrl}`} />
-        </>
-      )}
+      {/* The same page in every language, English as the default for everyone else. */}
+      {canonicalUrl && indexable && LANGUAGES.map((lang) => (
+        <link key={lang} rel="alternate" hrefLang={lang} href={`${siteUrl}${localizePath(lang, canonicalUrl)}`} />
+      ))}
+      {canonicalUrl && indexable && <link rel="alternate" hrefLang="x-default" href={`${siteUrl}${canonicalUrl}`} />}
 
       {/* Enhanced robots directive */}
       <meta name="robots" content={robots || "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"} />

@@ -8,6 +8,7 @@ import DateRangePicker from './DateRangePicker';
 import { Accommodation } from '@/data/accommodations';
 import { toast } from 'sonner';
 import { useLanguage } from '@/context/LanguageContext';
+import { toDateParam } from '@/lib/dateParams';
 
 interface BookingFormProps {
   accommodation: Accommodation;
@@ -16,7 +17,7 @@ interface BookingFormProps {
 
 const BookingForm = ({ accommodation, isDetail = false }: BookingFormProps) => {
   const navigate = useNavigate();
-  const { t, language } = useLanguage();
+  const { t, localize } = useLanguage();
   const [startDate, setStartDate] = useState<Date | undefined>(undefined);
   const [endDate, setEndDate] = useState<Date | undefined>(undefined);
   const [guests, setGuests] = useState<number>(1);
@@ -32,27 +33,27 @@ const BookingForm = ({ accommodation, isDetail = false }: BookingFormProps) => {
     e.preventDefault();
 
     if (!startDate || !endDate) {
-      toast.error(language === 'el' ? 'Παρακαλώ επιλέξτε ημερομηνίες' : 'Please select check-in and check-out dates');
+      toast.error(t('bookingForm.error.dates'));
       return;
     }
 
     if (guests < 1 || guests > accommodation.guests) {
-      toast.error(`${language === 'el' ? 'Παρακαλώ επιλέξτε μεταξύ 1 και' : 'Please select between 1 and'} ${accommodation.guests} ${language === 'el' ? 'επισκέπτες' : 'guests'}`);
+      toast.error(t('bookingForm.error.guests', { max: accommodation.guests }));
       return;
     }
 
-    navigate(`/booking/${accommodation.id}?start=${startDate.toISOString()}&end=${endDate.toISOString()}&guests=${guests}`);
+    navigate(`${localize(`/booking/${accommodation.id}`)}?start=${toDateParam(startDate)}&end=${toDateParam(endDate)}&guests=${guests}`);
   };
 
   return (
     <div className={`bg-white rounded-2xl border border-gray-100 shadow-card ${isDetail ? 'p-6' : 'p-5'}`}>
       {isDetail && (
         <div className="mb-5 pb-4 border-b border-gray-100">
-          <p className="text-xs font-sans font-semibold uppercase tracking-widest text-wood mb-1">
-            {language === 'el' ? 'Κρατήστε Τώρα' : 'Reserve Your Stay'}
+          <p className="text-xs font-sans font-semibold uppercase tracking-widest text-wood-deep mb-1">
+            {t('bookingForm.eyebrow')}
           </p>
           <h3 className="text-xl font-heading font-semibold text-forest-dark">
-            {language === 'el' ? 'Κάντε Κράτηση' : 'Book Your Stay'}
+            {t('bookingForm.title')}
           </h3>
         </div>
       )}
@@ -62,7 +63,7 @@ const BookingForm = ({ accommodation, isDetail = false }: BookingFormProps) => {
         <div>
           <Label className="flex items-center gap-2 text-sm font-sans font-medium text-gray-700 mb-2">
             <Calendar className="h-4 w-4 text-forest/60" />
-            {language === 'el' ? 'Ημερομηνίες' : 'Dates'}
+            {t('bookingForm.dates')}
           </Label>
           <DateRangePicker
             startDate={startDate}
@@ -76,7 +77,7 @@ const BookingForm = ({ accommodation, isDetail = false }: BookingFormProps) => {
         <div>
           <Label htmlFor="guests" className="flex items-center gap-2 text-sm font-sans font-medium text-gray-700 mb-2">
             <Users className="h-4 w-4 text-forest/60" />
-            {language === 'el' ? 'Επισκέπτες' : 'Guests'}
+            {t('summary.guests')}
           </Label>
           <Input
             id="guests"
@@ -87,8 +88,8 @@ const BookingForm = ({ accommodation, isDetail = false }: BookingFormProps) => {
             onChange={(e) => setGuests(Number(e.target.value))}
             className="border-gray-200 focus-visible:ring-forest/30 focus-visible:border-forest rounded-xl"
           />
-          <p className="text-xs text-gray-400 mt-1">
-            {language === 'el' ? `Μέγιστο ${accommodation.guests} άτομα` : `Max ${accommodation.guests} guests`}
+          <p className="text-xs text-gray-500 mt-1">
+            {t('bookingForm.maxGuests', { count: accommodation.guests })}
           </p>
         </div>
 
@@ -96,9 +97,9 @@ const BookingForm = ({ accommodation, isDetail = false }: BookingFormProps) => {
         {nights > 0 && (
           <div className="flex items-center justify-between py-3 px-4 rounded-xl bg-forest/4 text-sm">
             <span className="text-gray-600">
-              {nights} {language === 'el' ? 'διανυκτερεύσεις' : nights === 1 ? 'night' : 'nights'}
+              {t('common.nights', { count: nights })}
             </span>
-            <span className="text-xs text-gray-400 italic">
+            <span className="text-xs text-gray-500 italic">
               {t('pricing.contactForQuote')}
             </span>
           </div>
@@ -111,8 +112,8 @@ const BookingForm = ({ accommodation, isDetail = false }: BookingFormProps) => {
           className="w-full py-3.5 rounded-xl bg-wood text-forest-dark font-sans font-semibold text-sm tracking-wide transition-all duration-300 hover:bg-wood-light hover:shadow-cta active:scale-[0.98] disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:shadow-none disabled:hover:bg-wood"
         >
           {isDetail
-            ? (language === 'el' ? 'Ζητήστε Προσφορά' : 'Get Quote')
-            : (language === 'el' ? 'Ελέγξτε Διαθεσιμότητα' : 'Check Availability')}
+            ? t('bookingForm.getQuote')
+            : t('bookingForm.checkAvailability')}
         </button>
       </form>
     </div>

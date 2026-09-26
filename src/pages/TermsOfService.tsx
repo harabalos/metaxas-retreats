@@ -1,31 +1,17 @@
 import Layout from '@/components/Layout/Layout';
 import SEOHead from '@/components/SEO/SEOHead';
 import { useLanguage } from '@/context/LanguageContext';
-import { motion } from 'framer-motion';
-
-const FadeUp = ({ children, delay = 0 }: { children: React.ReactNode; delay?: number }) => (
-  <motion.div
-    initial={{ opacity: 0, y: 20 }}
-    whileInView={{ opacity: 1, y: 0 }}
-    viewport={{ once: true, margin: '-40px' }}
-    transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1], delay }}
-  >
-    {children}
-  </motion.div>
-);
+import FadeUp from '@/components/FadeUp';
 
 const TermsOfService = () => {
-  const { language, t } = useLanguage();
+  const { t } = useLanguage();
 
   const termsSchema = {
     '@context': 'https://schema.org',
     '@type': 'WebPage',
-    name: language === 'el' ? 'Όροι Χρήσης - Metaxas Retreats' : 'Terms of Service - Metaxas Retreats',
-    description:
-      language === 'el'
-        ? 'Όροι χρήσης και κανονισμοί διαμονής στο Metaxas Retreats στη Λευκάδα'
-        : 'Terms of service and house rules for staying at Metaxas Retreats in Lefkada',
-    url: 'https://metaxasretreats.gr/terms',
+    name: `${t('terms.title')} - Metaxas Retreats`,
+    description: t('terms.schema.description'),
+    url: 'https://www.metaxasretreats.gr/terms',
   };
 
   const sections = [
@@ -59,21 +45,20 @@ const TermsOfService = () => {
   return (
     <Layout>
       <SEOHead
-        title="Terms of Service - Metaxas Retreats"
-        titleEl="Όροι Χρήσης - Metaxas Retreats"
-        description="Read our terms of service including booking policies, house rules, and cancellation terms for Metaxas Retreats in Lefkada, Greece."
-        descriptionEl="Διαβάστε τους όρους χρήσης μας, συμπεριλαμβανομένων πολιτικών κράτησης, κανόνων διαμονής και όρων ακύρωσης για το Metaxas Retreats στη Λευκάδα."
+        title={t('terms.title')}
+        description={t('terms.schema.description')}
         canonicalUrl="/terms"
+        robots="noindex, follow"
         schema={termsSchema}
       />
 
       <div className="max-w-3xl mx-auto px-5 sm:px-8 py-16 md:py-24">
-        <FadeUp>
+        <FadeUp eager>
           <div className="mb-12">
-            <p className="text-wood text-xs font-sans font-semibold uppercase tracking-widest mb-3">Legal</p>
+            <p className="text-wood-deep text-xs font-sans font-semibold uppercase tracking-widest mb-3">{t('legal.eyebrow')}</p>
             <h1 className="text-4xl md:text-5xl font-heading font-semibold text-forest-dark mb-4">{t('terms.title')}</h1>
-            <p className="text-gray-400 text-sm font-sans">
-              {language === 'el' ? 'Τελευταία ενημέρωση: Μάρτιος 2026' : 'Last updated: March 2026'}
+            <p className="text-gray-500 text-sm font-sans">
+              {t('legal.lastUpdated')}
             </p>
           </div>
         </FadeUp>

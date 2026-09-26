@@ -3,6 +3,7 @@ import { ReactNode } from 'react';
 import { useLocation } from 'react-router-dom';
 import Navbar from './Navbar';
 import Footer from './Footer';
+import { splitLanguage } from '@/lib/i18nRoutes';
 
 interface LayoutProps {
   children: ReactNode;
@@ -13,7 +14,7 @@ const HERO_PAGES = ['/', '/explore'];
 
 const Layout = ({ children }: LayoutProps) => {
   const { pathname } = useLocation();
-  const hasHero = HERO_PAGES.includes(pathname);
+  const hasHero = HERO_PAGES.includes(splitLanguage(pathname).path);
 
   return (
     <div className="flex flex-col min-h-screen">
