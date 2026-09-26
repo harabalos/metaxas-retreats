@@ -1,8 +1,5 @@
 import React, { Suspense, useEffect, useLayoutEffect } from "react";
-import { Toaster } from "@/components/ui/toaster";
-import { Toaster as Sonner } from "@/components/ui/sonner";
-import { TooltipProvider } from "@/components/ui/tooltip";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { Toaster } from "@/components/ui/sonner";
 import { Outlet, Routes, Route, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { LANGUAGES, localizePath, type Language } from "./lib/i18nRoutes";
@@ -22,15 +19,6 @@ const ContactUs = React.lazy(() => import("./pages/ContactUs"));
 const NotFound = React.lazy(() => import("./pages/NotFound"));
 const PrivacyPolicy = React.lazy(() => import("./pages/PrivacyPolicy"));
 const TermsOfService = React.lazy(() => import("./pages/TermsOfService"));
-
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      staleTime: 1000 * 60 * 5,
-      gcTime: 1000 * 60 * 10,
-    },
-  },
-});
 
 // Simple loading fallback
 const PageLoader = () => (
@@ -90,20 +78,17 @@ const AnimatedRoutes = () => {
 // The router comes from outside: BrowserRouter in main.tsx, StaticRouter when
 // prerendering (entry-server.tsx).
 const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <LanguageProvider>
-        <Toaster />
-        <Sonner />
-        <ErrorBoundary>
-          <AnimatedRoutes />
-        </ErrorBoundary>
-        <CookieConsent />
-      </LanguageProvider>
-      <Analytics />
-      <SpeedInsights />
-    </TooltipProvider>
-  </QueryClientProvider>
+  <>
+    <LanguageProvider>
+      <Toaster />
+      <ErrorBoundary>
+        <AnimatedRoutes />
+      </ErrorBoundary>
+      <CookieConsent />
+    </LanguageProvider>
+    <Analytics />
+    <SpeedInsights />
+  </>
 );
 
 export default App;
