@@ -103,7 +103,7 @@ const FAQAccordion = ({ t }: { t: (key: string) => string }) => {
             <div
               className={`overflow-hidden transition-all duration-300 ease-in-out ${isOpen ? 'max-h-80 pb-5' : 'max-h-0'}`}
             >
-              <p className="text-muted-foreground font-sans font-light text-[15px] leading-relaxed pr-10">
+              <p className="text-muted-foreground font-sans text-[15px] leading-relaxed pr-10">
                 {t(item.a)}
               </p>
             </div>
@@ -244,7 +244,7 @@ const HomePage = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.55 }}
-            className="text-sand-light/80 text-lg md:text-xl font-sans font-light mb-10 max-w-xl leading-relaxed"
+            className="text-sand-light/80 text-lg md:text-xl font-sans mb-10 max-w-xl leading-relaxed"
           >
             {t('home.hero.subtitle')}
           </motion.p>
@@ -298,7 +298,7 @@ const HomePage = () => {
             </h2>
           </FadeUp>
           <FadeUp delay={0.15}>
-            <p className="mt-8 text-muted-foreground text-base md:text-lg font-sans font-light leading-relaxed max-w-2xl mx-auto">
+            <p className="mt-8 text-muted-foreground text-base md:text-lg font-sans leading-relaxed max-w-2xl mx-auto">
               {t('home.section.description')}
             </p>
           </FadeUp>
@@ -382,7 +382,7 @@ const HomePage = () => {
                 <h2 className="font-heading font-light text-forest text-display-lg mb-7 text-balance">
                   {t('home.experience.title')}
                 </h2>
-                <div className="space-y-5 text-muted-foreground font-sans font-light leading-relaxed">
+                <div className="space-y-5 text-muted-foreground font-sans leading-relaxed">
                   <p>
                     {t('home.experience.desc1')}
                   </p>
@@ -466,7 +466,7 @@ const HomePage = () => {
             <h2 className="font-heading font-light text-forest text-display-lg mb-5 text-balance">
               {t('home.cta.title')}
             </h2>
-            <p className="text-muted-foreground font-sans font-light text-lg mb-10 max-w-xl mx-auto">
+            <p className="text-muted-foreground font-sans text-lg mb-10 max-w-xl mx-auto">
               {t('home.cta.description')}
             </p>
             <div className="flex flex-wrap justify-center gap-4">

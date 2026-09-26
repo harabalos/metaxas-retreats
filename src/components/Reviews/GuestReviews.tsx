@@ -64,7 +64,7 @@ const GuestReviews = () => {
           <li key={review.url} className="snap-start shrink-0 w-[85%] sm:w-[60%] md:w-auto">
             <figure className="h-full flex flex-col rounded-2xl bg-white/5 border border-white/10 p-6">
               <Stars className="mb-4" label={`${review.rating}/5`} />
-              <blockquote className="flex-1 text-sand-light/85 text-[15px] leading-relaxed font-sans font-light">
+              <blockquote className="flex-1 text-sand-light/85 text-[15px] leading-relaxed font-sans">
                 <p>{review.text}</p>
               </blockquote>
               <figcaption className="mt-6 flex items-center gap-3">

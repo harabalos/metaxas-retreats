@@ -183,6 +183,19 @@ function heroPosterPreload() {
   return `<link rel="preload" as="image" href="/_app/${poster}" type="image/webp" />`;
 }
 
+/**
+ * Preloads for the Latin subsets of the two self-hosted fonts (src/main.tsx),
+ * so text doesn't wait for the stylesheet before the fonts start downloading.
+ */
+function fontPreloads() {
+  const files = readdirSync(join(distDir, '_app'));
+  return ['commissioner-latin-wght-normal', 'eb-garamond-latin-wght-normal'].map((name) => {
+    const file = files.find((f) => f.startsWith(`${name}-`) && f.endsWith('.woff2'));
+    if (!file) throw new Error(`${name}-*.woff2 not found in dist/_app`);
+    return `<link rel="preload" as="font" type="font/woff2" href="/_app/${file}" crossorigin />`;
+  });
+}
+
 function renderPage({ title, description, canonicalUrl, robots, h1, content, head = [] }) {
   let html = baseHtml;
 
@@ -260,14 +273,12 @@ function renderPage({ title, description, canonicalUrl, robots, h1, content, hea
     );
   }
 
-  // Page-specific additions (preloads, schema): early in <head> so the
-  // browser finds them before the app's script and stylesheet.
-  if (head.length) {
-    html = html.replace(
-      /(<meta name="viewport"[^>]*>)/,
-      `$1\n  ${head.join('\n  ')}`
-    );
-  }
+  // Font preloads and page-specific additions (preloads, schema): early in
+  // <head> so the browser finds them before the app's script and stylesheet.
+  html = html.replace(
+    /(<meta name="viewport"[^>]*>)/,
+    `$1\n  ${[...FONT_PRELOADS, ...head].join('\n  ')}`
+  );
 
   // Build the crawler-visible content block with H1, description, and nav
   const contentBlock = [
@@ -306,6 +317,7 @@ function write(file, html) {
 
 // Read the base index.html built by Vite
 const baseHtml = readFileSync(join(distDir, 'index.html'), 'utf-8');
+const FONT_PRELOADS = fontPreloads();
 
 for (const route of routes) {
   const head = [];
