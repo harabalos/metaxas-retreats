@@ -183,8 +183,8 @@ const HomePage = () => {
   return (
     <Layout>
       <SEOHead
-        title={t('seo.homeTitle')}
-        description={t('seo.homeSeoDesc')}
+        title={t('seo.home.title')}
+        description={t('seo.home.description')}
         canonicalUrl="/"
         schema={campgroundSchema}
       />
@@ -237,7 +237,7 @@ const HomePage = () => {
             transition={{ duration: 0.8, delay: 0.35, ease: [0.22, 1, 0.36, 1] }}
             className="font-heading font-light text-white text-display-2xl leading-[1.05] mb-6 max-w-3xl text-balance"
           >
-            {t('home.hero.welcome')}
+            {t('home.hero.title')}
           </motion.h1>
 
           <motion.p

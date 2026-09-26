@@ -76,10 +76,8 @@ const PrivacyPolicy = () => {
   return (
     <Layout>
       <SEOHead
-        title="Privacy Policy - Metaxas Retreats"
-        titleEl="Πολιτική Απορρήτου - Metaxas Retreats"
-        description="Learn how Metaxas Retreats protects your personal information. Our privacy policy explains data collection, usage, and your rights."
-        descriptionEl="Μάθετε πώς το Metaxas Retreats προστατεύει τα προσωπικά σας δεδομένα. Η πολιτική απορρήτου μας εξηγεί τη συλλογή, χρήση δεδομένων και τα δικαιώματά σας."
+        title={t('privacy.title')}
+        description={t('privacy.schema.description')}
         canonicalUrl="/privacy"
         robots="noindex, follow"
         schema={privacySchema}

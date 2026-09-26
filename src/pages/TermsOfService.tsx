@@ -56,10 +56,8 @@ const TermsOfService = () => {
   return (
     <Layout>
       <SEOHead
-        title="Terms of Service - Metaxas Retreats"
-        titleEl="Όροι Χρήσης - Metaxas Retreats"
-        description="Read our terms of service including booking policies, house rules, and cancellation terms for Metaxas Retreats in Lefkada, Greece."
-        descriptionEl="Διαβάστε τους όρους χρήσης μας, συμπεριλαμβανομένων πολιτικών κράτησης, κανόνων διαμονής και όρων ακύρωσης για το Metaxas Retreats στη Λευκάδα."
+        title={t('terms.title')}
+        description={t('terms.schema.description')}
         canonicalUrl="/terms"
         robots="noindex, follow"
         schema={termsSchema}

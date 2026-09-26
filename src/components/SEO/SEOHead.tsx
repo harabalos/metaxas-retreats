@@ -9,8 +9,6 @@ interface SEOHeadProps {
   type?: 'website' | 'article' | 'product';
   schema?: object | object[];
   keywords?: string;
-  titleEl?: string;
-  descriptionEl?: string;
   robots?: string;
 }
 
@@ -22,15 +20,13 @@ const SEOHead = ({
   type = 'website',
   schema,
   keywords,
-  titleEl,
-  descriptionEl,
   robots
 }: SEOHeadProps) => {
   const { t, language } = useLanguage();
 
-  // Use language-specific content
-  const displayTitle = language === 'el' && titleEl ? titleEl : title;
-  const displayDescription = language === 'el' && descriptionEl ? descriptionEl : description;
+  // Pages pass text already translated for the current language.
+  const displayTitle = title;
+  const displayDescription = description;
 
   // Some page titles already end in the brand ("… | Metaxas Retreats"); don't add it twice.
   const fullTitle = displayTitle.includes('Metaxas Retreats')

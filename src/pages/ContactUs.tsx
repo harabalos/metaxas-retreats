@@ -75,10 +75,8 @@ const ContactUs = () => {
   return (
     <Layout>
       <SEOHead
-        title="Contact Metaxas Retreats - Book Your Stay in Lefkada"
-        titleEl="Επικοινωνία - Κάντε Κράτηση στη Λευκάδα"
-        description="Contact us for reservations at our glamping retreat in Mikros Gialos, Lefkada, Greece. Phone, email, and directions to find us. Response within 1 hour."
-        descriptionEl="Επικοινωνήστε μαζί μας για κρατήσεις στο glamping καταφύγιό μας στον Μικρό Γιαλό, Λευκάδα. Τηλέφωνο, email και οδηγίες. Απάντηση εντός 1 ώρας."
+        title={t('seo.contact.title')}
+        description={t('seo.contact.description')}
         canonicalUrl="/contact"
         schema={contactSchema}
       />

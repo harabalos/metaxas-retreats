@@ -69,10 +69,8 @@ const BookingPage = () => {
   return (
     <Layout>
       <SEOHead
-        title={`Book ${accommodation.name} - Metaxas Retreats`}
-        titleEl={`Κράτηση ${language === 'el' ? t(`accommodation.${id === 'wooden-house' ? 'woodenHouse' : 'glampingTent'}`) : accommodation.name} - Metaxas Retreats`}
-        description={`Book your stay at ${accommodation.name} in Mikros Gialos, Lefkada. Direct booking saves 15% compared to Airbnb/Booking.com.`}
-        descriptionEl={`Κάντε κράτηση στο ${t(`accommodation.${id === 'wooden-house' ? 'woodenHouse' : 'glampingTent'}`)} στον Μικρό Γιαλό, Λευκάδα. Απευθείας κράτηση με 15% έκπτωση.`}
+        title={t('seo.booking.title')}
+        description={t('seo.booking.description')}
         robots="noindex, nofollow"
         schema={bookingSchema}
       />

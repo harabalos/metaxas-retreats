@@ -55,7 +55,7 @@ const FadeUp = ({ children, delay = 0 }: { children: React.ReactNode; delay?: nu
 const AccommodationDetail = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const { t, language } = useLanguage();
+  const { t } = useLanguage();
   const { data: accommodations, isLoading } = useAccommodations();
 
   // The two identical tents are now one merged listing — redirect old URLs.
@@ -128,17 +128,9 @@ const AccommodationDetail = () => {
   };
 
   // ─── SEO ─────────────────────────────────────────────────────────────────
-  const seoTitle = language === 'el'
-    ? (accommodation.type === 'house' ? "Ξύλινο Σπίτι με Θέα Θάλασσα | Camping & Glamping Λευκάδα" : "Πολυτελής Σκηνή Glamping | Camping Λευκάδα Ελλάδα")
-    : (accommodation.type === 'house' ? "Wooden House Sea View | Lefkada Camping & Glamping Greece" : "Luxury Glamping Tent | Camping Lefkada Greece - Best Accommodation");
-
-  const seoDescription = language === 'el'
-    ? (accommodation.type === 'house'
-      ? `Κάντε κράτηση στο γοητευτικό ξύλινο σπίτι μας στη Λευκάδα. Θέα στον κόλπο του Μικρού Γιαλού, χωρητικότητα ${accommodation.guests} ατόμων, 50μ από την παραλία.`
-      : `Premium σκηνή glamping στη Λευκάδα - πολυτελής κατασκήνωση ανάμεσα σε ελαιόδεντρα. Χωρητικότητα ${accommodation.guests} ατόμων, θέα θάλασσα, κλιματισμός.`)
-    : (accommodation.type === 'house'
-      ? `Book our charming wooden house in Lefkada, Greece. Sea views over Mikros Gialos bay, sleeps ${accommodation.guests}, 50m from beach. Best camping & glamping accommodation.`
-      : `Premium glamping tent in Lefkada, Greece - luxury camping among olive trees. Sleeps ${accommodation.guests}, sea views, A/C. Best glamping in Greece. Book direct!`);
+  const unitKey = accommodation.type === 'house' ? 'woodenHouse' : 'glampingTent';
+  const seoTitle = t(`seo.${unitKey}.title`);
+  const seoDescription = t(`seo.${unitKey}.description`);
 
   const accommodationName = accommodation.type === 'house' ? t('accommodation.woodenHouse') : t('accommodation.glampingTent');
   const accommodationDescription = accommodation.type === 'house' ? t('accommodation.woodenHouse.description') : t('accommodation.glampingTent.description');
@@ -179,7 +171,7 @@ const AccommodationDetail = () => {
           <div className="mb-8">
             <p className="text-wood text-sm font-sans font-semibold uppercase tracking-widest mb-2">{nickname}</p>
             <h1 className="text-4xl md:text-5xl font-heading font-semibold text-forest-dark leading-tight mb-4">
-              {accommodationName}
+              {t(`detail.h1.${unitKey}`)}
             </h1>
             {/* Quick stat pills */}
             <div className="flex flex-wrap gap-3">

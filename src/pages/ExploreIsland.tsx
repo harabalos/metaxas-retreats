@@ -77,10 +77,8 @@ const ExploreIsland = () => {
   return (
     <Layout>
       <SEOHead
-        title="Explore Lefkada - Best Beaches, Villages & Activities"
-        titleEl="Εξερευνήστε τη Λευκάδα - Καλύτερες Παραλίες, Χωριά & Δραστηριότητες"
-        description="Discover Lefkada's stunning beaches like Porto Katsiki, charming villages, water sports, and local cuisine. Your complete Greek island travel guide from Metaxas Retreats."
-        descriptionEl="Ανακαλύψτε τις εκπληκτικές παραλίες της Λευκάδας, τα γραφικά χωριά, τα θαλάσσια σπορ και την τοπική κουζίνα. Ο πλήρης οδηγός σας."
+        title={t('seo.explore.title')}
+        description={t('seo.explore.description')}
         canonicalUrl="/explore"
         schema={exploreSchema}
       />

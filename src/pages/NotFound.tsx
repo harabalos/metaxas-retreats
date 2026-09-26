@@ -26,8 +26,8 @@ const NotFound = () => {
   return (
     <Layout>
       <SEOHead
-        title="Page Not Found"
-        description="The page you're looking for doesn't exist."
+        title={t('notFound.eyebrow')}
+        description={t('notFound.text')}
         robots="noindex, nofollow"
       />
       <div className="min-h-[85vh] flex items-center justify-center px-5">
