@@ -159,7 +159,7 @@ const HomePage = () => {
       />
 
       {/* ─── HERO ──────────────────────────────────────────────────────────── */}
-      <section ref={heroRef} className="relative h-screen min-h-[600px] flex items-center overflow-hidden bg-forest-dark">
+      <section ref={heroRef} className="relative min-h-[max(100svh,600px)] pt-28 pb-24 flex items-center overflow-hidden bg-forest-dark">
         {/* Video background */}
         <div className="absolute inset-0">
           {showHeroVideo ? (
@@ -204,7 +204,7 @@ const HomePage = () => {
             initial={{ y: 16 }}
             animate={{ y: 0 }}
             transition={{ duration: 0.8, delay: 0.15, ease: EASE_OUT }}
-            className="font-heading font-light text-white text-display-2xl leading-[1.05] mb-6 max-w-3xl text-balance"
+            className="font-heading font-light text-white text-display-2xl leading-[1.05] mb-6 max-w-4xl text-balance"
           >
             {t('home.hero.title')}
           </m.h1>
@@ -258,16 +258,16 @@ const HomePage = () => {
       </section>
 
       {/* ─── BRAND STATEMENT ───────────────────────────────────────────────── */}
-      <section className="py-24 px-5 sm:px-10">
-        <div className="max-w-4xl mx-auto text-center">
+      <section className="pt-16 pb-10 md:pt-20 px-5 sm:px-10">
+        <div className="max-w-3xl mx-auto text-center">
           <FadeUp>
-            <p className="text-wood-deep text-xs font-sans font-semibold tracking-[0.25em] uppercase mb-6">{t('home.brand.eyebrow')}</p>
-            <h2 className="font-heading font-light text-forest text-display-lg leading-snug text-balance">
+            <p className="text-wood-deep text-xs font-sans font-semibold tracking-[0.25em] uppercase mb-4">{t('home.brand.eyebrow')}</p>
+            <h2 className="font-heading font-light text-forest text-[clamp(1.5rem,2.4vw,2.125rem)] leading-snug text-balance">
               {t('home.brandStatement')}
             </h2>
           </FadeUp>
           <FadeUp delay={0.15}>
-            <p className="mt-8 text-muted-foreground text-base md:text-lg font-sans font-light leading-relaxed max-w-2xl mx-auto">
+            <p className="mt-5 text-muted-foreground text-base font-sans font-light leading-relaxed max-w-2xl mx-auto">
               {t('home.section.description')}
             </p>
           </FadeUp>
@@ -275,7 +275,7 @@ const HomePage = () => {
       </section>
 
       {/* ─── FEATURE PILLARS ───────────────────────────────────────────────── */}
-      <section className="py-6 px-5 sm:px-10 pb-20">
+      <section className="py-6 px-5 sm:px-10 pb-16">
         <div className="max-w-5xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-6">
           {FEATURE_KEYS.map(({ label, desc }, i) => {
             const Icon = FEATURE_ICONS[i];

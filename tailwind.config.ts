@@ -78,7 +78,7 @@ export default {
 				display: ['"EB Garamond Variable"', 'Georgia', 'serif'],
 			},
 			fontSize: {
-				'display-2xl': ['clamp(3rem,8vw,7rem)', { lineHeight: '1.05', letterSpacing: '-0.02em' }],
+				'display-2xl': ['clamp(2.75rem,6vw,5.5rem)', { lineHeight: '1.05', letterSpacing: '-0.02em' }],
 				'display-xl': ['clamp(2.5rem,6vw,5rem)', { lineHeight: '1.1', letterSpacing: '-0.02em' }],
 				'display-lg': ['clamp(2rem,4vw,3.5rem)', { lineHeight: '1.15', letterSpacing: '-0.01em' }],
 				'display-md': ['clamp(1.5rem,3vw,2.5rem)', { lineHeight: '1.2' }],
