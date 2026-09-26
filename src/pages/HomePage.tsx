@@ -6,9 +6,11 @@ import { ArrowDown, Waves, Trees, Sun, Wind, ChevronDown } from 'lucide-react';
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
 import Layout from '@/components/Layout/Layout';
 import AccommodationCard from '@/components/Accommodations/AccommodationCard';
+import GuestReviews from '@/components/Reviews/GuestReviews';
 import { useAccommodations } from '@/hooks/useAccommodations';
 import SEOHead from '@/components/SEO/SEOHead';
 import { useLanguage } from '@/context/LanguageContext';
+import { reviewSummary } from '@/data/reviews';
 import { responsiveImage } from '@/lib/images';
 import heroVideoDesktop from '@/assets/hero/hero-desktop.mp4';
 import heroVideoMobile from '@/assets/hero/hero-mobile.mp4';
@@ -144,23 +146,6 @@ const HomePage = () => {
     }
   }, [location]);
 
-  // Load Elfsight reviews widget deferred
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      const script = document.createElement('script');
-      script.src = 'https://elfsightcdn.com/platform.js';
-      script.defer = true;
-      document.body.appendChild(script);
-    }, 2500);
-    return () => {
-      clearTimeout(timer);
-      try {
-        const s = document.querySelector('script[src="https://elfsightcdn.com/platform.js"]');
-        if (s) document.body.removeChild(s);
-      } catch { }
-    };
-  }, []);
-
   // iOS video autoplay
   useEffect(() => {
     const video = videoRef.current;
@@ -186,7 +171,13 @@ const HomePage = () => {
     address: { '@type': 'PostalAddress', addressLocality: 'Lefkada', addressCountry: 'GR' },
     geo: { '@type': 'GeoCoordinates', latitude: '38.640048', longitude: '20.698988' },
     priceRange: '€€',
-    aggregateRating: { '@type': 'AggregateRating', ratingValue: '4.9', bestRating: '5' },
+    // The Google rating shown in the reviews section below.
+    aggregateRating: {
+      '@type': 'AggregateRating',
+      ratingValue: reviewSummary.rating,
+      reviewCount: reviewSummary.count,
+      bestRating: 5,
+    },
   };
 
   return (
@@ -446,11 +437,8 @@ const HomePage = () => {
             </h2>
           </FadeUp>
 
-          {/* Elfsight widget — real Google reviews */}
           <FadeUp delay={0.1}>
-            <div className="elfsight-reviews-wrapper">
-              <div className="elfsight-app-08c2814a-39d2-4b24-af1d-0694c0b45eb6" data-elfsight-app-lazy></div>
-            </div>
+            <GuestReviews />
           </FadeUp>
         </div>
       </section>

@@ -114,7 +114,6 @@ const AccommodationDetail = () => {
     "amenityFeature": accommodation.amenities.map(a => ({ "@type": "LocationFeatureSpecification", "name": a, "value": true })),
     "address": { "@type": "PostalAddress", "streetAddress": "Mikros Gialos, Poros", "addressLocality": "Lefkada", "addressRegion": "Ionian Islands", "addressCountry": "GR" },
     "geo": { "@type": "GeoCoordinates", "latitude": "38.640048", "longitude": "20.698988" },
-    "aggregateRating": { "@type": "AggregateRating", "ratingValue": "4.9", "bestRating": "5", "worstRating": "1" },
     "offers": { "@type": "Offer", "availability": "https://schema.org/InStock", "url": `https://metaxasretreats.gr/accommodation/${accommodation.id}` },
     "potentialAction": { "@type": "ReserveAction", "target": { "@type": "EntryPoint", "urlTemplate": `https://metaxasretreats.gr/booking/${accommodation.id}?startDate={checkInDate}&endDate={checkOutDate}&guests={guests}`, "actionPlatform": ["http://schema.org/DesktopWebPlatform", "http://schema.org/MobileWebPlatform"] }, "result": { "@type": "LodgingReservation", "name": `Book ${accommodation.name}` } }
   };
