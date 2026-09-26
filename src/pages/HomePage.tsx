@@ -15,6 +15,8 @@ import { business, faqPage, graph, website } from '@/lib/schema';
 import heroVideoDesktop from '@/assets/hero/hero-desktop.mp4';
 import heroVideoMobile from '@/assets/hero/hero-mobile.mp4';
 import heroPoster from '@/assets/hero/hero-poster.webp';
+import FadeUp from '@/components/FadeUp';
+import { EASE_OUT, prefersReducedMotion, scrollBehavior } from '@/lib/motion';
 
 // Photo column next to "The Experience" text from lg up, full width below.
 const CAROUSEL_SIZES = '(min-width: 1232px) 544px, (min-width: 1024px) calc(50vw - 72px), calc(100vw - 40px)';
@@ -33,29 +35,8 @@ const CAROUSEL_IMAGES = [
 const prefersStillHero = () => {
   if (typeof window === 'undefined') return false;
   const connection = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection;
-  return window.matchMedia('(prefers-reduced-motion: reduce)').matches || connection?.saveData === true;
+  return prefersReducedMotion() || connection?.saveData === true;
 };
-
-// ─── Reusable scroll-reveal wrapper ───────────────────────────────────────────
-const FadeUp = ({
-  children,
-  delay = 0,
-  className = '',
-}: {
-  children: React.ReactNode;
-  delay?: number;
-  className?: string;
-}) => (
-  <m.div
-    initial={{ opacity: 0, y: 32 }}
-    whileInView={{ opacity: 1, y: 0 }}
-    viewport={{ once: true, margin: '-60px' }}
-    transition={{ duration: 0.7, delay, ease: [0.22, 1, 0.36, 1] }}
-    className={className}
-  >
-    {children}
-  </m.div>
-);
 
 
 const FEATURE_ICONS = [Waves, Trees, Sun, Wind];
@@ -128,7 +109,8 @@ const HomePage = () => {
   const [carouselStarted, setCarouselStarted] = useState(false);
 
   const [emblaRef] = useEmblaCarousel({ loop: true }, [
-    Autoplay({ delay: 3500, stopOnInteraction: false })
+    // No self-advancing slides for visitors who asked for less motion.
+    Autoplay({ delay: 3500, stopOnInteraction: false, active: !prefersReducedMotion() })
   ]);
 
   // Parallax on hero content
@@ -137,7 +119,7 @@ const HomePage = () => {
   const heroOpacity = useTransform(scrollY, [0, 400], [1, 0]);
 
   const scrollToAccommodations = () => {
-    accommodationsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    accommodationsRef.current?.scrollIntoView({ behavior: scrollBehavior(), block: 'start' });
   };
 
   useEffect(() => {
@@ -210,36 +192,36 @@ const HomePage = () => {
           className="relative z-10 w-full px-5 sm:px-10 lg:px-16 max-w-7xl mx-auto"
         >
           <m.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
+            initial={{ y: 12 }}
+            animate={{ y: 0 }}
+            transition={{ duration: 0.6, delay: 0.1 }}
             className="text-wood text-sm font-sans font-medium tracking-[0.2em] uppercase mb-5"
           >
             {t('home.hero.eyebrow')}
           </m.p>
 
           <m.h1
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.35, ease: [0.22, 1, 0.36, 1] }}
+            initial={{ y: 16 }}
+            animate={{ y: 0 }}
+            transition={{ duration: 0.8, delay: 0.15, ease: EASE_OUT }}
             className="font-heading font-light text-white text-display-2xl leading-[1.05] mb-6 max-w-3xl text-balance"
           >
             {t('home.hero.title')}
           </m.h1>
 
           <m.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.55 }}
+            initial={{ y: 12 }}
+            animate={{ y: 0 }}
+            transition={{ duration: 0.7, delay: 0.25 }}
             className="text-sand-light/80 text-lg md:text-xl font-sans mb-10 max-w-xl leading-relaxed"
           >
             {t('home.hero.subtitle')}
           </m.p>
 
           <m.div
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.75 }}
+            initial={{ y: 10 }}
+            animate={{ y: 0 }}
+            transition={{ duration: 0.6, delay: 0.35 }}
             className="flex flex-wrap gap-4"
           >
             <button

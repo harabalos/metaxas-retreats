@@ -5,6 +5,7 @@ import { m, AnimatePresence } from 'framer-motion';
 import { useLanguage } from '@/context/LanguageContext';
 import LanguageSwitcher from './LanguageSwitcher';
 import { splitLanguage } from '@/lib/i18nRoutes';
+import { scrollBehavior } from '@/lib/motion';
 
 const Navbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -26,7 +27,7 @@ const Navbar = () => {
 
   const scrollToAccommodations = () => {
     if (isHome) {
-      document.getElementById('accommodations')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      document.getElementById('accommodations')?.scrollIntoView({ behavior: scrollBehavior(), block: 'start' });
     } else {
       navigate(`${localize('/')}#accommodations`);
     }

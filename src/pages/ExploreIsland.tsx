@@ -4,25 +4,14 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import { MapPin, Sailboat, Waves, Mountain, Star } from 'lucide-react';
 import SEOHead from '@/components/SEO/SEOHead';
 import { useLanguage } from '@/context/LanguageContext';
-import { m } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { responsiveImage } from '@/lib/images';
 import { breadcrumbs, business, graph, SITE } from '@/lib/schema';
+import FadeUp from '@/components/FadeUp';
 
 // Beach cards: three columns from lg, two from md, one below.
 const BEACH_IMAGE_SIZES =
   '(min-width: 1280px) 380px, (min-width: 1024px) calc(33vw - 48px), (min-width: 768px) calc(50vw - 44px), calc(100vw - 40px)';
-
-const FadeUp = ({ children, delay = 0 }: { children: React.ReactNode; delay?: number }) => (
-  <m.div
-    initial={{ opacity: 0, y: 24 }}
-    whileInView={{ opacity: 1, y: 0 }}
-    viewport={{ once: true, margin: '-60px' }}
-    transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1], delay }}
-  >
-    {children}
-  </m.div>
-);
 
 // Text for each entry lives in the locale files under explore.beach.<id>.* etc.
 const BEACHES = [
@@ -87,7 +76,7 @@ const ExploreIsland = () => {
       <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 py-16">
 
         {/* Header */}
-        <FadeUp>
+        <FadeUp eager>
           <div className="mb-12">
             <p className="text-wood-deep text-xs font-sans font-semibold uppercase tracking-widest mb-3">{t('explore.eyebrow')}</p>
             <h1 className="text-4xl md:text-5xl font-heading font-semibold text-forest-dark mb-4">{t('explore.title')}</h1>
@@ -96,7 +85,7 @@ const ExploreIsland = () => {
         </FadeUp>
 
         {/* Tabs */}
-        <FadeUp delay={0.1}>
+        <FadeUp eager>
           <Tabs defaultValue="beaches" className="mb-16">
             <TabsList className="mb-10 bg-transparent p-0 gap-1 h-auto border-b border-gray-200 w-full justify-start rounded-none">
               {[
@@ -120,12 +109,9 @@ const ExploreIsland = () => {
             <TabsContent value="beaches" forceMount className="data-[state=inactive]:hidden">
               <h2 className="sr-only">{t('explore.beaches')}</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {beaches.map((beach, i) => (
-                  <m.div
+                {beaches.map((beach) => (
+                  <div
                     key={beach.name}
-                    initial={{ opacity: 0, y: 24 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1], delay: i * 0.07 }}
                     className="group bg-white rounded-2xl overflow-hidden border border-gray-100 shadow-card hover:shadow-card-hover transition-all duration-400"
                   >
                     <div className="h-48 overflow-hidden">
@@ -146,7 +132,7 @@ const ExploreIsland = () => {
                       </div>
                       <p className="text-sm text-gray-500 leading-relaxed line-clamp-3">{beach.description}</p>
                     </div>
-                  </m.div>
+                  </div>
                 ))}
               </div>
             </TabsContent>
@@ -155,12 +141,9 @@ const ExploreIsland = () => {
             <TabsContent value="villages" forceMount className="data-[state=inactive]:hidden">
               <h2 className="sr-only">{t('explore.villages')}</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                {villages.map((village, i) => (
-                  <m.div
+                {villages.map((village) => (
+                  <div
                     key={village.name}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1], delay: i * 0.07 }}
                     className="bg-white rounded-2xl border border-gray-100 shadow-card p-6 flex items-start gap-4 hover:shadow-card-hover transition-all duration-300"
                   >
                     <div className="w-10 h-10 rounded-full bg-wood/10 flex items-center justify-center flex-shrink-0">
@@ -170,7 +153,7 @@ const ExploreIsland = () => {
                       <h3 className="font-heading font-semibold text-forest-dark mb-1.5">{village.name}</h3>
                       <p className="text-sm text-gray-500 leading-relaxed">{village.description}</p>
                     </div>
-                  </m.div>
+                  </div>
                 ))}
               </div>
             </TabsContent>
@@ -182,11 +165,8 @@ const ExploreIsland = () => {
                 {activities.map((act, i) => {
                   const Icon = activityIcons[i] || Sailboat;
                   return (
-                    <m.div
+                    <div
                       key={act.title}
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1], delay: i * 0.07 }}
                       className="bg-white rounded-2xl border border-gray-100 shadow-card p-6 hover:shadow-card-hover transition-all duration-300"
                     >
                       <div className="w-10 h-10 rounded-full bg-forest/8 flex items-center justify-center mb-4">
@@ -194,7 +174,7 @@ const ExploreIsland = () => {
                       </div>
                       <h3 className="font-heading font-semibold text-forest-dark mb-2">{act.title}</h3>
                       <p className="text-sm text-gray-500 leading-relaxed">{act.description}</p>
-                    </m.div>
+                    </div>
                   );
                 })}
               </div>

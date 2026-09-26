@@ -7,7 +7,7 @@ import { LANGUAGES, localizePath, type Language } from "./lib/i18nRoutes";
 import { LanguageProvider } from "./context/LanguageContext";
 import CookieConsent from "./components/Layout/CookieConsent";
 import ErrorBoundary from "./components/ErrorBoundary";
-import { AnimatePresence, LazyMotion, domAnimation, m } from "framer-motion";
+import { AnimatePresence, LazyMotion, MotionConfig, domAnimation, m } from "framer-motion";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/react";
 
@@ -84,16 +84,20 @@ const App = () => (
   // Components use the lightweight `m` with only the features the site needs
   // (animations, exit, hover/tap and in-view; no drag or layout animations).
   // `strict` makes a stray full `motion` component an error instead of dead weight.
+  // reducedMotion="user": with "reduce motion" on, nothing slides or scales,
+  // only fades remain.
   <LazyMotion features={domAnimation} strict>
-    <LanguageProvider>
-      <Toaster />
-      <ErrorBoundary>
-        <AnimatedRoutes />
-      </ErrorBoundary>
-      <CookieConsent />
-    </LanguageProvider>
-    <Analytics />
-    <SpeedInsights />
+    <MotionConfig reducedMotion="user">
+      <LanguageProvider>
+        <Toaster />
+        <ErrorBoundary>
+          <AnimatedRoutes />
+        </ErrorBoundary>
+        <CookieConsent />
+      </LanguageProvider>
+      <Analytics />
+      <SpeedInsights />
+    </MotionConfig>
   </LazyMotion>
 );
 

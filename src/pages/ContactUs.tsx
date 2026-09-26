@@ -13,17 +13,7 @@ import { contactFormSchema } from '@/lib/validationSchemas';
 import { breadcrumbs, business, businessRef, graph, SITE } from '@/lib/schema';
 import { z } from 'zod';
 import { m, AnimatePresence } from 'framer-motion';
-
-const FadeUp = ({ children, delay = 0 }: { children: React.ReactNode; delay?: number }) => (
-  <m.div
-    initial={{ opacity: 0, y: 24 }}
-    whileInView={{ opacity: 1, y: 0 }}
-    viewport={{ once: true, margin: '-40px' }}
-    transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1], delay }}
-  >
-    {children}
-  </m.div>
-);
+import FadeUp from '@/components/FadeUp';
 
 const ContactUs = () => {
   const { t, localize } = useLanguage();
@@ -84,7 +74,7 @@ const ContactUs = () => {
       <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 py-16">
 
         {/* Header */}
-        <FadeUp>
+        <FadeUp eager>
           <div className="mb-12">
             <p className="text-wood-deep text-xs font-sans font-semibold uppercase tracking-widest mb-3">{t('contact.eyebrow')}</p>
             <h1 className="text-4xl md:text-5xl font-heading font-semibold text-forest-dark mb-4">{t('contact.title')}</h1>

@@ -1,18 +1,7 @@
 import Layout from '@/components/Layout/Layout';
 import SEOHead from '@/components/SEO/SEOHead';
 import { useLanguage } from '@/context/LanguageContext';
-import { m } from 'framer-motion';
-
-const FadeUp = ({ children, delay = 0 }: { children: React.ReactNode; delay?: number }) => (
-  <m.div
-    initial={{ opacity: 0, y: 20 }}
-    whileInView={{ opacity: 1, y: 0 }}
-    viewport={{ once: true, margin: '-40px' }}
-    transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1], delay }}
-  >
-    {children}
-  </m.div>
-);
+import FadeUp from '@/components/FadeUp';
 
 const PrivacyPolicy = () => {
   const { t } = useLanguage();
@@ -84,7 +73,7 @@ const PrivacyPolicy = () => {
       />
 
       <div className="max-w-3xl mx-auto px-5 sm:px-8 py-16 md:py-24">
-        <FadeUp>
+        <FadeUp eager>
           <div className="mb-12">
             <p className="text-wood-deep text-xs font-sans font-semibold uppercase tracking-widest mb-3">{t('legal.eyebrow')}</p>
             <h1 className="text-4xl md:text-5xl font-heading font-semibold text-forest-dark mb-4">{t('privacy.title')}</h1>

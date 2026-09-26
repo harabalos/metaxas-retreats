@@ -9,6 +9,7 @@ import SEOHead from '@/components/SEO/SEOHead';
 import { useLanguage } from '@/context/LanguageContext';
 import NotFound from '@/pages/NotFound';
 import { accommodationNode, breadcrumbs, business, graph } from '@/lib/schema';
+import FadeUp from '@/components/FadeUp';
 
 // Map amenity string → icon
 const AMENITY_ICONS: Record<string, React.ComponentType<{ className?: string }>> = {
@@ -42,17 +43,6 @@ const AMENITY_KEY_MAP: Record<string, string> = {
   'Private outdoor seating': 'amenity.outdoorSeating',
   'Eco-friendly amenities': 'amenity.ecoFriendly',
 };
-
-const FadeUp = ({ children, delay = 0 }: { children: React.ReactNode; delay?: number }) => (
-  <m.div
-    initial={{ opacity: 0, y: 24 }}
-    whileInView={{ opacity: 1, y: 0 }}
-    viewport={{ once: true, margin: '-40px' }}
-    transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1], delay }}
-  >
-    {children}
-  </m.div>
-);
 
 const AccommodationDetail = () => {
   const { id } = useParams<{ id: string }>();
@@ -119,7 +109,7 @@ const AccommodationDetail = () => {
       <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 py-12">
 
         {/* Breadcrumb */}
-        <FadeUp>
+        <FadeUp eager>
           <nav className="flex items-center gap-2 text-sm text-gray-500 mb-8">
             <Link to={localize('/')} onClick={() => window.scrollTo(0,0)} className="hover:text-forest transition-colors">
               {t('nav.home')}
@@ -130,7 +120,7 @@ const AccommodationDetail = () => {
         </FadeUp>
 
         {/* Header */}
-        <FadeUp delay={0.05}>
+        <FadeUp eager>
           <div className="mb-8">
             <p className="text-wood-deep text-sm font-sans font-semibold uppercase tracking-widest mb-2">{nickname}</p>
             <h1 className="text-4xl md:text-5xl font-heading font-semibold text-forest-dark leading-tight mb-4">
@@ -153,7 +143,7 @@ const AccommodationDetail = () => {
 
           {/* Left: gallery + details */}
           <div className="flex-1 min-w-0">
-            <FadeUp delay={0.1}>
+            <FadeUp eager>
               <AccommodationGallery images={accommodation.images} name={accommodationName} />
             </FadeUp>
 

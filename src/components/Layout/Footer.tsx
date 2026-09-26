@@ -1,11 +1,12 @@
 import { Link } from 'react-router-dom';
 import { Mail, MapPin, Phone } from 'lucide-react';
 import { useLanguage } from '@/context/LanguageContext';
+import { scrollBehavior } from '@/lib/motion';
 
 const Footer = () => {
   const { t, localize } = useLanguage();
 
-  const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
+  const scrollToTop = () => window.scrollTo({ top: 0, behavior: scrollBehavior() });
 
   const linkClass = 'text-sand-dark/70 hover:text-wood text-sm transition-colors duration-200';
 
