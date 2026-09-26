@@ -131,7 +131,7 @@
   "form.message": "Message",
   "footer.privacy": "Privacy Policy",
   "footer.terms": "Terms of Service",
-  "cookie.text": "We use cookies to enhance your browsing experience and analyze our traffic. By clicking \"Accept\", you consent to our use of cookies. See our",
+  "cookie.text": "We use Google Analytics to understand how visitors use our site — only after your consent. No tracking without permission.",
   "cookie.privacyLink": "Privacy Policy",
   "cookie.accept": "Accept",
   "cookie.decline": "Decline",
@@ -308,5 +308,6 @@
   "distance.hoursMinutes": "{{hours}} h {{minutes}} min",
   "distance.byCar": "{{time}} by car",
   "distance.onFoot": "{{meters}} m on foot",
-  "nav.language": "Language"
+  "nav.language": "Language",
+  "cookie.title": "We use cookies"
 }

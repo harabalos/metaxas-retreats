@@ -131,7 +131,7 @@
   "form.message": "Nachricht",
   "footer.privacy": "Datenschutzerklärung",
   "footer.terms": "Nutzungsbedingungen",
-  "cookie.text": "Wir verwenden Cookies, um Ihr Surferlebnis zu verbessern und unseren Datenverkehr zu analysieren. Mit Klick auf 'Akzeptieren' stimmen Sie der Nutzung von Cookies zu. Weitere Informationen in unserer",
+  "cookie.text": "Wir nutzen Google Analytics nur nach Ihrer Zustimmung, um zu verstehen, wie Besucher unsere Website nutzen.",
   "cookie.privacyLink": "Datenschutzerklärung",
   "cookie.accept": "Akzeptieren",
   "cookie.decline": "Ablehnen",
@@ -308,5 +308,6 @@
   "distance.hoursMinutes": "{{hours}} Std. {{minutes}} Min.",
   "distance.byCar": "{{time}} mit dem Auto",
   "distance.onFoot": "{{meters}} m zu Fuß",
-  "nav.language": "Sprache"
+  "nav.language": "Sprache",
+  "cookie.title": "Wir nutzen Cookies"
 }

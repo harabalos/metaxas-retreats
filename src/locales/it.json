@@ -131,8 +131,8 @@
   "form.message": "Messaggio",
   "footer.privacy": "Informativa sulla Privacy",
   "footer.terms": "Termini di Servizio",
-  "cookie.text": "Utilizziamo i cookie per migliorare la tua esperienza di navigazione e analizzare il nostro traffico. Cliccando su \"Accetta\", acconsenti all'uso dei cookie. Vedi la nostra",
-  "cookie.privacyLink": "Informativa sulla Privacy",
+  "cookie.text": "Utilizziamo Google Analytics per capire come i visitatori usano il sito — solo dopo il tuo consenso.",
+  "cookie.privacyLink": "Privacy Policy",
   "cookie.accept": "Accetta",
   "cookie.decline": "Rifiuta",
   "seo.homeDescription": "Glamping e alloggio sulla spiaggia a Lefkada, Grecia. Casa in legno e tende glamping a 50m da Mikros Gialos.",
@@ -308,5 +308,6 @@
   "distance.hoursMinutes": "{{hours}} h {{minutes}} min",
   "distance.byCar": "{{time}} in auto",
   "distance.onFoot": "{{meters}} m a piedi",
-  "nav.language": "Lingua"
+  "nav.language": "Lingua",
+  "cookie.title": "Utilizziamo i cookie"
 }

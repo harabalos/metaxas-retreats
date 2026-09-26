@@ -131,10 +131,10 @@
   "form.message": "Mesaj",
   "footer.privacy": "Politica de Confidențialitate",
   "footer.terms": "Termeni și Condiții",
-  "cookie.text": "Folosim cookie-uri pentru a îmbunătăți experiența dvs. de navigare și a analiza traficul nostru. Făcând clic pe 'Accept', sunteți de acord cu utilizarea cookie-urilor. Consultați",
-  "cookie.privacyLink": "Politica de Confidențialitate",
-  "cookie.accept": "Accept",
-  "cookie.decline": "Refuz",
+  "cookie.text": "Folosim Google Analytics pentru a înțelege cum vizitatorii utilizează site-ul nostru — numai după consimțământul dvs.",
+  "cookie.privacyLink": "Politică de confidențialitate",
+  "cookie.accept": "Acceptă",
+  "cookie.decline": "Refuză",
   "seo.homeDescription": "Glamping & cazare la mare în Lefkada, Grecia. Casă din lemn & corturi glamping la 50m de plaja Mikros Gialos.",
   "home.accommodations.directBook": "Rezervare directă = cel mai bun tarif, fără taxe de platformă",
   "home.accommodations.getInTouch": "Contactează-ne",
@@ -315,5 +315,6 @@
   "distance.onFoot": "{{meters}} m pe jos",
   "distance.minutes_few": "{{count}} min",
   "distance.hours_few": "{{count}} ore",
-  "nav.language": "Limbă"
+  "nav.language": "Limbă",
+  "cookie.title": "Folosim cookie-uri"
 }

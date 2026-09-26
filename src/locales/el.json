@@ -131,7 +131,7 @@
   "form.message": "Μήνυμα",
   "footer.privacy": "Πολιτική Απορρήτου",
   "footer.terms": "Όροι Χρήσης",
-  "cookie.text": "Χρησιμοποιούμε cookies για να βελτιώσουμε την εμπειρία σας και να αναλύσουμε την επισκεψιμότητά μας. Κάνοντας κλικ στο «Αποδοχή», συναινείτε στη χρήση cookies. Δείτε την",
+  "cookie.text": "Χρησιμοποιούμε Google Analytics για να καταλάβουμε πώς χρησιμοποιείτε την ιστοσελίδα μας — μόνο μετά τη συγκατάθεσή σας.",
   "cookie.privacyLink": "Πολιτική Απορρήτου",
   "cookie.accept": "Αποδοχή",
   "cookie.decline": "Απόρριψη",
@@ -308,5 +308,6 @@
   "distance.hoursMinutes": "{{hours}} ώρα {{minutes}} λεπτά",
   "distance.byCar": "{{time}} με το αυτοκίνητο",
   "distance.onFoot": "{{meters}} μ. με τα πόδια",
-  "nav.language": "Γλώσσα"
+  "nav.language": "Γλώσσα",
+  "cookie.title": "Χρησιμοποιούμε cookies"
 }
