@@ -3,6 +3,10 @@ import { Users, BedDouble, ArrowRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { Accommodation } from '@/data/accommodations';
 import { useLanguage } from '@/context/LanguageContext';
+import { responsiveImage } from '@/lib/images';
+
+// Two cards side by side from md up (max-w-4xl grid), one per row below.
+const CARD_IMAGE_SIZES = '(min-width: 960px) 432px, (min-width: 768px) calc(50vw - 56px), calc(100vw - 40px)';
 
 interface AccommodationCardProps {
   accommodation: Accommodation;
@@ -38,9 +42,10 @@ const AccommodationCard = ({ accommodation, index = 0 }: AccommodationCardProps)
         {/* Image */}
         <div className="relative h-64 overflow-hidden">
           <img
-            src={images[0] || '/images/placeholder.svg'}
+            {...responsiveImage(images[0] || '/images/placeholder.svg', CARD_IMAGE_SIZES)}
             alt={translatedName}
             loading="lazy"
+            decoding="async"
             className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
           />
           {/* Gradient */}

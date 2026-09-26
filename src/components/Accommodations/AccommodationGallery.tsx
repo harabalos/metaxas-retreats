@@ -2,6 +2,31 @@ import { useState, useEffect, useCallback, useRef } from 'react';
 import { ChevronLeft, ChevronRight, X, ZoomIn } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useLanguage } from '@/context/LanguageContext';
+import { aspectRatio, imageUrl, responsiveImage } from '@/lib/images';
+
+// Width of the main photo: the left column next to the 380px booking widget
+// from lg up, the full content width below. scripts/prerender-meta.js preloads
+// the first photo with the same sizes, so keep the two in step.
+const MAIN_IMAGE_SIZES = '(min-width: 1280px) 748px, (min-width: 1024px) calc(100vw - 532px), calc(100vw - 40px)';
+
+/**
+ * src/srcSet/sizes for the lightbox photo.
+ *
+ * The photo is shown object-contain inside the viewport padding, so its
+ * rendered width depends on its shape; telling the browser that width lets it
+ * fetch a portrait photo at about half the size of a landscape one. No
+ * width/height attributes: with max-w/max-h-full they would stretch the box past
+ * the photo and misplace the shadow.
+ */
+function lightboxImage(src: string) {
+  const { src: fallback, srcSet } = responsiveImage(src, '', { withOriginal: true });
+  const ratio = aspectRatio(src);
+  if (!ratio) return { src: fallback, srcSet };
+  const wide = window.innerWidth >= 640;
+  const maxWidth = window.innerWidth - (wide ? 128 : 16);
+  const maxHeight = window.innerHeight - (wide ? 96 : 128);
+  return { src: fallback, srcSet, sizes: `${Math.round(Math.min(maxWidth, maxHeight * ratio))}px` };
+}
 
 interface AccommodationGalleryProps {
   images: string[];
@@ -255,7 +280,7 @@ const AccommodationGallery = ({ images, name }: AccommodationGalleryProps) => {
               animate="center"
               exit="exit"
               transition={transition}
-              src={images[current] || '/images/placeholder.svg'}
+              {...responsiveImage(images[current] || '/images/placeholder.svg', MAIN_IMAGE_SIZES)}
               alt={`${name} - ${current + 1}`}
               className="absolute inset-0 w-full h-full object-cover"
             />
@@ -310,10 +335,11 @@ const AccommodationGallery = ({ images, name }: AccommodationGalleryProps) => {
                 }`}
               >
                 <img
-                  src={img}
+                  src={imageUrl(img, 160)}
                   alt={`${name} ${i + 1}`}
                   className="w-full h-full object-cover"
                   loading={i < 6 ? 'eager' : 'lazy'}
+                  decoding="async"
                 />
               </button>
             ))}
@@ -375,7 +401,7 @@ const AccommodationGallery = ({ images, name }: AccommodationGalleryProps) => {
                     animate={zoom === 1 ? 'center' : { opacity: 1 }}
                     exit={zoom === 1 ? 'exit' : { opacity: 0 }}
                     transition={transition}
-                    src={images[current]}
+                    {...lightboxImage(images[current])}
                     alt={`${name} - ${current + 1}`}
                     draggable={false}
                     className="max-w-full max-h-full object-contain rounded-lg shadow-2xl"

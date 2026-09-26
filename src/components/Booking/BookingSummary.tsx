@@ -3,6 +3,7 @@ import { el, enUS } from 'date-fns/locale';
 import { CalendarDays, Users, Moon } from 'lucide-react';
 import { Accommodation } from '@/data/accommodations';
 import { useLanguage } from '@/context/LanguageContext';
+import { imageUrl } from '@/lib/images';
 
 interface BookingSummaryProps {
   accommodation: Accommodation;
@@ -35,7 +36,7 @@ const BookingSummary = ({ accommodation, startDate, endDate, guests, nights, sel
       <div className="flex items-center gap-4">
         <div className="w-20 h-20 rounded-xl overflow-hidden flex-shrink-0">
           <img
-            src={accommodation.images[0] || '/images/placeholder.svg'}
+            src={imageUrl(accommodation.images[0] || '/images/placeholder.svg', 160)}
             alt={accommodationName}
             className="w-full h-full object-cover"
             loading="lazy"

@@ -1,0 +1,437 @@
+{
+  "/assets/0cbd94cc-fdef-4176-82c1-389e8194aeb3.jpg": {
+    "w": 1824,
+    "h": 1026,
+    "base": "/assets/opt/0cbd94cc-fdef-4176-82c1-389e8194aeb3.34f0203b",
+    "widths": [
+      160,
+      480,
+      960,
+      1600
+    ]
+  },
+  "/assets/2f6bd2b9-02d2-44a7-ade9-2051f8e6b39a.png": {
+    "w": 736,
+    "h": 414,
+    "base": "/assets/opt/2f6bd2b9-02d2-44a7-ade9-2051f8e6b39a.ce786c14",
+    "widths": [
+      160,
+      480,
+      736
+    ]
+  },
+  "/assets/477283771.jpg": {
+    "w": 1024,
+    "h": 683,
+    "base": "/assets/opt/477283771.46f8eea4",
+    "widths": [
+      160,
+      480,
+      960,
+      1024
+    ]
+  },
+  "/assets/479336955.jpg": {
+    "w": 513,
+    "h": 768,
+    "base": "/assets/opt/479336955.b2d50bc1",
+    "widths": [
+      160,
+      480,
+      513
+    ]
+  },
+  "/assets/480234586.jpg": {
+    "w": 1024,
+    "h": 683,
+    "base": "/assets/opt/480234586.16ed3956",
+    "widths": [
+      160,
+      480,
+      960,
+      1024
+    ]
+  },
+  "/assets/85ab03d1-caf1-4700-8b73-024e7542386a.jpg": {
+    "w": 1920,
+    "h": 1281,
+    "base": "/assets/opt/85ab03d1-caf1-4700-8b73-024e7542386a.935ed977",
+    "widths": [
+      160,
+      480,
+      960,
+      1600
+    ]
+  },
+  "/assets/88d93693-0850-4a0d-994d-97a5c35dfc96.jpg": {
+    "w": 1920,
+    "h": 1281,
+    "base": "/assets/opt/88d93693-0850-4a0d-994d-97a5c35dfc96.90af5123",
+    "widths": [
+      160,
+      480,
+      960,
+      1600
+    ]
+  },
+  "/assets/Milos.jpeg": {
+    "w": 736,
+    "h": 920,
+    "base": "/assets/opt/Milos.ba44d566",
+    "widths": [
+      160,
+      480,
+      736
+    ]
+  },
+  "/assets/avli.jpg": {
+    "w": 576,
+    "h": 768,
+    "base": "/assets/opt/avli.599beca1",
+    "widths": [
+      160,
+      480,
+      576
+    ]
+  },
+  "/assets/avli2.jpg": {
+    "w": 1024,
+    "h": 768,
+    "base": "/assets/opt/avli2.4e25cd85",
+    "widths": [
+      160,
+      480,
+      960,
+      1024
+    ]
+  },
+  "/assets/b333b19c-eb5a-4f1d-a8bb-9ba39fd8482d.jpg": {
+    "w": 1216,
+    "h": 1824,
+    "base": "/assets/opt/b333b19c-eb5a-4f1d-a8bb-9ba39fd8482d.49303765",
+    "widths": [
+      160,
+      480,
+      960,
+      1216
+    ]
+  },
+  "/assets/b548966e-47b9-4b60-a67c-8860d08b8aac.jpg": {
+    "w": 1920,
+    "h": 1281,
+    "base": "/assets/opt/b548966e-47b9-4b60-a67c-8860d08b8aac.776d7eb1",
+    "widths": [
+      160,
+      480,
+      960,
+      1600
+    ]
+  },
+  "/assets/c684f5f3-b382-4e9b-b997-9a4614320960.jpg": {
+    "w": 1920,
+    "h": 1281,
+    "base": "/assets/opt/c684f5f3-b382-4e9b-b997-9a4614320960.4f35c36c",
+    "widths": [
+      160,
+      480,
+      960,
+      1600
+    ]
+  },
+  "/assets/e9f9bd84-9f74-4189-bf30-d6640a566fd3.jpg": {
+    "w": 1824,
+    "h": 1216,
+    "base": "/assets/opt/e9f9bd84-9f74-4189-bf30-d6640a566fd3.77ef3d60",
+    "widths": [
+      160,
+      480,
+      960,
+      1600
+    ]
+  },
+  "/assets/f3dbfe79-a8c0-42d5-87d3-df85833746be.jpg": {
+    "w": 1920,
+    "h": 1281,
+    "base": "/assets/opt/f3dbfe79-a8c0-42d5-87d3-df85833746be.28055fcb",
+    "widths": [
+      160,
+      480,
+      960,
+      1600
+    ]
+  },
+  "/assets/fd98c289-04aa-409e-abf0-a5369a9855be.jpg": {
+    "w": 1281,
+    "h": 1920,
+    "base": "/assets/opt/fd98c289-04aa-409e-abf0-a5369a9855be.f649cc93",
+    "widths": [
+      160,
+      480,
+      960,
+      1281
+    ]
+  },
+  "/assets/glamping-tent/banio.jpg": {
+    "w": 3126,
+    "h": 4168,
+    "base": "/assets/opt/glamping-tent/banio.0c96b689",
+    "widths": [
+      160,
+      480,
+      960,
+      1600
+    ]
+  },
+  "/assets/glamping-tent/banio2.jpg": {
+    "w": 2955,
+    "h": 3940,
+    "base": "/assets/opt/glamping-tent/banio2.294b6e0c",
+    "widths": [
+      160,
+      480,
+      960,
+      1600
+    ]
+  },
+  "/assets/glamping-tent/banio3.jpg": {
+    "w": 3139,
+    "h": 4229,
+    "base": "/assets/opt/glamping-tent/banio3.a62d8303",
+    "widths": [
+      160,
+      480,
+      960,
+      1600
+    ]
+  },
+  "/assets/glamping-tent/fonto.jpg": {
+    "w": 3024,
+    "h": 4032,
+    "base": "/assets/opt/glamping-tent/fonto.2d038bd6",
+    "widths": [
+      160,
+      480,
+      960,
+      1600
+    ]
+  },
+  "/assets/glamping-tent/kouzina.jpg": {
+    "w": 2982,
+    "h": 3976,
+    "base": "/assets/opt/glamping-tent/kouzina.52920553",
+    "widths": [
+      160,
+      480,
+      960,
+      1600
+    ]
+  },
+  "/assets/glamping-tent/krasaki.jpg": {
+    "w": 2969,
+    "h": 3958,
+    "base": "/assets/opt/glamping-tent/krasaki.10ecb94e",
+    "widths": [
+      160,
+      480,
+      960,
+      1600
+    ]
+  },
+  "/assets/glamping-tent/krevati.jpg": {
+    "w": 2969,
+    "h": 3958,
+    "base": "/assets/opt/glamping-tent/krevati.60d32a77",
+    "widths": [
+      160,
+      480,
+      960,
+      1600
+    ]
+  },
+  "/assets/glamping-tent/krevati2.jpg": {
+    "w": 2982,
+    "h": 3976,
+    "base": "/assets/opt/glamping-tent/krevati2.e506bb0d",
+    "widths": [
+      160,
+      480,
+      960,
+      1600
+    ]
+  },
+  "/assets/glamping-tent/krevatia.jpg": {
+    "w": 3154,
+    "h": 4206,
+    "base": "/assets/opt/glamping-tent/krevatia.d61ead05",
+    "widths": [
+      160,
+      480,
+      960,
+      1600
+    ]
+  },
+  "/assets/glamping-tent/krevatia2.jpg": {
+    "w": 2989,
+    "h": 3973,
+    "base": "/assets/opt/glamping-tent/krevatia2.2a5dcae1",
+    "widths": [
+      160,
+      480,
+      960,
+      1600
+    ]
+  },
+  "/assets/glamping-tent/prosopsi.jpg": {
+    "w": 3985,
+    "h": 2989,
+    "base": "/assets/opt/glamping-tent/prosopsi.7bbec87f",
+    "widths": [
+      160,
+      480,
+      960,
+      1600
+    ]
+  },
+  "/assets/glamping-tent/prosopsi2.jpg": {
+    "w": 2982,
+    "h": 3808,
+    "base": "/assets/opt/glamping-tent/prosopsi2.4b6ef824",
+    "widths": [
+      160,
+      480,
+      960,
+      1600
+    ]
+  },
+  "/assets/glamping-tent/prosopsi3.jpg": {
+    "w": 2942,
+    "h": 3923,
+    "base": "/assets/opt/glamping-tent/prosopsi3.f400f56e",
+    "widths": [
+      160,
+      480,
+      960,
+      1600
+    ]
+  },
+  "/assets/glamping-tent/prosopsiLight.jpg": {
+    "w": 3905,
+    "h": 2929,
+    "base": "/assets/opt/glamping-tent/prosopsiLight.8de242a6",
+    "widths": [
+      160,
+      480,
+      960,
+      1600
+    ]
+  },
+  "/assets/glamping-tent/trapezaria.jpg": {
+    "w": 3147,
+    "h": 4196,
+    "base": "/assets/opt/glamping-tent/trapezaria.1d1e874d",
+    "widths": [
+      160,
+      480,
+      960,
+      1600
+    ]
+  },
+  "/assets/glamping-tent/trapezaria2.jpg": {
+    "w": 3159,
+    "h": 4192,
+    "base": "/assets/opt/glamping-tent/trapezaria2.10eeac6c",
+    "widths": [
+      160,
+      480,
+      960,
+      1600
+    ]
+  },
+  "/assets/glamping-tent/trapezariaClose.jpg": {
+    "w": 2946,
+    "h": 3928,
+    "base": "/assets/opt/glamping-tent/trapezariaClose.e8bd961e",
+    "widths": [
+      160,
+      480,
+      960,
+      1600
+    ]
+  },
+  "/assets/glamping-tent/trapezariaNight.jpg": {
+    "w": 2962,
+    "h": 3949,
+    "base": "/assets/opt/glamping-tent/trapezariaNight.dbd7d34c",
+    "widths": [
+      160,
+      480,
+      960,
+      1600
+    ]
+  },
+  "/assets/glamping-tent/view.jpg": {
+    "w": 1280,
+    "h": 720,
+    "base": "/assets/opt/glamping-tent/view.cf0c227b",
+    "widths": [
+      160,
+      480,
+      960,
+      1280
+    ]
+  },
+  "/assets/glamping-tent/view2.jpg": {
+    "w": 1280,
+    "h": 720,
+    "base": "/assets/opt/glamping-tent/view2.099c36f3",
+    "widths": [
+      160,
+      480,
+      960,
+      1280
+    ]
+  },
+  "/assets/kathisma.jpeg": {
+    "w": 736,
+    "h": 414,
+    "base": "/assets/opt/kathisma.63401630",
+    "widths": [
+      160,
+      480,
+      736
+    ]
+  },
+  "/assets/krev.jpg": {
+    "w": 2913,
+    "h": 3981,
+    "base": "/assets/opt/krev.397956a3",
+    "widths": [
+      160,
+      480,
+      960,
+      1600
+    ]
+  },
+  "/assets/krev2.jpg": {
+    "w": 2942,
+    "h": 3900,
+    "base": "/assets/opt/krev2.59ba169d",
+    "widths": [
+      160,
+      480,
+      960,
+      1600
+    ]
+  },
+  "/assets/porto katsiki.jpg": {
+    "w": 6000,
+    "h": 4000,
+    "base": "/assets/opt/porto-katsiki.2366bb22",
+    "widths": [
+      160,
+      480,
+      960,
+      1600
+    ]
+  }
+}

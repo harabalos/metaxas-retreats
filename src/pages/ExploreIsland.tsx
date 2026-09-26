@@ -6,6 +6,11 @@ import SEOHead from '@/components/SEO/SEOHead';
 import { useLanguage } from '@/context/LanguageContext';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
+import { responsiveImage } from '@/lib/images';
+
+// Beach cards: three columns from lg, two from md, one below.
+const BEACH_IMAGE_SIZES =
+  '(min-width: 1280px) 380px, (min-width: 1024px) calc(33vw - 48px), (min-width: 768px) calc(50vw - 44px), calc(100vw - 40px)';
 
 const FadeUp = ({ children, delay = 0 }: { children: React.ReactNode; delay?: number }) => (
   <motion.div
@@ -123,7 +128,7 @@ const ExploreIsland = () => {
                   >
                     <div className="h-48 overflow-hidden">
                       {beach.image ? (
-                        <img src={beach.image} alt={`${beach.name} beach in Lefkada`} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" loading="lazy" />
+                        <img {...responsiveImage(beach.image, BEACH_IMAGE_SIZES)} alt={`${beach.name} beach in Lefkada`} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" loading="lazy" decoding="async" />
                       ) : (
                         <div className="h-full bg-aegean/10 flex items-center justify-center">
                           <Waves className="h-12 w-12 text-aegean/40" />

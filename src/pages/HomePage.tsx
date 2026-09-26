@@ -9,6 +9,17 @@ import AccommodationCard from '@/components/Accommodations/AccommodationCard';
 import { useAccommodations } from '@/hooks/useAccommodations';
 import SEOHead from '@/components/SEO/SEOHead';
 import { useLanguage } from '@/context/LanguageContext';
+import { responsiveImage } from '@/lib/images';
+
+// Photo column next to "The Experience" text from lg up, full width below.
+const CAROUSEL_SIZES = '(min-width: 1232px) 544px, (min-width: 1024px) calc(50vw - 72px), calc(100vw - 40px)';
+
+const CAROUSEL_IMAGES = [
+  { src: '/assets/glamping-tent/view.jpg', alt: 'Glamping tent with panoramic sea view over Mikros Gialos bay, Lefkada Greece' },
+  { src: '/assets/glamping-tent/view2.jpg', alt: 'Stunning Ionian Sea view from Metaxas Retreats glamping accommodation, Lefkada' },
+  { src: '/assets/glamping-tent/prosopsi.jpg', alt: 'Luxury glamping tent exterior among olive trees at Metaxas Retreats, Lefkada Greece' },
+  { src: '/assets/e9f9bd84-9f74-4189-bf30-d6640a566fd3.jpg', alt: 'Wooden house sea view accommodation at Mikros Gialos beach, Lefkada Greece' },
+];
 
 // ─── Reusable scroll-reveal wrapper ───────────────────────────────────────────
 const FadeUp = ({
@@ -96,6 +107,9 @@ const HomePage = () => {
   const heroRef = useRef<HTMLDivElement>(null);
   const { t, language } = useLanguage();
   const { data: accommodations, isLoading } = useAccommodations();
+  // The carousel's hidden slides are clipped, so lazy loading would only fetch
+  // each one as it slides in. Once the first photo is in, fetch the rest.
+  const [carouselStarted, setCarouselStarted] = useState(false);
 
   const [emblaRef] = useEmblaCarousel({ loop: true }, [
     Autoplay({ delay: 3500, stopOnInteraction: false })
@@ -376,16 +390,14 @@ const HomePage = () => {
               <div className="relative h-[500px] rounded-2xl overflow-hidden shadow-card group">
                 <div className="overflow-hidden h-full" ref={emblaRef}>
                   <div className="flex h-full">
-                    {[
-                      { src: "/assets/glamping-tent/view.jpg", alt: "Glamping tent with panoramic sea view over Mikros Gialos bay, Lefkada Greece" },
-                      { src: "/assets/glamping-tent/view2.jpg", alt: "Stunning Ionian Sea view from Metaxas Retreats glamping accommodation, Lefkada" },
-                      { src: "/assets/glamping-tent/prosopsi.jpg", alt: "Luxury glamping tent exterior among olive trees at Metaxas Retreats, Lefkada Greece" },
-                      { src: "/assets/e9f9bd84-9f74-4189-bf30-d6640a566fd3.jpg", alt: "Wooden house sea view accommodation at Mikros Gialos beach, Lefkada Greece" }
-                    ].map((img, idx) => (
-                      <div key={idx} className="flex-[0_0_100%] min-w-0 h-full relative">
+                    {CAROUSEL_IMAGES.map((img, idx) => (
+                      <div key={img.src} className="flex-[0_0_100%] min-w-0 h-full relative">
                         <img
-                          src={img.src}
+                          {...responsiveImage(img.src, CAROUSEL_SIZES)}
                           alt={img.alt}
+                          loading={idx === 0 || !carouselStarted ? 'lazy' : 'eager'}
+                          decoding="async"
+                          onLoad={idx === 0 ? () => setCarouselStarted(true) : undefined}
                           className="w-full h-full object-cover"
                         />
                       </div>

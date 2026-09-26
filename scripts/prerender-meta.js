@@ -21,6 +21,11 @@ const distDir = join(rootDir, 'dist');
 const SITE = 'https://www.metaxasretreats.gr';
 
 const en = JSON.parse(readFileSync(join(rootDir, 'src', 'locales', 'en.json'), 'utf-8'));
+const imageManifest = JSON.parse(readFileSync(join(rootDir, 'src', 'data', 'imageManifest.json'), 'utf-8'));
+
+// Must match MAIN_IMAGE_SIZES in src/components/Accommodations/AccommodationGallery.tsx,
+// otherwise the browser ignores the preload and downloads a second copy.
+const GALLERY_SIZES = '(min-width: 1280px) 748px, (min-width: 1024px) calc(100vw - 532px), calc(100vw - 40px)';
 
 // Route definitions with unique SEO per page
 const routes = [
@@ -38,6 +43,8 @@ const routes = [
     description: 'Charming wooden house above Mikros Gialos bay, Lefkada. Sleeps 4, sea views, private terrace, 50m from beach. Book direct.',
     h1: 'Wooden House — Sea View Accommodation in Lefkada',
     content: 'A charming wooden house perched above Mikros Gialos bay with panoramic sea views. Sleeps up to 4 guests with a private terrace, fully equipped kitchen, air conditioning, and direct beach access just 50 meters away. The ideal choice for couples or small families seeking comfort and tranquility on Lefkada island.',
+    // First photo of the gallery (src/data/accommodations.ts), the largest thing on the page.
+    heroImage: '/assets/e9f9bd84-9f74-4189-bf30-d6640a566fd3.jpg',
   },
   {
     path: '/accommodation/glamping-tent',
@@ -45,6 +52,7 @@ const routes = [
     description: 'Luxury glamping tent among olive trees, Lefkada. Sleeps 5, sea views, full kitchen, A/C, 50m from Mikros Gialos beach.',
     h1: 'Glamping Tent — Luxury Camping in Lefkada',
     content: 'Spacious luxury glamping tent set among ancient olive trees with stunning views of Mikros Gialos bay. Sleeps up to 5 guests with one double bed and three single beds, fully equipped kitchen, air conditioning, private bathroom, and outdoor dining area. Just 50 meters from the beach.',
+    heroImage: '/assets/glamping-tent/prosopsi.jpg',
   },
   {
     path: '/explore',
@@ -158,6 +166,14 @@ function faqSchema() {
     '@type': 'FAQPage',
     mainEntity,
   })}\n</script>`;
+}
+
+/** Preload for a gallery photo, matching the srcset the page renders (src/lib/images.ts). */
+function galleryPreload(src) {
+  const entry = imageManifest[src];
+  if (!entry) return '';
+  const srcset = entry.widths.map((w) => `${entry.base}-${w}w.webp ${w}w`).join(', ');
+  return `<link rel="preload" as="image" imagesrcset="${srcset}" imagesizes="${GALLERY_SIZES}" fetchpriority="high" />`;
 }
 
 function renderPage({ title, description, canonicalUrl, robots, h1, content, head = [] }) {
@@ -287,11 +303,12 @@ const baseHtml = readFileSync(join(distDir, 'index.html'), 'utf-8');
 for (const route of routes) {
   const head = [];
   if (route.home) head.push(faqSchema());
+  if (route.heroImage) head.push(galleryPreload(route.heroImage));
 
   const html = renderPage({
     ...route,
     canonicalUrl: route.path === '/' ? `${SITE}/` : `${SITE}${route.path}`,
-    head,
+    head: head.filter(Boolean),
   });
 
   // For the root this overwrites the index.html Vite built
