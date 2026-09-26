@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { Users, BedDouble, ArrowRight } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import { Accommodation } from '@/data/accommodations';
 import { useLanguage } from '@/context/LanguageContext';
 import { responsiveImage } from '@/lib/images';
@@ -28,7 +28,7 @@ const AccommodationCard = ({ accommodation, index = 0 }: AccommodationCardProps)
     : t('accommodation.glampingTent');
 
   return (
-    <motion.div
+    <m.div
       initial={{ opacity: 0, y: 32 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-60px' }}
@@ -83,7 +83,7 @@ const AccommodationCard = ({ accommodation, index = 0 }: AccommodationCardProps)
           </div>
         </div>
       </Link>
-    </motion.div>
+    </m.div>
   );
 };
 

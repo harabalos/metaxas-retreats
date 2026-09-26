@@ -3,7 +3,7 @@ import useEmblaCarousel from 'embla-carousel-react';
 import Autoplay from 'embla-carousel-autoplay';
 import { useLocation, Link } from 'react-router-dom';
 import { ArrowDown, Waves, Trees, Sun, Wind, ChevronDown } from 'lucide-react';
-import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
+import { m, useScroll, useTransform, AnimatePresence } from 'framer-motion';
 import Layout from '@/components/Layout/Layout';
 import AccommodationCard from '@/components/Accommodations/AccommodationCard';
 import GuestReviews from '@/components/Reviews/GuestReviews';
@@ -46,7 +46,7 @@ const FadeUp = ({
   delay?: number;
   className?: string;
 }) => (
-  <motion.div
+  <m.div
     initial={{ opacity: 0, y: 32 }}
     whileInView={{ opacity: 1, y: 0 }}
     viewport={{ once: true, margin: '-60px' }}
@@ -54,7 +54,7 @@ const FadeUp = ({
     className={className}
   >
     {children}
-  </motion.div>
+  </m.div>
 );
 
 
@@ -205,38 +205,38 @@ const HomePage = () => {
         </div>
 
         {/* Hero content with parallax */}
-        <motion.div
+        <m.div
           style={{ y: heroY, opacity: heroOpacity }}
           className="relative z-10 w-full px-5 sm:px-10 lg:px-16 max-w-7xl mx-auto"
         >
-          <motion.p
+          <m.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
             className="text-wood text-sm font-sans font-medium tracking-[0.2em] uppercase mb-5"
           >
             {t('home.hero.eyebrow')}
-          </motion.p>
+          </m.p>
 
-          <motion.h1
+          <m.h1
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.35, ease: [0.22, 1, 0.36, 1] }}
             className="font-heading font-light text-white text-display-2xl leading-[1.05] mb-6 max-w-3xl text-balance"
           >
             {t('home.hero.title')}
-          </motion.h1>
+          </m.h1>
 
-          <motion.p
+          <m.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.55 }}
             className="text-sand-light/80 text-lg md:text-xl font-sans mb-10 max-w-xl leading-relaxed"
           >
             {t('home.hero.subtitle')}
-          </motion.p>
+          </m.p>
 
-          <motion.div
+          <m.div
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.75 }}
@@ -254,11 +254,11 @@ const HomePage = () => {
             >
               {t('nav.contact')}
             </Link>
-          </motion.div>
-        </motion.div>
+          </m.div>
+        </m.div>
 
         {/* Scroll indicator */}
-        <motion.button
+        <m.button
           onClick={scrollToAccommodations}
           aria-label={t('home.hero.scrollDown')}
           initial={{ opacity: 0 }}
@@ -266,13 +266,13 @@ const HomePage = () => {
           transition={{ delay: 1.3 }}
           className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 text-white/60 hover:text-white transition-colors"
         >
-          <motion.div
+          <m.div
             animate={{ y: [0, 8, 0] }}
             transition={{ repeat: Infinity, duration: 2, ease: 'easeInOut' }}
           >
             <ArrowDown className="h-6 w-6" />
-          </motion.div>
-        </motion.button>
+          </m.div>
+        </m.button>
       </section>
 
       {/* ─── BRAND STATEMENT ───────────────────────────────────────────────── */}
@@ -331,7 +331,7 @@ const HomePage = () => {
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
               {accommodations?.map((accommodation, i) => (
-                <motion.div
+                <m.div
                   key={accommodation.id}
                   initial={{ opacity: 0, y: 40 }}
                   whileInView={{ opacity: 1, y: 0 }}
@@ -339,7 +339,7 @@ const HomePage = () => {
                   transition={{ duration: 0.65, delay: i * 0.12, ease: [0.22, 1, 0.36, 1] }}
                 >
                   <AccommodationCard accommodation={accommodation} />
-                </motion.div>
+                </m.div>
               ))}
             </div>
           )}

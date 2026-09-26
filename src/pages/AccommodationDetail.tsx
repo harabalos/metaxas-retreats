@@ -1,6 +1,6 @@
 import { useParams, Link, Navigate } from 'react-router-dom';
 import { Users, BedDouble, Bath, Wifi, Wind, Car, Waves, Sun, Coffee, TreePine, UtensilsCrossed, ChevronLeft, CalendarDays } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import Layout from '@/components/Layout/Layout';
 import { useAccommodations } from '@/hooks/useAccommodations';
 import AccommodationGallery from '@/components/Accommodations/AccommodationGallery';
@@ -44,14 +44,14 @@ const AMENITY_KEY_MAP: Record<string, string> = {
 };
 
 const FadeUp = ({ children, delay = 0 }: { children: React.ReactNode; delay?: number }) => (
-  <motion.div
+  <m.div
     initial={{ opacity: 0, y: 24 }}
     whileInView={{ opacity: 1, y: 0 }}
     viewport={{ once: true, margin: '-40px' }}
     transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1], delay }}
   >
     {children}
-  </motion.div>
+  </m.div>
 );
 
 const AccommodationDetail = () => {
@@ -181,7 +181,7 @@ const AccommodationDetail = () => {
                     const key = AMENITY_KEY_MAP[amenity];
                     const label = key ? t(key) : amenity;
                     return (
-                      <motion.div
+                      <m.div
                         key={i}
                         initial={{ opacity: 0, x: -12 }}
                         whileInView={{ opacity: 1, x: 0 }}
@@ -193,7 +193,7 @@ const AccommodationDetail = () => {
                           <Icon className="h-4 w-4 text-forest" />
                         </div>
                         <span className="text-sm text-gray-700">{label}</span>
-                      </motion.div>
+                      </m.div>
                     );
                   })}
                 </div>
@@ -235,7 +235,7 @@ const AccommodationDetail = () => {
 
       {/* ─── Mobile sticky "Book Direct" ribbon ───────────────────────────── */}
       {/* Visible only on mobile (lg hides the sidebar widget anyway) */}
-      <motion.div
+      <m.div
         className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-white border-t border-gray-100 shadow-[0_-4px_24px_rgba(0,0,0,0.08)] px-5 py-3 flex items-center justify-between gap-4"
         initial={{ y: 80 }}
         animate={{ y: 0 }}
@@ -257,7 +257,7 @@ const AccommodationDetail = () => {
           <CalendarDays className="h-4 w-4 inline-block mr-1.5 -mt-0.5" />
           {t('nav.bookNow')}
         </Link>
-      </motion.div>
+      </m.div>
     </Layout>
   );
 };

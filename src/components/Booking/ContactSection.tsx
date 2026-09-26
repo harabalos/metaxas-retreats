@@ -11,7 +11,7 @@ import { format } from 'date-fns';
 import { toast } from 'sonner';
 import { contactFormSchema } from '@/lib/validationSchemas';
 import { z } from 'zod';
-import { motion, AnimatePresence } from 'framer-motion';
+import { m, AnimatePresence } from 'framer-motion';
 
 const ContactSection = () => {
   const { t, language, localize } = useLanguage();
@@ -135,30 +135,30 @@ const ContactSection = () => {
 
         <AnimatePresence mode="wait">
           {submitted ? (
-            <motion.div
+            <m.div
               key="success"
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
               className="text-center py-8"
             >
-              <motion.div
+              <m.div
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}
                 transition={{ delay: 0.1, type: 'spring', stiffness: 200, damping: 15 }}
                 className="w-14 h-14 rounded-full bg-forest/10 flex items-center justify-center mx-auto mb-4"
               >
                 <CheckCircle className="h-7 w-7 text-forest" />
-              </motion.div>
+              </m.div>
               <h3 className="font-heading font-semibold text-xl text-forest-dark mb-2">
                 {t('booking.success.title')}
               </h3>
               <p className="text-gray-500 text-sm">
                 {t('booking.success.desc')}
               </p>
-            </motion.div>
+            </m.div>
           ) : (
-            <motion.form key="form" onSubmit={handleSubmit} className="space-y-4">
+            <m.form key="form" onSubmit={handleSubmit} className="space-y-4">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <Label htmlFor="fullName" className="text-sm text-gray-600 mb-1 block">{t('form.fullName')} *</Label>
@@ -236,7 +236,7 @@ const ContactSection = () => {
                   ? t('form.sending')
                   : t('form.sendRequest')}
               </button>
-            </motion.form>
+            </m.form>
           )}
         </AnimatePresence>
       </div>

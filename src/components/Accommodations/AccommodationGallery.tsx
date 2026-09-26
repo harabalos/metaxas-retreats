@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { ChevronLeft, ChevronRight, X, ZoomIn } from 'lucide-react';
-import { motion, AnimatePresence, type Transition } from 'framer-motion';
+import { m, AnimatePresence, type Transition } from 'framer-motion';
 import { useLanguage } from '@/context/LanguageContext';
 import { aspectRatio, imageUrl, responsiveImage } from '@/lib/images';
 
@@ -272,7 +272,7 @@ const AccommodationGallery = ({ images, name }: AccommodationGalleryProps) => {
           onClick={() => setLightbox(true)}
         >
           <AnimatePresence custom={direction} initial={false}>
-            <motion.img
+            <m.img
               key={current}
               custom={direction}
               variants={slideVariants}
@@ -350,7 +350,7 @@ const AccommodationGallery = ({ images, name }: AccommodationGalleryProps) => {
       {/* Lightbox */}
       <AnimatePresence>
         {lightbox && (
-          <motion.div
+          <m.div
             key="lightbox"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -393,7 +393,7 @@ const AccommodationGallery = ({ images, name }: AccommodationGalleryProps) => {
                 }}
               >
                 <AnimatePresence custom={direction} initial={false} mode="wait">
-                  <motion.img
+                  <m.img
                     key={current}
                     custom={direction}
                     variants={zoom === 1 ? slideVariants : undefined}
@@ -460,7 +460,7 @@ const AccommodationGallery = ({ images, name }: AccommodationGalleryProps) => {
                 ))}
               </div>
             )}
-          </motion.div>
+          </m.div>
         )}
       </AnimatePresence>
     </>

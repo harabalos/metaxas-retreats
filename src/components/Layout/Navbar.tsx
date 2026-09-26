@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { m, AnimatePresence } from 'framer-motion';
 import { useLanguage } from '@/context/LanguageContext';
 import LanguageSwitcher from './LanguageSwitcher';
 import { splitLanguage } from '@/lib/i18nRoutes';
@@ -52,7 +52,7 @@ const Navbar = () => {
 
   return (
     <>
-      <motion.nav
+      <m.nav
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${navBg}`}
         initial={{ y: -80, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
@@ -114,7 +114,7 @@ const Navbar = () => {
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               >
                 <AnimatePresence mode="wait" initial={false}>
-                  <motion.span
+                  <m.span
                     key={mobileMenuOpen ? 'x' : 'menu'}
                     initial={{ opacity: 0, rotate: -90 }}
                     animate={{ opacity: 1, rotate: 0 }}
@@ -122,18 +122,18 @@ const Navbar = () => {
                     transition={{ duration: 0.15 }}
                   >
                     {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-                  </motion.span>
+                  </m.span>
                 </AnimatePresence>
               </button>
             </div>
           </div>
         </div>
-      </motion.nav>
+      </m.nav>
 
       {/* Mobile menu */}
       <AnimatePresence>
         {mobileMenuOpen && (
-          <motion.div
+          <m.div
             key="mobile-menu"
             initial={{ opacity: 0, y: -16 }}
             animate={{ opacity: 1, y: 0 }}
@@ -143,7 +143,7 @@ const Navbar = () => {
           >
             <div className="px-6 py-6 space-y-1">
               {navLinks.map(({ label, onClick, to, href }, i) => (
-                <motion.div
+                <m.div
                   key={label}
                   initial={{ opacity: 0, x: -16 }}
                   animate={{ opacity: 1, x: 0 }}
@@ -166,9 +166,9 @@ const Navbar = () => {
                       {label}
                     </Link>
                   )}
-                </motion.div>
+                </m.div>
               ))}
-              <motion.div
+              <m.div
                 initial={{ opacity: 0, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.25, duration: 0.22 }}
@@ -181,9 +181,9 @@ const Navbar = () => {
                 >
                   {t('nav.bookNow') || 'Book Now'}
                 </Link>
-              </motion.div>
+              </m.div>
             </div>
-          </motion.div>
+          </m.div>
         )}
       </AnimatePresence>
     </>

@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { useLanguage, Language } from '@/context/LanguageContext';
 import { ChevronDown } from 'lucide-react';
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, m } from 'framer-motion';
 
 const languages: { code: Language; flag: string; short: string }[] = [
   { code: 'en', flag: '🇬🇧', short: 'EN' },
@@ -45,18 +45,18 @@ const LanguageSwitcher = ({ isLight = false }: LanguageSwitcherProps) => {
       >
         <span>{current.flag}</span>
         <span className="hidden sm:inline">{current.short}</span>
-        <motion.span
+        <m.span
           animate={{ rotate: open ? 180 : 0 }}
           transition={{ duration: 0.2 }}
           className="opacity-60"
         >
           <ChevronDown className="h-3 w-3" />
-        </motion.span>
+        </m.span>
       </button>
 
       <AnimatePresence>
         {open && (
-          <motion.div
+          <m.div
             key="lang-dropdown"
             initial={{ opacity: 0, y: -6, scale: 0.97 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -81,7 +81,7 @@ const LanguageSwitcher = ({ isLight = false }: LanguageSwitcherProps) => {
                 )}
               </button>
             ))}
-          </motion.div>
+          </m.div>
         )}
       </AnimatePresence>
     </div>

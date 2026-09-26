@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useParams, useSearchParams, useNavigate } from 'react-router-dom';
 import { differenceInDays, format } from 'date-fns';
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import Layout from '@/components/Layout/Layout';
 import { useAccommodations } from '@/hooks/useAccommodations';
 import BookingSummary from '@/components/Booking/BookingSummary';
@@ -70,7 +70,7 @@ const BookingPage = () => {
       <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 py-12">
 
         {/* Header */}
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
@@ -99,22 +99,22 @@ const BookingPage = () => {
               {accommodationName}
             </div>
           </div>
-        </motion.div>
+        </m.div>
 
         {/* Two-column layout */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
 
           {/* Left — contact (email + WhatsApp) */}
-          <motion.div
+          <m.div
             initial={{ opacity: 0, x: -24 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
           >
             <ContactSection />
-          </motion.div>
+          </m.div>
 
           {/* Right — summary + direct booking nudge */}
-          <motion.div
+          <m.div
             initial={{ opacity: 0, x: 24 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1], delay: 0.18 }}
@@ -163,7 +163,7 @@ const BookingPage = () => {
                 </a>
               </div>
             </div>
-          </motion.div>
+          </m.div>
         </div>
       </div>
     </Layout>

@@ -12,17 +12,17 @@ import { toast } from 'sonner';
 import { contactFormSchema } from '@/lib/validationSchemas';
 import { breadcrumbs, business, businessRef, graph, SITE } from '@/lib/schema';
 import { z } from 'zod';
-import { motion, AnimatePresence } from 'framer-motion';
+import { m, AnimatePresence } from 'framer-motion';
 
 const FadeUp = ({ children, delay = 0 }: { children: React.ReactNode; delay?: number }) => (
-  <motion.div
+  <m.div
     initial={{ opacity: 0, y: 24 }}
     whileInView={{ opacity: 1, y: 0 }}
     viewport={{ once: true, margin: '-40px' }}
     transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1], delay }}
   >
     {children}
-  </motion.div>
+  </m.div>
 );
 
 const ContactUs = () => {
@@ -103,30 +103,30 @@ const ContactUs = () => {
 
               <AnimatePresence mode="wait">
                 {submitted ? (
-                  <motion.div
+                  <m.div
                     key="success"
                     initial={{ opacity: 0, scale: 0.9 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
                     className="text-center py-12"
                   >
-                    <motion.div
+                    <m.div
                       initial={{ scale: 0 }}
                       animate={{ scale: 1 }}
                       transition={{ delay: 0.1, type: 'spring', stiffness: 200, damping: 15 }}
                       className="w-16 h-16 rounded-full bg-forest/10 flex items-center justify-center mx-auto mb-5"
                     >
                       <CheckCircle className="h-8 w-8 text-forest" />
-                    </motion.div>
+                    </m.div>
                     <h3 className="font-heading font-semibold text-2xl text-forest-dark mb-3">
                       {t('booking.success.title')}
                     </h3>
                     <p className="text-gray-500 text-sm leading-relaxed max-w-xs mx-auto">
                       {t('booking.success.desc')}
                     </p>
-                  </motion.div>
+                  </m.div>
                 ) : (
-                  <motion.form key="form" onSubmit={handleSubmit} className="space-y-5">
+                  <m.form key="form" onSubmit={handleSubmit} className="space-y-5">
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                       <div>
                         <Label htmlFor="fullName" className="text-sm text-gray-600 mb-1.5 block">{t('form.fullName')} *</Label>
@@ -157,7 +157,7 @@ const ContactUs = () => {
                       <Send className="h-4 w-4" />
                       {isSubmitting ? t('form.sending') : t('form.sendMessage')}
                     </button>
-                  </motion.form>
+                  </m.form>
                 )}
               </AnimatePresence>
             </div>

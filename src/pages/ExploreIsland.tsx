@@ -4,7 +4,7 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import { MapPin, Sailboat, Waves, Mountain, Star } from 'lucide-react';
 import SEOHead from '@/components/SEO/SEOHead';
 import { useLanguage } from '@/context/LanguageContext';
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { responsiveImage } from '@/lib/images';
 import { breadcrumbs, business, graph, SITE } from '@/lib/schema';
@@ -14,14 +14,14 @@ const BEACH_IMAGE_SIZES =
   '(min-width: 1280px) 380px, (min-width: 1024px) calc(33vw - 48px), (min-width: 768px) calc(50vw - 44px), calc(100vw - 40px)';
 
 const FadeUp = ({ children, delay = 0 }: { children: React.ReactNode; delay?: number }) => (
-  <motion.div
+  <m.div
     initial={{ opacity: 0, y: 24 }}
     whileInView={{ opacity: 1, y: 0 }}
     viewport={{ once: true, margin: '-60px' }}
     transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1], delay }}
   >
     {children}
-  </motion.div>
+  </m.div>
 );
 
 // Text for each entry lives in the locale files under explore.beach.<id>.* etc.
@@ -120,7 +120,7 @@ const ExploreIsland = () => {
             <TabsContent value="beaches" forceMount className="data-[state=inactive]:hidden">
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {beaches.map((beach, i) => (
-                  <motion.div
+                  <m.div
                     key={beach.name}
                     initial={{ opacity: 0, y: 24 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -145,7 +145,7 @@ const ExploreIsland = () => {
                       </div>
                       <p className="text-sm text-gray-500 leading-relaxed line-clamp-3">{beach.description}</p>
                     </div>
-                  </motion.div>
+                  </m.div>
                 ))}
               </div>
             </TabsContent>
@@ -154,7 +154,7 @@ const ExploreIsland = () => {
             <TabsContent value="villages" forceMount className="data-[state=inactive]:hidden">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                 {villages.map((village, i) => (
-                  <motion.div
+                  <m.div
                     key={village.name}
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -168,7 +168,7 @@ const ExploreIsland = () => {
                       <h3 className="font-heading font-semibold text-forest-dark mb-1.5">{village.name}</h3>
                       <p className="text-sm text-gray-500 leading-relaxed">{village.description}</p>
                     </div>
-                  </motion.div>
+                  </m.div>
                 ))}
               </div>
             </TabsContent>
@@ -179,7 +179,7 @@ const ExploreIsland = () => {
                 {activities.map((act, i) => {
                   const Icon = activityIcons[i] || Sailboat;
                   return (
-                    <motion.div
+                    <m.div
                       key={act.title}
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
@@ -191,7 +191,7 @@ const ExploreIsland = () => {
                       </div>
                       <h3 className="font-heading font-semibold text-forest-dark mb-2">{act.title}</h3>
                       <p className="text-sm text-gray-500 leading-relaxed">{act.description}</p>
-                    </motion.div>
+                    </m.div>
                   );
                 })}
               </div>

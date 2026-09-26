@@ -7,7 +7,7 @@ import { LANGUAGES, localizePath, type Language } from "./lib/i18nRoutes";
 import { LanguageProvider } from "./context/LanguageContext";
 import CookieConsent from "./components/Layout/CookieConsent";
 import ErrorBoundary from "./components/ErrorBoundary";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, LazyMotion, domAnimation, m } from "framer-motion";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/react";
 
@@ -49,7 +49,7 @@ const AnimatedRoutes = () => {
   const location = useLocation();
   return (
     <AnimatePresence mode="wait" initial={false}>
-      <motion.div
+      <m.div
         key={location.pathname}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -73,7 +73,7 @@ const AnimatedRoutes = () => {
             ))}
           </Routes>
         </Suspense>
-      </motion.div>
+      </m.div>
     </AnimatePresence>
   );
 };
@@ -81,7 +81,10 @@ const AnimatedRoutes = () => {
 // The router comes from outside: BrowserRouter in main.tsx, StaticRouter when
 // prerendering (entry-server.tsx).
 const App = () => (
-  <>
+  // Components use the lightweight `m` with only the features the site needs
+  // (animations, exit, hover/tap and in-view; no drag or layout animations).
+  // `strict` makes a stray full `motion` component an error instead of dead weight.
+  <LazyMotion features={domAnimation} strict>
     <LanguageProvider>
       <Toaster />
       <ErrorBoundary>
@@ -91,7 +94,7 @@ const App = () => (
     </LanguageProvider>
     <Analytics />
     <SpeedInsights />
-  </>
+  </LazyMotion>
 );
 
 export default App;
