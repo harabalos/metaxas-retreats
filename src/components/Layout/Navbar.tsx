@@ -27,7 +27,7 @@ const Navbar = () => {
     if (isHome) {
       document.getElementById('accommodations')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
     } else {
-      navigate('/?scrollToAccommodations=true');
+      navigate('/#accommodations');
     }
   };
 
@@ -44,7 +44,7 @@ const Navbar = () => {
   const logoColor = (isHome && !scrolled) ? 'text-white' : 'text-sand-light';
 
   const navLinks = [
-    { label: t('nav.accommodations'), onClick: scrollToAccommodations },
+    { label: t('nav.accommodations'), href: '/#accommodations', onClick: scrollToAccommodations },
     { label: t('nav.explore'), to: '/explore' },
     { label: t('nav.contact'), to: '/contact' },
   ];
@@ -69,16 +69,17 @@ const Navbar = () => {
 
             {/* Desktop links */}
             <div className="hidden md:flex items-center gap-8">
-              {navLinks.map(({ label, onClick, to }) =>
+              {navLinks.map(({ label, onClick, to, href }) =>
                 onClick ? (
-                  <button
+                  <a
                     key={label}
-                    onClick={onClick}
+                    href={href}
+                    onClick={(e) => { e.preventDefault(); onClick(); }}
                     className={`text-sm font-sans font-medium tracking-wide transition-colors duration-200 relative group ${textColor} ${hoverColor}`}
                   >
                     {label}
                     <span className="absolute -bottom-0.5 left-0 w-0 h-px bg-wood transition-all duration-300 group-hover:w-full" />
-                  </button>
+                  </a>
                 ) : (
                   <Link
                     key={label}
@@ -140,7 +141,7 @@ const Navbar = () => {
             className="fixed top-16 left-0 right-0 z-40 bg-forest/97 backdrop-blur-md shadow-xl md:hidden"
           >
             <div className="px-6 py-6 space-y-1">
-              {navLinks.map(({ label, onClick, to }, i) => (
+              {navLinks.map(({ label, onClick, to, href }, i) => (
                 <motion.div
                   key={label}
                   initial={{ opacity: 0, x: -16 }}
@@ -148,12 +149,13 @@ const Navbar = () => {
                   transition={{ delay: i * 0.07, duration: 0.22 }}
                 >
                   {onClick ? (
-                    <button
-                      onClick={() => { onClick(); setMobileMenuOpen(false); }}
-                      className="w-full text-left py-3 px-2 text-base font-sans text-sand-light/90 hover:text-wood border-b border-white/8 transition-colors"
+                    <a
+                      href={href}
+                      onClick={(e) => { e.preventDefault(); onClick(); setMobileMenuOpen(false); }}
+                      className="block w-full text-left py-3 px-2 text-base font-sans text-sand-light/90 hover:text-wood border-b border-white/8 transition-colors"
                     >
                       {label}
-                    </button>
+                    </a>
                   ) : (
                     <Link
                       to={to!}

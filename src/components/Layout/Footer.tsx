@@ -53,7 +53,7 @@ const Footer = () => {
             </h4>
             <ul className="space-y-3">
               <li><Link to="/" className={linkClass} onClick={scrollToTop}>{t('nav.home')}</Link></li>
-              <li><Link to="/?scrollToAccommodations=true" className={linkClass}>{t('footer.ourAccommodations')}</Link></li>
+              <li><Link to="/#accommodations" className={linkClass}>{t('footer.ourAccommodations')}</Link></li>
               <li><Link to="/explore" className={linkClass} onClick={scrollToTop}>{t('nav.explore')}</Link></li>
               <li><Link to="/contact" className={linkClass} onClick={scrollToTop}>{t('footer.contactUs')}</Link></li>
             </ul>

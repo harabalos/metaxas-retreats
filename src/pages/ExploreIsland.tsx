@@ -116,7 +116,8 @@ const ExploreIsland = () => {
             </TabsList>
 
             {/* Beaches */}
-            <TabsContent value="beaches">
+            {/* forceMount keeps inactive tabs in the page (hidden), so search engines index them. */}
+            <TabsContent value="beaches" forceMount className="data-[state=inactive]:hidden">
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {beaches.map((beach, i) => (
                   <motion.div
@@ -150,7 +151,7 @@ const ExploreIsland = () => {
             </TabsContent>
 
             {/* Villages */}
-            <TabsContent value="villages">
+            <TabsContent value="villages" forceMount className="data-[state=inactive]:hidden">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                 {villages.map((village, i) => (
                   <motion.div
@@ -173,7 +174,7 @@ const ExploreIsland = () => {
             </TabsContent>
 
             {/* Activities */}
-            <TabsContent value="activities">
+            <TabsContent value="activities" forceMount className="data-[state=inactive]:hidden">
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
                 {activities.map((act, i) => {
                   const Icon = activityIcons[i] || Sailboat;

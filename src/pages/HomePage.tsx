@@ -141,7 +141,7 @@ const HomePage = () => {
   };
 
   useEffect(() => {
-    if (location.search.includes('scrollToAccommodations=true')) {
+    if (location.hash === '#accommodations' || location.search.includes('scrollToAccommodations=true')) {
       setTimeout(() => scrollToAccommodations(), 100);
     }
   }, [location]);
