@@ -94,15 +94,7 @@
       "destination": "/booking"
     },
     {
-      "source": "/booking-confirmation",
-      "destination": "/booking"
-    },
-    {
       "source": "/:lang(el|it|de|ro)/booking/:id",
-      "destination": "/booking"
-    },
-    {
-      "source": "/:lang(el|it|de|ro)/booking-confirmation",
       "destination": "/booking"
     }
   ]

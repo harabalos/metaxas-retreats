@@ -126,13 +126,6 @@
   text-wrap: balance;
 }
 
-/* ─── Hero section fallback bg ─── */
-.hero-section {
-  background-image: linear-gradient(rgba(18, 36, 24, 0.55), rgba(18, 36, 24, 0.35)), url('/images/hero-beach.jpg');
-  background-size: cover;
-  background-position: center;
-}
-
 /* ─── Book Now button shimmer ─── */
 @keyframes shimmer-sweep {
   0% {
