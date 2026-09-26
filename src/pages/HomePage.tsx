@@ -10,8 +10,8 @@ import GuestReviews from '@/components/Reviews/GuestReviews';
 import { useAccommodations } from '@/hooks/useAccommodations';
 import SEOHead from '@/components/SEO/SEOHead';
 import { useLanguage } from '@/context/LanguageContext';
-import { reviewSummary } from '@/data/reviews';
 import { responsiveImage } from '@/lib/images';
+import { business, faqPage, graph, website } from '@/lib/schema';
 import heroVideoDesktop from '@/assets/hero/hero-desktop.mp4';
 import heroVideoMobile from '@/assets/hero/hero-mobile.mp4';
 import heroPoster from '@/assets/hero/hero-poster.webp';
@@ -160,25 +160,12 @@ const HomePage = () => {
     };
   }, []);
 
-  // Schema 
-  const campgroundSchema = {
-    '@context': 'https://schema.org',
-    '@type': ['Campground', 'LodgingBusiness'],
-    name: 'Metaxas Retreats',
-    description: t('seo.homeDescription'),
-    url: 'https://metaxasretreats.gr',
-    telephone: '+306973219980',
-    address: { '@type': 'PostalAddress', addressLocality: 'Lefkada', addressCountry: 'GR' },
-    geo: { '@type': 'GeoCoordinates', latitude: '38.640048', longitude: '20.698988' },
-    priceRange: '€€',
-    // The Google rating shown in the reviews section below.
-    aggregateRating: {
-      '@type': 'AggregateRating',
-      ratingValue: reviewSummary.rating,
-      reviewCount: reviewSummary.count,
-      bestRating: 5,
-    },
-  };
+  // The business (with the Google rating shown below), the site, and the FAQ.
+  const schema = graph(
+    business(t, { withRating: true }),
+    website(language),
+    faqPage(t, faqItems.length),
+  );
 
   return (
     <Layout>
@@ -186,7 +173,7 @@ const HomePage = () => {
         title={t('seo.home.title')}
         description={t('seo.home.description')}
         canonicalUrl="/"
-        schema={campgroundSchema}
+        schema={schema}
       />
 
       {/* ─── HERO ──────────────────────────────────────────────────────────── */}

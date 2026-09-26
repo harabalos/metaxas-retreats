@@ -27,7 +27,6 @@ const distDir = join(rootDir, 'dist');
 
 const { render } = await import(pathToFileURL(join(rootDir, 'dist-ssr', 'entry-server.js')).href);
 
-const en = JSON.parse(readFileSync(join(rootDir, 'src', 'locales', 'en.json'), 'utf-8'));
 const imageManifest = JSON.parse(readFileSync(join(rootDir, 'src', 'data', 'imageManifest.json'), 'utf-8'));
 
 // Must match MAIN_IMAGE_SIZES in src/components/Accommodations/AccommodationGallery.tsx,
@@ -57,28 +56,6 @@ const HELMET_TAGS = [
   /\s*<meta name="twitter:[a-z]+"[^>]*>/g,
   /\s*<link rel="canonical"[^>]*>/g,
 ];
-
-const JSON_LD = /\s*<script type="application\/ld\+json">[\s\S]*?<\/script>/g;
-
-/** JSON for inside a <script> tag: no way to close the tag early. */
-const scriptJson = (value) => JSON.stringify(value, null, 2).replace(/</g, '\\u003c');
-
-/** FAQPage schema from the questions the home page shows (faq.q1/faq.a1, …). */
-function faqSchema() {
-  const mainEntity = [];
-  for (let i = 1; en[`faq.q${i}`] && en[`faq.a${i}`]; i++) {
-    mainEntity.push({
-      '@type': 'Question',
-      name: en[`faq.q${i}`],
-      acceptedAnswer: { '@type': 'Answer', text: en[`faq.a${i}`] },
-    });
-  }
-  return `<script type="application/ld+json">\n${scriptJson({
-    '@context': 'https://schema.org',
-    '@type': 'FAQPage',
-    mainEntity,
-  })}\n</script>`;
-}
 
 /** Preload for a gallery photo, matching the srcset the page renders (src/lib/images.ts). */
 function galleryPreload(src) {
@@ -111,9 +88,8 @@ const FONT_PRELOADS = ['commissioner-latin-wght-normal', 'eb-garamond-latin-wght
 const template = readFileSync(join(distDir, 'index.html'), 'utf-8');
 
 /** The template with this page's markup, head tags and language filled in. */
-function page({ appHtml = '', headTags = [], lang = 'en', stripSchema = false }) {
+function page({ appHtml = '', headTags = [], lang = 'en' }) {
   let html = HELMET_TAGS.reduce((out, pattern) => out.replace(pattern, ''), template);
-  if (stripSchema) html = html.replace(JSON_LD, '');
   html = html.replace(
     /(<meta name="viewport"[^>]*>)/,
     `$1\n  ${[...FONT_PRELOADS, ...headTags].filter(Boolean).join('\n  ')}`
@@ -136,7 +112,7 @@ function write(file, html) {
 for (const route of routes) {
   const { html: appHtml, helmet } = await render(route.path);
   const headTags = [];
-  if (route.home) headTags.push(heroPosterPreload(), faqSchema());
+  if (route.home) headTags.push(heroPosterPreload());
   if (route.heroImage) headTags.push(galleryPreload(route.heroImage));
 
   // For the root this overwrites the index.html Vite built
@@ -147,7 +123,6 @@ for (const route of routes) {
 
 // Booking shell: rendered in the browser from the URL's dates and guests.
 write('booking/index.html', page({
-  stripSchema: true,
   headTags: [
     '<title data-rh="true">Booking Request | Metaxas Retreats</title>',
     '<meta data-rh="true" name="description" content="Send a booking request for Metaxas Retreats in Mikros Gialos, Lefkada." />',
@@ -158,7 +133,7 @@ console.log('  ✓ booking shell → dist/booking/index.html');
 
 // Unknown paths: the app's own "page not found" page, noindex via its SEOHead.
 const notFound = await render('/__not-found__');
-write('404.html', page({ appHtml: notFound.html, headTags: helmetTags(notFound.helmet), stripSchema: true }));
+write('404.html', page({ appHtml: notFound.html, headTags: helmetTags(notFound.helmet) }));
 console.log('  ✓ not found → dist/404.html');
 
 console.log(`\n✅ Prerendered ${routes.length} pages, the booking shell and the 404 page`);

@@ -22,7 +22,7 @@ const TermsOfService = () => {
     '@type': 'WebPage',
     name: `${t('terms.title')} - Metaxas Retreats`,
     description: t('terms.schema.description'),
-    url: 'https://metaxasretreats.gr/terms',
+    url: 'https://www.metaxasretreats.gr/terms',
   };
 
   const sections = [

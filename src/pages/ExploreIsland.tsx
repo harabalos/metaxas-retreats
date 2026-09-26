@@ -7,6 +7,7 @@ import { useLanguage } from '@/context/LanguageContext';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { responsiveImage } from '@/lib/images';
+import { breadcrumbs, business, graph, SITE } from '@/lib/schema';
 
 // Beach cards: three columns from lg, two from md, one below.
 const BEACH_IMAGE_SIZES =
@@ -38,24 +39,24 @@ const ACTIVITIES = ['boatTrips', 'windsurfing', 'sailing', 'hiking', 'beachHoppi
 const ExploreIsland = () => {
   const { t } = useLanguage();
 
-  const exploreSchema = {
-    "@context": "https://schema.org",
-    "@type": "TouristDestination",
-    "name": t('explore.schema.name'),
-    "description": t('explore.schema.description'),
-    "url": "https://metaxasretreats.gr/explore",
-    "includesAttraction": [
-      { "@type": "Beach", "name": "Porto Katsiki" },
-      { "@type": "Beach", "name": "Mikros Gialos" },
-      { "@type": "Beach", "name": "Egremni" }
-    ]
-  };
-
   const beaches = BEACHES.map(({ id, image }) => ({
     name: t(`explore.beach.${id}.name`),
     description: t(`explore.beach.${id}.desc`),
     image,
   }));
+
+  const schema = graph(
+    business(t),
+    {
+      '@type': 'TouristDestination',
+      name: t('explore.schema.name'),
+      description: t('explore.schema.description'),
+      url: `${SITE}/explore`,
+      includesAttraction: beaches.map((beach) => ({ '@type': 'Beach', name: beach.name })),
+    },
+    breadcrumbs(t, [[t('nav.explore'), '/explore']]),
+  );
+
 
   const villages = VILLAGES.map((id) => ({
     name: t(`explore.village.${id}.name`),
@@ -80,7 +81,7 @@ const ExploreIsland = () => {
         title={t('seo.explore.title')}
         description={t('seo.explore.description')}
         canonicalUrl="/explore"
-        schema={exploreSchema}
+        schema={schema}
       />
 
       <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 py-16">

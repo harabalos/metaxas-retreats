@@ -8,6 +8,7 @@ import BookingForm from '@/components/Booking/BookingForm';
 import SEOHead from '@/components/SEO/SEOHead';
 import { useLanguage } from '@/context/LanguageContext';
 import NotFound from '@/pages/NotFound';
+import { accommodationNode, breadcrumbs, business, graph } from '@/lib/schema';
 
 // Map amenity string → icon
 const AMENITY_ICONS: Record<string, React.ComponentType<{ className?: string }>> = {
@@ -84,35 +85,6 @@ const AccommodationDetail = () => {
     return <NotFound />;
   }
 
-  // ─── Schema ──────────────────────────────────────────────────────────────
-  const accommodationSchema = {
-    "@context": "https://schema.org",
-    "@type": "VacationRental",
-    "name": `${accommodation.name} - Metaxas Retreats Lefkada`,
-    "description": accommodation.description,
-    "url": `https://metaxasretreats.gr/accommodation/${accommodation.id}`,
-    "image": accommodation.images.map(img => `https://metaxasretreats.gr${img}`),
-    "numberOfRooms": accommodation.bedrooms,
-    "occupancy": { "@type": "QuantitativeValue", "maxValue": accommodation.guests },
-    "numberOfBedrooms": accommodation.bedrooms,
-    "numberOfBathroomsTotal": accommodation.bathrooms,
-    "petsAllowed": false,
-    "amenityFeature": accommodation.amenities.map(a => ({ "@type": "LocationFeatureSpecification", "name": a, "value": true })),
-    "address": { "@type": "PostalAddress", "streetAddress": "Mikros Gialos, Poros", "addressLocality": "Lefkada", "addressRegion": "Ionian Islands", "addressCountry": "GR" },
-    "geo": { "@type": "GeoCoordinates", "latitude": "38.640048", "longitude": "20.698988" },
-    "offers": { "@type": "Offer", "availability": "https://schema.org/InStock", "url": `https://metaxasretreats.gr/accommodation/${accommodation.id}` },
-    "potentialAction": { "@type": "ReserveAction", "target": { "@type": "EntryPoint", "urlTemplate": `https://metaxasretreats.gr/booking/${accommodation.id}?startDate={checkInDate}&endDate={checkOutDate}&guests={guests}`, "actionPlatform": ["http://schema.org/DesktopWebPlatform", "http://schema.org/MobileWebPlatform"] }, "result": { "@type": "LodgingReservation", "name": `Book ${accommodation.name}` } }
-  };
-  const breadcrumbSchema = {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    "itemListElement": [
-      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://metaxasretreats.gr/" },
-      { "@type": "ListItem", "position": 2, "name": "Accommodations", "item": "https://metaxasretreats.gr/#accommodations" },
-      { "@type": "ListItem", "position": 3, "name": accommodation.name, "item": `https://metaxasretreats.gr/accommodation/${accommodation.id}` }
-    ]
-  };
-
   // ─── SEO ─────────────────────────────────────────────────────────────────
   const unitKey = accommodation.type === 'house' ? 'woodenHouse' : 'glampingTent';
   const seoTitle = t(`seo.${unitKey}.title`);
@@ -120,6 +92,11 @@ const AccommodationDetail = () => {
 
   const accommodationName = accommodation.type === 'house' ? t('accommodation.woodenHouse') : t('accommodation.glampingTent');
   const accommodationDescription = accommodation.type === 'house' ? t('accommodation.woodenHouse.description') : t('accommodation.glampingTent.description');
+  const schema = graph(
+    business(t),
+    accommodationNode(accommodation, accommodationName, accommodationDescription),
+    breadcrumbs(t, [[accommodationName, `/accommodation/${accommodation.id}`]]),
+  );
   const nickname = accommodation.id === 'wooden-house' ? 'Metaxaki' : 'Metaxoula';
 
   const stats = [
@@ -136,7 +113,7 @@ const AccommodationDetail = () => {
         description={seoDescription}
         canonicalUrl={`/accommodation/${accommodation.id}`}
         image={`https://www.metaxasretreats.gr${accommodation.images[0]}`}
-        schema={[accommodationSchema, breadcrumbSchema]}
+        schema={schema}
       />
 
       <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 py-12">

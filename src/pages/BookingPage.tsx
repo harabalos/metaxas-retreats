@@ -59,20 +59,12 @@ const BookingPage = () => {
   const nights = differenceInDays(endDate, startDate);
   const accommodationName = accommodation.type === 'house' ? t('accommodation.woodenHouse') : t('accommodation.glampingTent');
 
-  const bookingSchema = {
-    "@context": "https://schema.org",
-    "@type": "ReservationAction",
-    "target": { "@type": "EntryPoint", "urlTemplate": `https://metaxasretreats.gr/booking/${id}`, "actionPlatform": ["http://schema.org/DesktopWebPlatform", "http://schema.org/MobileWebPlatform"] },
-    "object": { "@type": "LodgingReservation", "reservationFor": { "@type": "LodgingBusiness", "name": accommodation.name, "address": { "@type": "PostalAddress", "addressLocality": "Mikros Gialos, Lefkada", "addressCountry": "GR" } } }
-  };
-
   return (
     <Layout>
       <SEOHead
         title={t('seo.booking.title')}
         description={t('seo.booking.description')}
         robots="noindex, nofollow"
-        schema={bookingSchema}
       />
 
       <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 py-12">

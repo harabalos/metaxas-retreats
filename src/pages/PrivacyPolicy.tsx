@@ -22,7 +22,7 @@ const PrivacyPolicy = () => {
     '@type': 'WebPage',
     name: `${t('privacy.title')} - Metaxas Retreats`,
     description: t('privacy.schema.description'),
-    url: 'https://metaxasretreats.gr/privacy',
+    url: 'https://www.metaxasretreats.gr/privacy',
   };
 
   const sections = [

@@ -10,6 +10,7 @@ import { useLanguage } from '@/context/LanguageContext';
 import { Link } from 'react-router-dom';
 import { toast } from 'sonner';
 import { contactFormSchema } from '@/lib/validationSchemas';
+import { breadcrumbs, business, businessRef, graph, SITE } from '@/lib/schema';
 import { z } from 'zod';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -35,18 +36,17 @@ const ContactUs = () => {
   const lat = 38.64003296086357;
   const lng = 20.699029254119495;
 
-  const contactSchema = {
-    "@context": "https://schema.org",
-    "@type": "LocalBusiness",
-    "name": "Metaxas Retreats",
-    "description": t('contact.schema.description'),
-    "url": "https://metaxasretreats.gr/contact",
-    "telephone": "+30 6973219980",
-    "email": "metaxasretreats@gmail.com",
-    "address": { "@type": "PostalAddress", "streetAddress": "Mikros Gialos, Poros", "addressLocality": "Lefkada", "addressRegion": "Ionian Islands", "postalCode": "31082", "addressCountry": "GR" },
-    "geo": { "@type": "GeoCoordinates", "latitude": lat.toString(), "longitude": lng.toString() },
-    "openingHoursSpecification": { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"], "opens": "08:00", "closes": "22:00" }
-  };
+  const schema = graph(
+    business(t),
+    {
+      '@type': 'ContactPage',
+      name: t('seo.contact.title'),
+      description: t('contact.schema.description'),
+      url: `${SITE}/contact`,
+      about: businessRef(),
+    },
+    breadcrumbs(t, [[t('nav.contact'), '/contact']]),
+  );
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -78,7 +78,7 @@ const ContactUs = () => {
         title={t('seo.contact.title')}
         description={t('seo.contact.description')}
         canonicalUrl="/contact"
-        schema={contactSchema}
+        schema={schema}
       />
 
       <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 py-16">
