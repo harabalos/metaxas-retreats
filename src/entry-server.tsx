@@ -4,6 +4,7 @@ import { StaticRouter } from 'react-router-dom/server';
 import { HelmetProvider, type HelmetServerState } from 'react-helmet-async';
 import App from './App';
 import i18n from './i18n';
+import { llmsTxt } from './lib/llmsTxt';
 
 /**
  * Renders one URL to HTML at build time (scripts/prerender-meta.js), waiting
@@ -38,4 +39,10 @@ export async function render(url: string, language = 'en') {
   });
 
   return { html, helmet: helmetContext.helmet };
+}
+
+/** The English /llms.txt, from the same data as the pages. */
+export async function renderLlmsTxt() {
+  await i18n.changeLanguage('en');
+  return llmsTxt(i18n.t.bind(i18n));
 }

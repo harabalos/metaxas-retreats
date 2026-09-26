@@ -1,21 +1,11 @@
-# Metaxas Retreats - Lefkada Glamping
+# Metaxas Retreats — glamping and a wooden house in Mikros Gialos, Lefkada
 # https://www.metaxasretreats.gr
+#
+# Search engines and AI assistants are welcome to read every page.
+# Plain-text summary for language models: https://www.metaxasretreats.gr/llms.txt
 
 User-agent: *
 Allow: /
-Disallow: /booking-confirmation
+Disallow: /api/
 
-User-agent: Googlebot
-Allow: /
-
-User-agent: Bingbot
-Allow: /
-
-User-agent: Twitterbot
-Allow: /
-
-User-agent: facebookexternalhit
-Allow: /
-
-# Sitemap
 Sitemap: https://www.metaxasretreats.gr/sitemap.xml

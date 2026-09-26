@@ -22,14 +22,15 @@ type Node = Record<string, unknown>;
 /** Google Business Profile, by the place's customer id (cid). */
 export const GOOGLE_MAPS_URL = 'https://maps.google.com/?cid=9764086314534643797';
 
-const PROFILES = [
-  GOOGLE_MAPS_URL,
-  'https://www.tripadvisor.com/Hotel_Review-g3581185-d34322391-Reviews-Metaxas_Retreats-Mikros_Gialos_Lefkada_Ionian_Islands.html',
-  'https://www.airbnb.com/rooms/936140564087838043',
-  'https://www.airbnb.com/rooms/1420445588586676264',
-  'https://www.airbnb.com/rooms/1424551364666564643',
-  'https://www.booking.com/hotel/gr/metaxaki.html',
-  'https://www.booking.com/hotel/gr/metaxaki-glamping.html',
+/** The business's profiles elsewhere (schema.org sameAs, llms.txt). */
+export const PROFILES = [
+  { label: 'Google Maps ("Metaxaki")', url: GOOGLE_MAPS_URL },
+  { label: 'TripAdvisor', url: 'https://www.tripadvisor.com/Hotel_Review-g3581185-d34322391-Reviews-Metaxas_Retreats-Mikros_Gialos_Lefkada_Ionian_Islands.html' },
+  { label: 'Airbnb, Wooden House', url: 'https://www.airbnb.com/rooms/936140564087838043' },
+  { label: 'Airbnb, Glamping Tent 1', url: 'https://www.airbnb.com/rooms/1420445588586676264' },
+  { label: 'Airbnb, Glamping Tent 2', url: 'https://www.airbnb.com/rooms/1424551364666564643' },
+  { label: 'Booking.com, Wooden House', url: 'https://www.booking.com/hotel/gr/metaxaki.html' },
+  { label: 'Booking.com, Glamping Tents', url: 'https://www.booking.com/hotel/gr/metaxaki-glamping.html' },
 ];
 
 const ADDRESS = {
@@ -84,10 +85,10 @@ export function business(t: T, { withRating = false } = {}): Node {
       contactType: 'reservations',
       telephone: '+30 697 321 9980',
       email: 'metaxasretreats@gmail.com',
-      availableLanguage: ['English', 'Greek', 'Italian', 'German', 'Romanian'],
+      availableLanguage: ['English', 'Greek'],
     },
     containsPlace: accommodations.map((a) => ({ '@id': accommodationId(a.id) })),
-    sameAs: PROFILES,
+    sameAs: PROFILES.map((profile) => profile.url),
     ...(withRating && {
       aggregateRating: {
         '@type': 'AggregateRating',

@@ -28,7 +28,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const rootDir = join(__dirname, '..');
 const distDir = join(rootDir, 'dist');
 
-const { render } = await import(pathToFileURL(join(rootDir, 'dist-ssr', 'entry-server.js')).href);
+const { render, renderLlmsTxt } = await import(pathToFileURL(join(rootDir, 'dist-ssr', 'entry-server.js')).href);
 
 const imageManifest = JSON.parse(readFileSync(join(rootDir, 'src', 'data', 'imageManifest.json'), 'utf-8'));
 
@@ -175,6 +175,10 @@ write('sitemap.xml', [
   '',
 ].join('\n'));
 console.log(`  ✓ sitemap → dist/sitemap.xml (${entries.length} URLs)`);
+
+// Plain-text summary for AI assistants (src/lib/llmsTxt.ts).
+write('llms.txt', await renderLlmsTxt());
+console.log('  ✓ llms.txt → dist/llms.txt');
 
 // Booking shell: rendered in the browser from the URL's dates and guests.
 write('booking/index.html', page({
