@@ -1,73 +1,58 @@
-# Welcome to your Lovable project
+# Metaxas Retreats
 
-## Project info
+Website for Metaxas Retreats (listed on Google, Airbnb and Booking.com as "Metaxaki"):
+a wooden house and two glamping tents in Mikros Gialos, Lefkada. Live at
+https://www.metaxasretreats.gr.
 
-**URL**: https://lovable.dev/projects/59bb08b4-414a-4f86-a86d-27bf2e120b42
+Vite + React + TypeScript + Tailwind, deployed on Vercel. Every page is prerendered
+to HTML at build time in five languages and hydrated in the browser.
 
-## How can I edit this code?
-
-There are several ways of editing your application.
-
-**Use Lovable**
-
-Simply visit the [Lovable Project](https://lovable.dev/projects/59bb08b4-414a-4f86-a86d-27bf2e120b42) and start prompting.
-
-Changes made via Lovable will be committed automatically to this repo.
-
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
+## Commands
 
 ```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+npm install
+npm run dev        # dev server on http://localhost:8080
+npm run build      # client build + SSR build + prerender (see below)
+npm run images     # after adding or replacing a photo in public/assets
+npm run indexnow   # after a deploy: tell Bing & co. the pages changed
 ```
 
-**Edit a file directly in GitHub**
+## How the build works
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+1. `vite build` bundles the app into `dist/` (hashed files in `dist/_app/`).
+2. `vite build --ssr src/entry-server.tsx` builds a Node renderer into `dist-ssr/`.
+3. `scripts/prerender-meta.js` renders every public page in every language into
+   `dist/<lang>/<page>/index.html`, plus `sitemap.xml` (with hreflang), `llms.txt`,
+   the noindex booking shell and `404.html`.
 
-**Use GitHub Codespaces**
+URLs: English at the root (`/explore`), other languages under a prefix
+(`/el/explore`, `/it/…`, `/de/…`, `/ro/…`) — see `src/lib/i18nRoutes.ts`.
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+## Where things live
 
-## What technologies are used for this project?
+| What | File |
+|---|---|
+| Units, amenities, seasonal prices | `src/data/accommodations.ts` |
+| Google reviews shown on the site | `src/data/reviews.ts` |
+| Drive times to beaches and villages | `src/data/places.ts` |
+| All visible text, per language | `src/locales/*.json` |
+| schema.org data (one business entity) | `src/lib/schema.ts` |
+| llms.txt | `src/lib/llmsTxt.ts` |
+| Routes, redirects, cache headers | `vercel.json` |
 
-This project is built with:
+Photos: originals stay in `public/assets/` (used by the sitemap, Open Graph and
+schema). `npm run images` writes resized WebP copies to `public/assets/opt/` and
+`src/data/imageManifest.json`; pages use them through `src/lib/images.ts`. Commit
+both.
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+## Serverless functions (`api/`)
 
-## How can I deploy this project?
+- `api/availability.ts` reads the Airbnb iCal feeds and returns the booked nights.
+  Needs `ICAL_WOODEN_HOUSE`, `ICAL_TENT_1`, `ICAL_TENT_2` (see `.env.example`).
+- `api/contact.ts` validates the contact and booking forms and forwards them to
+  Formspree, which emails the owner.
 
-Simply open [Lovable](https://lovable.dev/projects/59bb08b4-414a-4f86-a86d-27bf2e120b42) and click on Share -> Publish.
+## Deploying
 
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+The live domain is served by the Vercel project `harabalos-projects/metaxas-retreatss`;
+set env vars there. Pushing to `main` deploys.
