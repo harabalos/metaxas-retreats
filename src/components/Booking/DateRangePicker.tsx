@@ -1,5 +1,5 @@
 import * as React from "react";
-import { format, addDays, isWithinInterval, isBefore, startOfToday } from "date-fns";
+import { format, addDays, isWithinInterval, isBefore, isAfter, startOfToday } from "date-fns";
 import { Calendar as CalendarIcon } from "lucide-react";
 import { DateRange } from "react-day-picker";
 
@@ -49,10 +49,11 @@ export function DateRangePicker({
   // Live availability, read from the Airbnb feeds via /api/availability
   const { isDateBlocked, loading, unavailable } = useBlockedDates(accommodationId);
 
-  // Helper: Check if a range hits a blocked date
+  // Does a stay from `start` to checkout `end` include a booked night? The
+  // checkout day is not a night of the stay, so it is not checked.
   const isRangeBlocked = (start: Date, end: Date) => {
     const current = new Date(start);
-    while (current <= end) {
+    while (current < end) {
       if (isDateBlocked(current)) return true;
       current.setDate(current.getDate() + 1);
     }
@@ -91,9 +92,13 @@ export function DateRangePicker({
   const isDateDisabled = (date: Date) => {
     // 1. Disable past dates
     if (isBefore(date, startOfToday())) return true;
-    // 2. Disable nights that are already booked
-    if (isDateBlocked(date)) return true;
-    
+    // 2. Disable nights that are already booked, except as the checkout day of
+    //    the stay being picked: a guest can leave the morning a booking starts.
+    if (isDateBlocked(date)) {
+      const isCheckoutDay =
+        !!startDate && !endDate && isAfter(date, startDate) && !isRangeBlocked(startDate, date);
+      return !isCheckoutDay;
+    }
     return false;
   };
 
@@ -144,7 +149,7 @@ export function DateRangePicker({
             numberOfMonths={2}
             disabled={isDateDisabled}
             modifiers={{
-              blocked: (date) => isDateBlocked(date),
+              blocked: (date) => isDateBlocked(date) && isDateDisabled(date),
             }}
             modifiersStyles={{
               blocked: { 
