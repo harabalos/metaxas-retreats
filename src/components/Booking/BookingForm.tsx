@@ -8,6 +8,7 @@ import DateRangePicker from './DateRangePicker';
 import { Accommodation } from '@/data/accommodations';
 import { toast } from 'sonner';
 import { useLanguage } from '@/context/LanguageContext';
+import { toDateParam } from '@/lib/dateParams';
 
 interface BookingFormProps {
   accommodation: Accommodation;
@@ -41,7 +42,7 @@ const BookingForm = ({ accommodation, isDetail = false }: BookingFormProps) => {
       return;
     }
 
-    navigate(`${localize(`/booking/${accommodation.id}`)}?start=${startDate.toISOString()}&end=${endDate.toISOString()}&guests=${guests}`);
+    navigate(`${localize(`/booking/${accommodation.id}`)}?start=${toDateParam(startDate)}&end=${toDateParam(endDate)}&guests=${guests}`);
   };
 
   return (

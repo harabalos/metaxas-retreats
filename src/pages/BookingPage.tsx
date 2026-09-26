@@ -10,6 +10,7 @@ import SEOHead from '@/components/SEO/SEOHead';
 import { useLanguage } from '@/context/LanguageContext';
 import { dateLocale } from '@/lib/dateLocale';
 import { ExternalLink, CalendarDays, Users } from 'lucide-react';
+import { fromDateParam } from '@/lib/dateParams';
 
 const BookingPage = () => {
   const { id } = useParams<{ id: string }>();
@@ -36,8 +37,8 @@ const BookingPage = () => {
   const endParam = searchParams.get('end');
   const guestsParam = searchParams.get('guests');
 
-  const startDate = startParam ? new Date(startParam) : undefined;
-  const endDate = endParam ? new Date(endParam) : undefined;
+  const startDate = fromDateParam(startParam);
+  const endDate = fromDateParam(endParam);
   const guests = guestsParam ? parseInt(guestsParam) : 1;
 
   if (!accommodation || !startDate || !endDate) {

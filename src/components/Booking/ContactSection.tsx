@@ -12,6 +12,7 @@ import { toast } from 'sonner';
 import { contactFormSchema } from '@/lib/validationSchemas';
 import { z } from 'zod';
 import { m, AnimatePresence } from 'framer-motion';
+import { fromDateParam } from '@/lib/dateParams';
 
 const ContactSection = () => {
   const { t, language, localize } = useLanguage();
@@ -24,8 +25,8 @@ const ContactSection = () => {
 
   const { data: accommodations } = useAccommodations();
   const accommodation = accommodations?.find(acc => acc.id === id);
-  const startDate = startParam ? new Date(startParam) : undefined;
-  const endDate = endParam ? new Date(endParam) : undefined;
+  const startDate = fromDateParam(startParam);
+  const endDate = fromDateParam(endParam);
   const guests = guestsParam ? parseInt(guestsParam) : 1;
 
   const [formData, setFormData] = useState({ fullName: '', email: '', phone: '', specialRequests: '' });
