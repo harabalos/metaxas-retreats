@@ -2,7 +2,6 @@ import { Link } from 'react-router-dom';
 import { Mail, MapPin, Phone } from 'lucide-react';
 import { useLanguage } from '@/context/LanguageContext';
 import { scrollBehavior } from '@/lib/motion';
-import LogoMark from './LogoMark';
 
 const Footer = () => {
   const { t, localize } = useLanguage();
@@ -22,8 +21,7 @@ const Footer = () => {
           {/* Brand column */}
           <div className="md:col-span-4">
             <Link to={localize('/')} onClick={scrollToTop} className="inline-flex items-center gap-2.5 mb-3 group">
-              <LogoMark className="h-9 w-9 text-wood shrink-0" />
-              <span className="text-2xl font-brand font-semibold text-sand-light group-hover:text-wood transition-colors">
+              <span className="text-2xl font-heading font-semibold text-sand-light group-hover:text-wood transition-colors">
                 Metaxas Retreats
               </span>
             </Link>

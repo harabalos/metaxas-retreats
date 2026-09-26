@@ -4,7 +4,6 @@ import { Menu, X } from 'lucide-react';
 import { m, AnimatePresence } from 'framer-motion';
 import { useLanguage } from '@/context/LanguageContext';
 import LanguageSwitcher from './LanguageSwitcher';
-import LogoMark from './LogoMark';
 import { splitLanguage } from '@/lib/i18nRoutes';
 import { scrollBehavior } from '@/lib/motion';
 
@@ -79,8 +78,7 @@ const Navbar = () => {
 
             {/* Logo */}
             <Link to={localize('/')} className="flex items-center gap-2 group">
-              <LogoMark className="h-8 w-8 lg:h-9 lg:w-9 text-wood shrink-0" />
-              <span className={`text-xl lg:text-2xl font-brand font-semibold tracking-wide transition-colors duration-300 ${logoColor}`}>
+              <span className={`text-xl lg:text-2xl font-heading font-semibold tracking-wide transition-colors duration-300 ${logoColor}`}>
                 Metaxas Retreats
               </span>
             </Link>
