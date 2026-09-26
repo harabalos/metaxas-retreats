@@ -94,14 +94,17 @@ function heroPosterPreload() {
 }
 
 /**
- * Preloads for the two self-hosted fonts (src/main.tsx) in the subset a page's
- * language needs, so text doesn't wait for the stylesheet before the fonts
- * start downloading.
+ * Preloads for the body and heading fonts (src/main.tsx) in the subset a
+ * page's language needs, so text doesn't wait for the stylesheet before the
+ * fonts start downloading.
  */
 function fontPreloads(language) {
-  const subset = language === 'el' ? 'greek' : 'latin';
-  return ['commissioner', 'eb-garamond'].map((font) => {
-    const name = `${font}-${subset}-wght-normal`;
+  // Greek pages set their headings in Noto Serif Display (src/index.css).
+  const fonts = language === 'el'
+    ? ['commissioner-greek', 'noto-serif-display-greek']
+    : ['commissioner-latin', 'eb-garamond-latin'];
+  return fonts.map((font) => {
+    const name = `${font}-wght-normal`;
     const file = appFiles.find((f) => f.startsWith(`${name}-`) && f.endsWith('.woff2'));
     if (!file) throw new Error(`${name}-*.woff2 not found in dist/_app`);
     return `<link rel="preload" as="font" type="font/woff2" href="/_app/${file}" crossorigin />`;

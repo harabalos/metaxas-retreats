@@ -76,6 +76,8 @@ export default {
 				sans: ['"Commissioner Variable"', 'system-ui', 'sans-serif'],
 				heading: ['"EB Garamond Variable"', 'Georgia', 'serif'],
 				display: ['"EB Garamond Variable"', 'Georgia', 'serif'],
+				// The "Metaxas Retreats" wordmark: EB Garamond in every language.
+				brand: ['"EB Garamond Variable"', 'Georgia', 'serif'],
 			},
 			fontSize: {
 				'display-2xl': ['clamp(3rem,8vw,7rem)', { lineHeight: '1.05', letterSpacing: '-0.02em' }],

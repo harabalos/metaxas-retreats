@@ -5,6 +5,8 @@ import App from './App.tsx';
 // Self-hosted variable fonts; both cover Greek (DM Sans, the old body font, didn't).
 import '@fontsource-variable/eb-garamond';
 import '@fontsource-variable/commissioner';
+// Headings on the Greek pages (index.css); only downloaded there.
+import '@fontsource-variable/noto-serif-display';
 import i18n, { loadLanguage } from './i18n';
 import { DEFAULT_LANGUAGE, isLanguage, localizePath, splitLanguage } from './lib/i18nRoutes';
 import './index.css';
