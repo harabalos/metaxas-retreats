@@ -73,7 +73,7 @@ export default {
 				cream: '#FAFAF5',
 			},
 			fontFamily: {
-				sans: ['"Commissioner Variable"', 'system-ui', 'sans-serif'],
+				sans: ['"DM Sans Variable"', 'sans-serif'],
 				heading: ['"EB Garamond Variable"', 'Georgia', 'serif'],
 				display: ['"EB Garamond Variable"', 'Georgia', 'serif'],
 				// The "Metaxas Retreats" wordmark: EB Garamond in every language.

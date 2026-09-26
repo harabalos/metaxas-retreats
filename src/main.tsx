@@ -2,11 +2,11 @@ import { createRoot, hydrateRoot } from 'react-dom/client';
 import { HelmetProvider } from 'react-helmet-async';
 import { BrowserRouter } from 'react-router-dom';
 import App from './App.tsx';
-// Self-hosted variable fonts; both cover Greek (DM Sans, the old body font, didn't).
+// Self-hosted variable fonts: EB Garamond for headings (Greek included) and
+// DM Sans for body text. DM Sans has no Greek, so Greek body text falls back to
+// the system sans-serif, as it always has on this site.
 import '@fontsource-variable/eb-garamond';
-import '@fontsource-variable/commissioner';
-// Headings on the Greek pages (index.css); only downloaded there.
-import '@fontsource-variable/noto-serif-display';
+import '@fontsource-variable/dm-sans';
 import i18n, { loadLanguage } from './i18n';
 import { DEFAULT_LANGUAGE, isLanguage, localizePath, splitLanguage } from './lib/i18nRoutes';
 import './index.css';

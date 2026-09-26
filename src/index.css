@@ -185,16 +185,3 @@
     transition-duration: 0.01ms !important;
   }
 }
-
-/* ─── Greek headings ───
-   EB Garamond's Greek is a calligraphic, slanted style that reads as italic in
-   modern Greek; Noto Serif Display has an upright Greek in the same spirit.
-   Light (300) is kept at 400, the lightest weight EB Garamond renders. */
-html[lang="el"] .font-heading,
-html[lang="el"] .font-display {
-  font-family: 'Noto Serif Display Variable', Georgia, serif;
-}
-
-html[lang="el"] .font-heading.font-light {
-  font-weight: 400;
-}
