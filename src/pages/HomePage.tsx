@@ -10,6 +10,9 @@ import { useAccommodations } from '@/hooks/useAccommodations';
 import SEOHead from '@/components/SEO/SEOHead';
 import { useLanguage } from '@/context/LanguageContext';
 import { responsiveImage } from '@/lib/images';
+import heroVideoDesktop from '@/assets/hero/hero-desktop.mp4';
+import heroVideoMobile from '@/assets/hero/hero-mobile.mp4';
+import heroPoster from '@/assets/hero/hero-poster.webp';
 
 // Photo column next to "The Experience" text from lg up, full width below.
 const CAROUSEL_SIZES = '(min-width: 1232px) 544px, (min-width: 1024px) calc(50vw - 72px), calc(100vw - 40px)';
@@ -20,6 +23,16 @@ const CAROUSEL_IMAGES = [
   { src: '/assets/glamping-tent/prosopsi.jpg', alt: 'Luxury glamping tent exterior among olive trees at Metaxas Retreats, Lefkada Greece' },
   { src: '/assets/e9f9bd84-9f74-4189-bf30-d6640a566fd3.jpg', alt: 'Wooden house sea view accommodation at Mikros Gialos beach, Lefkada Greece' },
 ];
+
+/**
+ * Visitors who asked their device for less motion or less data get the still
+ * frame instead of the looping hero video.
+ */
+const prefersStillHero = () => {
+  if (typeof window === 'undefined') return false;
+  const connection = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection;
+  return window.matchMedia('(prefers-reduced-motion: reduce)').matches || connection?.saveData === true;
+};
 
 // ─── Reusable scroll-reveal wrapper ───────────────────────────────────────────
 const FadeUp = ({
@@ -107,6 +120,7 @@ const HomePage = () => {
   const heroRef = useRef<HTMLDivElement>(null);
   const { t, language } = useLanguage();
   const { data: accommodations, isLoading } = useAccommodations();
+  const [showHeroVideo] = useState(() => !prefersStillHero());
   // The carousel's hidden slides are clipped, so lazy loading would only fetch
   // each one as it slides in. Once the first photo is in, fetch the rest.
   const [carouselStarted, setCarouselStarted] = useState(false);
@@ -188,14 +202,26 @@ const HomePage = () => {
       <section ref={heroRef} className="relative h-screen min-h-[600px] flex items-center overflow-hidden bg-forest-dark">
         {/* Video background */}
         <div className="absolute inset-0">
-          <video
-            ref={videoRef}
-            autoPlay muted loop playsInline preload="auto"
-            poster="/assets/video-poster.jpg"
-            className="absolute inset-0 w-full h-full object-cover opacity-55"
-          >
-            <source src="/assets/video.mp4" type="video/mp4" />
-          </video>
+          {showHeroVideo ? (
+            <video
+              ref={videoRef}
+              autoPlay muted loop playsInline preload="metadata"
+              poster={heroPoster}
+              aria-hidden="true"
+              className="absolute inset-0 w-full h-full object-cover opacity-55"
+            >
+              {/* Phones get a portrait crop of the same footage: the part
+                  object-cover shows anyway, at under half the file size. */}
+              <source src={heroVideoDesktop} type="video/mp4" media="(min-width: 768px)" />
+              <source src={heroVideoMobile} type="video/mp4" />
+            </video>
+          ) : (
+            <img
+              src={heroPoster}
+              alt=""
+              className="absolute inset-0 w-full h-full object-cover opacity-55"
+            />
+          )}
           {/* Gradient overlay — darker at bottom for text contrast */}
           <div className="absolute inset-0 bg-gradient-to-b from-forest-dark/40 via-forest-dark/20 to-forest-dark/70" />
         </div>

@@ -11,7 +11,7 @@
  * Run after `vite build`: node scripts/prerender-meta.js
  */
 
-import { readFileSync, writeFileSync, mkdirSync, existsSync } from 'fs';
+import { readFileSync, writeFileSync, mkdirSync, existsSync, readdirSync } from 'fs';
 import { dirname, join } from 'path';
 import { fileURLToPath } from 'url';
 
@@ -176,6 +176,13 @@ function galleryPreload(src) {
   return `<link rel="preload" as="image" imagesrcset="${srcset}" imagesizes="${GALLERY_SIZES}" fetchpriority="high" />`;
 }
 
+/** Preload for the hero video's poster, which Vite emits with a hashed name. */
+function heroPosterPreload() {
+  const poster = readdirSync(join(distDir, '_app')).find((f) => /^hero-poster-.+\.webp$/.test(f));
+  if (!poster) throw new Error('hero-poster-*.webp not found in dist/_app');
+  return `<link rel="preload" as="image" href="/_app/${poster}" type="image/webp" />`;
+}
+
 function renderPage({ title, description, canonicalUrl, robots, h1, content, head = [] }) {
   let html = baseHtml;
 
@@ -302,7 +309,7 @@ const baseHtml = readFileSync(join(distDir, 'index.html'), 'utf-8');
 
 for (const route of routes) {
   const head = [];
-  if (route.home) head.push(faqSchema());
+  if (route.home) head.push(heroPosterPreload(), faqSchema());
   if (route.heroImage) head.push(galleryPreload(route.heroImage));
 
   const html = renderPage({
