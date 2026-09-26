@@ -1,4 +1,4 @@
-import { useParams, useNavigate, Link, Navigate } from 'react-router-dom';
+import { useParams, Link, Navigate } from 'react-router-dom';
 import { Users, BedDouble, Bath, Wifi, Wind, Car, Waves, Sun, Coffee, TreePine, UtensilsCrossed, ChevronLeft, CalendarDays } from 'lucide-react';
 import { motion } from 'framer-motion';
 import Layout from '@/components/Layout/Layout';
@@ -7,6 +7,7 @@ import AccommodationGallery from '@/components/Accommodations/AccommodationGalle
 import BookingForm from '@/components/Booking/BookingForm';
 import SEOHead from '@/components/SEO/SEOHead';
 import { useLanguage } from '@/context/LanguageContext';
+import NotFound from '@/pages/NotFound';
 
 // Map amenity string → icon
 const AMENITY_ICONS: Record<string, React.ComponentType<{ className?: string }>> = {
@@ -54,7 +55,6 @@ const FadeUp = ({ children, delay = 0 }: { children: React.ReactNode; delay?: nu
 
 const AccommodationDetail = () => {
   const { id } = useParams<{ id: string }>();
-  const navigate = useNavigate();
   const { t } = useLanguage();
   const { data: accommodations, isLoading } = useAccommodations();
 
@@ -79,23 +79,9 @@ const AccommodationDetail = () => {
 
   const accommodation = accommodations?.find(acc => acc.id === id);
 
+  // Same page as any unknown URL, which Vercel serves as the prerendered 404.
   if (!accommodation) {
-    return (
-      <Layout>
-        <div className="min-h-screen flex items-center justify-center px-4">
-          <div className="text-center">
-            <h1 className="text-3xl font-heading font-semibold text-forest-dark mb-4">{t('detail.notFound')}</h1>
-            <p className="text-gray-500 mb-8">{t('detail.notFoundText')}</p>
-            <button
-              onClick={() => navigate('/')}
-              className="px-6 py-3 rounded-full bg-forest text-white font-sans font-semibold text-sm hover:bg-forest-dark transition-colors"
-            >
-              {t('detail.returnHome')}
-            </button>
-          </div>
-        </div>
-      </Layout>
-    );
+    return <NotFound />;
   }
 
   // ─── Schema ──────────────────────────────────────────────────────────────

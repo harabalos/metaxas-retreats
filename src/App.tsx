@@ -3,7 +3,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 import { LanguageProvider } from "./context/LanguageContext";
 import CookieConsent from "./components/Layout/CookieConsent";
 import ErrorBoundary from "./components/ErrorBoundary";
@@ -38,7 +38,7 @@ const PageLoader = () => (
   </div>
 );
 
-// Fade transition wrapper — must live inside BrowserRouter to use useLocation
+// Fade transition wrapper — must live inside the router to use useLocation
 const AnimatedRoutes = () => {
   const location = useLocation();
   return (
@@ -68,18 +68,18 @@ const AnimatedRoutes = () => {
   );
 };
 
+// The router comes from outside: BrowserRouter in main.tsx, StaticRouter when
+// prerendering (entry-server.tsx).
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
       <LanguageProvider>
         <Toaster />
         <Sonner />
-        <BrowserRouter>
-          <ErrorBoundary>
-            <AnimatedRoutes />
-          </ErrorBoundary>
-          <CookieConsent />
-        </BrowserRouter>
+        <ErrorBoundary>
+          <AnimatedRoutes />
+        </ErrorBoundary>
+        <CookieConsent />
       </LanguageProvider>
       <Analytics />
       <SpeedInsights />

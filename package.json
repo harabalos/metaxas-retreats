@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build && node scripts/prerender-meta.js",
+    "build": "vite build && vite build --ssr src/entry-server.tsx --outDir dist-ssr && node scripts/prerender-meta.js",
     "build:dev": "vite build --mode development",
     "images": "node scripts/optimize-images.mjs",
     "lint": "eslint .",

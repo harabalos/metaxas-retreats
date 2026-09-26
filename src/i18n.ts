@@ -19,7 +19,10 @@ i18n
   .use(initReactI18next)
   .init({
     resources,
-    lng: localStorage.getItem('language') || navigator.language.split('-')[0] || 'en', // default language
+    // The saved choice, else the browser's language. Prerendering (no window) is English.
+    lng: typeof window === 'undefined'
+      ? 'en'
+      : localStorage.getItem('language') || navigator.language.split('-')[0] || 'en',
     fallbackLng: 'en',
     interpolation: {
       escapeValue: false, // react already safes from xss
