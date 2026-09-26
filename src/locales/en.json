@@ -307,5 +307,6 @@
   "distance.hours_other": "{{count}} h",
   "distance.hoursMinutes": "{{hours}} h {{minutes}} min",
   "distance.byCar": "{{time}} by car",
-  "distance.onFoot": "{{meters}} m on foot"
+  "distance.onFoot": "{{meters}} m on foot",
+  "nav.language": "Language"
 }

@@ -314,5 +314,6 @@
   "distance.byCar": "{{time}} cu mașina",
   "distance.onFoot": "{{meters}} m pe jos",
   "distance.minutes_few": "{{count}} min",
-  "distance.hours_few": "{{count}} ore"
+  "distance.hours_few": "{{count}} ore",
+  "nav.language": "Limbă"
 }

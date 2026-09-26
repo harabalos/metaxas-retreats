@@ -2,13 +2,15 @@ import { useState, useRef, useEffect } from 'react';
 import { useLanguage, Language } from '@/context/LanguageContext';
 import { ChevronDown } from 'lucide-react';
 import { AnimatePresence, m } from 'framer-motion';
+import Flag from './Flag';
 
-const languages: { code: Language; flag: string; short: string }[] = [
-  { code: 'en', flag: '🇬🇧', short: 'EN' },
-  { code: 'el', flag: '🇬🇷', short: 'ΕΛ' },
-  { code: 'it', flag: '🇮🇹', short: 'IT' },
-  { code: 'de', flag: '🇩🇪', short: 'DE' },
-  { code: 'ro', flag: '🇷🇴', short: 'RO' },
+// Each language named in itself, so a visitor can find theirs in any version.
+const languages: { code: Language; short: string; name: string }[] = [
+  { code: 'en', short: 'EN', name: 'English' },
+  { code: 'el', short: 'ΕΛ', name: 'Ελληνικά' },
+  { code: 'it', short: 'IT', name: 'Italiano' },
+  { code: 'de', short: 'DE', name: 'Deutsch' },
+  { code: 'ro', short: 'RO', name: 'Română' },
 ];
 
 interface LanguageSwitcherProps {
@@ -17,7 +19,7 @@ interface LanguageSwitcherProps {
 }
 
 const LanguageSwitcher = ({ isLight = false }: LanguageSwitcherProps) => {
-  const { language, setLanguage } = useLanguage();
+  const { language, setLanguage, t } = useLanguage();
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
@@ -41,9 +43,10 @@ const LanguageSwitcher = ({ isLight = false }: LanguageSwitcherProps) => {
       <button
         onClick={() => setOpen(!open)}
         className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg border transition-all duration-200 text-xs font-sans font-semibold tracking-wide ${triggerClass}`}
-        aria-label="Switch language"
+        aria-label={t('nav.language')}
+        aria-expanded={open}
       >
-        <span>{current.flag}</span>
+        <Flag language={current.code} />
         <span className="hidden sm:inline">{current.short}</span>
         <m.span
           animate={{ rotate: open ? 180 : 0 }}
@@ -62,7 +65,7 @@ const LanguageSwitcher = ({ isLight = false }: LanguageSwitcherProps) => {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -6, scale: 0.97 }}
             transition={{ duration: 0.18, ease: 'easeOut' }}
-            className="absolute right-0 top-full mt-2 bg-forest-dark border border-white/10 rounded-xl shadow-xl overflow-hidden z-50 min-w-[110px]"
+            className="absolute right-0 top-full mt-2 bg-forest-dark border border-white/10 rounded-xl shadow-xl overflow-hidden z-50 min-w-[150px]"
           >
             {languages.map((lang) => (
               <button
@@ -74,8 +77,8 @@ const LanguageSwitcher = ({ isLight = false }: LanguageSwitcherProps) => {
                     : 'text-sand-dark/70 hover:bg-white/6 hover:text-sand-light'
                 }`}
               >
-                <span className="text-sm">{lang.flag}</span>
-                <span>{lang.short}</span>
+                <Flag language={lang.code} />
+                <span lang={lang.code}>{lang.name}</span>
                 {language === lang.code && (
                   <span className="ml-auto w-1.5 h-1.5 rounded-full bg-wood" />
                 )}

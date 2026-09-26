@@ -307,5 +307,6 @@
   "distance.hours_other": "{{count}} ώρες",
   "distance.hoursMinutes": "{{hours}} ώρα {{minutes}} λεπτά",
   "distance.byCar": "{{time}} με το αυτοκίνητο",
-  "distance.onFoot": "{{meters}} μ. με τα πόδια"
+  "distance.onFoot": "{{meters}} μ. με τα πόδια",
+  "nav.language": "Γλώσσα"
 }
