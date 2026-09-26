@@ -34,6 +34,20 @@ const Navbar = () => {
     }
   };
 
+  // "Book Now" leads to availability: the date picker on an accommodation page,
+  // otherwise the two accommodations on the home page to choose from.
+  const onAccommodationPage = splitLanguage(location.pathname).path.startsWith('/accommodation/');
+  const bookHref = onAccommodationPage ? '#book' : `${localize('/')}#accommodations`;
+  const bookNow = (e: React.MouseEvent) => {
+    e.preventDefault();
+    setMobileMenuOpen(false);
+    if (onAccommodationPage) {
+      document.getElementById('book')?.scrollIntoView({ behavior: scrollBehavior(), block: 'start' });
+    } else {
+      scrollToAccommodations();
+    }
+  };
+
   // On homepage: transparent when at top, solid when scrolled
   // On other pages: always solid
   const navBg = isHome
@@ -97,12 +111,13 @@ const Navbar = () => {
               )}
 
               {/* Book Now CTA */}
-              <Link
-                to={localize('/contact')}
+              <a
+                href={bookHref}
+                onClick={bookNow}
                 className="btn-shimmer ml-2 px-5 py-2 rounded-full bg-wood text-forest-dark text-sm font-sans font-semibold tracking-wide transition-all duration-300 hover:bg-wood-light hover:shadow-cta active:scale-95"
               >
-                {t('nav.bookNow') || 'Book Now'}
-              </Link>
+                {t('nav.bookNow')}
+              </a>
 
               <LanguageSwitcher isLight={isHome && !scrolled} />
             </div>
@@ -177,13 +192,13 @@ const Navbar = () => {
                 transition={{ delay: 0.25, duration: 0.22 }}
                 className="pt-4"
               >
-                <Link
-                  to={localize('/contact')}
-                  onClick={() => setMobileMenuOpen(false)}
+                <a
+                  href={bookHref}
+                  onClick={bookNow}
                   className="block w-full text-center py-3 rounded-full bg-wood text-forest-dark font-sans font-semibold text-sm tracking-wide"
                 >
-                  {t('nav.bookNow') || 'Book Now'}
-                </Link>
+                  {t('nav.bookNow')}
+                </a>
               </m.div>
             </div>
           </m.div>

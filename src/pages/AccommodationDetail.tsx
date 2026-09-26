@@ -10,6 +10,7 @@ import { useLanguage } from '@/context/LanguageContext';
 import NotFound from '@/pages/NotFound';
 import { accommodationNode, breadcrumbs, business, graph } from '@/lib/schema';
 import FadeUp from '@/components/FadeUp';
+import { scrollBehavior } from '@/lib/motion';
 
 // Map amenity string → icon
 const AMENITY_ICONS: Record<string, React.ComponentType<{ className?: string }>> = {
@@ -203,8 +204,8 @@ const AccommodationDetail = () => {
             </FadeUp>
           </div>
 
-          {/* Right: sticky booking widget */}
-          <div className="lg:w-[380px] flex-shrink-0">
+          {/* Right: sticky booking widget ("Book Now" scrolls here) */}
+          <div id="book" className="lg:w-[380px] flex-shrink-0 scroll-mt-24">
             <div className="sticky top-24">
               <FadeUp delay={0.2}>
                 <BookingForm accommodation={accommodation} isDetail={true} />
@@ -239,14 +240,17 @@ const AccommodationDetail = () => {
             {t('detail.ribbon.subtitle')}
           </p>
         </div>
-        <Link
-          to={localize('/contact')}
-          onClick={() => window.scrollTo(0, 0)}
+        <a
+          href="#book"
+          onClick={(e) => {
+            e.preventDefault();
+            document.getElementById('book')?.scrollIntoView({ behavior: scrollBehavior(), block: 'start' });
+          }}
           className="btn-shimmer flex-shrink-0 px-6 py-2.5 rounded-full bg-wood text-forest-dark font-sans font-semibold text-sm tracking-wide hover:bg-wood-light transition-colors"
         >
           <CalendarDays className="h-4 w-4 inline-block mr-1.5 -mt-0.5" />
           {t('nav.bookNow')}
-        </Link>
+        </a>
       </m.div>
     </Layout>
   );
