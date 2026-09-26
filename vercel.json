@@ -46,6 +46,15 @@
           "value": "public, max-age=86400, stale-while-revalidate=604800"
         }
       ]
+    },
+    {
+      "source": "/booking(.*)",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        }
+      ]
     }
   ],
   "cleanUrls": true,
@@ -64,15 +73,11 @@
   "rewrites": [
     {
       "source": "/booking/:id",
-      "destination": "/index.html"
+      "destination": "/booking"
     },
     {
       "source": "/booking-confirmation",
-      "destination": "/index.html"
-    },
-    {
-      "source": "/((?!api|assets|accommodation|explore|contact|privacy|terms|sitemap|robots|favicon).*)",
-      "destination": "/index.html"
+      "destination": "/booking"
     }
   ]
 }

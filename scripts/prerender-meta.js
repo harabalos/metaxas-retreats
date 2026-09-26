@@ -3,6 +3,11 @@
  * Crawlers that don't execute JavaScript (Ahrefs, Bing, etc.) will see
  * the correct title, description, canonical, H1, and nav links for each page.
  *
+ * It also writes the two pages that are not in the sitemap: the shell that
+ * /booking/* is rewritten to (see vercel.json) and 404.html, which Vercel serves
+ * with a 404 status for unknown paths. Both load the app, so visitors get the
+ * normal header, footer and page, and both are noindex.
+ *
  * Run after `vite build`: node scripts/prerender-meta.js
  */
 
@@ -11,7 +16,8 @@ import { dirname, join } from 'path';
 import { fileURLToPath } from 'url';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const distDir = join(__dirname, '..', 'dist');
+const rootDir = join(__dirname, '..');
+const distDir = join(rootDir, 'dist');
 const SITE = 'https://www.metaxasretreats.gr';
 
 // Route definitions with unique SEO per page
@@ -69,6 +75,22 @@ const routes = [
   },
 ];
 
+// Served for URLs that are not pages of their own; the app renders the rest.
+const utilityPages = [
+  {
+    file: 'booking/index.html',
+    title: 'Booking Request | Metaxas Retreats',
+    description: 'Send a booking request for Metaxas Retreats in Mikros Gialos, Lefkada.',
+    h1: 'Booking Request',
+  },
+  {
+    file: '404.html',
+    title: 'Page Not Found | Metaxas Retreats',
+    description: "The page you're looking for doesn't exist.",
+    h1: 'Page Not Found',
+  },
+];
+
 // Rendered into the served HTML outside #root, so it survives without JS.
 // The React footer carries the same two links for the styled version once the
 // app has mounted, but that is client-side only and Googlebot reads the served
@@ -98,89 +120,87 @@ const navLinks = routes
   })
   .join(' | ');
 
-// Read the base index.html built by Vite
-const baseHtml = readFileSync(join(distDir, 'index.html'), 'utf-8');
-
-for (const route of routes) {
+function renderPage({ title, description, canonicalUrl, robots, h1, content }) {
   let html = baseHtml;
-  const url = `${SITE}${route.path === '/' ? '/' : route.path}`;
-  const canonicalUrl = route.path === '/' ? `${SITE}/` : url;
 
   // Replace <title>
   html = html.replace(
     /<title>[^<]*<\/title>/,
-    `<title>${route.title}</title>`
+    `<title>${title}</title>`
   );
 
   // Replace meta name="title"
   html = html.replace(
     /<meta name="title"\s+content="[^"]*"\s*\/?>/,
-    `<meta name="title" content="${route.title}" />`
+    `<meta name="title" content="${title}" />`
   );
 
   // Replace meta name="description"
   html = html.replace(
     /<meta name="description"\s+content="[^"]*"\s*\/?>/,
-    `<meta name="description"\n    content="${route.description}" />`
+    `<meta name="description"\n    content="${description}" />`
   );
 
-  // Replace canonical URL
-  html = html.replace(
-    /<link rel="canonical" href="[^"]*"\s*\/?>/,
-    `<link rel="canonical" href="${canonicalUrl}" />`
-  );
+  // Replace canonical URL, or drop it for pages that have none
+  html = canonicalUrl
+    ? html.replace(/<link rel="canonical" href="[^"]*"\s*\/?>/, `<link rel="canonical" href="${canonicalUrl}" />`)
+    : html.replace(/\s*<link rel="canonical" href="[^"]*"\s*\/?>/, '');
 
   // Remove all hreflang tags (single-URL multilingual site doesn't need them)
   html = html.replace(/\s*<link rel="alternate" hreflang="[^"]*" href="[^"]*"\s*\/?>\s*/g, '\n');
 
   // Replace OG URL
-  html = html.replace(
-    /<meta property="og:url" content="[^"]*"\s*\/?>/,
-    `<meta property="og:url" content="${canonicalUrl}" />`
-  );
+  if (canonicalUrl) {
+    html = html.replace(
+      /<meta property="og:url" content="[^"]*"\s*\/?>/,
+      `<meta property="og:url" content="${canonicalUrl}" />`
+    );
+  }
 
   // Replace OG title
   html = html.replace(
     /<meta property="og:title" content="[^"]*"\s*\/?>/,
-    `<meta property="og:title" content="${route.title}" />`
+    `<meta property="og:title" content="${title}" />`
   );
 
   // Replace OG description
   html = html.replace(
     /<meta property="og:description"\s+content="[^"]*"\s*\/?>/,
-    `<meta property="og:description"\n    content="${route.description}" />`
+    `<meta property="og:description"\n    content="${description}" />`
   );
 
   // Replace Twitter URL
-  html = html.replace(
-    /<meta name="twitter:url" content="[^"]*"\s*\/?>/,
-    `<meta name="twitter:url" content="${canonicalUrl}" />`
-  );
+  if (canonicalUrl) {
+    html = html.replace(
+      /<meta name="twitter:url" content="[^"]*"\s*\/?>/,
+      `<meta name="twitter:url" content="${canonicalUrl}" />`
+    );
+  }
 
   // Replace Twitter title
   html = html.replace(
     /<meta name="twitter:title" content="[^"]*"\s*\/?>/,
-    `<meta name="twitter:title" content="${route.title}" />`
+    `<meta name="twitter:title" content="${title}" />`
   );
 
   // Replace Twitter description
   html = html.replace(
     /<meta name="twitter:description"\s+content="[^"]*"\s*\/?>/,
-    `<meta name="twitter:description"\n    content="${route.description}" />`
+    `<meta name="twitter:description"\n    content="${description}" />`
   );
 
-  // Replace robots if specified (for privacy/terms)
-  if (route.robots) {
+  // Replace robots if specified (for privacy/terms and the utility pages)
+  if (robots) {
     html = html.replace(
       /<meta name="robots" content="[^"]*"\s*\/?>/,
-      `<meta name="robots" content="${route.robots}" />`
+      `<meta name="robots" content="${robots}" />`
     );
   }
 
   // Build the crawler-visible content block with H1, description, and nav
   const contentBlock = [
-    `<h1>${route.h1}</h1>`,
-    route.content ? `<p>${route.content}</p>` : '',
+    `<h1>${h1}</h1>`,
+    content ? `<p>${content}</p>` : '',
     `<nav>${navLinks}</nav>`,
   ].filter(Boolean).join('');
 
@@ -201,19 +221,38 @@ for (const route of routes) {
     `  ${CREDIT_FOOTER}\n</body>`
   );
 
-  // Determine output path
-  const routePath = route.path === '/' ? '' : route.path;
-  const outDir = join(distDir, routePath);
-  const outFile = join(outDir, 'index.html');
-
-  // Create directory if needed
-  if (!existsSync(outDir)) {
-    mkdirSync(outDir, { recursive: true });
-  }
-
-  // Write the file (for root, overwrite the existing index.html)
-  writeFileSync(outFile, html, 'utf-8');
-  console.log(`  ✓ ${route.path} → ${outFile.replace(distDir, 'dist')}`);
+  return html;
 }
 
-console.log(`\n✅ Pre-rendered meta tags for ${routes.length} routes`);
+function write(file, html) {
+  const outFile = join(distDir, file);
+  if (!existsSync(dirname(outFile))) {
+    mkdirSync(dirname(outFile), { recursive: true });
+  }
+  writeFileSync(outFile, html, 'utf-8');
+}
+
+// Read the base index.html built by Vite
+const baseHtml = readFileSync(join(distDir, 'index.html'), 'utf-8');
+
+for (const route of routes) {
+  const html = renderPage({
+    ...route,
+    canonicalUrl: route.path === '/' ? `${SITE}/` : `${SITE}${route.path}`,
+  });
+
+  // For the root this overwrites the index.html Vite built
+  const file = route.path === '/' ? 'index.html' : `${route.path.slice(1)}/index.html`;
+  write(file, html);
+  console.log(`  ✓ ${route.path} → dist/${file}`);
+}
+
+for (const page of utilityPages) {
+  const html = renderPage({ ...page, canonicalUrl: null, robots: 'noindex, nofollow' })
+    // The business schema describes the site's real pages, not these.
+    .replace(/\s*<script type="application\/ld\+json">[\s\S]*?<\/script>/g, '');
+  write(page.file, html);
+  console.log(`  ✓ ${page.title.split(' |')[0]} → dist/${page.file}`);
+}
+
+console.log(`\n✅ Pre-rendered meta tags for ${routes.length} routes and ${utilityPages.length} utility pages`);
