@@ -70,6 +70,7 @@ export function business(t: T, { withRating = false } = {}): Node {
     address: ADDRESS,
     geo: GEO,
     hasMap: GOOGLE_MAPS_URL,
+    logo: { '@type': 'ImageObject', url: absolute('/icon-512.png'), width: 512, height: 512 },
     image: [
       absolute('/assets/glamping-tent/view.jpg'),
       absolute('/assets/glamping-tent/prosopsi.jpg'),
