@@ -49,7 +49,7 @@ const Footer = () => {
           {/* Navigate */}
           <div className="md:col-span-2">
             <h4 className="text-xs font-sans font-semibold uppercase tracking-widest text-sand-dark/40 mb-4">
-              Navigate
+              {t('footer.navigate')}
             </h4>
             <ul className="space-y-3">
               <li><Link to="/" className={linkClass} onClick={scrollToTop}>{t('nav.home')}</Link></li>

@@ -74,11 +74,11 @@ const AccommodationCard = ({ accommodation, index = 0 }: AccommodationCardProps)
           <div className="flex items-center gap-5 text-sm text-gray-500 border-t border-gray-100 pt-4">
             <div className="flex items-center gap-1.5">
               <Users className="h-4 w-4 text-forest/60" />
-              <span>{guests} {t('card.guests')}</span>
+              <span>{t('common.guests', { count: guests })}</span>
             </div>
             <div className="flex items-center gap-1.5">
               <BedDouble className="h-4 w-4 text-forest/60" />
-              <span>{beds} {t('card.beds')}</span>
+              <span>{t('common.beds', { count: beds })}</span>
             </div>
           </div>
         </div>

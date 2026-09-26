@@ -15,16 +15,13 @@ const FadeUp = ({ children, delay = 0 }: { children: React.ReactNode; delay?: nu
 );
 
 const TermsOfService = () => {
-  const { language, t } = useLanguage();
+  const { t } = useLanguage();
 
   const termsSchema = {
     '@context': 'https://schema.org',
     '@type': 'WebPage',
-    name: language === 'el' ? 'Όροι Χρήσης - Metaxas Retreats' : 'Terms of Service - Metaxas Retreats',
-    description:
-      language === 'el'
-        ? 'Όροι χρήσης και κανονισμοί διαμονής στο Metaxas Retreats στη Λευκάδα'
-        : 'Terms of service and house rules for staying at Metaxas Retreats in Lefkada',
+    name: `${t('terms.title')} - Metaxas Retreats`,
+    description: t('terms.schema.description'),
     url: 'https://metaxasretreats.gr/terms',
   };
 
@@ -71,10 +68,10 @@ const TermsOfService = () => {
       <div className="max-w-3xl mx-auto px-5 sm:px-8 py-16 md:py-24">
         <FadeUp>
           <div className="mb-12">
-            <p className="text-wood text-xs font-sans font-semibold uppercase tracking-widest mb-3">Legal</p>
+            <p className="text-wood text-xs font-sans font-semibold uppercase tracking-widest mb-3">{t('legal.eyebrow')}</p>
             <h1 className="text-4xl md:text-5xl font-heading font-semibold text-forest-dark mb-4">{t('terms.title')}</h1>
             <p className="text-gray-400 text-sm font-sans">
-              {language === 'el' ? 'Τελευταία ενημέρωση: Μάρτιος 2026' : 'Last updated: March 2026'}
+              {t('legal.lastUpdated')}
             </p>
           </div>
         </FadeUp>

@@ -145,10 +145,10 @@ const AccommodationDetail = () => {
   const nickname = accommodation.id === 'wooden-house' ? 'Metaxaki' : 'Metaxoula';
 
   const stats = [
-    { icon: Users, label: `${accommodation.guests} ${t('detail.guests')}` },
-    { icon: BedDouble, label: `${accommodation.bedrooms} ${t('detail.bedrooms')}` },
-    { icon: BedDouble, label: `${accommodation.beds} ${t('detail.beds')}` },
-    { icon: Bath, label: `${accommodation.bathrooms} ${t('detail.bathrooms')}` },
+    { icon: Users, label: t('common.guests', { count: accommodation.guests }) },
+    { icon: BedDouble, label: t('common.bedrooms', { count: accommodation.bedrooms }) },
+    { icon: BedDouble, label: t('common.beds', { count: accommodation.beds }) },
+    { icon: Bath, label: t('common.bathrooms', { count: accommodation.bathrooms }) },
   ];
 
   return (
@@ -249,12 +249,10 @@ const AccommodationDetail = () => {
             <FadeUp delay={0.25}>
               <div className="mt-10 pt-10 border-t border-gray-100">
                 <h2 className="text-2xl font-heading font-semibold text-forest-dark mb-4">
-                  {language === 'el' ? 'Τοποθεσία' : 'Location'}
+                  {t('detail.location')}
                 </h2>
                 <p className="text-gray-600 text-sm leading-relaxed">
-                  {language === 'el'
-                    ? 'Μικρός Γιαλός, Πόρος, Λευκάδα, Ελλάδα — 50μ από την παραλία, ανάμεσα σε ελαιόδεντρα με θέα στον κόλπο.'
-                    : 'Mikros Gialos, Poros, Lefkada, Greece — 50m from the beach, nestled among olive trees with bay views.'}
+                  {t('detail.locationText')}
                 </p>
               </div>
             </FadeUp>
@@ -271,9 +269,7 @@ const AccommodationDetail = () => {
               <FadeUp delay={0.3}>
                 <div className="mt-4 p-4 rounded-xl bg-wood/8 border border-wood/20 text-center">
                   <p className="text-xs text-gray-600 leading-relaxed">
-                    {language === 'el'
-                      ? '🏷️ Κάντε κράτηση απευθείας και εξοικονομήστε — χωρίς προμήθεια πλατφόρμας.'
-                      : '🏷️ Book direct & save — no platform fees.'}
+                    {t('detail.bookDirectNote')}
                   </p>
                 </div>
               </FadeUp>
@@ -292,10 +288,10 @@ const AccommodationDetail = () => {
       >
         <div>
           <p className="text-xs text-wood font-sans font-semibold uppercase tracking-widest">
-            {language === 'el' ? 'Απευθείας Κράτηση' : 'Book Direct'}
+            {t('detail.ribbon.title')}
           </p>
           <p className="text-xs text-gray-400">
-            {language === 'el' ? 'Εξοικονομήστε χωρίς προμήθεια' : 'Save — no platform fees'}
+            {t('detail.ribbon.subtitle')}
           </p>
         </div>
         <Link
@@ -304,7 +300,7 @@ const AccommodationDetail = () => {
           className="btn-shimmer flex-shrink-0 px-6 py-2.5 rounded-full bg-wood text-forest-dark font-sans font-semibold text-sm tracking-wide hover:bg-wood-light transition-colors"
         >
           <CalendarDays className="h-4 w-4 inline-block mr-1.5 -mt-0.5" />
-          {language === 'el' ? 'Κράτηση' : 'Book Now'}
+          {t('nav.bookNow')}
         </Link>
       </motion.div>
     </Layout>

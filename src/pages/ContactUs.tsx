@@ -25,7 +25,7 @@ const FadeUp = ({ children, delay = 0 }: { children: React.ReactNode; delay?: nu
 );
 
 const ContactUs = () => {
-  const { t, language } = useLanguage();
+  const { t } = useLanguage();
 
   const [formData, setFormData] = useState({ fullName: '', email: '', phone: '', message: '' });
   const [agreedToPolicy, setAgreedToPolicy] = useState(false);
@@ -39,7 +39,7 @@ const ContactUs = () => {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
     "name": "Metaxas Retreats",
-    "description": language === 'el' ? "Πολυτελές glamping και ενοικιαζόμενα διαμερίσματα διακοπών στον Μικρό Γιαλό, Λευκάδα, Ελλάδα" : "Luxury glamping and vacation rentals in Mikros Gialos, Lefkada, Greece",
+    "description": t('contact.schema.description'),
     "url": "https://metaxasretreats.gr/contact",
     "telephone": "+30 6973219980",
     "email": "metaxasretreats@gmail.com",
@@ -52,8 +52,8 @@ const ContactUs = () => {
     e.preventDefault();
     try {
       const validated = contactFormSchema.parse({ fullName: formData.fullName, email: formData.email, phone: formData.phone, message: formData.message });
-      if (!validated.message?.trim()) { toast.error(language === 'el' ? 'Παρακαλώ συμπληρώστε το μήνυμα' : 'Please fill in the message'); return; }
-      if (!agreedToPolicy) { toast.error(language === 'el' ? 'Παρακαλώ αποδεχτείτε την Πολιτική Απορρήτου' : 'Please accept the Privacy Policy'); return; }
+      if (!validated.message?.trim()) { toast.error(t('contact.error.message')); return; }
+      if (!agreedToPolicy) { toast.error(t('booking.error.privacy')); return; }
       setIsSubmitting(true);
       const response = await fetch('/api/contact', {
         method: 'POST',
@@ -64,13 +64,13 @@ const ContactUs = () => {
       setSubmitted(true);
     } catch (err) {
       if (err instanceof z.ZodError) { toast.error(err.errors[0].message); }
-      else { toast.error(language === 'el' ? 'Υπήρξε πρόβλημα. Δοκιμάστε ξανά.' : 'There was a problem. Please try again.'); }
+      else { toast.error(t('booking.error.general')); }
     } finally {
       setIsSubmitting(false);
     }
   };
 
-  const waMsg = encodeURIComponent(language === 'el' ? 'Γεια σας! Θα ήθελα πληροφορίες για τα καταλύματά σας.' : 'Hello! I would like information about your accommodations.');
+  const waMsg = encodeURIComponent(t('contact.whatsappMessage'));
 
   return (
     <Layout>
@@ -88,7 +88,7 @@ const ContactUs = () => {
         {/* Header */}
         <FadeUp>
           <div className="mb-12">
-            <p className="text-wood text-xs font-sans font-semibold uppercase tracking-widest mb-3">{language === 'el' ? 'Επικοινωνία' : 'Get in Touch'}</p>
+            <p className="text-wood text-xs font-sans font-semibold uppercase tracking-widest mb-3">{t('contact.eyebrow')}</p>
             <h1 className="text-4xl md:text-5xl font-heading font-semibold text-forest-dark mb-4">{t('contact.title')}</h1>
             <p className="text-gray-500 max-w-xl leading-relaxed">{t('contact.subtitle')}</p>
           </div>
@@ -100,7 +100,7 @@ const ContactUs = () => {
           <FadeUp delay={0.1}>
             <div className="bg-white rounded-2xl border border-gray-100 shadow-card p-8">
               <h2 className="text-xl font-heading font-semibold text-forest-dark mb-6">
-                {language === 'el' ? 'Αποστολή Μηνύματος' : 'Send a Message'}
+                {t('contact.form.title')}
               </h2>
 
               <AnimatePresence mode="wait">
@@ -121,20 +121,18 @@ const ContactUs = () => {
                       <CheckCircle className="h-8 w-8 text-forest" />
                     </motion.div>
                     <h3 className="font-heading font-semibold text-2xl text-forest-dark mb-3">
-                      {language === 'el' ? 'Το μήνυμά σας στάλθηκε!' : 'Message sent!'}
+                      {t('booking.success.title')}
                     </h3>
                     <p className="text-gray-500 text-sm leading-relaxed max-w-xs mx-auto">
-                      {language === 'el'
-                        ? 'Θα σας απαντήσουμε σύντομα — συνήθως εντός 1 ώρας.'
-                        : "We'll get back to you soon — usually within 1 hour."}
+                      {t('booking.success.desc')}
                     </p>
                   </motion.div>
                 ) : (
                   <motion.form key="form" onSubmit={handleSubmit} className="space-y-5">
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                       <div>
-                        <Label htmlFor="fullName" className="text-sm text-gray-600 mb-1.5 block">{language === 'el' ? 'Ονοματεπώνυμο' : 'Full Name'} *</Label>
-                        <Input id="fullName" type="text" required value={formData.fullName} onChange={(e) => setFormData({ ...formData, fullName: e.target.value })} placeholder={language === 'el' ? 'Ονοματεπώνυμο' : 'Full name'} className="rounded-xl border-gray-200 focus-visible:ring-forest/30 focus-visible:border-forest" />
+                        <Label htmlFor="fullName" className="text-sm text-gray-600 mb-1.5 block">{t('form.fullName')} *</Label>
+                        <Input id="fullName" type="text" required value={formData.fullName} onChange={(e) => setFormData({ ...formData, fullName: e.target.value })} placeholder={t('form.fullNamePlaceholder')} className="rounded-xl border-gray-200 focus-visible:ring-forest/30 focus-visible:border-forest" />
                       </div>
                       <div>
                         <Label htmlFor="email" className="text-sm text-gray-600 mb-1.5 block">Email *</Label>
@@ -142,24 +140,24 @@ const ContactUs = () => {
                       </div>
                     </div>
                     <div>
-                      <Label htmlFor="phone" className="text-sm text-gray-600 mb-1.5 block">{language === 'el' ? 'Τηλέφωνο' : 'Phone'}</Label>
-                      <Input id="phone" type="tel" value={formData.phone} onChange={(e) => setFormData({ ...formData, phone: e.target.value })} placeholder={language === 'el' ? 'Τηλέφωνο' : 'Phone'} className="rounded-xl border-gray-200 focus-visible:ring-forest/30 focus-visible:border-forest" />
+                      <Label htmlFor="phone" className="text-sm text-gray-600 mb-1.5 block">{t('form.phone')}</Label>
+                      <Input id="phone" type="tel" value={formData.phone} onChange={(e) => setFormData({ ...formData, phone: e.target.value })} placeholder={t('form.phonePlaceholder')} className="rounded-xl border-gray-200 focus-visible:ring-forest/30 focus-visible:border-forest" />
                     </div>
                     <div>
-                      <Label htmlFor="message" className="text-sm text-gray-600 mb-1.5 block">{language === 'el' ? 'Μήνυμα' : 'Message'} *</Label>
-                      <Textarea id="message" required value={formData.message} onChange={(e) => setFormData({ ...formData, message: e.target.value })} placeholder={language === 'el' ? 'Πώς μπορούμε να σας βοηθήσουμε;' : 'How can we help you?'} rows={5} className="rounded-xl border-gray-200 focus-visible:ring-forest/30 focus-visible:border-forest resize-none" />
+                      <Label htmlFor="message" className="text-sm text-gray-600 mb-1.5 block">{t('form.message')} *</Label>
+                      <Textarea id="message" required value={formData.message} onChange={(e) => setFormData({ ...formData, message: e.target.value })} placeholder={t('contact.form.messagePlaceholder')} rows={5} className="rounded-xl border-gray-200 focus-visible:ring-forest/30 focus-visible:border-forest resize-none" />
                     </div>
                     <div className="flex items-start gap-3">
                       <Checkbox id="privacy" checked={agreedToPolicy} onCheckedChange={(v) => setAgreedToPolicy(v === true)} className="mt-0.5" />
                       <Label htmlFor="privacy" className="text-xs text-gray-500 leading-relaxed cursor-pointer">
-                        {language === 'el' ? 'Συμφωνώ με την ' : 'I agree with the '}
-                        <Link to="/privacy" className="text-forest hover:underline">{language === 'el' ? 'Πολιτική Απορρήτου' : 'Privacy Policy'}</Link>
-                        {language === 'el' ? ' και την επεξεργασία των δεδομένων μου.' : ' and the processing of my data.'}
+                        {t('booking.privacy.agreePart1')}
+                        <Link to="/privacy" className="text-forest hover:underline">{t('booking.privacy.link')}</Link>
+                        {t('booking.privacy.agreePart2')}
                       </Label>
                     </div>
                     <button type="submit" disabled={isSubmitting} className="w-full py-3.5 rounded-xl bg-wood text-forest-dark font-sans font-semibold text-sm tracking-wide flex items-center justify-center gap-2 transition-all duration-300 hover:bg-wood-light hover:shadow-cta active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed">
                       <Send className="h-4 w-4" />
-                      {isSubmitting ? (language === 'el' ? 'Αποστολή...' : 'Sending...') : (language === 'el' ? 'Αποστολή Μηνύματος' : 'Send Message')}
+                      {isSubmitting ? t('form.sending') : t('form.sendMessage')}
                     </button>
                   </motion.form>
                 )}
@@ -172,7 +170,7 @@ const ContactUs = () => {
             <FadeUp delay={0.15}>
               <div className="bg-white rounded-2xl border border-gray-100 shadow-card p-8 space-y-6">
                 <h2 className="text-xl font-heading font-semibold text-forest-dark">
-                  {language === 'el' ? 'Στοιχεία Επικοινωνίας' : 'Contact Details'}
+                  {t('contact.details')}
                 </h2>
 
                 {/* Address */}
@@ -181,9 +179,9 @@ const ContactUs = () => {
                     <MapPin className="h-4 w-4 text-forest" />
                   </div>
                   <div>
-                    <p className="text-sm font-semibold text-gray-700 mb-0.5">{language === 'el' ? 'Διεύθυνση' : 'Address'}</p>
-                    <p className="text-sm text-gray-500">{language === 'el' ? 'Μικρός Γιαλός, Πόρος' : 'Mikros Gialos, Poros'}</p>
-                    <p className="text-sm text-gray-500">{language === 'el' ? 'Λευκάδα, Ελλάδα 31082' : 'Lefkada, Greece 31082'}</p>
+                    <p className="text-sm font-semibold text-gray-700 mb-0.5">{t('contact.address')}</p>
+                    <p className="text-sm text-gray-500">{t('contact.addressLine1')}</p>
+                    <p className="text-sm text-gray-500">{t('contact.addressLine2')}</p>
                   </div>
                 </div>
 
@@ -228,7 +226,7 @@ const ContactUs = () => {
                   allowFullScreen
                   loading="lazy"
                   referrerPolicy="no-referrer-when-downgrade"
-                  title="Metaxas Retreats Location"
+                  title={t('contact.mapTitle')}
                 />
               </div>
             </FadeUp>

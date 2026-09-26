@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/popover";
 import { useBlockedDates } from "@/hooks/useBlockedDates";
 import { useLanguage } from "@/context/LanguageContext";
+import { dateLocale } from "@/lib/dateLocale";
 
 // Shown when the live calendar can't be reached — better to admit we don't know
 // than to imply every date is free.
@@ -42,7 +43,8 @@ export function DateRangePicker({
   className,
 }: DateRangePickerProps) {
   const [isCalendarOpen, setIsCalendarOpen] = React.useState(false);
-  const { language } = useLanguage();
+  const { language, t } = useLanguage();
+  const locale = dateLocale(language);
 
   // Live availability, read from the Airbnb feeds via /api/availability
   const { isDateBlocked, loading, unavailable } = useBlockedDates(accommodationId);
@@ -115,14 +117,14 @@ export function DateRangePicker({
             {startDate ? (
               endDate ? (
                 <>
-                  {format(startDate, "MMM d, yyyy")} -{" "}
-                  {format(endDate, "MMM d, yyyy")}
+                  {format(startDate, "d MMM yyyy", { locale })} –{" "}
+                  {format(endDate, "d MMM yyyy", { locale })}
                 </>
               ) : (
-                format(startDate, "MMM d, yyyy")
+                format(startDate, "d MMM yyyy", { locale })
               )
             ) : (
-              <span>{loading ? "Loading availability..." : "Check-in - Check-out"}</span>
+              <span>{loading ? t('datePicker.loading') : t('datePicker.placeholder')}</span>
             )}
           </Button>
         </PopoverTrigger>
@@ -135,6 +137,7 @@ export function DateRangePicker({
           <Calendar
             initialFocus
             mode="range"
+            locale={locale}
             defaultMonth={startDate}
             selected={{ from: startDate, to: endDate }}
             onSelect={onSelect}

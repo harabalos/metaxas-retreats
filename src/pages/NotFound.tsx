@@ -8,7 +8,7 @@ import { Home, ArrowRight } from 'lucide-react';
 
 const NotFound = () => {
   const location = useLocation();
-  const { language } = useLanguage();
+  const { t } = useLanguage();
 
   useEffect(() => {
     console.error('404 Error: User attempted to access non-existent route:', location.pathname);
@@ -46,19 +46,15 @@ const NotFound = () => {
           </motion.p>
 
           <motion.p variants={itemVariants} className="text-wood text-xs font-sans font-semibold uppercase tracking-widest mb-4 -mt-4">
-            {language === 'el' ? 'Σελίδα δεν βρέθηκε' : 'Page not found'}
+            {t('notFound.eyebrow')}
           </motion.p>
 
           <motion.h1 variants={itemVariants} className="text-3xl md:text-4xl font-heading font-semibold text-forest-dark mb-4">
-            {language === 'el'
-              ? 'Αυτή η σελίδα δεν υπάρχει'
-              : "This page doesn't exist"}
+            {t('notFound.title')}
           </motion.h1>
 
           <motion.p variants={itemVariants} className="text-gray-500 text-sm leading-relaxed mb-10 max-w-xs mx-auto">
-            {language === 'el'
-              ? 'Η σελίδα που ψάχνετε μπορεί να έχει μετακινηθεί ή να μην υπάρχει πλέον.'
-              : "The page you're looking for may have moved or no longer exists."}
+            {t('notFound.text')}
           </motion.p>
 
           <motion.div variants={itemVariants} className="flex flex-wrap items-center justify-center gap-4">
@@ -68,14 +64,14 @@ const NotFound = () => {
               className="btn-shimmer flex items-center gap-2 px-7 py-3 rounded-full bg-forest text-white font-sans font-semibold text-sm tracking-wide hover:bg-forest-dark transition-colors"
             >
               <Home className="h-4 w-4" />
-              {language === 'el' ? 'Αρχική' : 'Return Home'}
+              {t('notFound.home')}
             </Link>
             <Link
               to="/contact"
               onClick={() => window.scrollTo(0, 0)}
               className="flex items-center gap-2 px-7 py-3 rounded-full border border-gray-200 text-gray-600 font-sans font-semibold text-sm tracking-wide hover:border-forest hover:text-forest transition-colors"
             >
-              {language === 'el' ? 'Επικοινωνία' : 'Contact Us'}
+              {t('nav.contact')}
               <ArrowRight className="h-4 w-4" />
             </Link>
           </motion.div>

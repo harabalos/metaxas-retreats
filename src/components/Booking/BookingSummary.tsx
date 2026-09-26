@@ -1,9 +1,9 @@
 import { format } from 'date-fns';
-import { el, enUS } from 'date-fns/locale';
 import { CalendarDays, Users, Moon } from 'lucide-react';
 import { Accommodation } from '@/data/accommodations';
 import { useLanguage } from '@/context/LanguageContext';
 import { imageUrl } from '@/lib/images';
+import { dateLocale } from '@/lib/dateLocale';
 
 interface BookingSummaryProps {
   accommodation: Accommodation;
@@ -17,7 +17,7 @@ interface BookingSummaryProps {
 const BookingSummary = ({ accommodation, startDate, endDate, guests, nights, selectedTent }: BookingSummaryProps) => {
   const { t, language } = useLanguage();
 
-  const locale = language === 'el' ? el : enUS;
+  const locale = dateLocale(language);
   const fmt = (d: Date) => format(d, 'EEE, d MMM yyyy', { locale });
 
   const accommodationName = accommodation.type === 'house'
@@ -71,12 +71,12 @@ const BookingSummary = ({ accommodation, startDate, endDate, guests, nights, sel
 
         <div className="flex items-center gap-3 text-sm">
           <Moon className="h-4 w-4 text-forest/60 flex-shrink-0" />
-          <span className="text-gray-700">{nights} {language === 'el' ? 'διανυκτερεύσεις' : nights === 1 ? 'night' : 'nights'}</span>
+          <span className="text-gray-700">{t('common.nights', { count: nights })}</span>
         </div>
 
         <div className="flex items-center gap-3 text-sm">
           <Users className="h-4 w-4 text-forest/60 flex-shrink-0" />
-          <span className="text-gray-700">{guests} {language === 'el' ? 'επισκέπτες' : guests === 1 ? 'guest' : 'guests'}</span>
+          <span className="text-gray-700">{t('common.guests', { count: guests })}</span>
         </div>
       </div>
 

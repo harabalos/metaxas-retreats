@@ -228,7 +228,7 @@ const HomePage = () => {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="text-wood text-sm font-sans font-medium tracking-[0.2em] uppercase mb-5"
           >
-            Lefkada, Greece
+            {t('home.hero.eyebrow')}
           </motion.p>
 
           <motion.h1
@@ -273,7 +273,7 @@ const HomePage = () => {
         {/* Scroll indicator */}
         <motion.button
           onClick={scrollToAccommodations}
-          aria-label="Scroll down"
+          aria-label={t('home.hero.scrollDown')}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1.3 }}
@@ -292,7 +292,7 @@ const HomePage = () => {
       <section className="py-24 px-5 sm:px-10">
         <div className="max-w-4xl mx-auto text-center">
           <FadeUp>
-            <p className="text-wood text-xs font-sans font-semibold tracking-[0.25em] uppercase mb-6">Mikros Gialos Bay</p>
+            <p className="text-wood text-xs font-sans font-semibold tracking-[0.25em] uppercase mb-6">{t('home.brand.eyebrow')}</p>
             <h2 className="font-heading font-light text-forest text-display-lg leading-snug text-balance">
               {t('home.brandStatement')}
             </h2>
@@ -329,7 +329,7 @@ const HomePage = () => {
       <section id="accommodations" ref={accommodationsRef} className="py-20 px-5 sm:px-10 bg-sand/40">
         <div className="max-w-6xl mx-auto">
           <FadeUp className="text-center mb-14">
-            <p className="text-wood text-xs font-sans font-semibold tracking-[0.25em] uppercase mb-3">Where You'll Stay</p>
+            <p className="text-wood text-xs font-sans font-semibold tracking-[0.25em] uppercase mb-3">{t('home.accommodations.eyebrow')}</p>
             <h2 className="font-heading font-light text-forest text-display-lg">
               {t('home.accommodations.title')}
             </h2>
@@ -378,7 +378,7 @@ const HomePage = () => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <FadeUp>
               <div>
-                <p className="text-wood text-xs font-sans font-semibold tracking-[0.25em] uppercase mb-5">The Experience</p>
+                <p className="text-wood text-xs font-sans font-semibold tracking-[0.25em] uppercase mb-5">{t('home.experience.eyebrow')}</p>
                 <h2 className="font-heading font-light text-forest text-display-lg mb-7 text-balance">
                   {t('home.experience.title')}
                 </h2>
@@ -431,7 +431,7 @@ const HomePage = () => {
       <section className="py-20 px-5 sm:px-10 bg-forest-dark text-white overflow-hidden">
         <div className="max-w-6xl mx-auto">
           <FadeUp className="text-center mb-12">
-            <p className="text-wood text-xs font-sans font-semibold tracking-[0.25em] uppercase mb-3">Guest Stories</p>
+            <p className="text-wood text-xs font-sans font-semibold tracking-[0.25em] uppercase mb-3">{t('home.reviews.eyebrow')}</p>
             <h2 className="font-heading font-light text-white text-display-lg">
               {t('home.reviews.title') || 'What Our Guests Say'}
             </h2>
@@ -447,7 +447,7 @@ const HomePage = () => {
       <section id="faq" className="py-20 px-5 sm:px-10 bg-cream">
         <div className="max-w-3xl mx-auto">
           <FadeUp className="text-center mb-12">
-            <p className="text-wood text-xs font-sans font-semibold tracking-[0.25em] uppercase mb-3">FAQ</p>
+            <p className="text-wood text-xs font-sans font-semibold tracking-[0.25em] uppercase mb-3">{t('faq.eyebrow')}</p>
             <h2 className="font-heading font-light text-forest text-display-lg">
               {t('faq.title')}
             </h2>

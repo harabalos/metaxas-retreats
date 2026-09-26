@@ -7,7 +7,8 @@ export type Language = 'en' | 'el' | 'it' | 'de' | 'ro';
 type LanguageContextType = {
   language: Language;
   setLanguage: (lang: Language) => void;
-  t: (key: string) => string;
+  /** i18next's t: pass { count } for plurals, other values for {{interpolation}}. */
+  t: (key: string, options?: Record<string, unknown>) => string;
 };
 
 // Create the context with a default value

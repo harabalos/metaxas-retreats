@@ -8,6 +8,7 @@ import BookingSummary from '@/components/Booking/BookingSummary';
 import ContactSection from '@/components/Booking/ContactSection';
 import SEOHead from '@/components/SEO/SEOHead';
 import { useLanguage } from '@/context/LanguageContext';
+import { dateLocale } from '@/lib/dateLocale';
 import { ExternalLink, CalendarDays, Users } from 'lucide-react';
 
 const BookingPage = () => {
@@ -86,7 +87,7 @@ const BookingPage = () => {
           className="mb-10"
         >
           <p className="text-wood text-xs font-sans font-semibold uppercase tracking-widest mb-2">
-            {language === 'el' ? 'Βήμα 2 — Επικοινωνία' : 'Step 2 — Contact'}
+            {t('booking.step2')}
           </p>
           <h1 className="text-4xl md:text-5xl font-heading font-semibold text-forest-dark mb-4">
             {t('booking.pageTitle')}
@@ -96,13 +97,13 @@ const BookingPage = () => {
           <div className="flex flex-wrap gap-3">
             <div className="flex items-center gap-2 px-4 py-2 bg-forest/5 rounded-full text-sm text-forest-dark">
               <CalendarDays className="h-4 w-4 text-forest/60" />
-              <span>{format(startDate, 'dd MMM')} → {format(endDate, 'dd MMM yyyy')}</span>
+              <span>{format(startDate, 'dd MMM', { locale: dateLocale(language) })} → {format(endDate, 'dd MMM yyyy', { locale: dateLocale(language) })}</span>
               <span className="text-gray-400">·</span>
-              <span>{nights} {language === 'el' ? 'νύχτες' : 'nights'}</span>
+              <span>{t('common.nights', { count: nights })}</span>
             </div>
             <div className="flex items-center gap-2 px-4 py-2 bg-forest/5 rounded-full text-sm text-forest-dark">
               <Users className="h-4 w-4 text-forest/60" />
-              <span>{guests} {language === 'el' ? 'επισκέπτες' : 'guests'}</span>
+              <span>{t('common.guests', { count: guests })}</span>
             </div>
             <div className="px-4 py-2 bg-wood/10 rounded-full text-sm text-wood font-semibold">
               {accommodationName}
