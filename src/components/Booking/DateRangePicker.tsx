@@ -51,7 +51,7 @@ export function DateRangePicker({
 
   // Helper: Check if a range hits a blocked date
   const isRangeBlocked = (start: Date, end: Date) => {
-    let current = new Date(start);
+    const current = new Date(start);
     while (current <= end) {
       if (isDateBlocked(current)) return true;
       current.setDate(current.getDate() + 1);

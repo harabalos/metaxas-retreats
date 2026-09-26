@@ -1,6 +1,6 @@
 import { useLocation, Link } from 'react-router-dom';
 import { useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { motion, type Variants } from 'framer-motion';
 import Layout from '@/components/Layout/Layout';
 import SEOHead from '@/components/SEO/SEOHead';
 import { useLanguage } from '@/context/LanguageContext';
@@ -14,11 +14,11 @@ const NotFound = () => {
     console.error('404 Error: User attempted to access non-existent route:', location.pathname);
   }, [location.pathname]);
 
-  const containerVariants = {
+  const containerVariants: Variants = {
     hidden: {},
     show: { transition: { staggerChildren: 0.1 } },
   };
-  const itemVariants = {
+  const itemVariants: Variants = {
     hidden: { opacity: 0, y: 24 },
     show: { opacity: 1, y: 0, transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1] } },
   };

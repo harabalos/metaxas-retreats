@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { ChevronLeft, ChevronRight, X, ZoomIn } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, type Transition } from 'framer-motion';
 import { useLanguage } from '@/context/LanguageContext';
 import { aspectRatio, imageUrl, responsiveImage } from '@/lib/images';
 
@@ -259,7 +259,7 @@ const AccommodationGallery = ({ images, name }: AccommodationGalleryProps) => {
     exit: (dir: number) => ({ x: dir > 0 ? '-100%' : '100%', opacity: 0 }),
   };
 
-  const transition = { duration: 0.38, ease: [0.22, 1, 0.36, 1] };
+  const transition: Transition = { duration: 0.38, ease: [0.22, 1, 0.36, 1] };
 
   return (
     <>

@@ -19,7 +19,7 @@ export default function CookieConsent() {
     document.head.appendChild(script);
 
     window.dataLayer = window.dataLayer || [];
-    function gtag(...args: any[]) {
+    function gtag(...args: unknown[]) {
       window.dataLayer.push(args);
     }
     window.gtag = gtag;
@@ -121,7 +121,8 @@ export default function CookieConsent() {
 // Global Type Definitions
 declare global {
   interface Window {
-    dataLayer: any[];
-    gtag: (...args: any[]) => void;
+    dataLayer: unknown[];
+    /** Set once Google Analytics has been loaded (after consent). */
+    gtag?: (...args: unknown[]) => void;
   }
 }
