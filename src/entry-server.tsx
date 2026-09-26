@@ -3,14 +3,16 @@ import { renderToPipeableStream } from 'react-dom/server';
 import { StaticRouter } from 'react-router-dom/server';
 import { HelmetProvider, type HelmetServerState } from 'react-helmet-async';
 import App from './App';
-import i18n from './i18n';
+import i18n, { loadLanguage } from './i18n';
+import type { Language } from './lib/i18nRoutes';
 import { llmsTxt } from './lib/llmsTxt';
 
 /**
  * Renders one URL to HTML at build time (scripts/prerender-meta.js), waiting
  * for the lazy-loaded page so the markup contains the real content.
  */
-export async function render(url: string, language = 'en') {
+export async function render(url: string, language: Language = 'en') {
+  await loadLanguage(language);
   await i18n.changeLanguage(language);
   const helmetContext: { helmet?: HelmetServerState } = {};
 

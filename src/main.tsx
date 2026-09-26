@@ -5,7 +5,7 @@ import App from './App.tsx';
 // Self-hosted variable fonts; both cover Greek (DM Sans, the old body font, didn't).
 import '@fontsource-variable/eb-garamond';
 import '@fontsource-variable/commissioner';
-import i18n from './i18n';
+import i18n, { loadLanguage } from './i18n';
 import { DEFAULT_LANGUAGE, isLanguage, localizePath, splitLanguage } from './lib/i18nRoutes';
 import './index.css';
 
@@ -52,5 +52,13 @@ function mount() {
 }
 
 const redirect = preferredUrl();
-if (redirect) window.location.replace(redirect);
-else mount();
+if (redirect) {
+  window.location.replace(redirect);
+} else {
+  // Fetch the page's language before the first render, so hydration matches
+  // the prerendered markup.
+  const { language } = splitLanguage(window.location.pathname);
+  loadLanguage(language)
+    .then(() => i18n.changeLanguage(language))
+    .then(mount);
+}

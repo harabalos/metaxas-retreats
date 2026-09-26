@@ -2,6 +2,7 @@ import React, { Suspense, useEffect, useLayoutEffect } from "react";
 import { Toaster } from "@/components/ui/sonner";
 import { Outlet, Routes, Route, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { isLanguageLoaded, loadLanguage } from "./i18n";
 import { LANGUAGES, localizePath, type Language } from "./lib/i18nRoutes";
 import { LanguageProvider } from "./context/LanguageContext";
 import CookieConsent from "./components/Layout/CookieConsent";
@@ -31,10 +32,12 @@ const PageLoader = () => (
 const useIsomorphicLayoutEffect = typeof window === "undefined" ? useEffect : useLayoutEffect;
 
 // Keeps i18n on the language of the URL. The first render already matches
-// (i18n.ts reads the URL, prerendering sets it per page); this handles moving
-// between languages, before the browser paints.
+// (main.tsx and the prerender load it first); this handles moving between
+// languages, before the browser paints. A language that hasn't been fetched
+// yet suspends the page (the Suspense fallback) until its texts arrive.
 const LanguageScope = ({ language }: { language: Language }) => {
   const { i18n } = useTranslation();
+  if (!isLanguageLoaded(language)) throw loadLanguage(language);
   useIsomorphicLayoutEffect(() => {
     if (i18n.language !== language) i18n.changeLanguage(language);
   }, [i18n, language]);

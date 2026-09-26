@@ -7,7 +7,7 @@
 
 export const LANGUAGES = ['en', 'el', 'it', 'de', 'ro'] as const;
 export type Language = (typeof LANGUAGES)[number];
-export const DEFAULT_LANGUAGE: Language = 'en';
+export const DEFAULT_LANGUAGE = 'en' satisfies Language;
 
 export const isLanguage = (value: unknown): value is Language =>
   LANGUAGES.includes(value as Language);

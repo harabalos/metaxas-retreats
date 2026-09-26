@@ -2,6 +2,7 @@ import React, { createContext, useCallback, useContext, useEffect, ReactNode } f
 import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { DEFAULT_LANGUAGE, isLanguage, localizePath, splitLanguage, type Language } from '@/lib/i18nRoutes';
+import { loadLanguage } from '@/i18n';
 
 export type { Language };
 
@@ -42,7 +43,8 @@ export const LanguageProvider = ({ children }: LanguageProviderProps) => {
       // Storage can be unavailable (private mode); the URL still carries the language.
     }
     const { path } = splitLanguage(location.pathname);
-    navigate(localizePath(lang, path) + location.search + location.hash);
+    // Fetch the texts first so the page switches in one step, without a loader.
+    loadLanguage(lang).then(() => navigate(localizePath(lang, path) + location.search + location.hash));
   }, [location, navigate]);
 
   const localize = useCallback((path: string) => localizePath(language, path), [language]);
