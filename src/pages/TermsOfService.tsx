@@ -64,6 +64,7 @@ const TermsOfService = () => {
         description="Read our terms of service including booking policies, house rules, and cancellation terms for Metaxas Retreats in Lefkada, Greece."
         descriptionEl="Διαβάστε τους όρους χρήσης μας, συμπεριλαμβανομένων πολιτικών κράτησης, κανόνων διαμονής και όρων ακύρωσης για το Metaxas Retreats στη Λευκάδα."
         canonicalUrl="/terms"
+        robots="noindex, follow"
         schema={termsSchema}
       />
 

@@ -20,6 +20,8 @@ const rootDir = join(__dirname, '..');
 const distDir = join(rootDir, 'dist');
 const SITE = 'https://www.metaxasretreats.gr';
 
+const en = JSON.parse(readFileSync(join(rootDir, 'src', 'locales', 'en.json'), 'utf-8'));
+
 // Route definitions with unique SEO per page
 const routes = [
   {
@@ -28,6 +30,7 @@ const routes = [
     description: 'Glamping tents & wooden house 50m from Mikros Gialos beach, Lefkada. Sea views, olive groves, private setting. Book direct & save.',
     h1: 'Glamping & Beach Accommodation in Lefkada, Greece',
     content: 'Luxury glamping tents and a charming wooden house nestled among olive trees, just 50 meters from the crystal-clear waters of Mikros Gialos beach. Experience authentic Greek island living with modern comforts including sea views, air conditioning, fully equipped kitchens, and free WiFi. Our family-run retreat offers the perfect escape on Lefkada island.',
+    home: true,
   },
   {
     path: '/accommodation/wooden-house',
@@ -41,7 +44,7 @@ const routes = [
     title: 'Glamping Tent Lefkada — Luxury Camping | Metaxas Retreats',
     description: 'Luxury glamping tent among olive trees, Lefkada. Sleeps 5, sea views, full kitchen, A/C, 50m from Mikros Gialos beach.',
     h1: 'Glamping Tent — Luxury Camping in Lefkada',
-    content: 'Spacious luxury glamping tent set among ancient olive trees with stunning views of Mikros Gialos bay. Sleeps up to 5 guests with a comfortable double bed, sofa bed, fully equipped kitchen, air conditioning, private bathroom, and outdoor dining area. Just 50 meters from the beach.',
+    content: 'Spacious luxury glamping tent set among ancient olive trees with stunning views of Mikros Gialos bay. Sleeps up to 5 guests with one double bed and three single beds, fully equipped kitchen, air conditioning, private bathroom, and outdoor dining area. Just 50 meters from the beach.',
   },
   {
     path: '/explore',
@@ -120,7 +123,44 @@ const navLinks = routes
   })
   .join(' | ');
 
-function renderPage({ title, description, canonicalUrl, robots, h1, content }) {
+// Tags that SEOHead (react-helmet-async) renders as well. Marking the static
+// copies with data-rh lets Helmet replace them when the app mounts, instead of
+// leaving a second canonical, description, robots… next to its own. Crawlers
+// that don't run JavaScript still read these.
+const HELMET_MANAGED = [
+  /<meta name="(?:title|description|keywords|robots)"/g,
+  /<meta property="og:(?:type|url|title|description|image|site_name|locale)"/g,
+  /<meta name="twitter:(?:card|url|title|description|image)"/g,
+  /<link rel="canonical"/g,
+];
+
+const markHelmetManaged = (html) =>
+  HELMET_MANAGED.reduce(
+    (out, pattern) => out.replace(pattern, (tag) => tag.replace(/^<(meta|link)/, '<$1 data-rh="true"')),
+    html,
+  );
+
+/** JSON for inside a <script> tag: no way to close the tag early. */
+const scriptJson = (value) => JSON.stringify(value, null, 2).replace(/</g, '\\u003c');
+
+/** FAQPage schema from the questions the home page shows (faq.q1/faq.a1, …). */
+function faqSchema() {
+  const mainEntity = [];
+  for (let i = 1; en[`faq.q${i}`] && en[`faq.a${i}`]; i++) {
+    mainEntity.push({
+      '@type': 'Question',
+      name: en[`faq.q${i}`],
+      acceptedAnswer: { '@type': 'Answer', text: en[`faq.a${i}`] },
+    });
+  }
+  return `<script type="application/ld+json">\n${scriptJson({
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity,
+  })}\n</script>`;
+}
+
+function renderPage({ title, description, canonicalUrl, robots, h1, content, head = [] }) {
   let html = baseHtml;
 
   // Replace <title>
@@ -197,6 +237,15 @@ function renderPage({ title, description, canonicalUrl, robots, h1, content }) {
     );
   }
 
+  // Page-specific additions (preloads, schema): early in <head> so the
+  // browser finds them before the app's script and stylesheet.
+  if (head.length) {
+    html = html.replace(
+      /(<meta name="viewport"[^>]*>)/,
+      `$1\n  ${head.join('\n  ')}`
+    );
+  }
+
   // Build the crawler-visible content block with H1, description, and nav
   const contentBlock = [
     `<h1>${h1}</h1>`,
@@ -221,7 +270,7 @@ function renderPage({ title, description, canonicalUrl, robots, h1, content }) {
     `  ${CREDIT_FOOTER}\n</body>`
   );
 
-  return html;
+  return markHelmetManaged(html);
 }
 
 function write(file, html) {
@@ -236,9 +285,13 @@ function write(file, html) {
 const baseHtml = readFileSync(join(distDir, 'index.html'), 'utf-8');
 
 for (const route of routes) {
+  const head = [];
+  if (route.home) head.push(faqSchema());
+
   const html = renderPage({
     ...route,
     canonicalUrl: route.path === '/' ? `${SITE}/` : `${SITE}${route.path}`,
+    head,
   });
 
   // For the root this overwrites the index.html Vite built

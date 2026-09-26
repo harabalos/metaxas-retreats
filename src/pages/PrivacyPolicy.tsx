@@ -84,6 +84,7 @@ const PrivacyPolicy = () => {
         description="Learn how Metaxas Retreats protects your personal information. Our privacy policy explains data collection, usage, and your rights."
         descriptionEl="Μάθετε πώς το Metaxas Retreats προστατεύει τα προσωπικά σας δεδομένα. Η πολιτική απορρήτου μας εξηγεί τη συλλογή, χρήση δεδομένων και τα δικαιώματά σας."
         canonicalUrl="/privacy"
+        robots="noindex, follow"
         schema={privacySchema}
       />
 

@@ -158,7 +158,7 @@ const AccommodationDetail = () => {
         title={seoTitle}
         description={seoDescription}
         canonicalUrl={`/accommodation/${accommodation.id}`}
-        image={`https://metaxasretreats.gr${accommodation.images[0]}`}
+        image={`https://www.metaxasretreats.gr${accommodation.images[0]}`}
         schema={[accommodationSchema, breadcrumbSchema]}
       />
 

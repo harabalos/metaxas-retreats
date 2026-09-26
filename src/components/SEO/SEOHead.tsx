@@ -32,7 +32,10 @@ const SEOHead = ({
   const displayTitle = language === 'el' && titleEl ? titleEl : title;
   const displayDescription = language === 'el' && descriptionEl ? descriptionEl : description;
 
-  const fullTitle = `${displayTitle} | Metaxas Retreats`;
+  // Some page titles already end in the brand ("… | Metaxas Retreats"); don't add it twice.
+  const fullTitle = displayTitle.includes('Metaxas Retreats')
+    ? displayTitle
+    : `${displayTitle} | Metaxas Retreats`;
   const siteUrl = 'https://www.metaxasretreats.gr';
   const fullUrl = canonicalUrl ? `${siteUrl}${canonicalUrl}` : siteUrl;
 
@@ -66,18 +69,7 @@ const SEOHead = ({
       <meta name="description" content={displayDescription} />
       <meta name="keywords" content={metaKeywords} />
       {canonicalUrl && <link rel="canonical" href={fullUrl} />}
-
-      {/* Hreflang tags for international SEO */}
-      {canonicalUrl && (
-        <>
-          <link rel="alternate" hrefLang="en" href={`${siteUrl}${canonicalUrl}`} />
-          <link rel="alternate" hrefLang="el" href={`${siteUrl}${canonicalUrl}`} />
-          <link rel="alternate" hrefLang="it" href={`${siteUrl}${canonicalUrl}`} />
-          <link rel="alternate" hrefLang="de" href={`${siteUrl}${canonicalUrl}`} />
-          <link rel="alternate" hrefLang="ro" href={`${siteUrl}${canonicalUrl}`} />
-          <link rel="alternate" hrefLang="x-default" href={`${siteUrl}${canonicalUrl}`} />
-        </>
-      )}
+      {/* No hreflang: every language shares one URL, so there is nothing to point to yet. */}
 
       {/* Enhanced robots directive */}
       <meta name="robots" content={robots || "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"} />
