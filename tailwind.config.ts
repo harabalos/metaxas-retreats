@@ -51,6 +51,9 @@ export default {
 					light: '#E2C98A',
 					DEFAULT: '#C9A44A',
 					dark: '#9A7A2E',
+					// Gold for text on cream/white/sand: 5.7:1 on cream (DEFAULT is 2.3:1,
+					// fine only on the dark green sections).
+					deep: '#7D5F1A',
 				},
 				leaf: {
 					light: '#C1D9A3',

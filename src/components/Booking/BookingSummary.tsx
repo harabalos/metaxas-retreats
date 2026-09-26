@@ -43,9 +43,9 @@ const BookingSummary = ({ accommodation, startDate, endDate, guests, nights, sel
           />
         </div>
         <div>
-          <p className="text-xs text-wood font-sans font-semibold uppercase tracking-widest mb-0.5">{nickname}</p>
+          <p className="text-xs text-wood-deep font-sans font-semibold uppercase tracking-widest mb-0.5">{nickname}</p>
           <h4 className="font-heading font-semibold text-forest-dark leading-tight">{fullName}</h4>
-          <p className="text-xs text-gray-400 mt-0.5">Mikros Gialos, Lefkada</p>
+          <p className="text-xs text-gray-500 mt-0.5">Mikros Gialos, Lefkada</p>
         </div>
       </div>
 
@@ -58,11 +58,11 @@ const BookingSummary = ({ accommodation, startDate, endDate, guests, nights, sel
           <div className="text-sm">
             <div className="flex gap-4">
               <div>
-                <p className="text-xs text-gray-400 mb-0.5">{t('summary.checkIn')}</p>
+                <p className="text-xs text-gray-500 mb-0.5">{t('summary.checkIn')}</p>
                 <p className="font-medium text-gray-800">{fmt(startDate)}</p>
               </div>
               <div>
-                <p className="text-xs text-gray-400 mb-0.5">{t('summary.checkOut')}</p>
+                <p className="text-xs text-gray-500 mb-0.5">{t('summary.checkOut')}</p>
                 <p className="font-medium text-gray-800">{fmt(endDate)}</p>
               </div>
             </div>
@@ -83,7 +83,7 @@ const BookingSummary = ({ accommodation, startDate, endDate, guests, nights, sel
       <div className="h-px bg-gray-100" />
 
       {/* Pricing note */}
-      <p className="text-xs text-gray-400 italic leading-relaxed">
+      <p className="text-xs text-gray-500 italic leading-relaxed">
         {t('pricing.contactForQuote')}
       </p>
     </div>

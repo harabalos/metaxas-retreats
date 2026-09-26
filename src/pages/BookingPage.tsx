@@ -76,7 +76,7 @@ const BookingPage = () => {
           transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
           className="mb-10"
         >
-          <p className="text-wood text-xs font-sans font-semibold uppercase tracking-widest mb-2">
+          <p className="text-wood-deep text-xs font-sans font-semibold uppercase tracking-widest mb-2">
             {t('booking.step2')}
           </p>
           <h1 className="text-4xl md:text-5xl font-heading font-semibold text-forest-dark mb-4">
@@ -88,14 +88,14 @@ const BookingPage = () => {
             <div className="flex items-center gap-2 px-4 py-2 bg-forest/5 rounded-full text-sm text-forest-dark">
               <CalendarDays className="h-4 w-4 text-forest/60" />
               <span>{format(startDate, 'dd MMM', { locale: dateLocale(language) })} → {format(endDate, 'dd MMM yyyy', { locale: dateLocale(language) })}</span>
-              <span className="text-gray-400">·</span>
+              <span className="text-gray-500">·</span>
               <span>{t('common.nights', { count: nights })}</span>
             </div>
             <div className="flex items-center gap-2 px-4 py-2 bg-forest/5 rounded-full text-sm text-forest-dark">
               <Users className="h-4 w-4 text-forest/60" />
               <span>{t('common.guests', { count: guests })}</span>
             </div>
-            <div className="px-4 py-2 bg-wood/10 rounded-full text-sm text-wood font-semibold">
+            <div className="px-4 py-2 bg-wood/10 rounded-full text-sm text-wood-deep font-semibold">
               {accommodationName}
             </div>
           </div>
@@ -141,7 +141,7 @@ const BookingPage = () => {
 
             {/* Also available on */}
             <div className="bg-white rounded-2xl border border-gray-100 p-5">
-              <p className="text-xs font-sans font-semibold uppercase tracking-widest text-gray-400 mb-3">
+              <p className="text-xs font-sans font-semibold uppercase tracking-widest text-gray-500 mb-3">
                 {t('booking.alsoAvailable')}
               </p>
               <div className="flex gap-4">

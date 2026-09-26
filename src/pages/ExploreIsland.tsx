@@ -89,7 +89,7 @@ const ExploreIsland = () => {
         {/* Header */}
         <FadeUp>
           <div className="mb-12">
-            <p className="text-wood text-xs font-sans font-semibold uppercase tracking-widest mb-3">{t('explore.eyebrow')}</p>
+            <p className="text-wood-deep text-xs font-sans font-semibold uppercase tracking-widest mb-3">{t('explore.eyebrow')}</p>
             <h1 className="text-4xl md:text-5xl font-heading font-semibold text-forest-dark mb-4">{t('explore.title')}</h1>
             <p className="text-gray-500 max-w-xl leading-relaxed">{t('explore.intro')}</p>
           </div>
@@ -107,7 +107,7 @@ const ExploreIsland = () => {
                 <TabsTrigger
                   key={value}
                   value={value}
-                  className="flex items-center gap-2 px-5 py-3 rounded-none border-b-2 border-transparent data-[state=active]:border-wood data-[state=active]:text-forest-dark data-[state=active]:bg-transparent text-gray-400 hover:text-gray-600 font-sans font-medium text-sm transition-all"
+                  className="flex items-center gap-2 px-5 py-3 rounded-none border-b-2 border-transparent data-[state=active]:border-wood data-[state=active]:text-forest-dark data-[state=active]:bg-transparent text-gray-500 hover:text-gray-700 font-sans font-medium text-sm transition-all"
                 >
                   <Icon className="h-4 w-4" />
                   {label}
@@ -118,6 +118,7 @@ const ExploreIsland = () => {
             {/* Beaches */}
             {/* forceMount keeps inactive tabs in the page (hidden), so search engines index them. */}
             <TabsContent value="beaches" forceMount className="data-[state=inactive]:hidden">
+              <h2 className="sr-only">{t('explore.beaches')}</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {beaches.map((beach, i) => (
                   <m.div
@@ -152,6 +153,7 @@ const ExploreIsland = () => {
 
             {/* Villages */}
             <TabsContent value="villages" forceMount className="data-[state=inactive]:hidden">
+              <h2 className="sr-only">{t('explore.villages')}</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                 {villages.map((village, i) => (
                   <m.div
@@ -162,7 +164,7 @@ const ExploreIsland = () => {
                     className="bg-white rounded-2xl border border-gray-100 shadow-card p-6 flex items-start gap-4 hover:shadow-card-hover transition-all duration-300"
                   >
                     <div className="w-10 h-10 rounded-full bg-wood/10 flex items-center justify-center flex-shrink-0">
-                      <MapPin className="h-4 w-4 text-wood" />
+                      <MapPin className="h-4 w-4 text-wood-dark" />
                     </div>
                     <div>
                       <h3 className="font-heading font-semibold text-forest-dark mb-1.5">{village.name}</h3>
@@ -175,6 +177,7 @@ const ExploreIsland = () => {
 
             {/* Activities */}
             <TabsContent value="activities" forceMount className="data-[state=inactive]:hidden">
+              <h2 className="sr-only">{t('explore.activities')}</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
                 {activities.map((act, i) => {
                   const Icon = activityIcons[i] || Sailboat;
@@ -223,7 +226,7 @@ const ExploreIsland = () => {
         {/* CTA */}
         <FadeUp delay={0.2}>
           <div className="mt-12 text-center">
-            <p className="text-gray-400 text-sm mb-4">{t('explore.cta.question')}</p>
+            <p className="text-gray-500 text-sm mb-4">{t('explore.cta.question')}</p>
             <Link
               to={localize('/contact')}
               onClick={() => window.scrollTo(0, 0)}

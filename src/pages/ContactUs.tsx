@@ -86,7 +86,7 @@ const ContactUs = () => {
         {/* Header */}
         <FadeUp>
           <div className="mb-12">
-            <p className="text-wood text-xs font-sans font-semibold uppercase tracking-widest mb-3">{t('contact.eyebrow')}</p>
+            <p className="text-wood-deep text-xs font-sans font-semibold uppercase tracking-widest mb-3">{t('contact.eyebrow')}</p>
             <h1 className="text-4xl md:text-5xl font-heading font-semibold text-forest-dark mb-4">{t('contact.title')}</h1>
             <p className="text-gray-500 max-w-xl leading-relaxed">{t('contact.subtitle')}</p>
           </div>
@@ -149,7 +149,7 @@ const ContactUs = () => {
                       <Checkbox id="privacy" checked={agreedToPolicy} onCheckedChange={(v) => setAgreedToPolicy(v === true)} className="mt-0.5" />
                       <Label htmlFor="privacy" className="text-xs text-gray-500 leading-relaxed cursor-pointer">
                         {t('booking.privacy.agreePart1')}
-                        <Link to={localize('/privacy')} className="text-forest hover:underline">{t('booking.privacy.link')}</Link>
+                        <Link to={localize('/privacy')} className="text-forest underline underline-offset-2 hover:text-forest-dark">{t('booking.privacy.link')}</Link>
                         {t('booking.privacy.agreePart2')}
                       </Label>
                     </div>
@@ -196,7 +196,7 @@ const ContactUs = () => {
 
                 {/* WhatsApp */}
                 <div>
-                  <p className="text-xs font-sans font-semibold uppercase tracking-widest text-gray-400 mb-3">WhatsApp</p>
+                  <p className="text-xs font-sans font-semibold uppercase tracking-widest text-gray-500 mb-3">WhatsApp</p>
                   <div className="space-y-2.5">
                     {[{ num: '306973219980', display: '+30 697 321 9980' }, { num: '306980429891', display: '+30 698 042 9891' }].map(({ num, display }) => (
                       <a key={num} href={`https://wa.me/${num}?text=${waMsg}`} target="_blank" rel="noopener noreferrer"
@@ -205,7 +205,7 @@ const ContactUs = () => {
                           <Phone className="h-4 w-4 text-white" />
                         </div>
                         <span className="text-sm font-sans font-semibold text-gray-700 group-hover:text-green-700 transition-colors">{display}</span>
-                        <span className="ml-auto text-xs text-green-600 font-semibold bg-green-100 px-2 py-0.5 rounded-full">WA</span>
+                        <span className="ml-auto text-xs text-green-700 font-semibold bg-green-100 px-2 py-0.5 rounded-full">WA</span>
                       </a>
                     ))}
                   </div>

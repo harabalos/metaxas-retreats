@@ -64,7 +64,7 @@ const AccommodationCard = ({ accommodation, index = 0 }: AccommodationCardProps)
 
         {/* Content */}
         <div className="p-6">
-          <p className="text-wood text-xs font-sans font-semibold uppercase tracking-widest mb-1">{nickname}</p>
+          <p className="text-wood-deep text-xs font-sans font-semibold uppercase tracking-widest mb-1">{nickname}</p>
           <h3 className="text-xl font-heading font-semibold text-forest-dark mb-2 group-hover:text-forest transition-colors">
             {translatedName}
           </h3>

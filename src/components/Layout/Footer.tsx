@@ -7,7 +7,7 @@ const Footer = () => {
 
   const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
 
-  const linkClass = 'text-sand-dark/60 hover:text-wood text-sm transition-colors duration-200';
+  const linkClass = 'text-sand-dark/70 hover:text-wood text-sm transition-colors duration-200';
 
   return (
     <footer className="bg-forest-dark text-sand-light">
@@ -48,9 +48,9 @@ const Footer = () => {
 
           {/* Navigate */}
           <div className="md:col-span-2">
-            <h4 className="text-xs font-sans font-semibold uppercase tracking-widest text-sand-dark/40 mb-4">
+            <h2 className="text-xs font-sans font-semibold uppercase tracking-widest text-sand-dark/60 mb-4">
               {t('footer.navigate')}
-            </h4>
+            </h2>
             <ul className="space-y-3">
               <li><Link to={localize('/')} className={linkClass} onClick={scrollToTop}>{t('nav.home')}</Link></li>
               <li><Link to={`${localize('/')}#accommodations`} className={linkClass}>{t('footer.ourAccommodations')}</Link></li>
@@ -61,9 +61,9 @@ const Footer = () => {
 
           {/* Accommodations */}
           <div className="md:col-span-3">
-            <h4 className="text-xs font-sans font-semibold uppercase tracking-widest text-sand-dark/40 mb-4">
+            <h2 className="text-xs font-sans font-semibold uppercase tracking-widest text-sand-dark/60 mb-4">
               {t('footer.accommodationsTitle')}
-            </h4>
+            </h2>
             <ul className="space-y-3">
               <li>
                 <Link to={localize('/accommodation/wooden-house')} className={linkClass} onClick={scrollToTop}>
@@ -77,7 +77,7 @@ const Footer = () => {
               </li>
             </ul>
             <div className="mt-5 pt-5 border-t border-white/8">
-              <p className="text-sand-dark/35 text-xs leading-relaxed">
+              <p className="text-sand-dark/60 text-xs leading-relaxed">
                 {t('footer.accommodationsTags')}
               </p>
             </div>
@@ -85,9 +85,9 @@ const Footer = () => {
 
           {/* Contact */}
           <div className="md:col-span-3">
-            <h4 className="text-xs font-sans font-semibold uppercase tracking-widest text-sand-dark/40 mb-4">
+            <h2 className="text-xs font-sans font-semibold uppercase tracking-widest text-sand-dark/60 mb-4">
               {t('footer.contactUs')}
-            </h4>
+            </h2>
             <ul className="space-y-4">
               <li className="flex items-start gap-3">
                 <MapPin className="h-4 w-4 text-wood/60 mt-0.5 flex-shrink-0" />
@@ -121,12 +121,12 @@ const Footer = () => {
         {/* Bottom bar */}
         <div className="mt-14 pt-6 border-t border-white/8 flex flex-col sm:flex-row items-center justify-between gap-4">
           <p
-            className="text-sand-dark/30 text-xs select-none"
+            className="text-sand-dark/60 text-xs select-none"
           >
             &copy; {new Date().getFullYear()} Metaxas Retreats. {t('footer.rights')}
           </p>
 
-          <div className="flex items-center gap-5 text-xs text-sand-dark/30">
+          <div className="flex items-center gap-5 text-xs text-sand-dark/60">
             <Link to={localize('/privacy')} className="hover:text-wood transition-colors" onClick={scrollToTop}>
               {t('footer.privacy')}
             </Link>

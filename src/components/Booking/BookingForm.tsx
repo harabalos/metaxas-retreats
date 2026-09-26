@@ -48,7 +48,7 @@ const BookingForm = ({ accommodation, isDetail = false }: BookingFormProps) => {
     <div className={`bg-white rounded-2xl border border-gray-100 shadow-card ${isDetail ? 'p-6' : 'p-5'}`}>
       {isDetail && (
         <div className="mb-5 pb-4 border-b border-gray-100">
-          <p className="text-xs font-sans font-semibold uppercase tracking-widest text-wood mb-1">
+          <p className="text-xs font-sans font-semibold uppercase tracking-widest text-wood-deep mb-1">
             {t('bookingForm.eyebrow')}
           </p>
           <h3 className="text-xl font-heading font-semibold text-forest-dark">
@@ -87,7 +87,7 @@ const BookingForm = ({ accommodation, isDetail = false }: BookingFormProps) => {
             onChange={(e) => setGuests(Number(e.target.value))}
             className="border-gray-200 focus-visible:ring-forest/30 focus-visible:border-forest rounded-xl"
           />
-          <p className="text-xs text-gray-400 mt-1">
+          <p className="text-xs text-gray-500 mt-1">
             {t('bookingForm.maxGuests', { count: accommodation.guests })}
           </p>
         </div>
@@ -98,7 +98,7 @@ const BookingForm = ({ accommodation, isDetail = false }: BookingFormProps) => {
             <span className="text-gray-600">
               {t('common.nights', { count: nights })}
             </span>
-            <span className="text-xs text-gray-400 italic">
+            <span className="text-xs text-gray-500 italic">
               {t('pricing.contactForQuote')}
             </span>
           </div>

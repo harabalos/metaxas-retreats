@@ -120,7 +120,7 @@ const AccommodationDetail = () => {
 
         {/* Breadcrumb */}
         <FadeUp>
-          <nav className="flex items-center gap-2 text-sm text-gray-400 mb-8">
+          <nav className="flex items-center gap-2 text-sm text-gray-500 mb-8">
             <Link to={localize('/')} onClick={() => window.scrollTo(0,0)} className="hover:text-forest transition-colors">
               {t('nav.home')}
             </Link>
@@ -132,7 +132,7 @@ const AccommodationDetail = () => {
         {/* Header */}
         <FadeUp delay={0.05}>
           <div className="mb-8">
-            <p className="text-wood text-sm font-sans font-semibold uppercase tracking-widest mb-2">{nickname}</p>
+            <p className="text-wood-deep text-sm font-sans font-semibold uppercase tracking-widest mb-2">{nickname}</p>
             <h1 className="text-4xl md:text-5xl font-heading font-semibold text-forest-dark leading-tight mb-4">
               {t(`detail.h1.${unitKey}`)}
             </h1>
@@ -242,10 +242,10 @@ const AccommodationDetail = () => {
         transition={{ delay: 0.6, type: 'spring', stiffness: 200, damping: 22 }}
       >
         <div>
-          <p className="text-xs text-wood font-sans font-semibold uppercase tracking-widest">
+          <p className="text-xs text-wood-deep font-sans font-semibold uppercase tracking-widest">
             {t('detail.ribbon.title')}
           </p>
-          <p className="text-xs text-gray-400">
+          <p className="text-xs text-gray-500">
             {t('detail.ribbon.subtitle')}
           </p>
         </div>

@@ -93,7 +93,7 @@ const ContactSection = () => {
 
       {/* WhatsApp */}
       <div>
-        <p className="text-xs font-sans font-semibold uppercase tracking-widest text-gray-400 mb-4">
+        <p className="text-xs font-sans font-semibold uppercase tracking-widest text-gray-500 mb-4">
           {t('booking.callWhatsapp')}
         </p>
         <div className="space-y-3">
@@ -110,10 +110,10 @@ const ContactSection = () => {
               </div>
               <div>
                 <p className="font-sans font-semibold text-gray-800">{display}</p>
-                <p className="text-xs text-gray-400">{t('booking.whatsapp.tapToOpen')}</p>
+                <p className="text-xs text-gray-500">{t('booking.whatsapp.tapToOpen')}</p>
               </div>
               {/* WhatsApp logo pill */}
-              <span className="ml-auto text-xs font-semibold text-green-600 bg-green-100 px-2.5 py-1 rounded-full">WhatsApp</span>
+              <span className="ml-auto text-xs font-semibold text-green-700 bg-green-100 px-2.5 py-1 rounded-full">WhatsApp</span>
             </a>
           ))}
         </div>
@@ -122,13 +122,13 @@ const ContactSection = () => {
       {/* Divider */}
       <div className="relative flex items-center gap-3">
         <div className="flex-1 h-px bg-gray-100" />
-        <span className="text-xs text-gray-400 font-sans">{t('booking.email.orSend')}</span>
+        <span className="text-xs text-gray-500 font-sans">{t('booking.email.orSend')}</span>
         <div className="flex-1 h-px bg-gray-100" />
       </div>
 
       {/* Email Form */}
       <div>
-        <p className="text-xs font-sans font-semibold uppercase tracking-widest text-gray-400 mb-4 flex items-center gap-2">
+        <p className="text-xs font-sans font-semibold uppercase tracking-widest text-gray-500 mb-4 flex items-center gap-2">
           <Mail className="h-3.5 w-3.5" />
           {t('booking.emailUs')}
         </p>
@@ -219,7 +219,7 @@ const ContactSection = () => {
                 />
                 <Label htmlFor="privacy-booking" className="text-xs text-gray-500 leading-relaxed cursor-pointer">
                   {t('booking.privacy.agreePart1')}
-                  <Link to={localize('/privacy')} className="text-forest hover:underline">
+                  <Link to={localize('/privacy')} className="text-forest underline underline-offset-2 hover:text-forest-dark">
                     {t('booking.privacy.link')}
                   </Link>
                   {t('booking.privacy.agreePart2')}

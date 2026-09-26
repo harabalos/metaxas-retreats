@@ -279,7 +279,7 @@ const HomePage = () => {
       <section className="py-24 px-5 sm:px-10">
         <div className="max-w-4xl mx-auto text-center">
           <FadeUp>
-            <p className="text-wood text-xs font-sans font-semibold tracking-[0.25em] uppercase mb-6">{t('home.brand.eyebrow')}</p>
+            <p className="text-wood-deep text-xs font-sans font-semibold tracking-[0.25em] uppercase mb-6">{t('home.brand.eyebrow')}</p>
             <h2 className="font-heading font-light text-forest text-display-lg leading-snug text-balance">
               {t('home.brandStatement')}
             </h2>
@@ -316,7 +316,7 @@ const HomePage = () => {
       <section id="accommodations" ref={accommodationsRef} className="py-20 px-5 sm:px-10 bg-sand/40">
         <div className="max-w-6xl mx-auto">
           <FadeUp className="text-center mb-14">
-            <p className="text-wood text-xs font-sans font-semibold tracking-[0.25em] uppercase mb-3">{t('home.accommodations.eyebrow')}</p>
+            <p className="text-wood-deep text-xs font-sans font-semibold tracking-[0.25em] uppercase mb-3">{t('home.accommodations.eyebrow')}</p>
             <h2 className="font-heading font-light text-forest text-display-lg">
               {t('home.accommodations.title')}
             </h2>
@@ -365,7 +365,7 @@ const HomePage = () => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <FadeUp>
               <div>
-                <p className="text-wood text-xs font-sans font-semibold tracking-[0.25em] uppercase mb-5">{t('home.experience.eyebrow')}</p>
+                <p className="text-wood-deep text-xs font-sans font-semibold tracking-[0.25em] uppercase mb-5">{t('home.experience.eyebrow')}</p>
                 <h2 className="font-heading font-light text-forest text-display-lg mb-7 text-balance">
                   {t('home.experience.title')}
                 </h2>
@@ -383,7 +383,7 @@ const HomePage = () => {
                     className="inline-flex items-center gap-2 text-sm font-sans font-semibold text-forest border-b border-forest/30 pb-0.5 hover:border-forest transition-colors"
                   >
                     {t('home.experience.explore')}
-                    <span className="text-wood">→</span>
+                    <span className="text-wood-deep">→</span>
                   </Link>
                 </div>
               </div>
@@ -434,7 +434,7 @@ const HomePage = () => {
       <section id="faq" className="py-20 px-5 sm:px-10 bg-cream">
         <div className="max-w-3xl mx-auto">
           <FadeUp className="text-center mb-12">
-            <p className="text-wood text-xs font-sans font-semibold tracking-[0.25em] uppercase mb-3">{t('faq.eyebrow')}</p>
+            <p className="text-wood-deep text-xs font-sans font-semibold tracking-[0.25em] uppercase mb-3">{t('faq.eyebrow')}</p>
             <h2 className="font-heading font-light text-forest text-display-lg">
               {t('faq.title')}
             </h2>

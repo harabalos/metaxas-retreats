@@ -45,7 +45,7 @@ const NotFound = () => {
             404
           </m.p>
 
-          <m.p variants={itemVariants} className="text-wood text-xs font-sans font-semibold uppercase tracking-widest mb-4 -mt-4">
+          <m.p variants={itemVariants} className="text-wood-deep text-xs font-sans font-semibold uppercase tracking-widest mb-4 -mt-4">
             {t('notFound.eyebrow')}
           </m.p>
 
