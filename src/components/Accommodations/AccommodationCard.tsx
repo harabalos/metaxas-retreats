@@ -15,7 +15,7 @@ interface AccommodationCardProps {
 
 const AccommodationCard = ({ accommodation, index = 0 }: AccommodationCardProps) => {
   const { id, guests, beds, images } = accommodation;
-  const { t, language } = useLanguage();
+  const { t, localize } = useLanguage();
 
   const translatedName = id === 'wooden-house' ? t('accommodation.woodenHouse') : t('accommodation.glampingTent');
   const translatedDescription = id === 'wooden-house'
@@ -35,7 +35,7 @@ const AccommodationCard = ({ accommodation, index = 0 }: AccommodationCardProps)
       transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1], delay: index * 0.12 }}
     >
       <Link
-        to={`/accommodation/${id}`}
+        to={localize(`/accommodation/${id}`)}
         onClick={() => window.scrollTo(0, 0)}
         className="group block bg-white rounded-2xl overflow-hidden shadow-card hover:shadow-card-hover transition-all duration-400"
       >

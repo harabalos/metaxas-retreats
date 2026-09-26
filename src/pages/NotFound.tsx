@@ -8,7 +8,7 @@ import { Home, ArrowRight } from 'lucide-react';
 
 const NotFound = () => {
   const location = useLocation();
-  const { t } = useLanguage();
+  const { t, localize } = useLanguage();
 
   useEffect(() => {
     console.error('404 Error: User attempted to access non-existent route:', location.pathname);
@@ -59,7 +59,7 @@ const NotFound = () => {
 
           <motion.div variants={itemVariants} className="flex flex-wrap items-center justify-center gap-4">
             <Link
-              to="/"
+              to={localize('/')}
               onClick={() => window.scrollTo(0, 0)}
               className="btn-shimmer flex items-center gap-2 px-7 py-3 rounded-full bg-forest text-white font-sans font-semibold text-sm tracking-wide hover:bg-forest-dark transition-colors"
             >
@@ -67,7 +67,7 @@ const NotFound = () => {
               {t('notFound.home')}
             </Link>
             <Link
-              to="/contact"
+              to={localize('/contact')}
               onClick={() => window.scrollTo(0, 0)}
               className="flex items-center gap-2 px-7 py-3 rounded-full border border-gray-200 text-gray-600 font-sans font-semibold text-sm tracking-wide hover:border-forest hover:text-forest transition-colors"
             >

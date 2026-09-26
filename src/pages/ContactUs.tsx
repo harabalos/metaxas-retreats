@@ -26,7 +26,7 @@ const FadeUp = ({ children, delay = 0 }: { children: React.ReactNode; delay?: nu
 );
 
 const ContactUs = () => {
-  const { t } = useLanguage();
+  const { t, localize } = useLanguage();
 
   const [formData, setFormData] = useState({ fullName: '', email: '', phone: '', message: '' });
   const [agreedToPolicy, setAgreedToPolicy] = useState(false);
@@ -149,7 +149,7 @@ const ContactUs = () => {
                       <Checkbox id="privacy" checked={agreedToPolicy} onCheckedChange={(v) => setAgreedToPolicy(v === true)} className="mt-0.5" />
                       <Label htmlFor="privacy" className="text-xs text-gray-500 leading-relaxed cursor-pointer">
                         {t('booking.privacy.agreePart1')}
-                        <Link to="/privacy" className="text-forest hover:underline">{t('booking.privacy.link')}</Link>
+                        <Link to={localize('/privacy')} className="text-forest hover:underline">{t('booking.privacy.link')}</Link>
                         {t('booking.privacy.agreePart2')}
                       </Label>
                     </div>

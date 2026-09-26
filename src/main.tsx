@@ -6,23 +6,51 @@ import App from './App.tsx';
 import '@fontsource-variable/eb-garamond';
 import '@fontsource-variable/commissioner';
 import i18n from './i18n';
+import { DEFAULT_LANGUAGE, isLanguage, localizePath, splitLanguage } from './lib/i18nRoutes';
 import './index.css';
 
-const container = document.getElementById('root')!;
-const app = (
-  <HelmetProvider>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
-  </HelmetProvider>
-);
-
-// Pages are prerendered (scripts/prerender-meta.js) in the language of their
-// <html lang>, so the app takes over that markup. The booking shell has no
-// markup, and a visitor whose saved language differs would not match it, so
-// those render from scratch instead.
-if (container.hasChildNodes() && i18n.language === document.documentElement.lang) {
-  hydrateRoot(container, app);
-} else {
-  createRoot(container).render(app);
+function savedLanguage() {
+  try {
+    return localStorage.getItem('language');
+  } catch {
+    return null;
+  }
 }
+
+/**
+ * Where to send a visitor who arrived at an English URL: the language they
+ * picked before, or, on the home page only, their browser's language if the
+ * site has it. Crawlers have neither, so every version gets indexed as served.
+ */
+function preferredUrl(): string | null {
+  const { language, path } = splitLanguage(window.location.pathname);
+  if (language !== DEFAULT_LANGUAGE) return null;
+  const preferred = savedLanguage() ?? (path === '/' ? navigator.language.split('-')[0] : null);
+  if (!isLanguage(preferred) || preferred === DEFAULT_LANGUAGE) return null;
+  return localizePath(preferred, path) + window.location.search + window.location.hash;
+}
+
+function mount() {
+  const container = document.getElementById('root')!;
+  const app = (
+    <HelmetProvider>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </HelmetProvider>
+  );
+
+  // Pages are prerendered (scripts/prerender-meta.js) in the language of their
+  // <html lang>, so the app takes over that markup. The booking shell has no
+  // markup, and the English 404 page may be showing another language's URL, so
+  // those render from scratch instead.
+  if (container.hasChildNodes() && i18n.language === document.documentElement.lang) {
+    hydrateRoot(container, app);
+  } else {
+    createRoot(container).render(app);
+  }
+}
+
+const redirect = preferredUrl();
+if (redirect) window.location.replace(redirect);
+else mount();

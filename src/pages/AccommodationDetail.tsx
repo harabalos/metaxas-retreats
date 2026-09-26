@@ -56,12 +56,12 @@ const FadeUp = ({ children, delay = 0 }: { children: React.ReactNode; delay?: nu
 
 const AccommodationDetail = () => {
   const { id } = useParams<{ id: string }>();
-  const { t } = useLanguage();
+  const { t, localize } = useLanguage();
   const { data: accommodations, isLoading } = useAccommodations();
 
   // The two identical tents are now one merged listing — redirect old URLs.
   if (id === 'glamping-tent-1' || id === 'glamping-tent-2') {
-    return <Navigate to="/accommodation/glamping-tent" replace />;
+    return <Navigate to={localize('/accommodation/glamping-tent')} replace />;
   }
 
   if (isLoading) {
@@ -121,7 +121,7 @@ const AccommodationDetail = () => {
         {/* Breadcrumb */}
         <FadeUp>
           <nav className="flex items-center gap-2 text-sm text-gray-400 mb-8">
-            <Link to="/" onClick={() => window.scrollTo(0,0)} className="hover:text-forest transition-colors">
+            <Link to={localize('/')} onClick={() => window.scrollTo(0,0)} className="hover:text-forest transition-colors">
               {t('nav.home')}
             </Link>
             <span>/</span>
@@ -250,7 +250,7 @@ const AccommodationDetail = () => {
           </p>
         </div>
         <Link
-          to="/contact"
+          to={localize('/contact')}
           onClick={() => window.scrollTo(0, 0)}
           className="btn-shimmer flex-shrink-0 px-6 py-2.5 rounded-full bg-wood text-forest-dark font-sans font-semibold text-sm tracking-wide hover:bg-wood-light transition-colors"
         >

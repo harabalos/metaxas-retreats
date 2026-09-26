@@ -16,7 +16,7 @@ interface BookingFormProps {
 
 const BookingForm = ({ accommodation, isDetail = false }: BookingFormProps) => {
   const navigate = useNavigate();
-  const { t } = useLanguage();
+  const { t, localize } = useLanguage();
   const [startDate, setStartDate] = useState<Date | undefined>(undefined);
   const [endDate, setEndDate] = useState<Date | undefined>(undefined);
   const [guests, setGuests] = useState<number>(1);
@@ -41,7 +41,7 @@ const BookingForm = ({ accommodation, isDetail = false }: BookingFormProps) => {
       return;
     }
 
-    navigate(`/booking/${accommodation.id}?start=${startDate.toISOString()}&end=${endDate.toISOString()}&guests=${guests}`);
+    navigate(`${localize(`/booking/${accommodation.id}`)}?start=${startDate.toISOString()}&end=${endDate.toISOString()}&guests=${guests}`);
   };
 
   return (

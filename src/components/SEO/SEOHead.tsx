@@ -1,5 +1,6 @@
 import { Helmet } from 'react-helmet-async';
 import { useLanguage } from '@/context/LanguageContext';
+import { LANGUAGES, localizePath } from '@/lib/i18nRoutes';
 
 interface SEOHeadProps {
   title: string;
@@ -33,7 +34,9 @@ const SEOHead = ({
     ? displayTitle
     : `${displayTitle} | Metaxas Retreats`;
   const siteUrl = 'https://www.metaxasretreats.gr';
-  const fullUrl = canonicalUrl ? `${siteUrl}${canonicalUrl}` : siteUrl;
+  // canonicalUrl is the page's language-neutral path; each language has its own URL.
+  const fullUrl = canonicalUrl ? `${siteUrl}${localizePath(language, canonicalUrl)}` : siteUrl;
+  const indexable = !robots?.includes('noindex');
 
   const defaultKeywords = t('seo.defaultKeywords');
   const metaKeywords = keywords || defaultKeywords;
@@ -65,7 +68,11 @@ const SEOHead = ({
       <meta name="description" content={displayDescription} />
       <meta name="keywords" content={metaKeywords} />
       {canonicalUrl && <link rel="canonical" href={fullUrl} />}
-      {/* No hreflang: every language shares one URL, so there is nothing to point to yet. */}
+      {/* The same page in every language, English as the default for everyone else. */}
+      {canonicalUrl && indexable && LANGUAGES.map((lang) => (
+        <link key={lang} rel="alternate" hrefLang={lang} href={`${siteUrl}${localizePath(lang, canonicalUrl)}`} />
+      ))}
+      {canonicalUrl && indexable && <link rel="alternate" hrefLang="x-default" href={`${siteUrl}${canonicalUrl}`} />}
 
       {/* Enhanced robots directive */}
       <meta name="robots" content={robots || "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"} />

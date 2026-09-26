@@ -37,7 +37,7 @@ const VILLAGES = ['mikrosGialos', 'sivota', 'lefkadaTown', 'agiosNikitas', 'nidr
 const ACTIVITIES = ['boatTrips', 'windsurfing', 'sailing', 'hiking', 'beachHopping', 'diving'];
 
 const ExploreIsland = () => {
-  const { t } = useLanguage();
+  const { t, localize } = useLanguage();
 
   const beaches = BEACHES.map(({ id, image }) => ({
     name: t(`explore.beach.${id}.name`),
@@ -225,7 +225,7 @@ const ExploreIsland = () => {
           <div className="mt-12 text-center">
             <p className="text-gray-400 text-sm mb-4">{t('explore.cta.question')}</p>
             <Link
-              to="/contact"
+              to={localize('/contact')}
               onClick={() => window.scrollTo(0, 0)}
               className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full bg-wood text-forest-dark font-sans font-semibold text-sm tracking-wide hover:bg-wood-light hover:shadow-cta transition-all duration-300"
             >

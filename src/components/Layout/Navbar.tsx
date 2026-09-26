@@ -4,15 +4,16 @@ import { Menu, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useLanguage } from '@/context/LanguageContext';
 import LanguageSwitcher from './LanguageSwitcher';
+import { splitLanguage } from '@/lib/i18nRoutes';
 
 const Navbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
-  const { t } = useLanguage();
+  const { t, localize } = useLanguage();
 
-  const isHome = location.pathname === '/';
+  const isHome = splitLanguage(location.pathname).path === '/';
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
@@ -27,7 +28,7 @@ const Navbar = () => {
     if (isHome) {
       document.getElementById('accommodations')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
     } else {
-      navigate('/#accommodations');
+      navigate(`${localize('/')}#accommodations`);
     }
   };
 
@@ -44,9 +45,9 @@ const Navbar = () => {
   const logoColor = (isHome && !scrolled) ? 'text-white' : 'text-sand-light';
 
   const navLinks = [
-    { label: t('nav.accommodations'), href: '/#accommodations', onClick: scrollToAccommodations },
-    { label: t('nav.explore'), to: '/explore' },
-    { label: t('nav.contact'), to: '/contact' },
+    { label: t('nav.accommodations'), href: `${localize('/')}#accommodations`, onClick: scrollToAccommodations },
+    { label: t('nav.explore'), to: localize('/explore') },
+    { label: t('nav.contact'), to: localize('/contact') },
   ];
 
   return (
@@ -61,7 +62,7 @@ const Navbar = () => {
           <div className="flex items-center justify-between h-16 lg:h-20">
 
             {/* Logo */}
-            <Link to="/" className="flex items-center gap-2 group">
+            <Link to={localize('/')} className="flex items-center gap-2 group">
               <span className={`text-xl lg:text-2xl font-heading font-semibold tracking-wide transition-colors duration-300 ${logoColor}`}>
                 Metaxas Retreats
               </span>
@@ -94,7 +95,7 @@ const Navbar = () => {
 
               {/* Book Now CTA */}
               <Link
-                to="/contact"
+                to={localize('/contact')}
                 className="btn-shimmer ml-2 px-5 py-2 rounded-full bg-wood text-forest-dark text-sm font-sans font-semibold tracking-wide transition-all duration-300 hover:bg-wood-light hover:shadow-cta active:scale-95"
               >
                 {t('nav.bookNow') || 'Book Now'}
@@ -174,7 +175,7 @@ const Navbar = () => {
                 className="pt-4"
               >
                 <Link
-                  to="/contact"
+                  to={localize('/contact')}
                   onClick={() => setMobileMenuOpen(false)}
                   className="block w-full text-center py-3 rounded-full bg-wood text-forest-dark font-sans font-semibold text-sm tracking-wide"
                 >

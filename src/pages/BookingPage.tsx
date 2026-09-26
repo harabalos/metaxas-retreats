@@ -15,7 +15,7 @@ const BookingPage = () => {
   const { id } = useParams<{ id: string }>();
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
-  const { t, language } = useLanguage();
+  const { t, language, localize } = useLanguage();
   const { data: accommodations, isLoading } = useAccommodations();
 
   useEffect(() => { window.scrollTo(0, 0); }, []);
@@ -47,7 +47,7 @@ const BookingPage = () => {
           <div>
             <h1 className="text-3xl font-heading font-semibold text-forest-dark mb-4">{t('booking.missingInfo')}</h1>
             <p className="text-gray-500 mb-8">{t('booking.selectFirst')}</p>
-            <button onClick={() => navigate('/')} className="px-6 py-3 rounded-full bg-forest text-white font-sans font-semibold text-sm hover:bg-forest-dark transition-colors">
+            <button onClick={() => navigate(localize('/'))} className="px-6 py-3 rounded-full bg-forest text-white font-sans font-semibold text-sm hover:bg-forest-dark transition-colors">
               {t('detail.returnHome')}
             </button>
           </div>

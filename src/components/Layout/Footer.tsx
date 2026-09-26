@@ -3,7 +3,7 @@ import { Mail, MapPin, Phone } from 'lucide-react';
 import { useLanguage } from '@/context/LanguageContext';
 
 const Footer = () => {
-  const { t, language } = useLanguage();
+  const { t, localize } = useLanguage();
 
   const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
 
@@ -19,7 +19,7 @@ const Footer = () => {
 
           {/* Brand column */}
           <div className="md:col-span-4">
-            <Link to="/" onClick={scrollToTop}>
+            <Link to={localize('/')} onClick={scrollToTop}>
               <h2 className="text-2xl font-heading font-semibold text-sand-light mb-3 hover:text-wood transition-colors">
                 Metaxas Retreats
               </h2>
@@ -52,10 +52,10 @@ const Footer = () => {
               {t('footer.navigate')}
             </h4>
             <ul className="space-y-3">
-              <li><Link to="/" className={linkClass} onClick={scrollToTop}>{t('nav.home')}</Link></li>
-              <li><Link to="/#accommodations" className={linkClass}>{t('footer.ourAccommodations')}</Link></li>
-              <li><Link to="/explore" className={linkClass} onClick={scrollToTop}>{t('nav.explore')}</Link></li>
-              <li><Link to="/contact" className={linkClass} onClick={scrollToTop}>{t('footer.contactUs')}</Link></li>
+              <li><Link to={localize('/')} className={linkClass} onClick={scrollToTop}>{t('nav.home')}</Link></li>
+              <li><Link to={`${localize('/')}#accommodations`} className={linkClass}>{t('footer.ourAccommodations')}</Link></li>
+              <li><Link to={localize('/explore')} className={linkClass} onClick={scrollToTop}>{t('nav.explore')}</Link></li>
+              <li><Link to={localize('/contact')} className={linkClass} onClick={scrollToTop}>{t('footer.contactUs')}</Link></li>
             </ul>
           </div>
 
@@ -66,12 +66,12 @@ const Footer = () => {
             </h4>
             <ul className="space-y-3">
               <li>
-                <Link to="/accommodation/wooden-house" className={linkClass} onClick={scrollToTop}>
+                <Link to={localize('/accommodation/wooden-house')} className={linkClass} onClick={scrollToTop}>
                   {t('accommodation.woodenHouse')}
                 </Link>
               </li>
               <li>
-                <Link to="/accommodation/glamping-tent" className={linkClass} onClick={scrollToTop}>
+                <Link to={localize('/accommodation/glamping-tent')} className={linkClass} onClick={scrollToTop}>
                   {t('accommodation.glampingTent')}
                 </Link>
               </li>
@@ -127,10 +127,10 @@ const Footer = () => {
           </p>
 
           <div className="flex items-center gap-5 text-xs text-sand-dark/30">
-            <Link to="/privacy" className="hover:text-wood transition-colors" onClick={scrollToTop}>
+            <Link to={localize('/privacy')} className="hover:text-wood transition-colors" onClick={scrollToTop}>
               {t('footer.privacy')}
             </Link>
-            <Link to="/terms" className="hover:text-wood transition-colors" onClick={scrollToTop}>
+            <Link to={localize('/terms')} className="hover:text-wood transition-colors" onClick={scrollToTop}>
               {t('footer.terms')}
             </Link>
             <span>

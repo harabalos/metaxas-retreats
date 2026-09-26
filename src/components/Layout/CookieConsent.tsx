@@ -7,7 +7,7 @@ import { Cookie, X } from 'lucide-react';
 const GA_MEASUREMENT_ID = 'G-ZDD9NS3KDN';
 
 export default function CookieConsent() {
-  const { language } = useLanguage();
+  const { language, localize } = useLanguage();
   const [isVisible, setIsVisible] = useState(false);
 
   const loadGoogleAnalytics = () => {
@@ -91,7 +91,7 @@ export default function CookieConsent() {
             {/* Body */}
             <p className="text-white/65 text-xs leading-relaxed mb-4 font-sans">
               {text.body[lang]}{' '}
-              <Link to="/privacy" onClick={decline} className="text-wood hover:text-wood-light underline underline-offset-2 transition-colors">
+              <Link to={localize('/privacy')} onClick={decline} className="text-wood hover:text-wood-light underline underline-offset-2 transition-colors">
                 {text.privacy[lang]}
               </Link>
             </p>

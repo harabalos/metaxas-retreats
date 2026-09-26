@@ -1,5 +1,6 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
+import { splitLanguage } from './lib/i18nRoutes';
 
 import enTranslation from './locales/en.json';
 import elTranslation from './locales/el.json';
@@ -19,10 +20,8 @@ i18n
   .use(initReactI18next)
   .init({
     resources,
-    // The saved choice, else the browser's language. Prerendering (no window) is English.
-    lng: typeof window === 'undefined'
-      ? 'en'
-      : localStorage.getItem('language') || navigator.language.split('-')[0] || 'en',
+    // The URL decides (see lib/i18nRoutes); prerendering sets it per page.
+    lng: typeof window === 'undefined' ? 'en' : splitLanguage(window.location.pathname).language,
     fallbackLng: 'en',
     interpolation: {
       escapeValue: false, // react already safes from xss

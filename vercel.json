@@ -64,6 +64,15 @@
           "value": "noindex, nofollow"
         }
       ]
+    },
+    {
+      "source": "/:lang(el|it|de|ro)/booking(.*)",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        }
+      ]
     }
   ],
   "cleanUrls": true,
@@ -86,6 +95,14 @@
     },
     {
       "source": "/booking-confirmation",
+      "destination": "/booking"
+    },
+    {
+      "source": "/:lang(el|it|de|ro)/booking/:id",
+      "destination": "/booking"
+    },
+    {
+      "source": "/:lang(el|it|de|ro)/booking-confirmation",
       "destination": "/booking"
     }
   ]

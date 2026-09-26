@@ -120,7 +120,7 @@ const HomePage = () => {
   const accommodationsRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const heroRef = useRef<HTMLDivElement>(null);
-  const { t, language } = useLanguage();
+  const { t, language, localize } = useLanguage();
   const { data: accommodations, isLoading } = useAccommodations();
   const [showHeroVideo] = useState(() => !prefersStillHero());
   // The carousel's hidden slides are clipped, so lazy loading would only fetch
@@ -249,7 +249,7 @@ const HomePage = () => {
               {t('home.hero.viewAccommodations')}
             </button>
             <Link
-              to="/contact"
+              to={localize('/contact')}
               className="px-8 py-4 border border-white/40 text-white font-sans font-medium text-sm tracking-wide rounded-full transition-all duration-300 hover:border-white hover:bg-white/10 active:scale-95"
             >
               {t('nav.contact')}
@@ -350,7 +350,7 @@ const HomePage = () => {
               <p className="text-sm font-sans text-muted-foreground">
                 {t('home.accommodations.directBook')}
                 {' '}·{' '}
-                <Link to="/contact" className="text-forest underline underline-offset-2 hover:text-wood transition-colors">
+                <Link to={localize('/contact')} className="text-forest underline underline-offset-2 hover:text-wood transition-colors">
                   {t('home.accommodations.getInTouch')}
                 </Link>
               </p>
@@ -379,7 +379,7 @@ const HomePage = () => {
                 </div>
                 <div className="mt-10">
                   <Link
-                    to="/explore"
+                    to={localize('/explore')}
                     className="inline-flex items-center gap-2 text-sm font-sans font-semibold text-forest border-b border-forest/30 pb-0.5 hover:border-forest transition-colors"
                   >
                     {t('home.experience.explore')}
@@ -464,7 +464,7 @@ const HomePage = () => {
                 {t('home.cta.button')}
               </button>
               <Link
-                to="/contact"
+                to={localize('/contact')}
                 className="px-8 py-4 border border-forest/30 text-forest font-sans font-medium text-sm tracking-wide rounded-full transition-all duration-300 hover:border-forest hover:bg-forest/5 active:scale-95"
               >
                 {t('nav.contact')}

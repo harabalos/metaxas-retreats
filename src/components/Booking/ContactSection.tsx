@@ -14,7 +14,7 @@ import { z } from 'zod';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const ContactSection = () => {
-  const { t, language } = useLanguage();
+  const { t, language, localize } = useLanguage();
   const [searchParams] = useSearchParams();
   const { id } = useParams<{ id: string }>();
 
@@ -219,7 +219,7 @@ const ContactSection = () => {
                 />
                 <Label htmlFor="privacy-booking" className="text-xs text-gray-500 leading-relaxed cursor-pointer">
                   {t('booking.privacy.agreePart1')}
-                  <Link to="/privacy" className="text-forest hover:underline">
+                  <Link to={localize('/privacy')} className="text-forest hover:underline">
                     {t('booking.privacy.link')}
                   </Link>
                   {t('booking.privacy.agreePart2')}
