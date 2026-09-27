@@ -71,6 +71,8 @@
   "booking.pageTitle": "Contattaci per Prenotare",
   "booking.missingInfo": "Informazioni di Prenotazione Mancanti",
   "booking.selectFirst": "Seleziona un alloggio e le date prima di procedere.",
+  "booking.datesTaken": "Alcune di queste notti non sono più disponibili.",
+  "booking.chooseOtherDates": "Scegli altre date",
   "booking.saveDiscount": "Risparmia il 15% prenotando direttamente!",
   "booking.discountDescription": "I prezzi sul nostro sito sono il 15% più economici di Airbnb/Booking.com.",
   "booking.callWhatsapp": "Chiama o Scrivi (WhatsApp)",

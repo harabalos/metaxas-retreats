@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
-import { useParams, useSearchParams, useNavigate } from 'react-router-dom';
-import { differenceInDays, format } from 'date-fns';
+import { Link, useParams, useSearchParams, useNavigate } from 'react-router-dom';
+import { differenceInDays, format, isAfter, isBefore, startOfToday } from 'date-fns';
 import { m } from 'framer-motion';
 import Layout from '@/components/Layout/Layout';
 import { useAccommodations } from '@/hooks/useAccommodations';
@@ -9,8 +9,9 @@ import ContactSection from '@/components/Booking/ContactSection';
 import SEOHead from '@/components/SEO/SEOHead';
 import { useLanguage } from '@/context/LanguageContext';
 import { dateLocale } from '@/lib/dateLocale';
-import { ExternalLink, CalendarDays, Users } from 'lucide-react';
+import { ExternalLink, CalendarDays, CalendarX, Users } from 'lucide-react';
 import { fromDateParam } from '@/lib/dateParams';
+import { useBlockedDates } from '@/hooks/useBlockedDates';
 
 const BookingPage = () => {
   const { id } = useParams<{ id: string }>();
@@ -18,6 +19,10 @@ const BookingPage = () => {
   const navigate = useNavigate();
   const { t, language, localize } = useLanguage();
   const { data: accommodations, isLoading } = useAccommodations();
+  // Check the dates again against live availability: the link may be old, or
+  // the nights may have been booked since they were picked.
+  const knownId = accommodations?.some(acc => acc.id === id) ? id : '';
+  const { isStayBlocked, loading: checkingAvailability } = useBlockedDates(knownId ?? '');
 
   useEffect(() => { window.scrollTo(0, 0); }, []);
 
@@ -41,7 +46,8 @@ const BookingPage = () => {
   const endDate = fromDateParam(endParam);
   const guests = guestsParam ? parseInt(guestsParam) : 1;
 
-  if (!accommodation || !startDate || !endDate) {
+  // A stay needs at least one night and can't start in the past.
+  if (!accommodation || !startDate || !endDate || !isAfter(endDate, startDate) || isBefore(startDate, startOfToday())) {
     return (
       <Layout>
         <div className="min-h-screen flex items-center justify-center px-4 text-center">
@@ -58,6 +64,7 @@ const BookingPage = () => {
   }
 
   const nights = differenceInDays(endDate, startDate);
+  const datesTaken = !checkingAvailability && isStayBlocked(startDate, endDate);
   const accommodationName = accommodation.type === 'house' ? t('accommodation.woodenHouse') : t('accommodation.glampingTent');
 
   return (
@@ -100,6 +107,19 @@ const BookingPage = () => {
               {accommodationName}
             </div>
           </div>
+
+          {datesTaken && (
+            <div role="alert" className="mt-5 flex flex-wrap items-center gap-x-3 gap-y-2 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-800">
+              <CalendarX className="h-4 w-4 shrink-0" />
+              <span className="flex-1 min-w-[12rem]">{t('booking.datesTaken')}</span>
+              <Link
+                to={localize(`/accommodation/${accommodation.id}`)}
+                className="font-semibold underline underline-offset-2 hover:text-red-900"
+              >
+                {t('booking.chooseOtherDates')}
+              </Link>
+            </div>
+          )}
         </m.div>
 
         {/* Two-column layout */}

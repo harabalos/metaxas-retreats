@@ -71,6 +71,8 @@
   "booking.pageTitle": "Contact Us for Booking",
   "booking.missingInfo": "Booking Information Missing",
   "booking.selectFirst": "Please select an accommodation and dates before proceeding.",
+  "booking.datesTaken": "Some of these nights are no longer available.",
+  "booking.chooseOtherDates": "Choose other dates",
   "booking.saveDiscount": "Save 15% by booking direct!",
   "booking.discountDescription": "Our website prices are 15% cheaper than Airbnb/Booking.com.",
   "booking.callWhatsapp": "Call or Text (WhatsApp)",

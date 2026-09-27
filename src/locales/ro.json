@@ -71,6 +71,8 @@
   "booking.pageTitle": "Contactează-ne pentru Rezervare",
   "booking.missingInfo": "Informații de Rezervare Lipsă",
   "booking.selectFirst": "Te rugăm să selectezi o cazare și datele înainte de a continua.",
+  "booking.datesTaken": "Unele dintre aceste nopți nu mai sunt disponibile.",
+  "booking.chooseOtherDates": "Alegeți alte date",
   "booking.saveDiscount": "Economisești 15% rezervând direct!",
   "booking.discountDescription": "Prețurile noastre sunt cu 15% mai mici decât Airbnb/Booking.com.",
   "booking.callWhatsapp": "Sună sau Scrie (WhatsApp)",

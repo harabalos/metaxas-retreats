@@ -71,6 +71,8 @@
   "booking.pageTitle": "Επικοινωνήστε για Κράτηση",
   "booking.missingInfo": "Λείπουν Πληροφορίες Κράτησης",
   "booking.selectFirst": "Παρακαλούμε επιλέξτε κατάλυμα και ημερομηνίες πριν συνεχίσετε.",
+  "booking.datesTaken": "Κάποιες από αυτές τις νύχτες δεν είναι πια διαθέσιμες.",
+  "booking.chooseOtherDates": "Επιλέξτε άλλες ημερομηνίες",
   "booking.saveDiscount": "Εξοικονομήστε 15% κλείνοντας απευθείας!",
   "booking.discountDescription": "Οι τιμές μας είναι 15% φθηνότερες από Airbnb/Booking.com.",
   "booking.callWhatsapp": "Τηλεφωνήστε ή Στείλτε Μήνυμα (WhatsApp)",
