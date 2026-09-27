@@ -95,11 +95,11 @@ const BookingForm = ({ accommodation, isDetail = false }: BookingFormProps) => {
 
         {/* Nights summary */}
         {nights > 0 && (
-          <div className="flex items-center justify-between py-3 px-4 rounded-xl bg-forest/4 text-sm">
-            <span className="text-gray-600">
+          <div className="flex items-center justify-between gap-3 py-3 px-4 rounded-xl bg-forest/4 text-sm">
+            <span className="text-gray-600 shrink-0 whitespace-nowrap">
               {t('common.nights', { count: nights })}
             </span>
-            <span className="text-xs text-gray-500 italic">
+            <span className="text-xs text-gray-500 italic text-right">
               {t('pricing.contactForQuote')}
             </span>
           </div>
