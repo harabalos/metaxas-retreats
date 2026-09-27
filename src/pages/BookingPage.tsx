@@ -13,6 +13,19 @@ import { ExternalLink, CalendarDays, CalendarX, Users } from 'lucide-react';
 import { fromDateParam } from '@/lib/dateParams';
 import { useBlockedDates } from '@/hooks/useBlockedDates';
 
+// Where else each accommodation can be booked: the same listings as the
+// schema's sameAs profiles (src/lib/schema.ts).
+const OTHER_LISTINGS: Record<string, { airbnb: string; booking: string }> = {
+  'wooden-house': {
+    airbnb: 'https://www.airbnb.com/rooms/936140564087838043',
+    booking: 'https://www.booking.com/hotel/gr/metaxaki.html',
+  },
+  'glamping-tent': {
+    airbnb: 'https://www.airbnb.com/rooms/1420445588586676264',
+    booking: 'https://www.booking.com/hotel/gr/metaxaki-glamping.html',
+  },
+};
+
 const BookingPage = () => {
   const { id } = useParams<{ id: string }>();
   const [searchParams] = useSearchParams();
@@ -167,7 +180,7 @@ const BookingPage = () => {
               </p>
               <div className="flex gap-4">
                 <a
-                  href="https://www.airbnb.gr/rooms/936140564087838043"
+                  href={OTHER_LISTINGS[accommodation.id]?.airbnb}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center gap-1.5 text-sm text-gray-500 hover:text-forest transition-colors"
@@ -175,7 +188,7 @@ const BookingPage = () => {
                   Airbnb <ExternalLink className="h-3 w-3" />
                 </a>
                 <a
-                  href="https://www.booking.com/hotel/gr/metaxaki.el.html"
+                  href={OTHER_LISTINGS[accommodation.id]?.booking}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center gap-1.5 text-sm text-gray-500 hover:text-forest transition-colors"
