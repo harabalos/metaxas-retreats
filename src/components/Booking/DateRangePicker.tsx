@@ -47,45 +47,25 @@ export function DateRangePicker({
   const locale = dateLocale(language);
 
   // Live availability, read from the Airbnb feeds via /api/availability
-  const { isDateBlocked, loading, unavailable } = useBlockedDates(accommodationId);
+  const { isDateBlocked, isStayBlocked, loading, unavailable } = useBlockedDates(accommodationId);
 
-  // Does a stay from `start` to checkout `end` include a booked night? The
-  // checkout day is not a night of the stay, so it is not checked.
-  const isRangeBlocked = (start: Date, end: Date) => {
-    const current = new Date(start);
-    while (current < end) {
-      if (isDateBlocked(current)) return true;
-      current.setDate(current.getDate() + 1);
-    }
-    return false;
-  };
+  // Picked the way booking sites do it: the first click is the check-in, the
+  // second the checkout, and a click after a complete stay starts a new one.
+  // (react-day-picker's own range logic stretches or shrinks the range instead,
+  // and would turn a second click on the check-in into a zero-night stay.)
+  const onSelect = (_range: DateRange | undefined, day: Date) => {
+    const pickingCheckout = startDate && !endDate && isAfter(day, startDate);
 
-  const onSelect = (range: DateRange | undefined) => {
-    if (!range) {
-      onDateChange(undefined, undefined);
+    if (pickingCheckout && !isStayBlocked(startDate, day)) {
+      onDateChange(startDate, day);
+      setIsCalendarOpen(false);
       return;
     }
 
-    if (range.from && !range.to) {
-      // User selected the first date
-      if (isDateBlocked(range.from)) {
-         // Don't allow starting on a blocked date
-         return; 
-      }
-      onDateChange(range.from, undefined);
-    } else if (range.from && range.to) {
-      // User selected the second date (completing the range)
-      
-      // 1. Check if the range overlaps with any blocked dates
-      if (isRangeBlocked(range.from, range.to)) {
-        // Reset to just the start date if they try to book over a blocked date
-        onDateChange(range.from, undefined);
-        return;
-      }
-
-      onDateChange(range.from, range.to);
-      setIsCalendarOpen(false);
-    }
+    // A new check-in: the first click, a click on or before the check-in, a
+    // click after a complete stay, or a checkout that would include a booked
+    // night, which instead starts a new stay from the clicked day.
+    if (!isDateBlocked(day)) onDateChange(day, undefined);
   };
 
   // Helper to disable tiles in the calendar
@@ -96,7 +76,7 @@ export function DateRangePicker({
     //    the stay being picked: a guest can leave the morning a booking starts.
     if (isDateBlocked(date)) {
       const isCheckoutDay =
-        !!startDate && !endDate && isAfter(date, startDate) && !isRangeBlocked(startDate, date);
+        !!startDate && !endDate && isAfter(date, startDate) && !isStayBlocked(startDate, date);
       return !isCheckoutDay;
     }
     return false;
