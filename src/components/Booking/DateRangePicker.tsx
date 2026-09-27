@@ -70,9 +70,11 @@ export function DateRangePicker({
 
   // Helper to disable tiles in the calendar
   const isDateDisabled = (date: Date) => {
-    // 1. Disable past dates
+    // 1. Nothing can be picked until we know what's booked
+    if (loading) return true;
+    // 2. Disable past dates
     if (isBefore(date, startOfToday())) return true;
-    // 2. Disable nights that are already booked, except as the checkout day of
+    // 3. Disable nights that are already booked, except as the checkout day of
     //    the stay being picked: a guest can leave the morning a booking starts.
     if (isDateBlocked(date)) {
       const isCheckoutDay =
@@ -114,6 +116,11 @@ export function DateRangePicker({
           </Button>
         </PopoverTrigger>
         <PopoverContent className="w-auto p-0" align="start">
+          {loading && (
+            <p className="px-3 pt-3 pb-1 text-xs text-gray-500 max-w-xs leading-snug" role="status">
+              {t('datePicker.loading')}
+            </p>
+          )}
           {unavailable && (
             <p className="px-3 pt-3 pb-1 text-xs text-amber-700 max-w-xs leading-snug">
               {UNAVAILABLE_NOTE[language] || UNAVAILABLE_NOTE.en}
