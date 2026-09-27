@@ -45,7 +45,7 @@ const BookingSummary = ({ accommodation, startDate, endDate, guests, nights, sel
         <div>
           <p className="text-xs text-wood-deep font-sans font-semibold uppercase tracking-widest mb-0.5">{nickname}</p>
           <h4 className="font-heading font-semibold text-forest-dark leading-tight">{fullName}</h4>
-          <p className="text-xs text-gray-500 mt-0.5">Mikros Gialos, Lefkada</p>
+          <p className="text-xs text-gray-500 mt-0.5">{t('footer.address')}</p>
         </div>
       </div>
 
