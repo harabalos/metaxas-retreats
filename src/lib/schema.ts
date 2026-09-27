@@ -1,4 +1,5 @@
 import { accommodations, type Accommodation } from '@/data/accommodations';
+import { FAQ_ITEMS } from '@/data/faq';
 import { reviewSummary } from '@/data/reviews';
 
 /**
@@ -146,14 +147,14 @@ export function breadcrumbs(t: T, trail: [string, string][]): Node {
   };
 }
 
-/** FAQPage from the questions the home page shows (faq.q1/faq.a1, …). */
-export function faqPage(t: T, count: number): Node {
+/** FAQPage from the questions the FAQ page shows (src/data/faq.ts). */
+export function faqPage(t: T): Node {
   return {
     '@type': 'FAQPage',
-    mainEntity: Array.from({ length: count }, (_, i) => ({
+    mainEntity: FAQ_ITEMS.map(({ q, a }) => ({
       '@type': 'Question',
-      name: t(`faq.q${i + 1}`),
-      acceptedAnswer: { '@type': 'Answer', text: t(`faq.a${i + 1}`) },
+      name: t(q),
+      acceptedAnswer: { '@type': 'Answer', text: t(a) },
     })),
   };
 }

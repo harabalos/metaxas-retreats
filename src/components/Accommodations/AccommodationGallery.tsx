@@ -35,7 +35,7 @@ interface AccommodationGalleryProps {
 
 const HINTS: Record<string, { tap: string; reset: string }> = {
   en: { tap: 'Tap to zoom', reset: 'Reset' },
-  el: { tap: 'Πατήστε για zoom', reset: 'Επαναφορά' },
+  el: { tap: 'Πατήστε για μεγέθυνση', reset: 'Επαναφορά' },
   it: { tap: 'Tocca per ingrandire', reset: 'Reimposta' },
   de: { tap: 'Zum Zoomen tippen', reset: 'Zurücksetzen' },
   ro: { tap: 'Atinge pentru zoom', reset: 'Resetează' },

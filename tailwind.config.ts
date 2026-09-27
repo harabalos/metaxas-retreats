@@ -72,6 +72,14 @@ export default {
 				},
 				cream: '#FAFAF5',
 			},
+			// Faint tints the site uses (bg-forest/4, border-white/8, …). Tailwind's
+			// scale goes up in fives, and a class like bg-forest/8 outside the scale
+			// is silently not generated.
+			opacity: {
+				4: '0.04',
+				6: '0.06',
+				8: '0.08',
+			},
 			fontFamily: {
 				sans: ['"DM Sans Variable"', 'sans-serif'],
 				heading: ['"EB Garamond Variable"', 'Georgia', 'serif'],

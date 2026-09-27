@@ -1,4 +1,5 @@
 import { accommodations } from '@/data/accommodations';
+import { FAQ_ITEMS } from '@/data/faq';
 import { NEARBY, PLACES, formatTrip, type PlaceId } from '@/data/places';
 import { GOOGLE_REVIEWS_URL, reviewSummary } from '@/data/reviews';
 import { GOOGLE_MAPS_URL, PROFILES, SITE } from '@/lib/schema';
@@ -68,12 +69,16 @@ export function llmsTxt(t: T): string {
     '',
     ...more.map((id) => `- ${trip(id)}`),
     '',
+    '## Frequently asked questions',
+    '',
+    ...FAQ_ITEMS.flatMap(({ q, a }) => [`### ${t(q)}`, '', t(a), '']),
     '## Pages',
     '',
-    `- [Home](${url('/')}): the two accommodations, the setting, guest reviews and FAQ`,
+    `- [Home](${url('/')}): the two accommodations, the setting and guest reviews`,
     ...accommodations.map((a) => `- [${a.name}](${url(`/accommodation/${a.id}`)}): photos, amenities, availability`),
     `- [Explore Lefkada](${url('/explore')}): beaches, villages and activities around the island`,
     `- [Contact](${url('/contact')}): phone, WhatsApp, email and map`,
+    `- [FAQ](${url('/faq')}): the questions above, on a page of their own`,
     `- The site in other languages: ${LANGUAGES.filter((l) => l !== 'en').map((l) => url(localizePath(l, '/'))).join(', ')}`,
     '',
     '## Profiles',

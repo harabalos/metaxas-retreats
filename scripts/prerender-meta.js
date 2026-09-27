@@ -60,6 +60,7 @@ const routes = [
   },
   { path: '/explore', images: ['/assets/porto katsiki.jpg', '/assets/kathisma.jpeg'] },
   { path: '/contact' },
+  { path: '/faq' },
   { path: '/privacy', noindex: true },
   { path: '/terms', noindex: true },
 ];

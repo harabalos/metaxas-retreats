@@ -127,7 +127,11 @@ const Footer = () => {
             &copy; {new Date().getFullYear()} Metaxas Retreats. {t('footer.rights')}
           </p>
 
-          <div className="flex items-center gap-5 text-xs text-sand-dark/60">
+          <div className="flex flex-wrap items-center justify-center sm:justify-end gap-x-5 gap-y-2 text-xs text-sand-dark/60">
+            {/* The FAQ is linked only from here, next to the small print. */}
+            <Link to={localize('/faq')} className="hover:text-wood transition-colors" onClick={scrollToTop}>
+              {t('footer.faq')}
+            </Link>
             <Link to={localize('/privacy')} className="hover:text-wood transition-colors" onClick={scrollToTop}>
               {t('footer.privacy')}
             </Link>
@@ -140,8 +144,9 @@ const Footer = () => {
                 The Blue Hour Villas, Lefkada
               </a>
             </span>
-            <span>
-              {t('footer.poweredBy')}{' '}
+            {/* The studio's credit reads the same in every language. */}
+            <span lang="en">
+              Powered by{' '}
               <a href="https://www.amox.gr" target="_blank" rel="noopener noreferrer" className="hover:text-wood transition-colors">
                 Amox
               </a>
