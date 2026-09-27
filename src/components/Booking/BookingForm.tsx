@@ -70,6 +70,7 @@ const BookingForm = ({ accommodation, isDetail = false }: BookingFormProps) => {
             endDate={endDate}
             onDateChange={handleDateChange}
             accommodationId={accommodation.id}
+            minNights={accommodation.minNights}
           />
         </div>
 

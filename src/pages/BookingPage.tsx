@@ -78,6 +78,10 @@ const BookingPage = () => {
 
   const nights = differenceInDays(endDate, startDate);
   const datesTaken = !checkingAvailability && isStayBlocked(startDate, endDate);
+  const minStay = t('common.nights', { count: accommodation.minNights });
+  const problem = nights < accommodation.minNights
+    ? t('booking.minStay', { nights: minStay })
+    : datesTaken ? t('booking.datesTaken') : null;
   const accommodationName = accommodation.type === 'house' ? t('accommodation.woodenHouse') : t('accommodation.glampingTent');
 
   return (
@@ -121,10 +125,10 @@ const BookingPage = () => {
             </div>
           </div>
 
-          {datesTaken && (
+          {problem && (
             <div role="alert" className="mt-5 flex flex-wrap items-center gap-x-3 gap-y-2 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-800">
               <CalendarX className="h-4 w-4 shrink-0" />
-              <span className="flex-1 min-w-[12rem]">{t('booking.datesTaken')}</span>
+              <span className="flex-1 min-w-[12rem]">{problem}</span>
               <Link
                 to={localize(`/accommodation/${accommodation.id}`)}
                 className="font-semibold underline underline-offset-2 hover:text-red-900"
