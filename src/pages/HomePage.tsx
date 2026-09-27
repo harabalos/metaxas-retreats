@@ -2,8 +2,8 @@ import { useRef, useEffect, useCallback, useState } from 'react';
 import useEmblaCarousel from 'embla-carousel-react';
 import Autoplay from 'embla-carousel-autoplay';
 import { useLocation, Link } from 'react-router-dom';
-import { ArrowDown, Waves, Trees, Sun, Wind, ChevronDown } from 'lucide-react';
-import { m, useScroll, useTransform, AnimatePresence } from 'framer-motion';
+import { Waves, Trees, Sun, Wind, ChevronDown } from 'lucide-react';
+import { m, useScroll, useTransform } from 'framer-motion';
 import Layout from '@/components/Layout/Layout';
 import AccommodationCard from '@/components/Accommodations/AccommodationCard';
 import GuestReviews from '@/components/Reviews/GuestReviews';
@@ -186,24 +186,15 @@ const HomePage = () => {
           <div className="absolute inset-0 bg-gradient-to-b from-forest-dark/40 via-forest-dark/20 to-forest-dark/70" />
         </div>
 
-        {/* Hero content with parallax */}
+        {/* Hero content with parallax: the headline, one line, one button */}
         <m.div
           style={{ y: heroY, opacity: heroOpacity }}
           className="relative z-10 w-full px-5 sm:px-10 lg:px-16 max-w-7xl mx-auto"
         >
-          <m.p
-            initial={{ y: 12 }}
-            animate={{ y: 0 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            className="text-wood text-sm font-sans font-medium tracking-[0.2em] uppercase mb-5"
-          >
-            {t('home.hero.eyebrow')}
-          </m.p>
-
           <m.h1
             initial={{ y: 16 }}
             animate={{ y: 0 }}
-            transition={{ duration: 0.8, delay: 0.15, ease: EASE_OUT }}
+            transition={{ duration: 0.8, delay: 0.1, ease: EASE_OUT }}
             className="font-heading font-light text-white text-display-2xl leading-[1.05] mb-6 max-w-3xl text-balance"
           >
             {t('home.hero.title')}
@@ -212,17 +203,17 @@ const HomePage = () => {
           <m.p
             initial={{ y: 12 }}
             animate={{ y: 0 }}
-            transition={{ duration: 0.7, delay: 0.25 }}
+            transition={{ duration: 0.7, delay: 0.2 }}
             className="text-sand-light/80 text-lg md:text-xl font-sans mb-10 max-w-xl leading-relaxed"
           >
             {t('home.hero.subtitle')}
           </m.p>
 
+          {/* Motion on a wrapper: its transform would override the button's active:scale-95. */}
           <m.div
             initial={{ y: 10 }}
             animate={{ y: 0 }}
-            transition={{ duration: 0.6, delay: 0.35 }}
-            className="flex flex-wrap gap-4"
+            transition={{ duration: 0.6, delay: 0.3 }}
           >
             <button
               onClick={scrollToAccommodations}
@@ -230,31 +221,8 @@ const HomePage = () => {
             >
               {t('home.hero.viewAccommodations')}
             </button>
-            <Link
-              to={localize('/contact')}
-              className="px-8 py-4 border border-white/40 text-white font-sans font-medium text-sm tracking-wide rounded-full transition-all duration-300 hover:border-white hover:bg-white/10 active:scale-95"
-            >
-              {t('nav.contact')}
-            </Link>
           </m.div>
         </m.div>
-
-        {/* Scroll indicator */}
-        <m.button
-          onClick={scrollToAccommodations}
-          aria-label={t('home.hero.scrollDown')}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.3 }}
-          className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 text-white/60 hover:text-white transition-colors"
-        >
-          <m.div
-            animate={{ y: [0, 8, 0] }}
-            transition={{ repeat: Infinity, duration: 2, ease: 'easeInOut' }}
-          >
-            <ArrowDown className="h-6 w-6" />
-          </m.div>
-        </m.button>
       </section>
 
       {/* ─── BRAND STATEMENT ───────────────────────────────────────────────── */}
