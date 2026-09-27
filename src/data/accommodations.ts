@@ -13,6 +13,7 @@ export type Accommodation = {
   price: number; // Starting price (lowest)
   priceRanges: PriceRange[];
   guests: number;
+  minNights: number; // shortest stay taken, in nights
   bedrooms: number;
   beds: number;
   bathrooms: number;
@@ -55,6 +56,7 @@ export const accommodations: Accommodation[] = [
       { season: 'peak', price: 140, months: 'August' },
     ],
     guests: 4,
+    minNights: 2,
     bedrooms: 1,
     beds: 2,
     bathrooms: 1,
@@ -104,6 +106,7 @@ export const accommodations: Accommodation[] = [
       { season: 'peak', price: 120, months: 'August' },
     ],
     guests: 5,
+    minNights: 2,
     bedrooms: 2,
     beds: 5,
     bathrooms: 1,

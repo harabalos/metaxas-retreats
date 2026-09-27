@@ -1,5 +1,5 @@
 import * as React from "react";
-import { format, addDays, isWithinInterval, isBefore, startOfToday } from "date-fns";
+import { format, addDays, differenceInCalendarDays, isBefore, startOfToday } from "date-fns";
 import { Calendar as CalendarIcon } from "lucide-react";
 import { DateRange } from "react-day-picker";
 
@@ -31,6 +31,8 @@ interface DateRangePickerProps {
   onDateChange: (start: Date | undefined, end: Date | undefined) => void;
   disabled?: boolean;
   accommodationId: string;
+  /** Shortest stay taken, in nights. */
+  minNights?: number;
   className?: string;
 }
 
@@ -40,6 +42,7 @@ export function DateRangePicker({
   onDateChange,
   disabled = false,
   accommodationId,
+  minNights = 1,
   className,
 }: DateRangePickerProps) {
   const [isCalendarOpen, setIsCalendarOpen] = React.useState(false);
@@ -47,54 +50,42 @@ export function DateRangePicker({
   const locale = dateLocale(language);
 
   // Live availability, read from the Airbnb feeds via /api/availability
-  const { isDateBlocked, loading, unavailable } = useBlockedDates(accommodationId);
+  const { isDateBlocked, isStayBlocked, loading, unavailable } = useBlockedDates(accommodationId);
 
-  // Helper: Check if a range hits a blocked date
-  const isRangeBlocked = (start: Date, end: Date) => {
-    const current = new Date(start);
-    while (current <= end) {
-      if (isDateBlocked(current)) return true;
-      current.setDate(current.getDate() + 1);
-    }
-    return false;
-  };
+  // Picked the way booking sites do it: the first click is the check-in, the
+  // second the checkout, and a click after a complete stay starts a new one.
+  // (react-day-picker's own range logic stretches or shrinks the range instead,
+  // and would turn a second click on the check-in into a zero-night stay.)
+  const nightsFromCheckIn = (day: Date) =>
+    startDate && !endDate ? differenceInCalendarDays(day, startDate) : 0;
 
-  const onSelect = (range: DateRange | undefined) => {
-    if (!range) {
-      onDateChange(undefined, undefined);
+  const onSelect = (_range: DateRange | undefined, day: Date) => {
+    if (startDate && nightsFromCheckIn(day) >= minNights && !isStayBlocked(startDate, day)) {
+      onDateChange(startDate, day);
+      setIsCalendarOpen(false);
       return;
     }
 
-    if (range.from && !range.to) {
-      // User selected the first date
-      if (isDateBlocked(range.from)) {
-         // Don't allow starting on a blocked date
-         return; 
-      }
-      onDateChange(range.from, undefined);
-    } else if (range.from && range.to) {
-      // User selected the second date (completing the range)
-      
-      // 1. Check if the range overlaps with any blocked dates
-      if (isRangeBlocked(range.from, range.to)) {
-        // Reset to just the start date if they try to book over a blocked date
-        onDateChange(range.from, undefined);
-        return;
-      }
-
-      onDateChange(range.from, range.to);
-      setIsCalendarOpen(false);
-    }
+    // A new check-in: the first click, a click on or before the check-in, a
+    // click after a complete stay, or a checkout that would include a booked
+    // night, which instead starts a new stay from the clicked day.
+    if (!isStayBlocked(day, addDays(day, minNights))) onDateChange(day, undefined);
   };
 
   // Helper to disable tiles in the calendar
   const isDateDisabled = (date: Date) => {
-    // 1. Disable past dates
+    // 1. Nothing can be picked until we know what's booked
+    if (loading) return true;
+    // 2. Disable past dates
     if (isBefore(date, startOfToday())) return true;
-    // 2. Disable nights that are already booked
-    if (isDateBlocked(date)) return true;
-    
-    return false;
+    // 3. While picking the checkout, a day too soon after the check-in is off
+    //    (rather than read as a new check-in), and a valid checkout is on even
+    //    when that night is booked: a guest can leave the morning a booking starts.
+    const nights = nightsFromCheckIn(date);
+    if (nights > 0 && nights < minNights) return true;
+    if (startDate && nights >= minNights && !isStayBlocked(startDate, date)) return false;
+    // 4. Any other day can only start a stay, so its first nights must be free.
+    return isStayBlocked(date, addDays(date, minNights));
   };
 
   return (
@@ -129,6 +120,16 @@ export function DateRangePicker({
           </Button>
         </PopoverTrigger>
         <PopoverContent className="w-auto p-0" align="start">
+          {loading && (
+            <p className="px-3 pt-3 pb-1 text-xs text-gray-500 max-w-xs leading-snug" role="status">
+              {t('datePicker.loading')}
+            </p>
+          )}
+          {minNights > 1 && !loading && (
+            <p className="px-3 pt-3 pb-1 text-xs text-gray-500 max-w-xs leading-snug">
+              {t('datePicker.minStay', { nights: t('common.nights', { count: minNights }) })}
+            </p>
+          )}
           {unavailable && (
             <p className="px-3 pt-3 pb-1 text-xs text-amber-700 max-w-xs leading-snug">
               {UNAVAILABLE_NOTE[language] || UNAVAILABLE_NOTE.en}
@@ -144,7 +145,7 @@ export function DateRangePicker({
             numberOfMonths={2}
             disabled={isDateDisabled}
             modifiers={{
-              blocked: (date) => isDateBlocked(date),
+              blocked: (date) => isDateBlocked(date) && isDateDisabled(date),
             }}
             modifiersStyles={{
               blocked: { 

@@ -100,10 +100,11 @@ function heroPosterPreload() {
  * fonts start downloading.
  */
 function fontPreloads(language) {
-  // Greek pages set their headings in Noto Serif Display (src/index.css).
+  // DM Sans has no Greek (Greek body text uses the system font); the headings
+  // on Greek pages need EB Garamond's Greek as well as its Latin (wordmark).
   const fonts = language === 'el'
-    ? ['commissioner-greek', 'noto-serif-display-greek']
-    : ['commissioner-latin', 'eb-garamond-latin'];
+    ? ['dm-sans-latin', 'eb-garamond-latin', 'eb-garamond-greek']
+    : ['dm-sans-latin', 'eb-garamond-latin'];
   return fonts.map((font) => {
     const name = `${font}-wght-normal`;
     const file = appFiles.find((f) => f.startsWith(`${name}-`) && f.endsWith('.woff2'));

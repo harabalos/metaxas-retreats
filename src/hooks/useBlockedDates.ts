@@ -60,5 +60,16 @@ export const useBlockedDates = (accommodationId: string) => {
 
   const isDateBlocked = (date: Date) => blockedDates.has(dayKey(date));
 
-  return { blockedDates, isDateBlocked, loading, unavailable };
+  /** Does a stay from `start` to checkout `end` include a booked night? The
+   *  checkout day is not a night of the stay, so it is not checked. */
+  const isStayBlocked = (start: Date, end: Date) => {
+    const night = new Date(start);
+    while (night < end) {
+      if (isDateBlocked(night)) return true;
+      night.setDate(night.getDate() + 1);
+    }
+    return false;
+  };
+
+  return { blockedDates, isDateBlocked, isStayBlocked, loading, unavailable };
 };
