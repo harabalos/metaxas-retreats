@@ -194,6 +194,9 @@ To appear when someone asks ChatGPT "best glamping in Greece":
      Current FAQ is only in schema (invisible to users).
      Add a visible FAQ section to the homepage and blog articles.
      AI systems love direct question-answer format.
+     → Done differently (September 2026): the FAQ has its own page, /faq in
+       every language, linked from the footer only, with FAQPage schema, and
+       the same answers are in llms.txt. Kept off the homepage on purpose.
 
   4. YOUTUBE VIDEO
      A 2-min "Tour of Metaxas Retreats" uploaded to YouTube with keyword-rich

@@ -2,7 +2,7 @@ import { useRef, useEffect, useCallback, useState } from 'react';
 import useEmblaCarousel from 'embla-carousel-react';
 import Autoplay from 'embla-carousel-autoplay';
 import { useLocation, Link } from 'react-router-dom';
-import { Waves, Trees, Sun, Wind, ChevronDown } from 'lucide-react';
+import { Waves, Trees, Sun, Wind } from 'lucide-react';
 import { m, useScroll, useTransform } from 'framer-motion';
 import Layout from '@/components/Layout/Layout';
 import AccommodationCard from '@/components/Accommodations/AccommodationCard';
@@ -11,7 +11,7 @@ import { useAccommodations } from '@/hooks/useAccommodations';
 import SEOHead from '@/components/SEO/SEOHead';
 import { useLanguage } from '@/context/LanguageContext';
 import { responsiveImage } from '@/lib/images';
-import { business, faqPage, graph, website } from '@/lib/schema';
+import { business, graph, website } from '@/lib/schema';
 import heroVideoDesktop from '@/assets/hero/hero-desktop.mp4';
 import heroVideoMobile from '@/assets/hero/hero-mobile.mp4';
 import heroPoster from '@/assets/hero/hero-poster.webp';
@@ -46,54 +46,6 @@ const FEATURE_KEYS = [
   { label: 'home.features.views.label', desc: 'home.features.views.desc' },
   { label: 'home.features.secluded.label', desc: 'home.features.secluded.desc' },
 ];
-
-// ─── FAQ Accordion ─────────────────────────────────────────────────────────────
-const faqItems = [
-  { q: 'faq.q1', a: 'faq.a1' },
-  { q: 'faq.q2', a: 'faq.a2' },
-  { q: 'faq.q3', a: 'faq.a3' },
-  { q: 'faq.q4', a: 'faq.a4' },
-  { q: 'faq.q5', a: 'faq.a5' },
-  { q: 'faq.q6', a: 'faq.a6' },
-  { q: 'faq.q7', a: 'faq.a7' },
-];
-
-const FAQAccordion = ({ t }: { t: (key: string) => string }) => {
-  const [openIndex, setOpenIndex] = useState<number | null>(null);
-
-  const toggle = (i: number) => setOpenIndex(openIndex === i ? null : i);
-
-  return (
-    <div className="divide-y divide-forest/10 border-t border-b border-forest/10">
-      {faqItems.map((item, i) => {
-        const isOpen = openIndex === i;
-        return (
-          <div key={i}>
-            <button
-              onClick={() => toggle(i)}
-              className="w-full flex items-center justify-between py-5 text-left gap-4 group cursor-pointer"
-              aria-expanded={isOpen}
-            >
-              <span className="font-sans font-medium text-forest text-[15px] sm:text-base leading-snug group-hover:text-forest-dark transition-colors">
-                {t(item.q)}
-              </span>
-              <ChevronDown
-                className={`w-5 h-5 text-forest/40 shrink-0 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`}
-              />
-            </button>
-            <div
-              className={`overflow-hidden transition-all duration-300 ease-in-out ${isOpen ? 'max-h-80 pb-5' : 'max-h-0'}`}
-            >
-              <p className="text-muted-foreground font-sans text-[15px] leading-relaxed pr-10">
-                {t(item.a)}
-              </p>
-            </div>
-          </div>
-        );
-      })}
-    </div>
-  );
-};
 
 // ─── Main Component ────────────────────────────────────────────────────────────
 const HomePage = () => {
@@ -142,11 +94,11 @@ const HomePage = () => {
     };
   }, []);
 
-  // The business (with the Google rating shown below), the site, and the FAQ.
+  // The business (with the Google rating shown below) and the site. The FAQ
+  // has its own page (/faq).
   const schema = graph(
     business(t, { withRating: true }),
     website(language),
-    faqPage(t, faqItems.length),
   );
 
   return (
@@ -376,22 +328,6 @@ const HomePage = () => {
 
           <FadeUp delay={0.1}>
             <GuestReviews />
-          </FadeUp>
-        </div>
-      </section>
-
-      {/* ─── FAQ ───────────────────────────────────────────────────────────── */}
-      <section id="faq" className="py-20 px-5 sm:px-10 bg-cream">
-        <div className="max-w-3xl mx-auto">
-          <FadeUp className="text-center mb-12">
-            <p className="text-wood-deep text-xs font-sans font-semibold tracking-[0.25em] uppercase mb-3">{t('faq.eyebrow')}</p>
-            <h2 className="font-heading font-light text-forest text-display-lg">
-              {t('faq.title')}
-            </h2>
-          </FadeUp>
-
-          <FadeUp delay={0.1}>
-            <FAQAccordion t={t} />
           </FadeUp>
         </div>
       </section>

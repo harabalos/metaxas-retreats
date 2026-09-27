@@ -130,6 +130,10 @@ const Footer = () => {
           </p>
 
           <div className="flex flex-wrap items-center justify-center sm:justify-end gap-x-5 gap-y-2 text-xs text-sand-dark/60">
+            {/* The FAQ is linked only from here, next to the small print. */}
+            <Link to={localize('/faq')} className="hover:text-wood transition-colors" onClick={scrollToTop}>
+              {t('footer.faq')}
+            </Link>
             <Link to={localize('/privacy')} className="hover:text-wood transition-colors" onClick={scrollToTop}>
               {t('footer.privacy')}
             </Link>

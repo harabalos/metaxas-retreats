@@ -35,6 +35,7 @@ URLs: English at the root (`/explore`), other languages under a prefix
 | Units, amenities, seasonal prices | `src/data/accommodations.ts` |
 | Google reviews shown on the site | `src/data/reviews.ts` |
 | Drive times to beaches and villages | `src/data/places.ts` |
+| FAQ questions (the /faq page, its schema, llms.txt) | `src/data/faq.ts` |
 | All visible text, per language | `src/locales/*.json` |
 | schema.org data (one business entity) | `src/lib/schema.ts` |
 | llms.txt | `src/lib/llmsTxt.ts` |
