@@ -87,7 +87,8 @@ const ExploreIsland = () => {
         {/* Tabs */}
         <FadeUp eager>
           <Tabs defaultValue="beaches" className="mb-16">
-            <TabsList className="mb-10 bg-transparent p-0 gap-1 h-auto border-b border-gray-200 w-full justify-start rounded-none">
+            {/* Fits a phone without the icons; scrolls rather than widening the page if it ever doesn't. */}
+            <TabsList className="mb-10 bg-transparent p-0 gap-1 h-auto border-b border-gray-200 w-full justify-start rounded-none overflow-x-auto">
               {[
                 { value: 'beaches', icon: Waves, label: t('explore.beaches') },
                 { value: 'villages', icon: MapPin, label: t('explore.villages') },
@@ -96,9 +97,9 @@ const ExploreIsland = () => {
                 <TabsTrigger
                   key={value}
                   value={value}
-                  className="flex items-center gap-2 px-5 py-3 rounded-none border-b-2 border-transparent data-[state=active]:border-wood data-[state=active]:text-forest-dark data-[state=active]:bg-transparent text-gray-500 hover:text-gray-700 font-sans font-medium text-sm transition-all"
+                  className="flex items-center gap-2 px-3 sm:px-5 py-3 rounded-none border-b-2 border-transparent data-[state=active]:border-wood data-[state=active]:text-forest-dark data-[state=active]:bg-transparent text-gray-500 hover:text-gray-700 font-sans font-medium text-sm transition-all"
                 >
-                  <Icon className="h-4 w-4" />
+                  <Icon className="hidden sm:block h-4 w-4" />
                   {label}
                 </TabsTrigger>
               ))}
