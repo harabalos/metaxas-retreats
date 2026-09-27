@@ -17,6 +17,7 @@ const AccommodationDetail = React.lazy(() => import("./pages/AccommodationDetail
 const BookingPage = React.lazy(() => import("./pages/BookingPage"));
 const ExploreIsland = React.lazy(() => import("./pages/ExploreIsland"));
 const ContactUs = React.lazy(() => import("./pages/ContactUs"));
+const FAQ = React.lazy(() => import("./pages/FAQ"));
 const NotFound = React.lazy(() => import("./pages/NotFound"));
 const PrivacyPolicy = React.lazy(() => import("./pages/PrivacyPolicy"));
 const TermsOfService = React.lazy(() => import("./pages/TermsOfService"));
@@ -66,6 +67,7 @@ const AnimatedRoutes = () => {
                 <Route path="booking/:id" element={<BookingPage />} />
                 <Route path="explore" element={<ExploreIsland />} />
                 <Route path="contact" element={<ContactUs />} />
+                <Route path="faq" element={<FAQ />} />
                 <Route path="privacy" element={<PrivacyPolicy />} />
                 <Route path="terms" element={<TermsOfService />} />
                 <Route path="*" element={<NotFound />} />

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { Menu, X } from 'lucide-react';
+import { ChevronRight, Menu, X } from 'lucide-react';
 import { m, AnimatePresence } from 'framer-motion';
 import { useLanguage } from '@/context/LanguageContext';
 import LanguageSwitcher from './LanguageSwitcher';
@@ -26,6 +26,24 @@ const Navbar = () => {
   // Close mobile menu on route change
   useEffect(() => { setMobileMenuOpen(false); }, [location.pathname]);
 
+  // While the phone menu is open the page behind it stays put, Escape closes
+  // it, and so does the window growing past the phone layout.
+  useEffect(() => {
+    if (!mobileMenuOpen) return;
+    const close = () => setMobileMenuOpen(false);
+    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') close(); };
+    const desktop = window.matchMedia('(min-width: 768px)');
+    const { overflow } = document.body.style;
+    document.body.style.overflow = 'hidden';
+    document.addEventListener('keydown', onKey);
+    desktop.addEventListener('change', close);
+    return () => {
+      document.body.style.overflow = overflow;
+      document.removeEventListener('keydown', onKey);
+      desktop.removeEventListener('change', close);
+    };
+  }, [mobileMenuOpen]);
+
   const scrollToAccommodations = () => {
     if (isHome) {
       document.getElementById('accommodations')?.scrollIntoView({ behavior: scrollBehavior(), block: 'start' });
@@ -49,16 +67,20 @@ const Navbar = () => {
   };
 
   // On homepage: transparent when at top, solid when scrolled
-  // On other pages: always solid
-  const navBg = isHome
-    ? scrolled
-      ? 'bg-forest/95 backdrop-blur-md shadow-nav'
-      : 'bg-transparent'
-    : 'bg-forest shadow-nav';
+  // On other pages, and under the open phone menu: always solid
+  const overHero = isHome && !scrolled && !mobileMenuOpen;
+  const navBg = mobileMenuOpen
+    ? 'bg-forest'
+    : isHome
+      ? scrolled
+        ? 'bg-forest/95 backdrop-blur-md shadow-nav'
+        : 'bg-transparent'
+      : 'bg-forest shadow-nav';
 
-  const textColor = (isHome && !scrolled) ? 'text-white/90' : 'text-sand-light';
+  const textColor = overHero ? 'text-white/90' : 'text-sand-light';
   const hoverColor = 'hover:text-wood';
-  const logoColor = (isHome && !scrolled) ? 'text-white' : 'text-sand-light';
+  const logoColor = overHero ? 'text-white' : 'text-sand-light';
+  const currentPath = splitLanguage(location.pathname).path;
 
   const navLinks = [
     { label: t('nav.accommodations'), href: `${localize('/')}#accommodations`, onClick: scrollToAccommodations },
@@ -119,16 +141,18 @@ const Navbar = () => {
                 {t('nav.bookNow')}
               </a>
 
-              <LanguageSwitcher isLight={isHome && !scrolled} />
+              <LanguageSwitcher isLight={overHero} />
             </div>
 
             {/* Mobile: language + hamburger */}
             <div className="md:hidden flex items-center gap-3">
-              <LanguageSwitcher isLight={isHome && !scrolled} />
+              <LanguageSwitcher isLight={overHero} />
               <button
                 type="button"
-                aria-label="Toggle menu"
-                className={`p-2 rounded-md transition-colors ${textColor} hover:bg-white/10`}
+                aria-label={t('nav.menu')}
+                aria-expanded={mobileMenuOpen}
+                aria-controls="mobile-menu"
+                className={`p-2 rounded-md transition-colors ${textColor} ${mobileMenuOpen ? 'bg-white/10' : 'hover:bg-white/10'}`}
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               >
                 <AnimatePresence mode="wait" initial={false}>
@@ -148,58 +172,71 @@ const Navbar = () => {
         </div>
       </m.nav>
 
-      {/* Mobile menu */}
+      {/* Mobile menu: a solid panel under the bar, the page dimmed behind it */}
       <AnimatePresence>
         {mobileMenuOpen && (
           <m.div
+            key="mobile-menu-backdrop"
+            aria-hidden="true"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            onClick={() => setMobileMenuOpen(false)}
+            className="fixed inset-x-0 top-16 bottom-0 z-40 bg-forest-dark/70 md:hidden"
+          />
+        )}
+        {mobileMenuOpen && (
+          <m.div
             key="mobile-menu"
-            initial={{ opacity: 0, y: -16 }}
+            id="mobile-menu"
+            initial={{ opacity: 0, y: -12 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -16 }}
-            transition={{ duration: 0.25, ease: 'easeOut' }}
-            className="fixed top-16 left-0 right-0 z-40 bg-forest/97 backdrop-blur-md shadow-xl md:hidden"
+            exit={{ opacity: 0, y: -12 }}
+            transition={{ duration: 0.2, ease: 'easeOut' }}
+            className="fixed top-16 inset-x-0 z-40 max-h-[calc(100dvh-4rem)] overflow-y-auto bg-forest border-t border-white/10 shadow-xl md:hidden"
           >
-            <div className="px-6 py-6 space-y-1">
-              {navLinks.map(({ label, onClick, to, href }, i) => (
-                <m.div
-                  key={label}
-                  initial={{ opacity: 0, x: -16 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: i * 0.07, duration: 0.22 }}
-                >
-                  {onClick ? (
-                    <a
-                      href={href}
-                      onClick={(e) => { e.preventDefault(); onClick(); setMobileMenuOpen(false); }}
-                      className="block w-full text-left py-3 px-2 text-base font-sans text-sand-light/90 hover:text-wood border-b border-white/8 transition-colors"
-                    >
-                      {label}
-                    </a>
-                  ) : (
-                    <Link
-                      to={to!}
-                      onClick={() => setMobileMenuOpen(false)}
-                      className="block py-3 px-2 text-base font-sans text-sand-light/90 hover:text-wood border-b border-white/8 transition-colors"
-                    >
-                      {label}
-                    </Link>
-                  )}
-                </m.div>
-              ))}
-              <m.div
-                initial={{ opacity: 0, y: 8 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.25, duration: 0.22 }}
-                className="pt-4"
+            <ul className="px-5 pt-2">
+              {navLinks.map(({ label, onClick, to, href }) => {
+                const current = to !== undefined && to === localize(currentPath);
+                const className = `flex items-center justify-between py-4 text-lg font-sans font-medium border-b border-white/10 transition-colors ${
+                  current ? 'text-wood' : 'text-sand-light hover:text-wood'
+                }`;
+                const arrow = <ChevronRight aria-hidden="true" className="h-5 w-5 text-wood/70" />;
+                return (
+                  <li key={label}>
+                    {onClick ? (
+                      <a
+                        href={href}
+                        onClick={(e) => { e.preventDefault(); onClick(); setMobileMenuOpen(false); }}
+                        className={className}
+                      >
+                        {label}
+                        {arrow}
+                      </a>
+                    ) : (
+                      <Link
+                        to={to!}
+                        onClick={() => setMobileMenuOpen(false)}
+                        aria-current={current ? 'page' : undefined}
+                        className={className}
+                      >
+                        {label}
+                        {arrow}
+                      </Link>
+                    )}
+                  </li>
+                );
+              })}
+            </ul>
+            <div className="px-5 pt-6 pb-8">
+              <a
+                href={bookHref}
+                onClick={bookNow}
+                className="block w-full text-center py-3.5 rounded-full bg-wood text-forest-dark font-sans font-semibold text-base tracking-wide active:scale-[0.98] transition-transform"
               >
-                <a
-                  href={bookHref}
-                  onClick={bookNow}
-                  className="block w-full text-center py-3 rounded-full bg-wood text-forest-dark font-sans font-semibold text-sm tracking-wide"
-                >
-                  {t('nav.bookNow')}
-                </a>
-              </m.div>
+                {t('nav.bookNow')}
+              </a>
             </div>
           </m.div>
         )}

@@ -24,7 +24,11 @@ export async function render(url: string, language: Language = 'en') {
         done();
       },
     });
-    sink.on('finish', () => resolve(markup));
+    // React 18's stream writes out each full 2048-byte buffer whole, even when
+    // the next character didn't fit and left its last byte or two empty, so
+    // Greek (two bytes a letter) and German text came out with NUL bytes
+    // inside words ("διακοπ\0ές"). Browsers skip them; crawlers may not.
+    sink.on('finish', () => resolve(markup.replace(/\0/g, '')));
 
     const { pipe } = renderToPipeableStream(
       <HelmetProvider context={helmetContext}>

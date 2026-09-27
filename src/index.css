@@ -64,13 +64,15 @@
     background-color: #FAFAF5;
   }
 
+  /* Set directly: `@apply font-heading` would also copy the Greek rule at the
+     end of this file onto every heading, and it would outrank font-sans. */
   h1,
   h2,
   h3,
   h4,
   h5,
   h6 {
-    @apply font-heading;
+    font-family: theme('fontFamily.heading');
   }
 }
 
@@ -189,9 +191,12 @@
 /* ─── Greek headings ───
    EB Garamond's Greek is a calligraphic, slanted style that reads as italic in
    modern Greek; Noto Serif Display has an upright Greek in the same spirit.
-   Light (300) is kept at 400, the lightest weight EB Garamond renders. */
+   Light (300) is kept at 400, the lightest weight EB Garamond renders.
+   Bare headings follow at a specificity that font-sans still overrides (the
+   small uppercase labels in the footer are h2s in the body font). */
 html[lang="el"] .font-heading,
-html[lang="el"] .font-display {
+html[lang="el"] .font-display,
+:where(html[lang="el"]) :is(h1, h2, h3, h4, h5, h6) {
   font-family: 'Noto Serif Display Variable', Georgia, serif;
 }
 
