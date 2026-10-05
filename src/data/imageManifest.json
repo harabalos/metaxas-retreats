@@ -1,25 +1,4 @@
 {
-  "/assets/0cbd94cc-fdef-4176-82c1-389e8194aeb3.jpg": {
-    "w": 1824,
-    "h": 1026,
-    "base": "/assets/opt/0cbd94cc-fdef-4176-82c1-389e8194aeb3.34f0203b",
-    "widths": [
-      160,
-      480,
-      960,
-      1600
-    ]
-  },
-  "/assets/2f6bd2b9-02d2-44a7-ade9-2051f8e6b39a.png": {
-    "w": 736,
-    "h": 414,
-    "base": "/assets/opt/2f6bd2b9-02d2-44a7-ade9-2051f8e6b39a.ce786c14",
-    "widths": [
-      160,
-      480,
-      736
-    ]
-  },
   "/assets/477283771.jpg": {
     "w": 1024,
     "h": 683,
@@ -74,16 +53,6 @@
       1600
     ]
   },
-  "/assets/Milos.jpeg": {
-    "w": 736,
-    "h": 920,
-    "base": "/assets/opt/Milos.ba44d566",
-    "widths": [
-      160,
-      480,
-      736
-    ]
-  },
   "/assets/avli.jpg": {
     "w": 576,
     "h": 768,
@@ -103,17 +72,6 @@
       480,
       960,
       1024
-    ]
-  },
-  "/assets/b333b19c-eb5a-4f1d-a8bb-9ba39fd8482d.jpg": {
-    "w": 1216,
-    "h": 1824,
-    "base": "/assets/opt/b333b19c-eb5a-4f1d-a8bb-9ba39fd8482d.49303765",
-    "widths": [
-      160,
-      480,
-      960,
-      1216
     ]
   },
   "/assets/b548966e-47b9-4b60-a67c-8860d08b8aac.jpg": {
@@ -391,16 +349,6 @@
       1280
     ]
   },
-  "/assets/kathisma.jpeg": {
-    "w": 736,
-    "h": 414,
-    "base": "/assets/opt/kathisma.63401630",
-    "widths": [
-      160,
-      480,
-      736
-    ]
-  },
   "/assets/krev.jpg": {
     "w": 2913,
     "h": 3981,
@@ -416,17 +364,6 @@
     "w": 2942,
     "h": 3900,
     "base": "/assets/opt/krev2.59ba169d",
-    "widths": [
-      160,
-      480,
-      960,
-      1600
-    ]
-  },
-  "/assets/porto katsiki.jpg": {
-    "w": 6000,
-    "h": 4000,
-    "base": "/assets/opt/porto-katsiki.2366bb22",
     "widths": [
       160,
       480,

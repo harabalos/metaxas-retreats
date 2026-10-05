@@ -15,7 +15,7 @@ import { SpeedInsights } from "@vercel/speed-insights/react";
 const HomePage = React.lazy(() => import("./pages/HomePage"));
 const AccommodationDetail = React.lazy(() => import("./pages/AccommodationDetail"));
 const BookingPage = React.lazy(() => import("./pages/BookingPage"));
-const ExploreIsland = React.lazy(() => import("./pages/ExploreIsland"));
+const MikrosGialos = React.lazy(() => import("./pages/MikrosGialos"));
 const ContactUs = React.lazy(() => import("./pages/ContactUs"));
 const FAQ = React.lazy(() => import("./pages/FAQ"));
 const NotFound = React.lazy(() => import("./pages/NotFound"));
@@ -65,7 +65,7 @@ const AnimatedRoutes = () => {
                 <Route index element={<HomePage />} />
                 <Route path="accommodation/:id" element={<AccommodationDetail />} />
                 <Route path="booking/:id" element={<BookingPage />} />
-                <Route path="explore" element={<ExploreIsland />} />
+                <Route path="mikros-gialos" element={<MikrosGialos />} />
                 <Route path="contact" element={<ContactUs />} />
                 <Route path="faq" element={<FAQ />} />
                 <Route path="privacy" element={<PrivacyPolicy />} />

@@ -48,7 +48,7 @@ function removeEmptyDirs(dir) {
   if (readdirSync(dir).length === 0) rmdirSync(dir);
 }
 
-/** Every `/assets/….jpg|png` string literal in src/, e.g. '/assets/porto katsiki.jpg'. */
+/** Every `/assets/….jpg|png` string literal in src/, e.g. '/assets/glamping-tent/view.jpg'. */
 function referencedImages() {
   const refs = new Set();
   for (const file of walk(join(root, 'src'))) {

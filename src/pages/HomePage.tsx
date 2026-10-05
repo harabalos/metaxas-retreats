@@ -2,7 +2,7 @@ import { useRef, useEffect, useCallback, useState } from 'react';
 import useEmblaCarousel from 'embla-carousel-react';
 import Autoplay from 'embla-carousel-autoplay';
 import { useLocation, Link } from 'react-router-dom';
-import { Waves, Trees, Sun, Wind } from 'lucide-react';
+import { Star } from 'lucide-react';
 import { m, useScroll, useTransform } from 'framer-motion';
 import Layout from '@/components/Layout/Layout';
 import AccommodationCard from '@/components/Accommodations/AccommodationCard';
@@ -11,6 +11,8 @@ import { useAccommodations } from '@/hooks/useAccommodations';
 import SEOHead from '@/components/SEO/SEOHead';
 import { useLanguage } from '@/context/LanguageContext';
 import { responsiveImage } from '@/lib/images';
+import { PLACES, formatMinutes } from '@/data/places';
+import { reviewSummary } from '@/data/reviews';
 import { business, graph, website } from '@/lib/schema';
 import heroVideoDesktop from '@/assets/hero/hero-desktop.mp4';
 import heroVideoMobile from '@/assets/hero/hero-mobile.mp4';
@@ -24,7 +26,7 @@ const CAROUSEL_SIZES = '(min-width: 1232px) 544px, (min-width: 1024px) calc(50vw
 const CAROUSEL_IMAGES = [
   { src: '/assets/glamping-tent/view.jpg', alt: 'Glamping tent with panoramic sea view over Mikros Gialos bay, Lefkada Greece' },
   { src: '/assets/glamping-tent/view2.jpg', alt: 'Stunning Ionian Sea view from Metaxas Retreats glamping accommodation, Lefkada' },
-  { src: '/assets/glamping-tent/prosopsi.jpg', alt: 'Luxury glamping tent exterior among olive trees at Metaxas Retreats, Lefkada Greece' },
+  { src: '/assets/glamping-tent/prosopsi.jpg', alt: 'Luxury glamping tent exterior at Metaxas Retreats, Lefkada Greece' },
   { src: '/assets/e9f9bd84-9f74-4189-bf30-d6640a566fd3.jpg', alt: 'Wooden house sea view accommodation at Mikros Gialos beach, Lefkada Greece' },
 ];
 
@@ -39,13 +41,8 @@ const prefersStillHero = () => {
 };
 
 
-const FEATURE_ICONS = [Waves, Trees, Sun, Wind];
-const FEATURE_KEYS = [
-  { label: 'home.features.beach.label', desc: 'home.features.beach.desc' },
-  { label: 'home.features.olive.label', desc: 'home.features.olive.desc' },
-  { label: 'home.features.views.label', desc: 'home.features.views.desc' },
-  { label: 'home.features.secluded.label', desc: 'home.features.secluded.desc' },
-];
+// The towns in home.where.drive.label, all a short drive away (src/data/places.ts).
+const NEARBY_TOWNS = [PLACES.sivota, PLACES.nidri, PLACES.vasiliki];
 
 // ─── Main Component ────────────────────────────────────────────────────────────
 const HomePage = () => {
@@ -69,6 +66,24 @@ const HomePage = () => {
   const { scrollY } = useScroll();
   const heroY = useTransform(scrollY, [0, 600], [0, 120]);
   const heroOpacity = useTransform(scrollY, [0, 400], [1, 0]);
+
+  // Facts only: the beach distance is the owner's, the rest come from src/data.
+  const whereFacts = [
+    { value: t('home.where.beach.value'), label: t('home.where.beach.label') },
+    {
+      value: formatMinutes(Math.max(...NEARBY_TOWNS.map((place) => place.minutes)), t),
+      label: t('home.where.drive.label'),
+    },
+    {
+      value: (
+        <span className="inline-flex items-center gap-2">
+          {reviewSummary.rating.toFixed(1)}
+          <Star className="h-6 w-6 md:h-7 md:w-7 fill-wood text-wood" aria-hidden="true" />
+        </span>
+      ),
+      label: t('home.where.rating.label', { count: reviewSummary.count }),
+    },
+  ];
 
   const scrollToAccommodations = () => {
     accommodationsRef.current?.scrollIntoView({ behavior: scrollBehavior(), block: 'start' });
@@ -177,40 +192,28 @@ const HomePage = () => {
         </m.div>
       </section>
 
-      {/* ─── BRAND STATEMENT ───────────────────────────────────────────────── */}
-      <section className="pt-16 pb-10 md:pt-20 px-5 sm:px-10">
-        <div className="max-w-3xl mx-auto text-center">
-          <FadeUp>
-            <p className="text-wood-deep text-xs font-sans font-semibold tracking-[0.25em] uppercase mb-4">{t('home.brand.eyebrow')}</p>
+      {/* ─── WHERE WE ARE ────────────────────────────────────────────────── */}
+      <section className="py-20 md:py-24 px-5 sm:px-10">
+        <div className="max-w-5xl mx-auto">
+          <FadeUp className="max-w-3xl mx-auto text-center">
+            <p className="text-wood-deep text-xs font-sans font-semibold tracking-[0.25em] uppercase mb-4">{t('home.where.eyebrow')}</p>
             <h2 className="font-heading font-light text-forest text-[clamp(1.5rem,2.4vw,2.125rem)] leading-snug text-balance">
-              {t('home.brandStatement')}
+              {t('home.where.title')}
             </h2>
           </FadeUp>
           <FadeUp delay={0.15}>
-            <p className="mt-5 text-muted-foreground text-base font-sans font-light leading-relaxed max-w-2xl mx-auto">
-              {t('home.section.description')}
-            </p>
+            {/* One row per fact on phones, three columns from sm */}
+            <ul className="mt-12 md:mt-14 grid grid-cols-1 sm:grid-cols-3 border-y border-forest/10 divide-y divide-forest/10 sm:divide-y-0 sm:divide-x">
+              {whereFacts.map(({ value, label }) => (
+                <li key={label} className="flex items-center gap-5 py-5 sm:block sm:py-9 sm:px-6 sm:text-center">
+                  <p className="w-28 flex-shrink-0 sm:w-auto font-heading text-forest-dark text-[2rem] md:text-[2.5rem] leading-none whitespace-nowrap">
+                    {value}
+                  </p>
+                  <p className="text-sm text-muted-foreground font-sans text-balance sm:mt-3">{label}</p>
+                </li>
+              ))}
+            </ul>
           </FadeUp>
-        </div>
-      </section>
-
-      {/* ─── FEATURE PILLARS ───────────────────────────────────────────────── */}
-      <section className="py-6 px-5 sm:px-10 pb-16">
-        <div className="max-w-5xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-6">
-          {FEATURE_KEYS.map(({ label, desc }, i) => {
-            const Icon = FEATURE_ICONS[i];
-            return (
-            <FadeUp key={label} delay={i * 0.1}>
-              <div className="text-center group">
-                <div className="w-12 h-12 rounded-full bg-sand flex items-center justify-center mx-auto mb-4 group-hover:bg-forest/10 transition-colors duration-300">
-                  <Icon className="h-5 w-5 text-forest" />
-                </div>
-                <p className="font-sans font-semibold text-sm text-forest-dark mb-1">{t(label)}</p>
-                <p className="text-xs text-muted-foreground font-sans">{t(desc)}</p>
-              </div>
-            </FadeUp>
-            );
-          })}
         </div>
       </section>
 
@@ -281,10 +284,10 @@ const HomePage = () => {
                 </div>
                 <div className="mt-10">
                   <Link
-                    to={localize('/explore')}
+                    to={localize('/mikros-gialos')}
                     className="inline-flex items-center gap-2 text-sm font-sans font-semibold text-forest border-b border-forest/30 pb-0.5 hover:border-forest transition-colors"
                   >
-                    {t('home.experience.explore')}
+                    {t('home.experience.area')}
                     <span className="text-wood-deep">→</span>
                   </Link>
                 </div>

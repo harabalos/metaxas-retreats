@@ -43,7 +43,7 @@ const ADDRESS = {
   addressCountry: 'GR',
 };
 
-const GEO = { '@type': 'GeoCoordinates', latitude: 38.640048, longitude: 20.698988 };
+export const GEO = { '@type': 'GeoCoordinates', latitude: 38.640048, longitude: 20.698988 };
 
 const amenity = (name: string) => ({ '@type': 'LocationFeatureSpecification', name, value: true });
 

@@ -45,7 +45,7 @@ export const accommodations: Accommodation[] = [
     name: 'Wooden House',
     type: 'house',
     description:
-      "Experience authentic Greek island living in our charming wooden house. Nestled among olive trees with stunning sea views. The spacious terrace is ideal for enjoying the famous Greek sunsets while sipping local wine. Inside, you'll find a fully equipped kitchen, comfortable living area, and thoughtfully designed bedrooms with premium linens.",
+      "Experience authentic Greek island living in our charming wooden house, with stunning sea views. The spacious terrace is ideal for enjoying the famous Greek sunsets while sipping local wine. Inside, you'll find a fully equipped kitchen, comfortable living area, and thoughtfully designed bedrooms with premium linens.",
     shortDescription: 'Charming wooden house with sea views for comfortable vacation',
     price: 50,
     priceRanges: [
@@ -94,7 +94,7 @@ export const accommodations: Accommodation[] = [
     name: 'Glamping Tent',
     type: 'tent',
     description:
-      'Our luxury glamping tent offers an unforgettable experience combining the adventure of camping with hotel-like amenities. Set in a peaceful location among ancient olive trees, this spacious tent features one comfortable double-sized bed and 3 single beds with premium linens, electricity, and stylish furnishings. The private outdoor seating area is perfect for morning coffee or evening relaxation under the stars. Experience the magic of island living with all the comforts you need.',
+      'Our luxury glamping tent offers an unforgettable experience combining the adventure of camping with hotel-like amenities. Set in a peaceful location, this spacious tent features one comfortable double-sized bed and 3 single beds with premium linens, electricity, and stylish furnishings. The private outdoor seating area is perfect for morning coffee or evening relaxation under the stars. Experience the magic of island living with all the comforts you need.',
     shortDescription:
       'Spacious glamping experience with hotel-quality comfort surrounded by beautiful trees',
     price: 50,

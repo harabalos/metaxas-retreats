@@ -83,7 +83,7 @@ const Navbar = () => {
 
   const navLinks = [
     { label: t('nav.accommodations'), href: `${localize('/')}#accommodations`, onClick: scrollToAccommodations },
-    { label: t('nav.explore'), to: localize('/explore') },
+    { label: t('nav.area'), to: localize('/mikros-gialos') },
     { label: t('nav.contact'), to: localize('/contact') },
   ];
 

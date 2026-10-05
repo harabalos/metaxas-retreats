@@ -40,7 +40,7 @@ export function llmsTxt(t: T): string {
   return [
     '# Metaxas Retreats',
     '',
-    '> Glamping tents and a wooden house among olive trees in Mikros Gialos (Poros), south-east Lefkada, Greece, 50 m from Mikros Gialos beach. Family-run; listed on Google, Airbnb and Booking.com as "Metaxaki".',
+    '> Glamping tents and a wooden house in Mikros Gialos (Poros), south-east Lefkada, Greece, 50 m from Mikros Gialos beach. Family-run; listed on Google, Airbnb and Booking.com as "Metaxaki".',
     '',
     `Address: Mikros Gialos, Poros, 31084 Lefkada, Greece (38.640048, 20.698988). Map: ${GOOGLE_MAPS_URL}`,
     `Phone and WhatsApp: +30 697 321 9980, +30 698 042 9891. Email: metaxasretreats@gmail.com.`,
@@ -76,7 +76,7 @@ export function llmsTxt(t: T): string {
     '',
     `- [Home](${url('/')}): the two accommodations, the setting and guest reviews`,
     ...accommodations.map((a) => `- [${a.name}](${url(`/accommodation/${a.id}`)}): photos, amenities, availability`),
-    `- [Explore Lefkada](${url('/explore')}): beaches, villages and activities around the island`,
+    `- [Mikros Gialos](${url('/mikros-gialos')}): the bay, what's on foot and by car from it, and how to get here`,
     `- [Contact](${url('/contact')}): phone, WhatsApp, email and map`,
     `- [FAQ](${url('/faq')}): the questions above, on a page of their own`,
     `- The site in other languages: ${LANGUAGES.filter((l) => l !== 'en').map((l) => url(localizePath(l, '/'))).join(', ')}`,
