@@ -40,7 +40,7 @@ export function llmsTxt(t: T): string {
   return [
     '# Metaxas Retreats',
     '',
-    '> Glamping tents and a wooden house among olive trees in Mikros Gialos (Poros), south-east Lefkada, Greece, 50 m from Mikros Gialos beach. Family-run; listed on Google, Airbnb and Booking.com as "Metaxaki".',
+    '> Glamping tents and a wooden house in Mikros Gialos (Poros), south-east Lefkada, Greece, 50 m from Mikros Gialos beach. Family-run; listed on Google, Airbnb and Booking.com as "Metaxaki".',
     '',
     `Address: Mikros Gialos, Poros, 31084 Lefkada, Greece (38.640048, 20.698988). Map: ${GOOGLE_MAPS_URL}`,
     `Phone and WhatsApp: +30 697 321 9980, +30 698 042 9891. Email: metaxasretreats@gmail.com.`,
