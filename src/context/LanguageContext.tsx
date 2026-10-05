@@ -12,7 +12,7 @@ type LanguageContextType = {
   setLanguage: (lang: Language) => void;
   /** i18next's t: pass { count } for plurals, other values for {{interpolation}}. */
   t: (key: string, options?: Record<string, unknown>) => string;
-  /** A page's path in the current language, for links: localize('/explore'). */
+  /** A page's path in the current language, for links: localize('/faq'). */
   localize: (path: string) => string;
 };
 

@@ -76,7 +76,7 @@ export function llmsTxt(t: T): string {
     '',
     `- [Home](${url('/')}): the two accommodations, the setting and guest reviews`,
     ...accommodations.map((a) => `- [${a.name}](${url(`/accommodation/${a.id}`)}): photos, amenities, availability`),
-    `- [Explore Lefkada](${url('/explore')}): beaches, villages and activities around the island`,
+    `- [Mikros Gialos](${url('/mikros-gialos')}): the bay, what's on foot and by car from it, and how to get here`,
     `- [Contact](${url('/contact')}): phone, WhatsApp, email and map`,
     `- [FAQ](${url('/faq')}): the questions above, on a page of their own`,
     `- The site in other languages: ${LANGUAGES.filter((l) => l !== 'en').map((l) => url(localizePath(l, '/'))).join(', ')}`,

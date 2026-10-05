@@ -10,7 +10,7 @@ interface LayoutProps {
 }
 
 // Pages whose first section is a full-screen hero — navbar floats transparently over them
-const HERO_PAGES = ['/', '/explore'];
+const HERO_PAGES = ['/'];
 
 const Layout = ({ children }: LayoutProps) => {
   const { pathname } = useLocation();

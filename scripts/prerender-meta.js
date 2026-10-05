@@ -58,7 +58,7 @@ const routes = [
     heroImage: '/assets/glamping-tent/prosopsi.jpg',
     images: ['/assets/glamping-tent/prosopsi.jpg', '/assets/glamping-tent/krevati.jpg', '/assets/glamping-tent/view.jpg'],
   },
-  { path: '/explore', images: ['/assets/porto katsiki.jpg', '/assets/kathisma.jpeg'] },
+  { path: '/mikros-gialos', images: ['/assets/glamping-tent/view2.jpg', '/assets/glamping-tent/view.jpg'] },
   { path: '/contact' },
   { path: '/faq' },
   { path: '/privacy', noindex: true },

@@ -281,10 +281,10 @@ const HomePage = () => {
                 </div>
                 <div className="mt-10">
                   <Link
-                    to={localize('/explore')}
+                    to={localize('/mikros-gialos')}
                     className="inline-flex items-center gap-2 text-sm font-sans font-semibold text-forest border-b border-forest/30 pb-0.5 hover:border-forest transition-colors"
                   >
-                    {t('home.experience.explore')}
+                    {t('home.experience.area')}
                     <span className="text-wood-deep">→</span>
                   </Link>
                 </div>

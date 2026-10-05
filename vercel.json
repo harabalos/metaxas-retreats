@@ -86,6 +86,16 @@
       "source": "/accommodation/glamping-tent-2",
       "destination": "/accommodation/glamping-tent",
       "permanent": true
+    },
+    {
+      "source": "/explore",
+      "destination": "/mikros-gialos",
+      "permanent": true
+    },
+    {
+      "source": "/:lang(el|it|de|ro)/explore",
+      "destination": "/:lang/mikros-gialos",
+      "permanent": true
     }
   ],
   "rewrites": [

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Layout from '@/components/Layout/Layout';
+import MapEmbed from '@/components/MapEmbed';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
@@ -22,9 +23,6 @@ const ContactUs = () => {
   const [agreedToPolicy, setAgreedToPolicy] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
-
-  const lat = 38.64003296086357;
-  const lng = 20.699029254119495;
 
   const schema = graph(
     business(t),
@@ -206,16 +204,7 @@ const ContactUs = () => {
             {/* Map */}
             <FadeUp delay={0.2}>
               <div className="rounded-2xl overflow-hidden border border-gray-100 shadow-card h-[260px]">
-                <iframe
-                  src={`https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3000!2d${lng}!3d${lat}!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzjCsDM4JzI0LjEiTiAyMMKwNDEnNTYuNSJF!5e0!3m2!1sen!2sgr!4v1700000000000!5m2!1sen!2sgr`}
-                  width="100%"
-                  height="100%"
-                  style={{ border: 0 }}
-                  allowFullScreen
-                  loading="lazy"
-                  referrerPolicy="no-referrer-when-downgrade"
-                  title={t('contact.mapTitle')}
-                />
+                <MapEmbed span={3000} title={t('contact.mapTitle')} />
               </div>
             </FadeUp>
           </div>

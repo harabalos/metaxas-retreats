@@ -55,7 +55,7 @@ const Footer = () => {
             <ul className="space-y-3">
               <li><Link to={localize('/')} className={linkClass} onClick={scrollToTop}>{t('nav.home')}</Link></li>
               <li><Link to={`${localize('/')}#accommodations`} className={linkClass}>{t('footer.ourAccommodations')}</Link></li>
-              <li><Link to={localize('/explore')} className={linkClass} onClick={scrollToTop}>{t('nav.explore')}</Link></li>
+              <li><Link to={localize('/mikros-gialos')} className={linkClass} onClick={scrollToTop}>{t('nav.area')}</Link></li>
               <li><Link to={localize('/contact')} className={linkClass} onClick={scrollToTop}>{t('footer.contactUs')}</Link></li>
             </ul>
           </div>
