@@ -35,6 +35,9 @@ const imageManifest = JSON.parse(readFileSync(join(rootDir, 'src', 'data', 'imag
 // Must match MAIN_IMAGE_SIZES in src/components/Accommodations/AccommodationGallery.tsx,
 // otherwise the browser ignores the preload and downloads a second copy.
 const GALLERY_SIZES = '(min-width: 1280px) 748px, (min-width: 1024px) calc(100vw - 532px), calc(100vw - 40px)';
+// Must match BAY_IMAGE_SIZES in src/pages/MikrosGialos.tsx, for the same reason.
+const BAY_IMAGE_SIZES =
+  '(min-width: 1152px) 1056px, (min-width: 1024px) calc(100vw - 96px), (min-width: 640px) calc(100vw - 64px), calc(100vw - 40px)';
 
 const SITE = 'https://www.metaxasretreats.gr';
 
@@ -44,8 +47,9 @@ const localizePath = (language, path) =>
   language === 'en' ? path : path === '/' ? `/${language}` : `/${language}${path}`;
 
 // Public pages. Titles, descriptions and canonicals come from each page's SEOHead.
-// images: photos listed for the page in the sitemap. heroImage: first photo of
-// the gallery (src/data/accommodations.ts), the largest thing on the page.
+// images: photos listed for the page in the sitemap. heroImage: the largest
+// thing on the page, preloaded: the first photo of an accommodation's gallery
+// (src/data/accommodations.ts), or another photo with its own heroSizes.
 const routes = [
   { path: '/', home: true, images: ['/assets/glamping-tent/view.jpg', '/assets/glamping-tent/prosopsi.jpg'] },
   {
@@ -58,7 +62,12 @@ const routes = [
     heroImage: '/assets/glamping-tent/prosopsi.jpg',
     images: ['/assets/glamping-tent/prosopsi.jpg', '/assets/glamping-tent/krevati.jpg', '/assets/glamping-tent/view.jpg'],
   },
-  { path: '/mikros-gialos', images: ['/assets/glamping-tent/view2.jpg', '/assets/glamping-tent/view.jpg'] },
+  {
+    path: '/mikros-gialos',
+    heroImage: '/assets/glamping-tent/view2.jpg',
+    heroSizes: BAY_IMAGE_SIZES,
+    images: ['/assets/glamping-tent/view2.jpg', '/assets/glamping-tent/view.jpg'],
+  },
   { path: '/contact' },
   { path: '/faq' },
   { path: '/privacy', noindex: true },
@@ -77,12 +86,12 @@ const HELMET_TAGS = [
   /\s*<link rel="canonical"[^>]*>/g,
 ];
 
-/** Preload for a gallery photo, matching the srcset the page renders (src/lib/images.ts). */
-function galleryPreload(src) {
+/** Preload for a page's main photo, matching the srcset and sizes the page renders (src/lib/images.ts). */
+function heroPreload(src, sizes) {
   const entry = imageManifest[src];
   if (!entry) return '';
   const srcset = entry.widths.map((w) => `${entry.base}-${w}w.webp ${w}w`).join(', ');
-  return `<link rel="preload" as="image" imagesrcset="${srcset}" imagesizes="${GALLERY_SIZES}" fetchpriority="high" />`;
+  return `<link rel="preload" as="image" imagesrcset="${srcset}" imagesizes="${sizes}" fetchpriority="high" />`;
 }
 
 const appFiles = readdirSync(join(distDir, '_app'));
@@ -146,7 +155,7 @@ for (const language of LANGUAGES) {
     const { html: appHtml, helmet } = await render(url, language);
     const headTags = [];
     if (route.home) headTags.push(heroPosterPreload());
-    if (route.heroImage) headTags.push(galleryPreload(route.heroImage));
+    if (route.heroImage) headTags.push(heroPreload(route.heroImage, route.heroSizes ?? GALLERY_SIZES));
 
     // For the English root this overwrites the index.html Vite built
     const file = url === '/' ? 'index.html' : `${url.slice(1)}/index.html`;

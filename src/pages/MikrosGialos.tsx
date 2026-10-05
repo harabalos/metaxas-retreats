@@ -15,6 +15,7 @@ const BAY_IMAGE = '/assets/glamping-tent/view2.jpg';
 const DUSK_IMAGE = '/assets/glamping-tent/view.jpg';
 
 // The content column (max-w-6xl less its padding), and half of it from lg.
+// scripts/prerender-meta.js preloads the bay photo with a copy of BAY_IMAGE_SIZES.
 const BAY_IMAGE_SIZES =
   '(min-width: 1152px) 1056px, (min-width: 1024px) calc(100vw - 96px), (min-width: 640px) calc(100vw - 64px), calc(100vw - 40px)';
 const DUSK_IMAGE_SIZES =
@@ -36,7 +37,12 @@ const BY_CAR: PlaceId[] = ['sivota', 'nidri', 'vasiliki', 'agiofili', 'lefkadaTo
 const MikrosGialos = () => {
   const { t, localize } = useLanguage();
 
-  const trip = (id: PlaceId) => ({ km: PLACES[id].km, time: formatMinutes(PLACES[id].minutes, t) });
+  // "53 km", "1 h 10 min": non-breaking spaces keep a number on the same line as its unit.
+  const unbroken = (text: string) => text.replace(/ /g, ' ');
+  const trip = (id: PlaceId) => ({
+    distance: unbroken(t('distance.km', { km: PLACES[id].km })),
+    time: unbroken(formatMinutes(PLACES[id].minutes, t)),
+  });
   const gettingHere = [
     { key: 'airport', icon: Plane, values: trip('airport') },
     { key: 'town', icon: Car, values: trip('lefkadaTown') },
@@ -164,7 +170,7 @@ const MikrosGialos = () => {
               className="mt-9 inline-flex items-center gap-2 text-sm font-sans font-semibold text-forest border-b border-forest/30 pb-0.5 hover:border-forest transition-colors"
             >
               {t('area.getting.directions')}
-              <span className="text-wood-deep">→</span>
+              <span className="text-wood-deep" aria-hidden="true">→</span>
             </a>
           </FadeUp>
 
