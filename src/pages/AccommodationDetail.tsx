@@ -160,6 +160,30 @@ const AccommodationDetail = () => {
               </div>
             </FadeUp>
 
+            {/* The stay, in words: what the amenity tiles don't say */}
+            <FadeUp delay={0.18}>
+              <div className="mt-10 pt-10 border-t border-gray-100">
+                <h2 className="text-2xl font-heading font-semibold text-forest-dark mb-4">
+                  {t('detail.stay.title')}
+                </h2>
+                <div className="space-y-4 text-gray-600 leading-relaxed">
+                  {[1, 2, 3].map((n) => (
+                    <p key={n}>{t(`detail.stay.${unitKey}.p${n}`, { nights: accommodation.minNights })}</p>
+                  ))}
+                  <p>
+                    {t('detail.stay.around')}{' '}
+                    <Link
+                      to={localize('/mikros-gialos')}
+                      className="text-forest underline underline-offset-4 hover:text-wood transition-colors"
+                      onClick={() => window.scrollTo({ top: 0, behavior: scrollBehavior() })}
+                    >
+                      {t('detail.stay.areaLink')}
+                    </Link>
+                  </p>
+                </div>
+              </div>
+            </FadeUp>
+
             {/* Amenities */}
             <FadeUp delay={0.2}>
               <div className="mt-10 pt-10 border-t border-gray-100">
