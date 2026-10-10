@@ -1,7 +1,9 @@
 import { useState, useRef, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { useLanguage, Language } from '@/context/LanguageContext';
 import { ChevronDown } from 'lucide-react';
 import { AnimatePresence, m } from 'framer-motion';
+import { localizePath, splitLanguage } from '@/lib/i18nRoutes';
 import Flag from './Flag';
 
 // Each language named in itself, so a visitor can find theirs in any version.
@@ -20,6 +22,8 @@ interface LanguageSwitcherProps {
 
 const LanguageSwitcher = ({ isLight = false }: LanguageSwitcherProps) => {
   const { language, setLanguage, t } = useLanguage();
+  const { pathname, search, hash } = useLocation();
+  const { path } = splitLanguage(pathname);
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
@@ -68,9 +72,18 @@ const LanguageSwitcher = ({ isLight = false }: LanguageSwitcherProps) => {
             className="absolute right-0 top-full mt-2 bg-forest-dark border border-white/10 rounded-xl shadow-xl overflow-hidden z-50 min-w-[150px]"
           >
             {languages.map((lang) => (
-              <button
+              // A real link, so the translated page has an address crawlers can follow;
+              // a plain click is still handled in place (setLanguage fetches the texts first).
+              <a
                 key={lang.code}
-                onClick={() => { setLanguage(lang.code); setOpen(false); }}
+                href={localizePath(lang.code, path) + search + hash}
+                hrefLang={lang.code}
+                onClick={(e) => {
+                  if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
+                  e.preventDefault();
+                  setLanguage(lang.code);
+                  setOpen(false);
+                }}
                 className={`w-full flex items-center gap-2.5 px-4 py-2.5 text-xs font-sans font-medium transition-colors duration-150 ${
                   language === lang.code
                     ? 'bg-wood/15 text-wood'
@@ -82,7 +95,7 @@ const LanguageSwitcher = ({ isLight = false }: LanguageSwitcherProps) => {
                 {language === lang.code && (
                   <span className="ml-auto w-1.5 h-1.5 rounded-full bg-wood" />
                 )}
-              </button>
+              </a>
             ))}
           </m.div>
         )}
