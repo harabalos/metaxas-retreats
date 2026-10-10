@@ -1,10 +1,13 @@
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { Mail, MapPin, Phone } from 'lucide-react';
 import { useLanguage } from '@/context/LanguageContext';
 import { scrollBehavior } from '@/lib/motion';
+import { LANGUAGES, localizePath, splitLanguage } from '@/lib/i18nRoutes';
 
 const Footer = () => {
-  const { t, localize } = useLanguage();
+  const { t, localize, language, setLanguage } = useLanguage();
+  const { pathname } = useLocation();
+  const { path } = splitLanguage(pathname);
 
   const scrollToTop = () => window.scrollTo({ top: 0, behavior: scrollBehavior() });
 
@@ -128,6 +131,26 @@ const Footer = () => {
           </p>
 
           <div className="flex flex-wrap items-center justify-center sm:justify-end gap-x-5 gap-y-2 text-xs text-sand-dark/60">
+            {/* Every translation is linked from every page, so each one has an address to follow. */}
+            <span className="flex items-center gap-3" aria-label={t('nav.language')}>
+              {LANGUAGES.map((code) => (
+                <a
+                  key={code}
+                  href={localizePath(code, path)}
+                  hrefLang={code}
+                  lang={code}
+                  aria-current={code === language ? 'true' : undefined}
+                  className={code === language ? 'text-wood' : 'hover:text-wood transition-colors'}
+                  onClick={(e) => {
+                    if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
+                    e.preventDefault();
+                    setLanguage(code);
+                  }}
+                >
+                  {code.toUpperCase()}
+                </a>
+              ))}
+            </span>
             {/* The FAQ is linked only from here, next to the small print. */}
             <Link to={localize('/faq')} className="hover:text-wood transition-colors" onClick={scrollToTop}>
               {t('footer.faq')}
