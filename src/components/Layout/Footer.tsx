@@ -24,7 +24,7 @@ const Footer = () => {
           {/* Brand column */}
           <div className="md:col-span-4">
             <Link to={localize('/')} onClick={scrollToTop} className="inline-flex items-center gap-2.5 mb-3 group">
-              <span className="text-2xl font-heading font-semibold text-sand-light group-hover:text-wood transition-colors">
+              <span className="wordmark text-2xl font-heading font-semibold text-sand-light group-hover:text-wood transition-colors">
                 Metaxas Retreats
               </span>
             </Link>

@@ -100,7 +100,7 @@ const Navbar = () => {
 
             {/* Logo */}
             <Link to={localize('/')} className="flex items-center gap-2 group">
-              <span className={`text-xl lg:text-2xl font-heading font-semibold tracking-wide transition-colors duration-300 ${logoColor}`}>
+              <span className={`wordmark text-xl lg:text-2xl font-heading font-semibold tracking-wide transition-colors duration-300 ${logoColor}`}>
                 Metaxas Retreats
               </span>
             </Link>
