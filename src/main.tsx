@@ -7,6 +7,8 @@ import App from './App.tsx';
 // the system sans-serif, as it always has on this site.
 import '@fontsource-variable/eb-garamond';
 import '@fontsource-variable/dm-sans';
+// Literata sets the Greek headings (see index.css); the other languages never use it.
+import '@fontsource-variable/literata';
 import i18n, { loadLanguage } from './i18n';
 import { DEFAULT_LANGUAGE, isLanguage, localizePath, splitLanguage } from './lib/i18nRoutes';
 import './index.css';

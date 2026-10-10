@@ -72,6 +72,12 @@
   h6 {
     font-family: theme('fontFamily.heading');
   }
+
+  /* Greek headings are set in Literata. The "Metaxas Retreats" wordmark stays
+     in EB Garamond in every language. */
+  html[lang='el'] :is(h1, h2, h3, h4, h5, h6, .font-heading, .font-display):not(.wordmark) {
+    font-family: 'Literata Variable', Georgia, serif;
+  }
 }
 
 /* ─── Booking calendar (react-day-picker) ─── */
